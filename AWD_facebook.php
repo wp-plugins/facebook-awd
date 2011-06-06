@@ -1189,7 +1189,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function register_AWD_facebook_widgets(){
 		 register_widget("AWD_facebook_like_button");
-		// register_widget("AWD_facebook_like_box");
+		 register_widget("AWD_facebook_like_box");
 		 register_widget("AWD_facebook_activity");
 	}
 	
