@@ -190,8 +190,7 @@ class AWD_facebook_like_button extends WP_Widget {
 			echo '<div id="AWD_like_button">'.$instance['like_button_content'].'</div>';
 		//else get button with settings
 		else
-			echo $this->AWD_facebook->get_the_like_button($instance);
-
+			echo $this->AWD_facebook->get_the_like_button('',$instance);
 		
         echo $after_widget; 
     }

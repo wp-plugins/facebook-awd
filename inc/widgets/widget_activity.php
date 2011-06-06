@@ -66,7 +66,7 @@ class AWD_facebook_activity extends WP_Widget {
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('activity_domain').'">'._e('Url of the page',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('activity_domain').'">'._e('Domain (ex: mysite.com)',$this->AWD_facebook->plugin_text_domain).' 
 				<input class="widefat" id="'.$this->get_field_id('activity_domain').'" name="'.$this->get_field_name('activity_domain').'" type="text" value="'.$activity['activity_domain'].'" />
 			</label>
 		</p>';

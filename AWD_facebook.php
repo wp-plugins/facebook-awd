@@ -1084,6 +1084,11 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function get_the_like_button($post="",$options=''){
 		$href = get_permalink($post->ID);
+		if(is_object($post))
+		    $href = get_permalink($post->ID);
+		else    
+            $href =($options['like_button_url'] == '' ? $this->plugin_option['like_button_url'] : $options['like_button_url']);
+		
 		$send = (($options['like_button_send'] == '' ? $this->plugin_option['like_button_send'] : $options['like_button_send']) == 1 ? 'true' : 'false');
 		$width = ($options['like_button_width'] == '' ? $this->plugin_option['like_button_width'] : $options['like_button_width']);
 		$colorscheme = ($options['like_button_colorscheme'] == '' ? $this->plugin_option['like_button_colorscheme'] : $options['like_button_colorscheme']);
@@ -1093,7 +1098,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$layout = ($options['like_button_layout'] == '' ? $this->plugin_option['like_button_layout'] : $options['like_button_layout']);
 		$height = ($options['like_button_height'] == '' ? $this->plugin_option['like_button_height'] : $options['like_button_height']);
 		$xfbml = (($options['like_button_xfbml'] == '' ? $this->plugin_option['like_button_xfbml'] : $options['like_button_xfbml']) == 1 ? true : false);
-
 		if($height == ''){
 			if($layout == 'box_count')
 				$height = '90';
@@ -1108,7 +1112,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		else if($xfbml && $this->plugin_option['parse_xfbml'] == 1){
 			return '<div id="AWD_like_button"><fb:like href="'.$href.'" send="'.$send.'" width="'.$width.'" colorscheme="'.$colorscheme.'" layout='.$layout.' show_faces="'.$show_faces.'" font="'.$fonts.'" action="'.$action.'"></fb:like></div>';
 		}else if(!$xfbml || $this->plugin_option['parse_xfbml'] == 0){
-			return '<div id="AWD_like_button"><iframe src="http://www.facebook.com/plugins/like.php?href='.urlencode($href).'&amp;send='.$send.'&amp;layout='.$layout.'&amp;width='.$width.'&amp;show_faces='.$show_faces.'&amp;action='.$action.'&amp;colorscheme='.$colorscheme.'&amp;font='.$fonts.'&amp;height='.$height.'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:'.$height.'px;" allowTransparency="true"></iframe></div>';
+			return '<div id="AWD_like_button"><iframe src="http://www.facebook.com/plugins/like.php?href='.urlencode($href).'&amp;send='.$send.'&amp;layout='.$layout.'&amp;width='.$width.'&amp;show_faces='.$show_faces.'&amp;action='.$action.'&amp;colorscheme='.$colorscheme.'&amp;font='.$fonts.'&amp;height='.$height.'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:'.$width.'px; height:'.$height.'px;" allowTransparency="true"></iframe></div>';
 		}else
 			return '<div style="color:red;">'.__("There is an error, please verify the settings for the Like Button URL",$this->plugin_text_domain).'</div>';
 		
@@ -1171,7 +1175,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$recommendations = (($options['activity_recommendations'] == '' ? $this->plugin_option['activity_recommendations'] : $options['activity_recommendations']) == 1 ? 'true' : 'false');
 
 		
-		if($this->plugin_option['activity_domain'] == '' && $href == '')
+		if($this->plugin_option['activity_domain'] == '' && $domain == '')
 			return '<div style="color:red;">'.__("There is an error, please verify the settings for the Acivity Box DOMAIN",$this->plugin_text_domain).'</div>';
 		else if($xfbml && $this->plugin_option['parse_xfbml'] == 1){
 			return '<div id="AWD_activity"><fb:activity site="'.$domain.'" width="'.$width.'" height="'.$height.'" header="'.$show_header.'" font="'.$fonts.'" border_color="#'.$border_color.'" recommendations="'.$recommendations.'"></fb:activity></div>';
