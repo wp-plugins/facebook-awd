@@ -3,7 +3,7 @@
 Plugin Name: AWD Facebook
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph
-Version: 0.9.1
+Version: 0.9.2
 Author: AH WEB DEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AH WEB DEV
@@ -411,7 +411,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 							$input = '<input class="ogwidefat" id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" /><img id="'.$prefix.'upload_image" src="'.$this->plugin_url_images.'upload_image.png" alt="'.__('Upload',$this->plugin_text_domain).'" class="AWD_button_media"/>';
 						break;
 						default:
-							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="" />';
+							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.$custom_value.'" />';
 					}
 					if($tag_name){
 						?>
@@ -751,8 +751,21 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 				$this->message = '<div id="message" class="error"><p>'.__('Options not updated there is an error...',$this->plugin_text_domain).'</p></div>';
 		}
 	}
-	
-	
+	/*
+	* function to catch firest image in html
+	*/
+	function catch_that_image() {
+  		global $post, $posts;
+  		$first_img = '';
+  		ob_start();
+  		ob_end_clean();
+  		$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
+  		$first_img = $matches [1] [0];
+  		if(empty($first_img)){ //Defines a default image
+    		//$first_img = "/images/default.jpg";
+  		}
+  		return $first_img;
+	}
 	//****************************************************************************************
 	//	FRONT AND CONTENT
 	//****************************************************************************************
@@ -991,7 +1004,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 				$custom_post = get_post_custom($post->ID);
 				$postypes_media = get_post_types(array('label'=>'Media'),'objects');
 				$postypes = get_post_types(array('show_ui'=>true),'objects');
-				//if find attachement
+				//if find attachement type
 				if(is_object($postypes_media['attachment']))
 					$postypes['attachment'] = $postypes_media['attachment'];				
 				//post types
@@ -1004,9 +1017,23 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 						 	$prefix_option = 'ogtags_custom_post_types_'.$postypes_name.'_';						 	
 							$type = $type_values->label;
 						}
-					}				
-				$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%","%POST_TITLE%","%POST_EXCERPT%","%CURRENT_URL%");
-				$array_replace = array($blog_name,$blog_description,$home_url,$post->post_title,$post->post_excerpt,get_permalink($post->ID));
+					}
+				//thumbnails if thumb support and has one
+				if(current_theme_supports('post-thumbnails') && has_post_thumbnail()) {
+                	$thumbURL = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID),'');
+                	$img = $thumbURL[0];
+                }else{
+                    unset($img);
+                    if($wpzoom_cf_use == 'Yes'){
+                    	$img = get_post_meta($post->ID, $wpzoom_cf_photo, true);
+                	}else{
+                    	if(!$img){
+                    		$img = $this->catch_that_image($post->ID);
+                   		}
+                	}
+                }
+				$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%","%POST_TITLE%","%POST_EXCERPT%","%POST_IMAGE%","%CURRENT_URL%");
+				$array_replace = array($blog_name,$blog_description,$home_url,$post->post_title,$post->post_excerpt,$img,get_permalink($post->ID));
 				$options = $this->construct_open_graph_tags($prefix_option,$array_pattern,$array_replace,$custom_post);
 			break;
 			//for tag archives
