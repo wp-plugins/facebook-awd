@@ -91,6 +91,7 @@ class AHWEBDEV_wpplugin{
 	    <p><fb:like href="http://www.ahwebdev.fr" send="true" width="255" show_faces="false" font="lucida grande"></fb:like></p>
 	    <p><a href="http://www.ahwebdev.fr"><?php _e('Developed by AH WEB DEV',$this->plugin_text_domain); ?></a></p>
 	    <p><a href="mailto:contact@ahwebdev.fr" title="Mail">Contact</a></p>
+	    <p><?php printf(__('This version is under developpement, please report bug if you find it to help us. You can report bug %shere%s',$this->plugin_text_domain),'<a href="http://wordpress.org/tags/facebook-awd?forum_id=10#postform">','</a>'); ?></p>
 	    <?php
 	}
     

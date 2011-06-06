@@ -161,8 +161,8 @@ if($this->plugin_option['like_button_colorscheme'] == '')
 	$this->plugin_option['like_button_colorscheme'] = 'light';
 if($this->plugin_option['like_button_send'] == '' || $this->plugin_option['like_button_xfbml'] == 0)
 	$this->plugin_option['like_button_send'] = 0;
-if($this->plugin_option['like_button_width'] == '')
-	$this->plugin_option['like_button_height'] = 450;
+if($this->plugin_option['like_button_height'] == '')
+	$this->plugin_option['like_button_height'] = 40;
 if($this->plugin_option['like_button_height'] == '')
 	$this->plugin_option['like_button_height'] = 35;
 if($this->plugin_option['like_button_faces'] == '')
