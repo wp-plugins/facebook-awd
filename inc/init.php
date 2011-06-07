@@ -211,6 +211,19 @@ if($this->plugin_option['activity_header'] == '')
 	$this->plugin_option['activity_header'] = '1';
 
 
+//****************************************************************************************
+//  Login button
+//****************************************************************************************
+if($this->plugin_option['login_button_width'] == '')
+	$this->plugin_option['login_button_width'] = 200;
+if($this->plugin_option['login_button_maxrow'] == '')
+	$this->plugin_option['login_button_maxrow'] = 1;
+if($this->plugin_option['login_button_faces'] == '')
+	$this->plugin_option['login_button_faces'] = 0;
+if($this->plugin_option['login_button_logout_value'] == '')
+	$this->plugin_option['login_button_logout_value'] = __('Logout',$this->plugin_text_domain);
+
+
 
 
 //****************************************************************************************
@@ -316,10 +329,16 @@ if($this->plugin_option['parse_xfbml'] == '' || $this->plugin_option['parse_xfbm
 //define current user in this object
 $this->current_user();
 //call the api facebook init (php) if connect enable
-if($this->plugin_option['connect_enable'] == 1){
+if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id'] !='' && $this->plugin_option['app_secret_key'] !=''){
+	if(get_option('users_can_register') == 0){
+		add_action('admin_notices',array(&$this,'message_register_disabled'));
+	}
+	//init OAuth SDK php
 	$this->init_php();
 	//perform login process
 	$this->login_user();
+}else{
+	add_action('admin_notices',array(&$this,'missing_config'));
 }
 
 //init admin

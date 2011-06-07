@@ -12,15 +12,15 @@
 	<form method="POST" action="">
 		<div id="div_options_content_tabs">
 			<ul class="tabs_ul">
-				<li><a href="#activity_settings"><?php _e('Activity Feed',$this->plugin_text_domain); ?></a></li>
-				<li><a href="#"><?php _e('Comments',$this->plugin_text_domain); ?></a></li>
-				<li><a href="#"><?php _e('Facepile',$this->plugin_text_domain); ?></a></li>
-				<li><a href="#like_box_settings"><?php _e('Like Box',$this->plugin_text_domain); ?></a></li>
 				<li><a href="#like_button_settings"><?php _e('Like Button',$this->plugin_text_domain); ?></a></li>
+				<li><a href="#activity_settings"><?php _e('Activity Feed',$this->plugin_text_domain); ?></a></li>
+				<li><a href="#login_button_settings"><?php _e('Login Button',$this->plugin_text_domain); ?></a></li>
+				<li><a href="#like_box_settings"><?php _e('Like Box',$this->plugin_text_domain); ?></a></li>
+				<li><a href="#"><?php _e('Comments',$this->plugin_text_domain); ?></a></li>
 				<li><a href="#"><?php _e('Live Stream',$this->plugin_text_domain); ?></a></li>
-				<li><a href="#"><?php _e('Login Button',$this->plugin_text_domain); ?></a></li>
 				<li><a href="#"><?php _e('Recommendations',$this->plugin_text_domain); ?></a></li>
 				<li><a href="#"><?php _e('Send Button',$this->plugin_text_domain); ?></a></li>
+				<li><a href="#"><?php _e('Facepile',$this->plugin_text_domain); ?></a></li>
 			</ul>
 			<?php
 			/**
@@ -263,6 +263,69 @@
 					</div>
 				</div>
 				<div class="clear"></div>
+			</div>
+			<?php
+			/**
+			* login button settings
+			*/
+			?>
+			<div id="login_button_settings">
+				<?php
+				//if FB connect enable
+				if($this->plugin_option['connect_enable'] == 1){
+					//if FB parse xfbml
+					if($this->plugin_option['parse_xfbml'] == 1){
+					?>
+						<div class="block_50">
+							<p>
+								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_faces"><?php _e('Show Faces ?',$this->plugin_text_domain); ?></label>
+								<input type="radio" name="<?php echo $this->plugin_option_pref; ?>login_button_faces" value="1" <?php if($this->plugin_option['login_button_faces'] == '1') echo 'checked="checked"'; ?>  /> <?php _e('Yes',$this->plugin_text_domain); ?> 
+								<input type="radio" name="<?php echo $this->plugin_option_pref; ?>login_button_faces" value="0" <?php if($this->plugin_option['login_button_faces'] == '0') echo 'checked="checked"'; ?>  /> <?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?>
+							</p>
+							<p>
+								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture"><?php _e('Show Profile picture ?',$this->plugin_text_domain); ?></label>
+								<input type="radio" name="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture" value="1" <?php if($this->plugin_option['login_button_profile_picture'] == '1') echo 'checked="checked"'; ?>  /> <?php _e('Yes',$this->plugin_text_domain); ?> 
+								<input type="radio" name="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture" value="0" <?php if($this->plugin_option['login_button_profile_picture'] == '0') echo 'checked="checked"'; ?>  /> <?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?>
+							</p>
+							<p>
+								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_width"><?php _e('Width of button',$this->plugin_text_domain); ?></label>
+								<input type="text" name="<?php echo $this->plugin_option_pref; ?>login_button_width" value="<?php echo $this->plugin_option['login_button_width']; ?>" size="6" />
+							</p>
+							<p>
+								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_maxrow"><?php _e('Max Rows (faces)',$this->plugin_text_domain); ?></label>
+								<input type="text" name="<?php echo $this->plugin_option_pref; ?>login_button_maxrow" value="<?php echo $this->plugin_option['login_button_maxrow']; ?>" size="6" />
+							</p>
+							<p>
+								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_logout_value"><?php _e('Logout Phrase',$this->plugin_text_domain); ?></label>
+								<input type="text" name="<?php echo $this->plugin_option_pref; ?>login_button_logout_value" value="<?php echo $this->plugin_option['login_button_logout_value']; ?>" size="30" />
+							</p>
+							<p>
+								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_css"><?php _e('Custom Css',$this->plugin_text_domain); ?></label>
+								<textarea rows="10" cols="35" name="<?php echo $this->plugin_option_pref; ?>login_button_css"><?php echo $this->plugin_option['login_button_css']; ?></textarea>
+							</p>
+						</div>
+						<div class="block_50">
+							<div id="#preview_login_button" class="awd_preview">
+								<h2 style="text-align:center;"><?php _e('Preview',$this->plugin_text_domain);?></h2>
+								<?php 
+								//echo the button or profile
+								$fcbk_content = $this->get_the_login_button();
+								echo $fcbk_content;
+								//echo the code for custom css
+								echo '<br /><hr /><h2>'.__("Code html to help in css",$this->plugin_text_domain).'</h2><div class="awd_pre left">'.str_replace("/n","<br />",htmlentities($fcbk_content)).'</div>';
+								?>
+							</div>
+						</div>
+						<div class="clear"></div>
+					<?php
+					}else{
+						echo '<div class="ui-state-error">'.__('You must enable XFBML parsing, in settings of the plugin',$this->plugin_text_domain).'</div>';
+	
+					}
+				}else{
+					echo '<div class="ui-state-error">'.__('You must enable FB Connect and set parameters in settings of the plugins',$this->plugin_text_domain).'</div>';
+				}
+				?>
 			</div>
 			<br />
 			<?php wp_nonce_field($this->plugin_slug.'_update_options',$this->plugin_option_pref.'_nonce_options_update_field'); ?>

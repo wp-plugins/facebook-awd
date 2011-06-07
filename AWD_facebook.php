@@ -3,7 +3,7 @@
 Plugin Name: AWD Facebook
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph
-Version: 0.9.2
+Version: 0.9.4
 Author: AH WEB DEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AH WEB DEV
@@ -107,7 +107,17 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	public function missing_config(){
 		?>
 		<div class="error">
-			<p><?php printf( __( 'Facebook plugin is almost ready. To start using Facebook <strong>you need to set your Facebook Application API ID and Faceook Application secret</strong>. You can do that in <a href="%1s">Facebook Connect settings page</a>.', $this->plugin_text_domain), admin_url( 'admin.php?page='.$this->plugin_slug)); ?></p>
+			<p><?php printf( __( 'Facebook Connect plugin is almost ready. To start using Facebook <strong>you need to set your Facebook Application API ID and Faceook Application secret key</strong>. You can do that in <a href="%1s">Facebook Connect settings page</a>. (Notification from Facebook AWD)', $this->plugin_text_domain), admin_url( 'admin.php?page='.$this->plugin_slug)); ?></p>
+		</div> 
+		<?php	
+	}
+	/*
+	* missing config notices
+	*/
+	public function message_register_disabled(){
+		?>
+		<div class="error">
+			<p><?php _e('Users can not register, please enable registration account in blog settings before using FB Connect. (Notification from Facebook AWD)', $this->plugin_text_domain); ?></p>
 		</div> 
 		<?php	
 	}
@@ -128,8 +138,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$this->blog_admin_plugins_hook = add_submenu_page($this->plugin_slug, __('Plugins',$this->plugin_text_domain), __('Plugins',$this->plugin_text_domain), 'administrator', $this->plugin_slug.'_plugins', array($this,'admin_content'));
 		if($this->plugin_option['open_graph_enable'] == 1)
 			$this->blog_admin_opengraph_hook = add_submenu_page($this->plugin_slug, __('Open Graph',$this->plugin_text_domain), __('Open Graph',$this->plugin_text_domain), 'administrator', $this->plugin_slug.'_open_graph', array($this,'admin_content'));
-		$this->blog_admin_insights_hook = add_submenu_page($this->plugin_slug, __('Insights',$this->plugin_text_domain), __('Insights',$this->plugin_text_domain), 'administrator', $this->plugin_slug.'_insights', array($this,'admin_content'));
-		$this->blog_admin_faq_hook = add_submenu_page($this->plugin_slug, __('FAQ',$this->plugin_text_domain), __('FAQ',$this->plugin_text_domain), 'administrator', $this->plugin_slug.'_faq', array($this,'admin_content'));
+		//$this->blog_admin_insights_hook = add_submenu_page($this->plugin_slug, __('Insights',$this->plugin_text_domain), __('Insights',$this->plugin_text_domain), 'administrator', $this->plugin_slug.'_insights', array($this,'admin_content'));
+		//$this->blog_admin_faq_hook = add_submenu_page($this->plugin_slug, __('FAQ',$this->plugin_text_domain), __('FAQ',$this->plugin_text_domain), 'administrator', $this->plugin_slug.'_faq', array($this,'admin_content'));
 		
 	}
 	public function admin_initialisation(){
@@ -632,57 +642,90 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* Admin fcbk info content
 	*/
 	public function fcbk_content(){
-		if($this->me)
-			$case = 'profile';
-		//user not connected but he can in xfbml...
-		else if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['parse_xfbml'] == 1)
-			$case = 'login_xfbml';
-		//or via the php sdk...
-		else if($this->plugin_option['connect_enable'] == 1)
-			$case = 'login';
-		//no fb connect
-		else 
-			$case = 'message_connect_active';
+		$options = array();
+		$options['login_button_width'] = 200;
+		$options['login_button_profile_picture'] = 1;
+		$options['login_button_faces'] = 'false';
+		$options['login_button_maxrow'] = 1;
+		$options['login_button_logout_value'] = __("Logout",$this->plugin_text_domain);
+		$this->print_the_login_button($options);
+	}
+	/*
+	* return the html for login button
+	*/
+	public function get_the_login_button($options=array()){
 		
+		$width = ($options['login_button_width'] == '' ? $this->plugin_option['login_button_width'] : $options['login_button_width']);
+		$show_profile_picture = ($options['login_button_profile_picture'] == '' ? $this->plugin_option['login_button_profile_picture'] : $options['login_button_profile_picture']);
+		$show_faces = (($options['login_button_faces'] == '' ? $this->plugin_option['login_button_faces'] : $options['login_button_faces']) == 1 ? 'true' : 'false');
+		$maxrow = ($options['login_button_maxrow'] == '' ? $this->plugin_option['login_button_maxrow'] : $options['login_button_maxrow']);
+		$logout_value = ($options['login_button_logout_value'] == '' ? $this->plugin_option['login_button_logout_value'] : $options['login_button_logout_value']);
+		$login_button = '<fb:login-button perms="'.$this->plugin_option['perms'].'" show-faces="'.$show_faces.'" width="'.$width.'" max-rows="'.$maxrow.'" size="medium" ></fb:login-button>';
+		
+		//if some options defined
+		if(empty($options['case'])){
+			if($this->me)
+				$case = 'profile';
+			//user not connected but he can in xfbml...
+			else if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['parse_xfbml'] == 1)
+				$case = 'login_xfbml';
+			//or via the php sdk...
+			else if($this->plugin_option['connect_enable'] == 1)
+				$case = 'login';
+			//no fb connect
+			else 
+				$case = 'message_connect_active';
+		}else{
+			$case = $options['case'];
+		}
 		
 		switch($case){
 			case 'profile':
-				?>
-				<a href="<?php echo $this->me['link']; ?>" target="_blank"><img src="https://graph.facebook.com/<?php echo $this->uid; ?>/picture"></a>
-				
-				<div class="right">
-					<span class="fcbk_name"><a href="<?php echo $this->me['link']; ?>" target="_blank"><?php echo $this->me['name']; ?></a></span>
-					<p class="logout">
-						<a href="<?php echo wp_logout_url(); ?>">
-							<div><img src="http://static.ak.fbcdn.net/rsrc.php/z2Y31/hash/cxrz4k7j.gif"></div>
-						</a>					
-					</p>
-				</div>
-				<?php 
-			break;
+				$html = '';
+				$html .= '<div class="AWD_profile">'."\n";
+				if($show_profile_picture == 1 && $show_faces == 'false'){
+					$html .= '<div class="AWD_profile_image"><a href="'.$this->me['link'].'" target="_blank"><img src="https://graph.facebook.com/'.$this->uid.'/picture"></a></div>'."\n";
+				}
+				$html .='<div class="AWD_right">'."\n";
+					if($show_faces == 'true'){
+						$html .='<div class="AWD_faces">'.$login_button.'</div>'."\n";
+					}else{
+						$html .='<div class="AWD_name"><a href="'.$this->me['link'].'" target="_blank">'.$this->me['name'].'</a></div>'."\n";
+					}
+						$html .='<div class="AWD_logout"><a href="'.wp_logout_url().'">'.$logout_value.'</a></div>'."\n";
+				$html .='</div>'."\n";
+				$html .='<div class="clear"></div>'."\n";
+				$html .='</div>'."\n";
+				return $html;
+			break;	
 		
 			case 'login_xfbml':
-				?>
-				<fb:login-button perms="<?php echo $this->plugin_option['perms']; ?>" size="medium" ></fb:login-button>
-				<?php
+				return '
+				<div class="AWD_facebook_login">'.$login_button.'</div>'."\n";;
 			break;
 			
 			case 'login':
-				?>
-				<a href="<?php echo $this->login_url; ?>" ><img src="http://static.ak.fbcdn.net/rsrc.php/zB6N8/hash/4li2k73z.gif"></a>
-				<?php
+				return '
+				<div class="AWD_facebook_login">
+					<a href="'.$this->login_url.'" ><img src="http://static.ak.fbcdn.net/rsrc.php/zB6N8/hash/4li2k73z.gif"></a>
+				</div>'."\n";
 			break;
 		
 			case 'message_connect_active':
-				?>
-				<div class="ui-state-highlight"><?php printf(__('You should enable FB connect in %sApp settings%s to use Login buttons',$this->plugin_text_domain),'<a href="#settings" onclick="jQuery(\'#div_options_content_tabs\').tabs( \'option\', \'selected\',0);" >','</a>'); ?></div>
-				<?php
+				return '
+				<div class="ui-state-highlight">'.printf(__('You should enable FB connect in %sApp settings%s to use Login buttons',$this->plugin_text_domain),'<a href="#settings" onclick="jQuery(\'#div_options_content_tabs\').tabs( \'option\', \'selected\',0);" >','</a>').'</div>'."\n";
 			break;
 		}
 		?>
 		<div class="clear"></div>
 		<?php
-	}	
+	}
+	/*
+	* print the content off the login/logut
+	*/
+	public function print_the_login_button($options=array()){
+		echo $this->get_the_login_button($options);
+	}
 	/*
 	 * Admin css
 	 */
@@ -1221,6 +1264,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	public function register_AWD_facebook_widgets(){
 		 register_widget("AWD_facebook_like_button");
 		 register_widget("AWD_facebook_like_box");
+		 register_widget("AWD_facebook_login_button");
 		 register_widget("AWD_facebook_activity");
 	}
 	
@@ -1253,6 +1297,7 @@ $AWD_facebook = new AWD_facebook();
 //	WIDGET LIKE BOX include
 //****************************************************************************************
 include_once(dirname(__FILE__).'/inc/widgets/widget_like_box.php');
+include_once(dirname(__FILE__).'/inc/widgets/widget_login_button.php');
 include_once(dirname(__FILE__).'/inc/widgets/widget_like_button.php');
 include_once(dirname(__FILE__).'/inc/widgets/widget_activity.php');
 
