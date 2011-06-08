@@ -33,11 +33,12 @@ if($this->session){
 			//that's it, we don't need to do anything else, because the user is already logged in.
 			return true;
 		}
-	}else{
+	}else{	
 		//check if user has account in the website. get id
 		$existing_user = $this->wpdb->get_var( 'SELECT DISTINCT `u`.`ID` FROM `' . $this->wpdb->users . '` `u` JOIN `' . $this->wpdb->usermeta . '` `m` ON `u`.`ID` = `m`.`user_id`  WHERE (`m`.`meta_key` = "fb_uid" AND `m`.`meta_value` = "' . $this->user->id . '" ) OR user_email = "' . $this->user->email . '" OR (`m`.`meta_key` = "fb_email" AND `m`.`meta_value` = "' . $this->user->email . '" )  LIMIT 1 ');
 		//if the user exists - set cookie, do wp_login, redirect and exit
 		if($existing_user > 0){
+		
 			$fb_uid = get_user_meta($existing_user, 'fb_uid', true);
 			if(!$fb_uid)
 				update_user_meta($existing_user, 'fb_uid', $this->user->id );
@@ -49,9 +50,9 @@ if($this->session){
 			if(wp_get_referer()){
 				wp_redirect(wp_get_referer());
 			}else{
-				wp_redirect($_SERVER['REQUEST_URI']);
+				wp_redirect(home_url());
 			}
-			exit();
+			//exit();
 		//if user don't exist - create one and do all the same stuff: cookie, wp_login, redirect, exit
 		}else{
 			//if registration not enable
@@ -94,7 +95,7 @@ if($this->session){
 					if(wp_get_referer()){
 						wp_redirect(wp_get_referer());
 					}else{
-						wp_redirect($_SERVER['REQUEST_URI']);
+						wp_redirect(home_url());
 					}
 					exit();
 				}else{

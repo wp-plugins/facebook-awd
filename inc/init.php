@@ -7,12 +7,6 @@
 *
 */
 
-/*
-TODO 
-We need to call options from database qith sql and not get_option, because it's a lot of requests...
-*/
-
-
 $this->plugin_option = array();
 
 //check post and save
@@ -337,7 +331,10 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 	$this->init_php();
 	//perform login process
 	$this->login_user();
-}else{
+	add_action('admin_print_footer_scripts',array(&$this,'connect_footer'));
+	add_action('wp_footer',array(&$this,'connect_footer'));
+	
+}elseif($this->plugin_option['connect_enable'] == 1){
 	add_action('admin_notices',array(&$this,'missing_config'));
 }
 
@@ -345,11 +342,7 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 add_action('admin_menu', array(&$this,'admin_menu'));
 add_action('admin_init', array(&$this,'admin_initialisation'));
 
-//js fcbk loggin and start session in footer if connect enable
-if($this->plugin_option['connect_enable'] == 1){
-	add_action('admin_print_footer_scripts',array(&$this,'connect_footer'));
-	add_action('wp_footer',array(&$this,'connect_footer'));
-}
+
 //js in front lib fcbk
 add_action('wp_print_scripts', array(&$this,'enqueue_fbjs'));
 add_action('admin_print_scripts', array(&$this,'enqueue_fbjs'));

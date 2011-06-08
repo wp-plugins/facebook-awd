@@ -3,7 +3,7 @@
 Plugin Name: AWD Facebook
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph
-Version: 0.9.4
+Version: 0.9.4.1
 Author: AH WEB DEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AH WEB DEV
@@ -55,7 +55,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
     * private
     * hook admin
     */
-    private $blog_admin_page_hook;
+    public $blog_admin_page_hook;
     /*
     * public
     * Debug this object
@@ -712,8 +712,9 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			break;
 		
 			case 'message_connect_active':
+				if(is_admin())
 				return '
-				<div class="ui-state-highlight">'.printf(__('You should enable FB connect in %sApp settings%s to use Login buttons',$this->plugin_text_domain),'<a href="#settings" onclick="jQuery(\'#div_options_content_tabs\').tabs( \'option\', \'selected\',0);" >','</a>').'</div>'."\n";
+				<div class="ui-state-highlight">'.sprintf(__('You should enable FB connect in %sApp settings%s to use Login buttons',$this->plugin_text_domain),'<a href="admin.php?page='.$this->blog_admin_page_hook.'">','</a>').'</div>';
 			break;
 		}
 		?>
@@ -919,18 +920,18 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			jQuery(document).ready( function($) {
 				FB.init({
 					appId   : '<?php echo  $this->plugin_option["app_id"]; ?>',
-					session : <?php echo json_encode($this->session); ?>, // don't refetch the session when PHP already has it
+					//PB with php ??? wait for php 3 AOuth2//	session : '<?php echo json_encode($this->session); ?>'
 					status  : true, // check login status
 					cookie  : true, // enable cookies to allow the server to access the session
 					xfbml   : <?php echo ($this->plugin_option['parse_xfbml'] == 1 ? 'true' : 'false'); ?>// parse XFBML
 				});
 				// whenever the user logs in, we refresh the page
-				FB.Event.subscribe('auth.login', function() {
-						window.location.reload();
-				});
-				//FB.Event.subscribe('auth.sessionChange', function(response) {
-	      		//	window.location.reload();
-	  			//});
+				//FB.Event.subscribe('auth.login', function(response) {
+				//});
+				FB.Event.subscribe('auth.sessionChange', function(response) {
+					if(response.session)
+	      				window.location.reload();
+	  			});
 			});
 		</script>
 	<?php
