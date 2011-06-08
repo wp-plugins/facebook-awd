@@ -3,7 +3,7 @@
 Plugin Name: AWD Facebook
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph
-Version: 0.9.4.1
+Version: 0.9.4.2
 Author: AH WEB DEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AH WEB DEV
@@ -660,7 +660,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$show_faces = (($options['login_button_faces'] == '' ? $this->plugin_option['login_button_faces'] : $options['login_button_faces']) == 1 ? 'true' : 'false');
 		$maxrow = ($options['login_button_maxrow'] == '' ? $this->plugin_option['login_button_maxrow'] : $options['login_button_maxrow']);
 		$logout_value = ($options['login_button_logout_value'] == '' ? $this->plugin_option['login_button_logout_value'] : $options['login_button_logout_value']);
-		$login_button = '<fb:login-button perms="'.$this->plugin_option['perms'].'" show-faces="'.$show_faces.'" width="'.$width.'" max-rows="'.$maxrow.'" size="medium" ></fb:login-button>';
+		$login_button = '<fb:login-button perms="email,'.$this->plugin_option['perms'].'" show-faces="'.$show_faces.'" width="'.$width.'" max-rows="'.$maxrow.'" size="medium" ></fb:login-button>';
 		
 		//if some options defined
 		if(empty($options['case'])){
@@ -920,13 +920,16 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			jQuery(document).ready( function($) {
 				FB.init({
 					appId   : '<?php echo  $this->plugin_option["app_id"]; ?>',
-					//PB with php ??? wait for php 3 AOuth2//	session : '<?php echo json_encode($this->session); ?>'
+				//	session : '<?php echo json_encode($this->session); ?>', // don't refetch the session when PHP already has it
 					status  : true, // check login status
 					cookie  : true, // enable cookies to allow the server to access the session
 					xfbml   : <?php echo ($this->plugin_option['parse_xfbml'] == 1 ? 'true' : 'false'); ?>// parse XFBML
 				});
-				FB.Event.subscribe('auth.statusChange', function(response) {
-	      			window.location.reload();
+				FB.Event.subscribe('auth.login', function(response) {
+	      			//user connect just reload the page
+	      			if(response.session){
+	      				window.location.reload();
+	      			}
 	  			});
 			});
 		</script>
@@ -1272,7 +1275,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* Debug
 	*/
 	public function debug_content(){
-		$this->Debug(array("FCBK"=>$this->fcbk,"THE USER"=>$this->me,"DEBUG FCBK"=>$this->debug_echo));
+		$this->Debug(array('$AWD_facebook->fcbk'=>$this->fcbk,"$AWD_facebook->me"=>$this->me,"DEBUG FCBK"=>$this->debug_echo));
 		echo "
 		<h2>To DO 12/05/2011</h2>
 		- add widget login, like button and <s>like box</s><br>
