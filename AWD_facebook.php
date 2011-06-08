@@ -925,12 +925,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 					cookie  : true, // enable cookies to allow the server to access the session
 					xfbml   : <?php echo ($this->plugin_option['parse_xfbml'] == 1 ? 'true' : 'false'); ?>// parse XFBML
 				});
-				// whenever the user logs in, we refresh the page
-				//FB.Event.subscribe('auth.login', function(response) {
-				//});
-				FB.Event.subscribe('auth.sessionChange', function(response) {
-					if(response.session)
-	      				window.location.reload();
+				FB.Event.subscribe('auth.statusChange', function(response) {
+	      			window.location.reload();
 	  			});
 			});
 		</script>
