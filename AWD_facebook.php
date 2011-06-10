@@ -609,7 +609,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function AWD_comments_content(){
 		?>
-		<fb:comments href="http://www.ahwebdev.fr" num_posts="5" width="258"></fb:comments>
+		<fb:comments href="http://www.ahwebdev.fr/plugins/facebook-awd.html" num_posts="5" width="258"></fb:comments>
 		<?php
 	}
 	/*
