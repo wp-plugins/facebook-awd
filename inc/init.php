@@ -361,6 +361,6 @@ if($this->debug_active)
 	add_action('wp_footer',array(&$this,'debug_content'));
 
 //load text domain file
-load_plugin_textdomain($this->plugin_text_domain,false,dirname( plugin_basename( __FILE__ ) ) . '/languages/');
+load_plugin_textdomain($this->plugin_text_domain,false,dirname( plugin_basename( __FILE__ ) ) . '/langs/');
 
 ?>
