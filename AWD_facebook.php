@@ -1007,7 +1007,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 					//need image for video to work
 					elseif(ereg('video',$tag) && $image =='')
 						continue;
-					elseif(($tag == 'app_id' || $tag == 'admins') && $option_value!='')
+					elseif(($tag == 'app_id' || $tag == 'admins' || $tag == 'page_id') && $option_value!='')
 						$options['fb:'.$tag] = $option_value;
 					elseif($option_value !='')
 						$options['og:'.$tag] = $option_value;
