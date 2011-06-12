@@ -1,4 +1,4 @@
-=== Facebook AWD beta test ===
+=== Facebook AWD ===
 Contributors: AHWEBDEV 
 Donate link: http://www.ahwebdev.fr/plugins/facebook-awd.html
 Tags: facebook, fb, connect, like, box, comments
