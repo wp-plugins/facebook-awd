@@ -895,20 +895,17 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		
 		if(!in_array($post->post_type,$exclude_post_type) && !in_array($post->ID,$exclude_post_page_id) && !$is_term_to_exclude){
 			$like_button = $this->get_the_like_button($post);
-			
-			//page
-			if(is_page() && $this->plugin_option['like_button_on_pages']){
+			if(is_page() && $this->plugin_option['like_button_on_pages'])
 				if($this->plugin_option['like_button_place_on_pages'] == 'bottom')
 					return $content.$like_button;
 				else
 					return $like_button.$content;
-	        //single
-			}elseif(is_single() && $this->plugin_option['like_button_on_posts']){
+	
+			if(is_single() && $this->plugin_option['like_button_on_posts'])
 				if($this->plugin_option['like_button_place_on_posts'] == 'bottom')
 					return $content.$like_button;
 				else
 					return $like_button.$content;
-		    }
 		}
 		return $content;
 	}
