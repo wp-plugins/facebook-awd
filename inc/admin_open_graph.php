@@ -130,7 +130,7 @@
 			?>
 			<div id="ogtags_taxonomies">
 				<?php 
-				if(!empty($postypes)){
+				if(!empty($taxonomies)){
 					foreach($taxonomies as $taxonomie_name=>$tax_values){
 						$meta['args']['prefix'] = $this->plugin_option_pref.'ogtags_taxonomies_'.$taxonomie_name.'_';
 						//we have to construct the array correctly for this function work in post and admin plugin (compatibylity)
