@@ -1089,7 +1089,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 				//get avatar for replace in pattern
 				$avatar = get_avatar($current_author->ID, '50', '','');
 				//get the url of avatar
-				$gravatar_attributes = simplexml_load_string($avatar);
+				if($avatar)
+				    $gravatar_attributes = simplexml_load_string($avatar);
 				if(!empty($gravatar_attributes['src']))
 					$gravatar_url = $gravatar_attributes['src'];
 				$prefix_option = 'ogtags_author_';
