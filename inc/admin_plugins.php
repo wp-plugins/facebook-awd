@@ -57,6 +57,7 @@
 						<label for="<?php echo $this->plugin_option_pref; ?>like_button_place_on_pages"><?php _e('Where do you want to place "Like" button ?',$this->plugin_text_domain); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_pages" value="top" <?php if($this->plugin_option['like_button_place_on_pages'] == 'top') echo 'checked="checked"'; ?>  /> <?php echo __('Top',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?> 
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_pages" value="bottom" <?php if($this->plugin_option['like_button_place_on_pages'] == 'bottom') echo 'checked="checked"'; ?>  /> <?php _e('Bottom',$this->plugin_text_domain); ?>
+						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_pages" value="both" <?php if($this->plugin_option['like_button_place_on_pages'] == 'both') echo 'checked="checked"'; ?>  /> <?php _e('Both',$this->plugin_text_domain); ?>
 					</p>
 					<p>
 						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_on_posts"><?php _e('Add "Like" button to posts',$this->plugin_text_domain); ?></label>
@@ -67,6 +68,7 @@
 						<label for="<?php echo $this->plugin_option_pref; ?>plugin_option_like_button_place_on_posts"><?php _e('Where do you want to place "Like" button ?',$this->plugin_text_domain); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_posts" value="top" <?php if($this->plugin_option['like_button_place_on_posts'] == 'top') echo 'checked="checked"'; ?>/> <?php echo __('Top',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?> 
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_posts" value="bottom" <?php if($this->plugin_option['like_button_place_on_posts'] == 'bottom') echo 'checked="checked"'; ?>/> <?php _e('Bottom',$this->plugin_text_domain); ?>
+						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_posts" value="both" <?php if($this->plugin_option['like_button_place_on_posts'] == 'both') echo 'checked="checked"'; ?>/> <?php _e('Both',$this->plugin_text_domain); ?>
 					</p>
 					<p>
 						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_exclude_post_type"><?php _e('Exclude Post types (for custom post_type, example: post,page,etc...)',$this->plugin_text_domain); ?></label>
