@@ -121,7 +121,16 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		</div> 
 		<?php	
 	}
+	/*
+	* Get the help
+	* $elem string element to get (id of the div in help pages) 
+	* $class string class name global for help span
+	* $image string nema of the image to dispplay (icon)
+	*/
+	public function get_the_help($elem,$class="help",$image='info.png'){
+	    return '<span class="'.$class.'" id="'.$class.'_'.$elem.'"><img src="'.$this->plugin_url_images.$image.'" /></span>';
 	
+	}
 	
 	//****************************************************************************************
 	//	ADMIN
@@ -630,6 +639,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function plugins_content(){
 		include_once(dirname(__FILE__).'/inc/admin_plugins.php');
+		include_once(dirname(__FILE__).'/inc/help/help_plugins.php');
 	}
 	/*
 	* Settings Options

@@ -40,11 +40,11 @@
 			
 					?>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_url"><?php _e('Default Url to like',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_url"><?php _e('Default Url to like',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_url'); ?></label>
 						<input type="text" name="<?php echo $this->plugin_option_pref; ?>like_button_url" value="<?php echo $this->plugin_option['like_button_url']; ?>" size="30" />
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_xfbml"><?php echo $label_xfbml; ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_xfbml"><?php echo $label_xfbml; ?> <?php echo $this->get_the_help('like_button_fbml'); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_xfbml" value="1" <?php if($this->plugin_option['parse_xfbml'] == 0){ echo 'disabled="disabled"'; }elseif($this->plugin_option['like_button_xfbml'] == '1') echo 'checked="checked"'; ?>  /> <?php echo __('XFBML',$this->plugin_text_domain); ?> 
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_xfbml" value="0" <?php if($this->plugin_option['like_button_xfbml'] == '0') echo 'checked="checked"'; ?>  /> <?php echo __('IFRAME',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain);?>
 					</p>
@@ -83,30 +83,30 @@
 						<input type="text" name="<?php echo $this->plugin_option_pref; ?>like_button_exclude_post_id" value="<?php echo $this->plugin_option['like_button_exclude_post_id']; ?>" size="30" />
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_send"><?php printf(__('Enable "Send" button ? %s(xfbml only)%s',$this->plugin_text_domain),'<i>','</i>'); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_send"><?php printf(__('Enable "Send" button ? %s(xfbml only)%s',$this->plugin_text_domain),'<i>','</i>'); ?> <?php echo $this->get_the_help('like_button_send'); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_send" value="1" <?php if($this->plugin_option['like_button_xfbml'] == 0){ echo 'disabled="disabled"';}elseif($this->plugin_option['like_button_send'] == '1') echo 'checked="checked"'; ?>  /> <?php _e('Yes',$this->plugin_text_domain); ?> 
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_send" value="0" <?php if($this->plugin_option['like_button_send'] == '0') echo 'checked="checked"'; ?>  /> <?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?>
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_colorscheme"><?php _e('Colorscheme of button',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_colorscheme"><?php _e('Colorscheme of button',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_colorscheme'); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_colorscheme" value="light" <?php if($this->plugin_option['like_button_colorscheme'] == 'light') echo 'checked="checked"'; ?>  /> <?php echo __('Light',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?> 
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_colorscheme" value="dark" <?php if($this->plugin_option['like_button_colorscheme'] == 'dark') echo 'checked="checked"'; ?>  /> <?php _e('Dark',$this->plugin_text_domain); ?>
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_faces"><?php _e('Show Faces ?',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_faces"><?php _e('Show Faces ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_faces'); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_faces" value="1" <?php if($this->plugin_option['like_button_faces'] == '1') echo 'checked="checked"'; ?>  /> <?php _e('Yes',$this->plugin_text_domain); ?> 
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_faces" value="0" <?php if($this->plugin_option['like_button_faces'] == '0') echo 'checked="checked"'; ?>  /> <?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?>
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_width"><?php _e('Width of button',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_width"><?php _e('Width of button',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_width'); ?></label>
 						<input type="text" name="<?php echo $this->plugin_option_pref; ?>like_button_width" value="<?php echo $this->plugin_option['like_button_width']; ?>" size="6" />
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_height"><?php _e('Height of button (only for iframe)',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_height"><?php _e('Height of button (only for iframe)',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_height'); ?></label>
 						<input type="text" name="<?php echo $this->plugin_option_pref; ?>like_button_height" <?php if($this->plugin_option['like_button_xfbml'] == 1){ echo 'disabled="disabled"'; } ?> value="<?php echo $this->plugin_option['like_button_height']; ?>" size="6" />
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_fonts"><?php _e('Fonts of button',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_fonts"><?php _e('Fonts of button',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_fonts'); ?></label>
 						<select name="<?php echo $this->plugin_option_pref; ?>like_button_fonts">
 							<option value="arial" <?php if($this->plugin_option['like_button_fonts'] == "arial") echo 'selected="selected"'; ?> >Arial</option>
 							<option value="lucida grande" <?php if($this->plugin_option['like_button_fonts'] == "lucida grande") echo 'selected="selected"'; ?> >Lucida grande</option>
@@ -117,14 +117,14 @@
 						</select>
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_action"><?php _e('Action',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_action"><?php _e('Action',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_action'); ?></label>
 						<select name="<?php echo $this->plugin_option_pref; ?>like_button_action">
 							<option value="like" <?php if($this->plugin_option['like_button_action'] == "like") echo 'selected="selected"'; ?> ><?php echo __("Like",$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?></option>
 							<option value="recommend" <?php if($this->plugin_option['like_button_action'] == "recommend") echo 'selected="selected"'; ?> ><?php echo __("Recommend",$this->plugin_text_domain); ?></option>
 						</select>
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_layout"><?php _e('Layout style',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_layout"><?php _e('Layout style',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_layout'); ?></label>
 						<select name="<?php echo $this->plugin_option_pref; ?>like_button_layout">
 							<option value="standard" <?php if($this->plugin_option['like_button_layout'] == "standard") echo 'selected="selected"'; ?> ><?php echo __("Standard",$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?></option>
 							<option value="button_count" <?php if($this->plugin_option['like_button_layout'] == "button_count") echo 'selected="selected"'; ?> ><?php echo __("Button Count",$this->plugin_text_domain); ?></option>

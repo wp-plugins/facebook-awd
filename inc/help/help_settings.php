@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* Help Admin AWD FCBK
+* Help settings Admin AWD FCBK
 * (C) 2011 AH WEB DEV
 * Hermann.alexandre@ahwebdev.fr
 *
@@ -54,7 +54,7 @@
 ?>
 <div id="message_help_connect" class="hidden">
 	<?php
-	echo "<b>".__("Open Graph",$this->plugin_text_domain).':</b><br />';
+	echo "<b>".__("FB Connect",$this->plugin_text_domain).':</b><br />';
 	printf(__("Facebook helps you simplify and enhance user registration and sign-in by 
 	using Facebook as your login system. Users no longer need to fill in yet another 
 	registration form or remember another username and password to use your site. 
