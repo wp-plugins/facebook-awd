@@ -153,39 +153,39 @@
 				<div class="block_50">
 			    	<p><i><?php _e('The like box is added via shortcodes, widgets, and themes functions',$this->plugin_text_domain); ?></i></p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_xfbml"><?php echo '<br />'.$label_xfbml; ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_xfbml"><?php echo '<br />'.$label_xfbml; ?> <?php echo $this->get_the_help('like_button_fbml'); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_box_xfbml" value="1" <?php if($this->plugin_option['parse_xfbml'] == 0){ echo 'disabled="disabled"'; }elseif($this->plugin_option['like_box_xfbml'] == '1') echo 'checked="checked"'; ?>  /> <?php _e('XFBML',$this->plugin_text_domain); ?> 
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_box_xfbml" value="0" <?php if($this->plugin_option['like_box_xfbml'] == '0') echo 'checked="checked"'; ?>  /> <?php echo __('IFRAME',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?>
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_url"><?php _e('Url of the page',$this->plugin_text_domain); ?> <span class="help" id="help_like_box_url"><img src="<?php echo $this->plugin_url_images; ?>info.png" title="<?php _e('Help on App ID',$this->plugin_text_domain); ?>" /></span></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_url"><?php _e('Url of the page',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_box_url'); ?></label>
 						<input type="text" name="<?php echo $this->plugin_option_pref; ?>like_box_url" value="<?php echo $this->plugin_option['like_box_url']; ?>" size="30"/>
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_colorscheme"><?php _e('Colorscheme of box',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_colorscheme"><?php _e('Colorscheme of box',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_colorscheme'); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_box_colorscheme" value="light" <?php if($this->plugin_option['like_box_colorscheme'] == 'light') echo 'checked="checked"'; ?>  /> <?php echo __('Light',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?> 
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_box_colorscheme" value="dark" <?php if($this->plugin_option['like_box_colorscheme'] == 'dark') echo 'checked="checked"'; ?>  /> <?php _e('Dark',$this->plugin_text_domain); ?>
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_width"><?php _e('Width of box',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_width"><?php _e('Width of box',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_width'); ?></label>
 						<input type="text" name="<?php echo $this->plugin_option_pref; ?>like_box_width" value="<?php echo $this->plugin_option['like_box_width']; ?>" size="6" />
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_height"><?php _e('Height of box (only for iframe)',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_height"><?php _e('Height of box (only for iframe)',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_height'); ?></label>
 						<input type="text" name="<?php echo $this->plugin_option_pref; ?>like_box_height" <?php if($this->plugin_option['like_box_xfbml'] == 1){ echo 'disabled="disabled"'; } ?> value="<?php echo $this->plugin_option['like_box_height']; ?>" size="6" />
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_faces"><?php _e('Show Faces ?',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_faces"><?php _e('Show Faces ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_faces'); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_box_faces" value="1" <?php if($this->plugin_option['like_box_faces'] == '1') echo 'checked="checked"'; ?>  /> <?php _e('Yes',$this->plugin_text_domain); ?> 
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_box_faces" value="0" <?php if($this->plugin_option['like_box_faces'] == '0') echo 'checked="checked"'; ?>  /> <?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?>
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_stream"><?php _e('Show Stream ?',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_stream"><?php _e('Show Stream ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_box_stream'); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_box_stream" value="1" <?php if($this->plugin_option['like_box_stream'] == '1') echo 'checked="checked"'; ?>  /> <?php _e('Yes',$this->plugin_text_domain); ?> 
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_box_stream" value="0" <?php if($this->plugin_option['like_box_stream'] == '0') echo 'checked="checked"'; ?>  /> <?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?>
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_header"><?php _e('Show Header ?',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_box_header"><?php _e('Show Header ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('show_header'); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_box_header" value="1" <?php if($this->plugin_option['like_box_header'] == '1') echo 'checked="checked"'; ?>  /> <?php _e('Yes',$this->plugin_text_domain); ?> 
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_box_header" value="0" <?php if($this->plugin_option['like_box_header'] == '0') echo 'checked="checked"'; ?>  /> <?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?>
 					</p>
@@ -196,49 +196,34 @@
 						<?php echo $this->get_the_like_box(); ?>
 					</div>
 				</div>
-				<?php
-				/*
-				$this->plugin_option['activity_domain'] = get_option($this->plugin_option_pref.'activity_domain');
-				$this->plugin_option['activity_colorscheme'] = get_option($this->plugin_option_pref.'activity_colorscheme');
-				$this->plugin_option['activity_width'] = get_option($this->plugin_option_pref.'activity_width');
-				$this->plugin_option['activity_height'] = get_option($this->plugin_option_pref.'activity_height');
-				$this->plugin_option['activity_fonts'] = get_option($this->plugin_option_pref.'activity_fonts');
-				$this->plugin_option['activity_header'] = get_option($this->plugin_option_pref.'activity_header');
-				$this->plugin_option['activity_xfbml'] = get_option($this->plugin_option_pref.'activity_xfbml');
-				$this->plugin_option['activity_border_color'] = get_option($this->plugin_option_pref.'activity_border_color');
-				$this->plugin_option['activity_recommendations'] = stripslashes(get_option($this->plugin_option_pref.'activity_recommendations'));
-				$this->plugin_option['activity_content'] = stripslashes(get_option($this->plugin_option_pref.'activity_content'));
-				
-				*/
-				?>
 				<div class="clear"></div>
 			</div>
 			<div id="activity_settings">
 				<div class="block_50">
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_domain"><?php _e('Url of the page',$this->plugin_text_domain); ?> <span class="help" id="help_activity_domainl"><img src="<?php echo $this->plugin_url_images; ?>info.png" title="<?php _e('Help on App ID',$this->plugin_text_domain); ?>" /></span></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_domain"><?php _e('Domain',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('activity_domain'); ?></label>
 						<input type="text" name="<?php echo $this->plugin_option_pref; ?>activity_domain" value="<?php echo $this->plugin_option['activity_domain']; ?>" size="30"/>
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_width"><?php _e('Width of box',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_width"><?php _e('Width of box',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_width'); ?></label>
 						<input type="text" name="<?php echo $this->plugin_option_pref; ?>activity_width" value="<?php echo $this->plugin_option['activity_width']; ?>" size="6" />
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_height"><?php _e('Height of box',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_height"><?php _e('Height of box',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_height'); ?></label>
 						<input type="text" name="<?php echo $this->plugin_option_pref; ?>activity_height" value="<?php echo $this->plugin_option['activity_height']; ?>" size="6" />
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_header"><?php _e('Show Header ?',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_header"><?php _e('Show Header ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('show_header'); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>activity_header" value="1" <?php if($this->plugin_option['activity_header'] == '1') echo 'checked="checked"'; ?>  /> <?php echo __('Yes',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain);  ?> 
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>activity_header" value="0" <?php if($this->plugin_option['activity_header'] == '0') echo 'checked="checked"'; ?>  /> <?php echo _e('No',$this->plugin_text_domain);?>
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_colorscheme"><?php _e('Colorscheme of box',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_colorscheme"><?php _e('Colorscheme of box',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_colorscheme'); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>activity_colorscheme" value="light" <?php if($this->plugin_option['activity_colorscheme'] == 'light') echo 'checked="checked"'; ?>  /> <?php echo __('Light',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?> 
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>activity_colorscheme" value="dark" <?php if($this->plugin_option['activity_colorscheme'] == 'dark') echo 'checked="checked"'; ?>  /> <?php _e('Dark',$this->plugin_text_domain); ?>
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_fonts"><?php _e('Font',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_fonts"><?php _e('Font',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_fonts'); ?></label>
 						<select name="<?php echo $this->plugin_option_pref; ?>activity_fonts">
 							<option value="arial" <?php if($this->plugin_option['activity_fonts'] == "arial") echo 'selected="selected"'; ?> >Arial</option>
 							<option value="lucida grande" <?php if($this->plugin_option['activity_fonts'] == "lucida grande") echo 'selected="selected"'; ?> >Lucida grande</option>
@@ -249,11 +234,11 @@
 						</select>
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_border_color"><?php _e('Border color',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_border_color"><?php _e('Border color',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('activity_border'); ?></label>
 						<input type="text" name="<?php echo $this->plugin_option_pref; ?>activity_border_color" value="<?php echo $this->plugin_option['activity_border_color']; ?>" size="10" />
 					</p>
 					<p>
-						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_recommendations"><?php _e('Show Recommendations ?',$this->plugin_text_domain); ?></label>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>activity_recommendations"><?php _e('Show Recommendations ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('activity_recommendation'); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>activity_recommendations" value="1" <?php if($this->plugin_option['activity_recommendations'] == '1') echo 'checked="checked"'; ?>  /> <?php _e('Yes',$this->plugin_text_domain); ?> 
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>activity_recommendations" value="0" <?php if($this->plugin_option['activity_recommendations'] == '0') echo 'checked="checked"'; ?>  /> <?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?>
 					</p>
@@ -280,29 +265,29 @@
 					?>
 						<div class="block_50">
 							<p>
-								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_faces"><?php _e('Show Faces ?',$this->plugin_text_domain); ?></label>
+								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_faces"><?php _e('Show Faces ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_faces'); ?></label>
 								<input type="radio" name="<?php echo $this->plugin_option_pref; ?>login_button_faces" value="1" <?php if($this->plugin_option['login_button_faces'] == '1') echo 'checked="checked"'; ?>  /> <?php _e('Yes',$this->plugin_text_domain); ?> 
 								<input type="radio" name="<?php echo $this->plugin_option_pref; ?>login_button_faces" value="0" <?php if($this->plugin_option['login_button_faces'] == '0') echo 'checked="checked"'; ?>  /> <?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?>
 							</p>
 							<p>
-								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture"><?php _e('Show Profile picture ?',$this->plugin_text_domain); ?></label>
+								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture"><?php _e('Show Profile picture ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_profile_picture'); ?></label>
 								<input type="radio" name="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture" value="1" <?php if($this->plugin_option['login_button_profile_picture'] == '1') echo 'checked="checked"'; ?>  /> <?php _e('Yes',$this->plugin_text_domain); ?> 
 								<input type="radio" name="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture" value="0" <?php if($this->plugin_option['login_button_profile_picture'] == '0') echo 'checked="checked"'; ?>  /> <?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?>
 							</p>
 							<p>
-								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_width"><?php _e('Width of button',$this->plugin_text_domain); ?></label>
+								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_width"><?php _e('Width of button',$this->plugin_text_domain); ?>  <?php echo $this->get_the_help('like_button_width'); ?></label>
 								<input type="text" name="<?php echo $this->plugin_option_pref; ?>login_button_width" value="<?php echo $this->plugin_option['login_button_width']; ?>" size="6" />
 							</p>
 							<p>
-								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_maxrow"><?php _e('Max Rows (faces)',$this->plugin_text_domain); ?></label>
+								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_maxrow"><?php _e('Max Rows (faces)',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_maxrow'); ?></label>
 								<input type="text" name="<?php echo $this->plugin_option_pref; ?>login_button_maxrow" value="<?php echo $this->plugin_option['login_button_maxrow']; ?>" size="6" />
 							</p>
 							<p>
-								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_logout_value"><?php _e('Logout Phrase',$this->plugin_text_domain); ?></label>
+								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_logout_value"><?php _e('Logout Phrase',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_logout'); ?></label>
 								<input type="text" name="<?php echo $this->plugin_option_pref; ?>login_button_logout_value" value="<?php echo $this->plugin_option['login_button_logout_value']; ?>" size="30" />
 							</p>
 							<p>
-								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_css"><?php _e('Custom Css',$this->plugin_text_domain); ?></label>
+								<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>login_button_css"><?php _e('Custom Css',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_css'); ?></label>
 								<textarea rows="10" cols="35" name="<?php echo $this->plugin_option_pref; ?>login_button_css"><?php echo $this->plugin_option['login_button_css']; ?></textarea>
 							</p>
 						</div>

@@ -177,7 +177,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		
 		//if xfbml show comment box for ths plugin
 		if($this->plugin_option['parse_xfbml'] == 1){
-			add_meta_box($this->plugin_slug."_comment",  __('Comments',$this->plugin_text_domain), array(&$this,'AWD_comments_content'),  $this->plugin_slug.'_box' , 'side', 'core');
+			add_meta_box($this->plugin_slug."_comment",  __('Comments',$this->plugin_text_domain), array(&$this,'AWD_comments_content'),  $this->plugin_slug.'_box' , 'normal', 'core');
 		}
 		
 		//js hook for admin fcbk		
@@ -588,6 +588,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 								do_meta_boxes($this->plugin_slug.'_open_graph_box','normal',null);
 							elseif($page == $this->plugin_slug.'_plugins')
 								do_meta_boxes($this->plugin_slug.'_plugins_box','normal',null);
+							
+							do_meta_boxes($this->plugin_slug.'_box','normal',null);
 							?>
 					   </div>
 					</div>
@@ -618,7 +620,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function AWD_comments_content(){
 		?>
-		<fb:comments href="http://www.ahwebdev.fr/plugins/facebook-awd.html" num_posts="5" width="258"></fb:comments>
+		<fb:comments href="http://www.ahwebdev.fr/plugins/facebook-awd.html" num_posts="10" width=""></fb:comments>
 		<?php
 	}
 	/*
