@@ -6,6 +6,8 @@
 * Hermann.alexandre@ahwebdev.fr
 *
 */
+//load text domain file
+load_plugin_textdomain($this->plugin_text_domain,false,dirname( plugin_basename( __FILE__ ) ) . '/langs/');
 
 $this->plugin_option = array();
 
@@ -359,8 +361,4 @@ add_action('wp_head',array(&$this,'define_open_graph_tags_header'));
 
 if($this->debug_active)
 	add_action('wp_footer',array(&$this,'debug_content'));
-
-//load text domain file
-load_plugin_textdomain($this->plugin_text_domain,false,dirname( plugin_basename( __FILE__ ) ) . '/langs/');
-
 ?>
