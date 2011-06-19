@@ -48,7 +48,7 @@ msgstr "AH WEV DEV"
 #, php-format
 #@ AWD_facebook
 msgid "Facebook Connect plugin is almost ready. To start using Facebook <strong>you need to set your Facebook Application API ID and Faceook Application secret key</strong>. You can do that in <a href=\"%1s\">Facebook Connect settings page</a>. (Notification from Facebook AWD)"
-msgstr "FB connect n'est pas encore paramétré... Pour utiliser facebook connect, vous devez spécifier votre ID d'application Facebook et votre clé secrète. Vous pouvez fire ca sur <a href=\"%1s\">cette page</a>. (Notification depuis Facebook AWD)"
+msgstr "FB connect n'est pas encore paramétré... Pour utiliser facebook connect, vous devez spécifier votre ID d'application Facebook et votre clé secrète. Vous pouvez fire ca sur <a href='%s'>cette page</a>. (Notification depuis Facebook AWD)"
 
 #: AWD_facebook.php:120
 #@ AWD_facebook
@@ -141,12 +141,12 @@ msgstr "Utiliser l'url du blog"
 #: AWD_facebook.php:207
 #@ AWD_facebook
 msgid "Use term name"
-msgstr "Utiliser le nom du \\\"term\\\""
+msgstr "Utiliser le nom du ”term”"
 
 #: AWD_facebook.php:208
 #@ AWD_facebook
 msgid "Use term description"
-msgstr "Utiliser la description du \\\"term\\\""
+msgstr "Utiliser la description du ”term”"
 
 #: AWD_facebook.php:223
 #@ AWD_facebook
@@ -561,7 +561,7 @@ msgstr "(Par défaut)"
 #: inc/admin_plugins.php:52
 #@ AWD_facebook
 msgid "Add \"Like\" button to pages"
-msgstr "Ajouter un bouton \\\"J'aime\\\" pour les pages"
+msgstr "Ajouter un bouton ”J'aime” pour les pages"
 
 #: inc/admin_plugins.php:57
 #: inc/admin_plugins.php:68
@@ -584,7 +584,7 @@ msgstr "En dessous"
 #: inc/admin_plugins.php:63
 #@ AWD_facebook
 msgid "Add \"Like\" button to posts"
-msgstr "Ajouter un bouton \\\"J'aime\\\" pour les articles"
+msgstr "Ajouter un bouton ”J'aime” pour les articles"
 
 #: inc/admin_plugins.php:74
 #@ AWD_facebook
