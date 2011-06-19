@@ -671,7 +671,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$show_faces = (($options['login_button_faces'] == '' ? $this->plugin_option['login_button_faces'] : $options['login_button_faces']) == 1 ? 'true' : 'false');
 		$maxrow = ($options['login_button_maxrow'] == '' ? $this->plugin_option['login_button_maxrow'] : $options['login_button_maxrow']);
 		$logout_value = ($options['login_button_logout_value'] == '' ? $this->plugin_option['login_button_logout_value'] : $options['login_button_logout_value']);
-		$login_button = '<fb:login-button perms="email,'.$this->plugin_option['perms'].'" show-faces="'.$show_faces.'" width="'.$width.'" max-rows="'.$maxrow.'" size="medium" ></fb:login-button>';
+		$login_button = '<fb:login-button perms="'.rtrim('email,'.$this->plugin_option['perms'],',').'" show-faces="'.$show_faces.'" width="'.$width.'" max-rows="'.$maxrow.'" size="medium" ></fb:login-button>';
 		
 		//if some options defined
 		if(empty($options['case'])){
