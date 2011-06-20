@@ -52,6 +52,7 @@ if($this->session){
 			}else{
 				wp_redirect(home_url());
 			}
+			exit();
 		//if user don't exist - create one and do all the same stuff: cookie, wp_login, redirect, exit
 		}else{
 			//if registration not enable
@@ -99,6 +100,7 @@ if($this->session){
 					}else{
 						wp_redirect(home_url());
 					}
+					exit();
 				}
 			}else{
 				wp_die(__('Facebook registration is disabled, contact the administrator',$this-plugin_text_domain));
