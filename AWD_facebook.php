@@ -946,7 +946,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
                    window.location.reload();
                 });
                 FB.Event.subscribe("auth.logout", function(response) {
-                   alert('logout');
                    window.location.href= "/";
                 });
             };
