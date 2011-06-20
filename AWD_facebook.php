@@ -3,7 +3,7 @@
 Plugin Name: AWD Facebook
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph
-Version: 0.9.4.9
+Version: 0.9.5
 Author: AH WEB DEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AH WEB DEV
@@ -671,7 +671,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$show_faces = (($options['login_button_faces'] == '' ? $this->plugin_option['login_button_faces'] : $options['login_button_faces']) == 1 ? 'true' : 'false');
 		$maxrow = ($options['login_button_maxrow'] == '' ? $this->plugin_option['login_button_maxrow'] : $options['login_button_maxrow']);
 		$logout_value = ($options['login_button_logout_value'] == '' ? $this->plugin_option['login_button_logout_value'] : $options['login_button_logout_value']);
-		$login_button = '<fb:login-button perms="'.rtrim('email,'.$this->plugin_option['perms'],',').'" show-faces="'.$show_faces.'" width="'.$width.'" max-rows="'.$maxrow.'" size="medium" ></fb:login-button>';
+		//we set faces options to false, if user not connected
+		$login_button = '<fb:login-button perms="'.rtrim('email,'.$this->plugin_option['perms'],',').'" show-faces="'.($this->me ? $show_faces : 'false').'" width="'.$width.'" max-rows="'.$maxrow.'" size="medium" ></fb:login-button>';
 		
 		//if some options defined
 		if(empty($options['case'])){
@@ -769,7 +770,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			}else{
 				$connect_lang = WPLANG;
 			}
-		wp_enqueue_script( 'AWD_facebook_js', 'http://connect.facebook.net/'.$connect_lang.'/all.js'.($this->plugin_option['parse_xfbml'] == 1 ? '#xfbml=1' : ''));
+		//wp_enqueue_script( 'AWD_facebook_js', 'http://connect.facebook.net/'.$connect_lang.'/all.js'.($this->plugin_option['parse_xfbml'] == 1 ? '#xfbml=1' : ''));
 	}
 	/*
 	 * options metabox columns etc...
@@ -933,21 +934,28 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		?>
 		<div id="fb-root"></div>
 		<script type="text/javascript">
-			jQuery(document).ready( function($) {
-				FB.init({
-					appId   : '<?php echo  $this->plugin_option["app_id"]; ?>',
-				//	session : '<?php echo json_encode($this->session); ?>', // don't refetch the session when PHP already has it
-					status  : true, // check login status
-					cookie  : true, // enable cookies to allow the server to access the session
-					xfbml   : <?php echo ($this->plugin_option['parse_xfbml'] == 1 ? 'true' : 'false'); ?>// parse XFBML
-				});
-				FB.Event.subscribe('auth.login', function(response) {
-	      			//user connect just reload the page
-	      			if(response.session){
-	      				window.location.reload();
-	      			}
-	  			});
-			});
+            window.fbAsyncInit = function(){
+                FB.init({
+                    appId   : '<?php echo  $this->plugin_option["app_id"]; ?>',
+                //	session : '<?php echo json_encode($this->session); ?>', // don't refetch the session when PHP already has it
+                    status  : true, // check login status
+                    cookie  : true, // enable cookies to allow the server to access the session
+                    xfbml   : <?php echo ($this->plugin_option['parse_xfbml'] == 1 ? 'true' : 'false'); ?>// parse XFBML
+                });
+                FB.Event.subscribe("auth.login", function(response) {
+                   window.location.reload();
+                });
+                FB.Event.subscribe("auth.logout", function(response) {
+                   alert('logout');
+                   window.location.href= "/";
+                });
+            };
+			(function() {
+                var e = document.createElement('script');
+                e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+                e.async = true;
+                document.getElementById('fb-root').appendChild(e);
+              }());
 		</script>
 	<?php
 	}
