@@ -78,6 +78,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		/* Class FCBK */
 		if(!class_exists('Facebook'))
 			require_once(dirname(__FILE__).'/inc/classes/facebook.php');
+			//For 3.0 sdk php require_once(dirname(__FILE__).'/inc/classes/facebook/facebook.php');
 		add_action('init',array(&$this,'initial'),11);//11 start init later to be comatible with custom post types
 		//like box widget register
 		add_action('widgets_init',  array(&$this,'register_AWD_facebook_widgets'));
@@ -857,6 +858,45 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			$this->login_url = $this->fcbk->getLoginUrl();
 		}
 	}
+	/*
+	* Waiting for PHP SDK 3.0 version
+	public function init_php(){
+		$this->fcbk = new Facebook(array(
+			'appId'  => $this->plugin_option['app_id'],
+			'secret' => $this->plugin_option['app_secret_key'],
+		));
+		
+		$this->me = null;
+		// Get User ID
+		$this->uid = $this->fcbk->getUser();
+		if($this->uid) {
+			try {
+				// Proceed knowing you have a logged in user who's authenticated.
+				$this->me = $facebook->api('/me');
+				
+				//$updated = date("l, F j, Y", strtotime($me['updated_time']));
+			} catch (FacebookApiException $e) {
+				error_log($e);
+				$this->uid = null;
+				echo '00000';
+			}
+		}
+		// login or logout url will be needed depending on current user state.
+		if($this->uid){
+			$this->logout_url = $this->fcbk->getLogoutUrl();
+			//modify logout url
+			add_filter('logout_url', array(&$this,'logout_url'));
+		}else{
+			$this->login_url = $this->fcbk->getLoginUrl(
+				array(
+                	'scope'         => $this->plugin_option['perms'],
+                	'redirect_uri'  => home_url()
+            	)
+            );
+		}
+	}
+	*/
+	
 	/*
 	* login user with facebook account
 	*/

@@ -323,6 +323,8 @@ if($this->plugin_option['parse_xfbml'] == '' || $this->plugin_option['parse_xfbm
 	$this->plugin_option['like_box_xfbml'] = 0;
 	$this->plugin_option['activity_xfbml'] = 0;
 }
+$this->plugin_option['perms'] = rtrim('email,'.$this->plugin_option['perms'],',');
+
 //define current user in this object
 $this->current_user();
 //call the api facebook init (php) if connect enable
