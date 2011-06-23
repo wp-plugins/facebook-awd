@@ -339,8 +339,8 @@
 ?>
 <script type="text/javascript">
 	jQuery(document).ready( function(){
+		hide_state("#<?php echo $this->plugin_option_pref; ?>like_button_on_custom_post_types_on","#start_or_end_custom_post_types");
 		hide_state("#<?php echo $this->plugin_option_pref; ?>like_button_on_pages_on","#start_or_end_pages");
 		hide_state("#<?php echo $this->plugin_option_pref; ?>like_button_on_posts_on","#start_or_end_posts");
-		hide_state("#<?php echo $this->plugin_option_pref; ?>like_button_on_custom_post_types_on","#start_or_end_custom_post_types");
 	});
 </script>
