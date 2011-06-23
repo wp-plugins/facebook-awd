@@ -154,6 +154,10 @@ if($this->plugin_option['like_button_on_posts'] == '')
 	$this->plugin_option['like_button_on_posts'] = 0;
 if($this->plugin_option['like_button_place_on_posts'] == '')
 	$this->plugin_option['like_button_place_on_posts'] = 'top';
+if($this->plugin_option['like_button_place_on_custom_post_types'] == '')
+	$this->plugin_option['like_button_place_on_custom_post_types'] = 'top';
+if($this->plugin_option['like_button_on_custom_post_types'] == '')
+	$this->plugin_option['like_button_on_custom_post_types'] = 0;
 if($this->plugin_option['like_button_colorscheme'] == '')
 	$this->plugin_option['like_button_colorscheme'] = 'light';
 if($this->plugin_option['like_button_send'] == '' || $this->plugin_option['like_button_xfbml'] == 0)
