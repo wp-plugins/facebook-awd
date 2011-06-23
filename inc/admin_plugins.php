@@ -71,6 +71,17 @@
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_posts" value="both" <?php if($this->plugin_option['like_button_place_on_posts'] == 'both') echo 'checked="checked"'; ?>/> <?php _e('Both',$this->plugin_text_domain); ?>
 					</p>
 					<p>
+						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_on_custom_post_types"><?php _e('Add "Like" button to custom post types',$this->plugin_text_domain); ?></label>
+						<input type="radio" id="<?php echo $this->plugin_option_pref; ?>like_button_on_custom_post_types_on" name="<?php echo $this->plugin_option_pref; ?>like_button_on_custom_post_types" value="1" <?php if($this->plugin_option['like_button_on_custom_post_types'] == '1') echo 'checked="checked"'; ?> onclick="jQuery('#start_or_end_custom_post_types').slideDown('fast');"/> <?php _e('Yes',$this->plugin_text_domain); ?>
+						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_on_custom_post_types" value="0" <?php if($this->plugin_option['like_button_on_custom_post_types'] == '0') echo 'checked="checked"'; ?> onclick="jQuery('#start_or_end_custom_post_types').slideUp('fast');"/> <?php _e('No',$this->plugin_text_domain); ?>
+					</p>
+					<p id="start_or_end_custom_post_types" class="hidden_state">
+						<label for="<?php echo $this->plugin_option_pref; ?>like_button_place_on_custom_post_types"><?php _e('Where do you want to place "Like" button ?',$this->plugin_text_domain); ?></label>
+						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_custom_post_types" value="top" <?php if($this->plugin_option['like_button_place_on_custom_post_types'] == 'top') echo 'checked="checked"'; ?>  /> <?php echo __('Top',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?> 
+						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_custom_post_types" value="bottom" <?php if($this->plugin_option['like_button_place_on_custom_post_types'] == 'bottom') echo 'checked="checked"'; ?>  /> <?php _e('Bottom',$this->plugin_text_domain); ?>
+						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_custom_post_types" value="both" <?php if($this->plugin_option['like_button_place_on_custom_post_types'] == 'both') echo 'checked="checked"'; ?>  /> <?php _e('Both',$this->plugin_text_domain); ?>
+					</p>
+					<p>
 						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_exclude_post_type"><?php _e('Exclude Post types (for custom post_type, example: post,page,etc...)',$this->plugin_text_domain); ?></label>
 						<input type="text" name="<?php echo $this->plugin_option_pref; ?>like_button_exclude_post_type" value="<?php echo $this->plugin_option['like_button_exclude_post_type']; ?>" size="30" />
 					</p>
@@ -330,5 +341,6 @@
 	jQuery(document).ready( function(){
 		hide_state("#<?php echo $this->plugin_option_pref; ?>like_button_on_pages_on","#start_or_end_pages");
 		hide_state("#<?php echo $this->plugin_option_pref; ?>like_button_on_posts_on","#start_or_end_posts");
+		hide_state("#<?php echo $this->plugin_option_pref; ?>like_button_on_custom_post_types_on","#start_or_end_custom_post_types");
 	});
 </script>

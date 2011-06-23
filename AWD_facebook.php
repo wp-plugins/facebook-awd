@@ -3,7 +3,7 @@
 Plugin Name: AWD Facebook
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph
-Version: 0.9.5
+Version: 0.9.5.1
 Author: AH WEB DEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AH WEB DEV
@@ -947,22 +947,29 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		
 		if(!in_array($post->post_type,$exclude_post_type) && !in_array($post->ID,$exclude_post_page_id) && !$is_term_to_exclude){
 			$like_button = $this->get_the_like_button($post);
-			if(is_page() && $this->plugin_option['like_button_on_pages']){
+			if($post->post_type == 'page' && $this->plugin_option['like_button_on_pages']){
 				if($this->plugin_option['like_button_place_on_pages'] == 'bottom')
 					return $content.$like_button;
 				elseif($this->plugin_option['like_button_place_on_pages'] == 'both')
 					return $like_button.$content.$like_button;
 				elseif($this->plugin_option['like_button_place_on_pages'] == 'top')
 				    return $like_button.$content;
-	        }
-			if(is_single() && $this->plugin_option['like_button_on_posts']){
+	        }elseif($post->post_type == 'post' && $this->plugin_option['like_button_on_posts']){
 			    if($this->plugin_option['like_button_place_on_posts'] == 'bottom')
 					return $content.$like_button;
 				elseif($this->plugin_option['like_button_place_on_posts'] == 'both')
 					return $like_button.$content.$like_button;
 				elseif($this->plugin_option['like_button_place_on_posts'] == 'top')
 				    return $like_button.$content;
-			}	
+			}elseif($post->post_type != '' && $this->plugin_option['like_button_on_custom_post_types']){
+				//for other custom post type
+				if($this->plugin_option['like_button_on_custom_post_types'] == 'bottom')
+					return $content.$like_button;
+				elseif($this->plugin_option['like_button_on_custom_post_types'] == 'both')
+					return $like_button.$content.$like_button;
+				elseif($this->plugin_option['like_button_on_custom_post_types'] == 'top')
+				    return $like_button.$content;
+			}
 		}
 		return $content;
 	}
