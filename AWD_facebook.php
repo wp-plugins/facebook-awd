@@ -3,7 +3,7 @@
 Plugin Name: AWD Facebook
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph
-Version: 0.9.5.1
+Version: 0.9.5.2
 Author: AH WEB DEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AH WEB DEV
@@ -1233,7 +1233,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$send = (($options['like_button_send'] == '' ? $this->plugin_option['like_button_send'] : $options['like_button_send']) == 1 ? 'true' : 'false');
 		$width = ($options['like_button_width'] == '' ? $this->plugin_option['like_button_width'] : $options['like_button_width']);
 		$colorscheme = ($options['like_button_colorscheme'] == '' ? $this->plugin_option['like_button_colorscheme'] : $options['like_button_colorscheme']);
-		$show_faces = (($options['like_button_faces'] == '' ? $this->plugin_option['like_button_send'] : $options['like_button_faces']) == 1 ? 'true' : 'false');
+		$show_faces = (($options['like_button_faces'] == '' ? $this->plugin_option['like_button_faces'] : $options['like_button_faces']) == 1 ? 'true' : 'false');
 		$fonts = ($options['like_button_fonts'] == '' ? $this->plugin_option['like_button_fonts'] : $options['like_button_fonts']);
 		$action = ($options['like_button_action'] == '' ? $this->plugin_option['like_button_action'] : $options['like_button_action']);
 		$layout = ($options['like_button_layout'] == '' ? $this->plugin_option['like_button_layout'] : $options['like_button_layout']);
