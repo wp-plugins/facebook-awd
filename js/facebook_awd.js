@@ -31,8 +31,10 @@ jQuery(document).ready( function(){
 	});
 	
 	//create the tabs in options pages admin
-	jQuery("#div_options_content_tabs").tabs({ fx: { opacity: 'toggle',duration:'fast' }});
-	
+	jQuery("#div_options_content_tabs").tabs({ 
+		fx: { opacity: 'toggle',duration:'fast'},
+		cookie: { expires: 30 }
+	});
 	//hide all on load
 	jQuery("h3.tabs_in_tab").next().hide();
 	
