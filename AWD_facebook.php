@@ -3,7 +3,7 @@
 Plugin Name: AWD Facebook
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph
-Version: 0.9.5.2
+Version: 0.9.5.3
 Author: AH WEB DEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AH WEB DEV
@@ -963,11 +963,11 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 				    return $like_button.$content;
 			}elseif($post->post_type != '' && $this->plugin_option['like_button_on_custom_post_types']){
 				//for other custom post type
-				if($this->plugin_option['like_button_on_custom_post_types'] == 'bottom')
+				if($this->plugin_option['like_button_place_on_custom_post_types'] == 'bottom')
 					return $content.$like_button;
-				elseif($this->plugin_option['like_button_on_custom_post_types'] == 'both')
+				elseif($this->plugin_option['like_button_place_on_custom_post_types'] == 'both')
 					return $like_button.$content.$like_button;
-				elseif($this->plugin_option['like_button_on_custom_post_types'] == 'top')
+				elseif($this->plugin_option['like_button_place_on_custom_post_types'] == 'top')
 				    return $like_button.$content;
 			}
 		}
