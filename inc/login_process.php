@@ -50,7 +50,7 @@ if($this->session){
 			if(wp_get_referer()){
 				wp_redirect(wp_get_referer());
 			}else{
-				wp_redirect(home_url());
+				wp_redirect($_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
 			}
 			exit();
 		//if user don't exist - create one and do all the same stuff: cookie, wp_login, redirect, exit
@@ -98,7 +98,7 @@ if($this->session){
 					if(wp_get_referer()){
 						wp_redirect(wp_get_referer());
 					}else{
-						wp_redirect(home_url());
+						wp_redirect($_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
 					}
 					exit();
 				}
