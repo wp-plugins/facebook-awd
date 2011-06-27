@@ -3,7 +3,7 @@
 Plugin Name: AWD Facebook
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph
-Version: 0.9.5.4
+Version: 0.9.5.5
 Author: AH WEB DEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AH WEB DEV
@@ -839,6 +839,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		
 		//we need to update api call fucntion in facebook class. 01/05/2011 (add stripslashes() in validateSessionObject function)
 		$this->session = $this->fcbk->getSession();
+		//fot the debug
+		$this->debug_echo['Fcbk session'] = $this->session;
 		$this->me = null;
 		// Session based API call.
 		if($this->session){
@@ -985,17 +987,21 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
             window.fbAsyncInit = function(){
                 FB.init({
                     appId   : '<?php echo  $this->plugin_option["app_id"]; ?>',
-                //	session : '<?php echo json_encode($this->session); ?>', // don't refetch the session when PHP already has it
                     status  : true, // check login status
+                    <?php if($this->session){ echo "session : ".json_encode($this->session).","; } 
+                    ?>//get the session with php sdk
                     cookie  : true, // enable cookies to allow the server to access the session
                     xfbml   : <?php echo ($this->plugin_option['parse_xfbml'] == 1 ? 'true' : 'false'); ?>// parse XFBML
                 });
-                FB.Event.subscribe("auth.login", function(response) {
-                   window.location.reload();
-                });
-                FB.Event.subscribe("auth.logout", function(response) {
-                   window.location.href= "/";
-                });
+                
+				FB.Event.subscribe('auth.sessionChange', function(response) {
+                    <?php if(!$this->session || !is_user_logged_in()){ ?>
+                    if (response.session) {
+                        // A user has logged in, and a new cookie has been saved
+                      	window.location.reload();
+                    }
+                    <?php } ?>
+                });    
             };
 			(function() {
                 var e = document.createElement('script');
@@ -1347,17 +1353,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* Debug
 	*/
 	public function debug_content(){
-		$this->Debug(array('$AWD_facebook->fcbk'=>$this->fcbk,"$AWD_facebook->me"=>$this->me,"DEBUG FCBK"=>$this->debug_echo));
-		echo "
-		<h2>To DO 12/05/2011</h2>
-		- add widget login, like button and <s>like box</s><br>
-		- <s>add design for different like, and rest of design for other box</s><br>
-		- add fb-comment possibility...<br>
-		- add shortcode<br>
-		- add shortcode button for editor<br>
-		- <s>add a generator in admin for template (same as shortcode? iframe ?)</s><br>
-		- finish other tabs...
-		";
+		$this->Debug(array("$AWD_facebook->me"=>$this->me,"DEBUG FCBK"=>$this->debug_echo));
 	}
 
 }
