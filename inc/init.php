@@ -367,4 +367,10 @@ add_action('wp_head',array(&$this,'define_open_graph_tags_header'));
 
 if($this->debug_active)
 	add_action('wp_footer',array(&$this,'debug_content'));
+	
+//add shortcode 
+add_shortcode('AWD_likebutton', array(&$this,'shortcode_like_button'));
+add_shortcode('AWD_likebox', array(&$this,'shortcode_like_box'));
+add_shortcode('AWD_activitybox', array(&$this,'shortcode_activity_box'));
+add_shortcode('AWD_loginbutton', array(&$this,'shortcode_login_button'));
 ?>
