@@ -998,7 +998,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
                     <?php if(!$this->session || !is_user_logged_in()){ ?>
                     if (response.session) {
                         // A user has logged in, and a new cookie has been saved
-                      	window.location.reload();
+                      	window.location.href = window.location.href;
                     }
                     <?php } ?>
                 });    
