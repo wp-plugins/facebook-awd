@@ -666,6 +666,9 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function shortcode_login_button($atts) {
 		extract(shortcode_atts("", $atts )); 
+		foreach($atts as $att=>$value){
+			$new_atts['login_button_'.$att] = $value;
+		}
 		return $this->get_the_login_button($atts);
 	}
 	/*
@@ -1234,9 +1237,17 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* Return the like button shortcode
 	*/
 	public function shortcode_like_button($atts) {
-		global $post;
-		extract(shortcode_atts("", $atts )); 
-		return $this->get_the_like_button($post,$atts);
+		$new_atts = array();
+		extract(shortcode_atts("", $atts));
+		$no_post = 1;
+		
+		foreach($atts as $att=>$value){
+			$new_atts['like_button_'.$att] = $value;
+		}
+		//check if we want to use post in this shortcode or different url
+		if($new_atts['like_button_href'] == '')
+			global $post;
+		return $this->get_the_like_button($post,$new_atts);
 	}
 	/*
 	* Return the like button
@@ -1289,8 +1300,11 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* Return the like box shortcode
 	*/
 	public function shortcode_like_box($atts) {
-		extract(shortcode_atts("", $atts )); 
-		return $this->get_the_like_box($atts);
+		extract(shortcode_atts("", $atts ));
+		foreach($atts as $att=>$value){
+			$new_atts['like_box_'.$att] = $value;
+		}
+		return $this->get_the_like_box($new_atts);
 	}
 	/*
 	* Return the like button
@@ -1330,7 +1344,10 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* Return the activity box shortcode
 	*/
 	public function shortcode_activity_box($atts) {
-		extract(shortcode_atts("", $atts )); 
+		extract(shortcode_atts("", $atts ));
+		foreach($atts as $att=>$value){
+			$new_atts['activity_'.$att] = $value;
+		}
 		return $this->get_the_activity_box($atts);
 	}
 	/*
