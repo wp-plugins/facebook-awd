@@ -3,7 +3,7 @@
 Plugin Name: AWD Facebook
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph
-Version: 0.9.5.6
+Version: 0.9.5.7
 Author: AH WEB DEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AH WEB DEV
@@ -1007,7 +1007,9 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
                       	window.location.href = window.location.href;
                     }
                     <?php } ?>
-                });    
+                });
+                //add some js with plugin or admin
+            	<?php do_action('AWD_custom_fbjs'); ?>
             };
 			(function() {
                 var e = document.createElement('script');
