@@ -1245,8 +1245,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$new_atts = array();
 		if(size_of($atts) > 0){
 			extract(shortcode_atts("", $atts));
-			$no_post = 1;
-			
 			foreach($atts as $att=>$value){
 				$new_atts['like_button_'.$att] = $value;
 			}
