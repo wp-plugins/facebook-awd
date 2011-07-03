@@ -666,7 +666,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function shortcode_login_button($atts) {
 		$new_atts = array();
-		if(size_of($atts) > 0){
+		if(sizeof($atts) > 0){
 			extract(shortcode_atts("", $atts )); 
 			foreach($atts as $att=>$value){
 				$new_atts['login_button_'.$att] = $value;
@@ -1243,7 +1243,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function shortcode_like_button($atts) {
 		$new_atts = array();
-		if(size_of($atts) > 0){
+		if(sizeof($atts) > 0){
 			extract(shortcode_atts("", $atts));
 			foreach($atts as $att=>$value){
 				$new_atts['like_button_'.$att] = $value;
@@ -1307,7 +1307,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function shortcode_like_box($atts) {
 		$new_atts = array();
-		if(size_of($atts) > 0){
+		if(sizeof($atts) > 0){
 			extract(shortcode_atts("", $atts ));
 			foreach($atts as $att=>$value){
 				$new_atts['like_box_'.$att] = $value;
@@ -1354,7 +1354,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function shortcode_activity_box($atts=array()){
         $new_atts = array();
-        if(size_of($atts) > 0){
+        if(sizeof($atts) > 0){
             extract(shortcode_atts("", $atts ));
        
             foreach($atts as $att=>$value){
