@@ -38,10 +38,10 @@ If you are a developer you can use the API of facebook and opengraph api directl
 = Widget And Themes functions: =
 You can use widgets to display socials plugins form Facebook
 
-*   Like Button
-*   Like Box
-*   Activity Box
-*   Login Button
+* Like Button
+* Like Box
+* Activity Box
+* Login Button
 
 = Multisite compatible: =
 This plugin is compatible with Wordpress multisite.
@@ -49,58 +49,62 @@ This plugin is compatible with Wordpress multisite.
 == Installation ==
 Extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
+Need PHP 5.*
+
 == Frequently Asked Questions ==
 = Shortcodes: =
 `[AWD_likebutton]`
 
 Options:
 
-*   url
-*   send
-*   width
-*   colorscheme
-*   faces
-*   fonts
-*   action
-*   layout
-*   height
-*   xfbml
+* url
+* send
+* width
+* colorscheme
+* faces
+* fonts
+* action
+* layout
+* height
+* xfbml
 
 `[AWD_likebox]`
 Options:
 
-*   url
-*   width
-*   colorscheme
-*   faces
-*   height
-*   xfbml
-*   stream
-*   header
+* url
+* width
+* colorscheme
+* faces
+* height
+* xfbml
+* stream
+* header
 
 `[AWD_activitybox]`
 Options:
 
-*   domain
-*   width
-*   colorscheme
-*   faces
-*   height
-*   xfbml
-*   fonts
-*   border_color
-*   header
-*   recommendations
+* domain
+* width
+* colorscheme
+* faces
+* height
+* xfbml
+* fonts
+* border_color
+* header
+* recommendations
 
 
 `[AWD_loginbutton]`
 Options:
 
-*   profile_picture
-*   width
-*   faces
-*   maxrow
-*   logout_value
+* profile_picture
+* width
+* faces
+* maxrow
+* logout_value
+
+[Create an Application on Facebook](https://www.facebook.com/developers/createapp.php/ "Create an application")
 
 == Screenshots ==
 1. Plugin Facebook AWD settings General tab
