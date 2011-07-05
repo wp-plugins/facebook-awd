@@ -18,9 +18,11 @@ Add Socials plugins, Open Graph, and FB connect.
 *   Like Button
 *   Like Box
 *   Activity Box
+
 *   Login Button
 
 = Langs: =
+
 *   EN
 *   FR
 
@@ -35,11 +37,11 @@ If you are a developer you can use the API of facebook and opengraph api directl
 
 = Widget And Themes functions: =
 You can use widgets to display socials plugins form Facebook
+
 *   Like Button
 *   Like Box
 *   Activity Box
 *   Login Button
-
 
 = Multisite compatible: =
 This plugin is compatible with Wordpress multisite.
@@ -50,6 +52,7 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 == Frequently Asked Questions ==
 = Shortcodes: =
 `[AWD_likebutton]`
+
 Options:
 *   url
 *   send
@@ -85,6 +88,7 @@ Options:
 *   border_color
 *   header
 *   recommendations
+
 
 `[AWD_loginbutton]`
 Options:
