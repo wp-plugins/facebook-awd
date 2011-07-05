@@ -15,10 +15,10 @@ Facebook AWD is an all in one Facebook capabilities for wordpress.
 Add Socials plugins, Open Graph, and FB connect.
 
 = Socials plugins: =
+
 *   Like Button
 *   Like Box
 *   Activity Box
-
 *   Login Button
 
 = Langs: =
@@ -54,6 +54,7 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 `[AWD_likebutton]`
 
 Options:
+
 *   url
 *   send
 *   width
@@ -67,6 +68,7 @@ Options:
 
 `[AWD_likebox]`
 Options:
+
 *   url
 *   width
 *   colorscheme
@@ -78,6 +80,7 @@ Options:
 
 `[AWD_activitybox]`
 Options:
+
 *   domain
 *   width
 *   colorscheme
@@ -92,6 +95,7 @@ Options:
 
 `[AWD_loginbutton]`
 Options:
+
 *   profile_picture
 *   width
 *   faces
