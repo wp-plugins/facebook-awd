@@ -3,8 +3,8 @@ Contributors: AHWEBDEV
 Donate link: http://www.ahwebdev.fr/plugins/facebook-awd.html
 Tags: facebook, fb,opengraph, open graph, connect, like, box, all in one,comments,fbconnect, Facebook plugins,
 Requires at least: 3.1
-Tested up to: 3.2 beta
-Stable tag: 0.9.5.8
+Tested up to: 3.2
+Stable tag: 0.9.5.9
 
 Facebook AWD is an all in one Facebook capabilities for wordpress.
 Add Socials plugins and Open Graph to your site and increase your virality
@@ -40,7 +40,6 @@ You can use widgets to display socials plugins form Facebook
 *   Activity Box
 *   Login Button
 
-** functions PHP will be explained later.
 
 = Multisite compatible: =
 This plugin is compatible with Wordpress multisite.
@@ -49,7 +48,51 @@ This plugin is compatible with Wordpress multisite.
 Extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Frequently Asked Questions ==
-Soon...
+= Shortcodes =
+[AWD_likebutton]
+Options:
+- url
+- send
+- width
+- colorscheme
+- faces
+- fonts
+- action
+- layout
+- height
+- xfbml
+
+[AWD_likebox]
+Options:
+- url
+- width
+- colorscheme
+- faces
+- height
+- xfbml
+- stream
+- header
+
+[AWD_activitybox]
+Options:
+- domain
+- width
+- colorscheme
+- faces
+- height
+- xfbml
+- fonts
+- border_color
+- header
+- recommendations
+
+[AWD_loginbutton]
+Options:
+- profile_picture
+- width
+- faces
+- maxrow
+- logout_value
 
 == Screenshots ==
 1. Plugin Facebook AWD settings General tab

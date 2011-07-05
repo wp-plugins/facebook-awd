@@ -3,7 +3,7 @@
 Plugin Name: AWD Facebook
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph, Plugins from facebook, and FB connect, with SDK JS AND SDK PHP Facebook
-Version: 0.9.5.8
+Version: 0.9.5.9
 Author: AH WEB DEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AH WEB DEV
@@ -664,10 +664,10 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	/*
 	* Return the loggin button  shortcode
 	*/
-	public function shortcode_login_button($atts) {
+	public function shortcode_login_button($atts=array()) {
 		$new_atts = array();
-		if(sizeof($atts) > 0){
-			extract(shortcode_atts("", $atts )); 
+		if(is_array($atts)){	
+			extract(shortcode_atts(array("init"=>"init"), $atts )); 
 			foreach($atts as $att=>$value){
 				$new_atts['login_button_'.$att] = $value;
 			}
@@ -1001,6 +1001,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
                     ?>//get the session with php sdk
                     cookie  : true, // enable cookies to allow the server to access the session
                     xfbml   : <?php echo ($this->plugin_option['parse_xfbml'] == 1 ? 'true' : 'false'); ?>// parse XFBML
+                	//add some js with plugin or admin
+            		<?php do_action('AWD_custom_fbinit'); ?>
                 });
                 
 				FB.Event.subscribe('auth.sessionChange', function(response) {
@@ -1241,10 +1243,10 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	/*
 	* Return the like button shortcode
 	*/
-	public function shortcode_like_button($atts) {
+	public function shortcode_like_button($atts=array()) {
 		$new_atts = array();
-		if(sizeof($atts) > 0){
-			extract(shortcode_atts("", $atts));
+		if(is_array($atts)){
+			extract(shortcode_atts(array("init"=>"init"), $atts )); 
 			foreach($atts as $att=>$value){
 				$new_atts['like_button_'.$att] = $value;
 			}
@@ -1305,10 +1307,10 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	/*
 	* Return the like box shortcode
 	*/
-	public function shortcode_like_box($atts) {
+	public function shortcode_like_box($atts=array()) {
 		$new_atts = array();
-		if(sizeof($atts) > 0){
-			extract(shortcode_atts("", $atts ));
+		if(is_array($atts)){
+			extract(shortcode_atts(array("init"=>"init"), $atts )); 
 			foreach($atts as $att=>$value){
 				$new_atts['like_box_'.$att] = $value;
 			}
@@ -1354,9 +1356,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function shortcode_activity_box($atts=array()){
         $new_atts = array();
-        if(sizeof($atts) > 0){
-            extract(shortcode_atts("", $atts ));
-       
+        if(is_array($atts)){
+			extract(shortcode_atts(array("init"=>"init"), $atts )); 
             foreach($atts as $att=>$value){
                 $new_atts['activity_'.$att] = $value;
             }
