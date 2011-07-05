@@ -7,7 +7,7 @@ Tested up to: 3.2
 Stable tag: 0.9.5.9
 
 Facebook AWD is an all in one Facebook capabilities for wordpress.
-Add Socials plugins and Open Graph to your site and increase your virality
+Add Socials plugins, Open Graph and FB connect to your site.
 
 == Description ==
 = This version is still under development =
