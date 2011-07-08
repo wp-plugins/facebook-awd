@@ -1152,7 +1152,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 						}
 					}
 				//thumbnails if thumb support and has one
-				if(current_theme_supports('post-thumbnails') && has_post_thumbnail()) {
+				if(has_post_thumbnail($post->ID)) {
                 	$thumbURL = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID),'');
                 	$img = $thumbURL[0];
                 }else{
