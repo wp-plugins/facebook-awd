@@ -1483,7 +1483,7 @@ msgstr "Il y a une erreur, vous devez activer XFBML dans les paramètres du plug
 #: inc/admin_plugins.php:404
 #@ AWD_facebook
 msgid "All that settings are defaults, you can redefine them in shortcodes, and themes functions"
-msgstr ""
+msgstr "Tout les paramètres sont globaux, vous pouvez les redéfinir avec des shortcodes, des widgets, et des fonctions php"
 
 #: inc/admin_plugins.php:405
 #@ AWD_facebook
@@ -1543,7 +1543,7 @@ msgstr "id des administrateurs (facebook)"
 #: inc/admin_settings.php:37
 #@ AWD_facebook
 msgid "Page Admin ID (facebook)"
-msgstr "Id par défaut des page d'administration (facebook)"
+msgstr "Id par défaut des pages d'administration (facebook)"
 
 #: inc/admin_settings.php:41
 #@ AWD_facebook
