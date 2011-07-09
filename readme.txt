@@ -131,5 +131,4 @@ Options:
 9. Widget Activity box
 
 == Changelog ==
-= 0.9.6 =
-[Changelog]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-6.html")
+= 0.9.6 [view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-6.html") =
