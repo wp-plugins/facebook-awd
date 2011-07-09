@@ -384,11 +384,6 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 add_action('admin_menu', array(&$this,'admin_menu'));
 add_action('admin_init', array(&$this,'admin_initialisation'));
 
-
-//js in front lib fcbk
-add_action('wp_print_scripts', array(&$this,'enqueue_fbjs'));
-add_action('admin_print_scripts', array(&$this,'enqueue_fbjs'));
-
 //filter for button post
 add_filter('the_content', array(&$this,'the_content'));
 add_action('comments_template', array(&$this,'the_comments_form'));

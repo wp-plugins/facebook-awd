@@ -53,6 +53,9 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 Need PHP 5.*
 
 == Frequently Asked Questions ==
+
+[Create an Application on Facebook](https://www.facebook.com/developers/createapp.php/ "Create an application")
+
 = Shortcodes: =
 `[AWD_likebutton]`
 
@@ -116,9 +119,6 @@ Options:
 * css
 
 
-
-[Create an Application on Facebook](https://www.facebook.com/developers/createapp.php/ "Create an application")
-
 == Screenshots ==
 1. Plugin Facebook AWD settings General tab
 2. Plugins Facebook settings General tab
@@ -131,4 +131,5 @@ Options:
 9. Widget Activity box
 
 == Changelog ==
-= Will start to 1.0 =
+= 0.9.6 =
+[Changelog](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-6.html")
