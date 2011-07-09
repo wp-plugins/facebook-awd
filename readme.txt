@@ -39,7 +39,7 @@ If you are a developer you can use the API of facebook and opengraph api directl
 = Widget And Themes functions: =
 You can use widgets to display socials plugins form Facebook
 
-* Like Button
+* [Like Button]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/utiliser-le-bouton-like.html")
 * Like Box
 * Activity Box
 * Login Button
@@ -116,7 +116,7 @@ Options:
 * nb
 * width
 * colorscheme
-* css
+* [css]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/css-fb-comments.html")
 
 
 == Screenshots ==
