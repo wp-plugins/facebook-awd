@@ -135,9 +135,14 @@
 	?>
 </div>
 
-<div id="message_help_like_box_url" class="hidden">
+<div id="message_help_comments_url" class="hidden">
 	<?php
-	_e("The url to like",$this->plugin_text_domain); 
+	_e("The default Url to comment on ex:http://www.ahwebdev.fr",$this->plugin_text_domain); 
+	?>
+</div>
+<div id="message_help_comments_nb" class="hidden">
+	<?php
+	_e("The number of comments to display",$this->plugin_text_domain); 
 	?>
 </div>
 

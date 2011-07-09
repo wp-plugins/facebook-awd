@@ -16,7 +16,7 @@
 				<li><a href="#activity_settings"><?php _e('Activity Feed',$this->plugin_text_domain); ?></a></li>
 				<li><a href="#login_button_settings"><?php _e('Login Button',$this->plugin_text_domain); ?></a></li>
 				<li><a href="#like_box_settings"><?php _e('Like Box',$this->plugin_text_domain); ?></a></li>
-				<li><a href="#"><?php _e('Comments',$this->plugin_text_domain); ?></a></li>
+				<li><a href="#comments_settings"><?php _e('Comments',$this->plugin_text_domain); ?></a></li>
 				<li><a href="#"><?php _e('Live Stream',$this->plugin_text_domain); ?></a></li>
 				<li><a href="#"><?php _e('Recommendations',$this->plugin_text_domain); ?></a></li>
 				<li><a href="#"><?php _e('Send Button',$this->plugin_text_domain); ?></a></li>
@@ -56,8 +56,8 @@
 					<p id="start_or_end_pages" class="hidden_state">
 						<label for="<?php echo $this->plugin_option_pref; ?>like_button_place_on_pages"><?php _e('Where do you want to place "Like" button ?',$this->plugin_text_domain); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_pages" value="top" <?php if($this->plugin_option['like_button_place_on_pages'] == 'top') echo 'checked="checked"'; ?>  /> <?php echo __('Top',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?> 
-						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_pages" value="bottom" <?php if($this->plugin_option['like_button_place_on_pages'] == 'bottom') echo 'checked="checked"'; ?>  /> <?php _e('Bottom',$this->plugin_text_domain); ?>
-						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_pages" value="both" <?php if($this->plugin_option['like_button_place_on_pages'] == 'both') echo 'checked="checked"'; ?>  /> <?php _e('Both',$this->plugin_text_domain); ?>
+						<br /><input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_pages" value="bottom" <?php if($this->plugin_option['like_button_place_on_pages'] == 'bottom') echo 'checked="checked"'; ?>  /> <?php _e('Bottom',$this->plugin_text_domain); ?>
+						<br /><input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_pages" value="both" <?php if($this->plugin_option['like_button_place_on_pages'] == 'both') echo 'checked="checked"'; ?>  /> <?php _e('Both',$this->plugin_text_domain); ?>
 					</p>
 					<p>
 						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_on_posts"><?php _e('Add "Like" button to posts',$this->plugin_text_domain); ?></label>
@@ -67,8 +67,8 @@
 					<p id="start_or_end_posts" class="hidden_state">
 						<label for="<?php echo $this->plugin_option_pref; ?>plugin_option_like_button_place_on_posts"><?php _e('Where do you want to place "Like" button ?',$this->plugin_text_domain); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_posts" value="top" <?php if($this->plugin_option['like_button_place_on_posts'] == 'top') echo 'checked="checked"'; ?>/> <?php echo __('Top',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?> 
-						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_posts" value="bottom" <?php if($this->plugin_option['like_button_place_on_posts'] == 'bottom') echo 'checked="checked"'; ?>/> <?php _e('Bottom',$this->plugin_text_domain); ?>
-						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_posts" value="both" <?php if($this->plugin_option['like_button_place_on_posts'] == 'both') echo 'checked="checked"'; ?>/> <?php _e('Both',$this->plugin_text_domain); ?>
+						<br /><input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_posts" value="bottom" <?php if($this->plugin_option['like_button_place_on_posts'] == 'bottom') echo 'checked="checked"'; ?>/> <?php _e('Bottom',$this->plugin_text_domain); ?>
+						<br /><input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_posts" value="both" <?php if($this->plugin_option['like_button_place_on_posts'] == 'both') echo 'checked="checked"'; ?>/> <?php _e('Both',$this->plugin_text_domain); ?>
 					</p>
 					<p>
 						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_on_custom_post_types"><?php _e('Add "Like" button to custom post types',$this->plugin_text_domain); ?></label>
@@ -78,8 +78,8 @@
 					<p id="start_or_end_custom_post_types" class="hidden_state">
 						<label for="<?php echo $this->plugin_option_pref; ?>like_button_place_on_custom_post_types"><?php _e('Where do you want to place "Like" button ?',$this->plugin_text_domain); ?></label>
 						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_custom_post_types" value="top" <?php if($this->plugin_option['like_button_place_on_custom_post_types'] == 'top') echo 'checked="checked"'; ?>  /> <?php echo __('Top',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?> 
-						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_custom_post_types" value="bottom" <?php if($this->plugin_option['like_button_place_on_custom_post_types'] == 'bottom') echo 'checked="checked"'; ?>  /> <?php _e('Bottom',$this->plugin_text_domain); ?>
-						<input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_custom_post_types" value="both" <?php if($this->plugin_option['like_button_place_on_custom_post_types'] == 'both') echo 'checked="checked"'; ?>  /> <?php _e('Both',$this->plugin_text_domain); ?>
+						<br /><input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_custom_post_types" value="bottom" <?php if($this->plugin_option['like_button_place_on_custom_post_types'] == 'bottom') echo 'checked="checked"'; ?>  /> <?php _e('Bottom',$this->plugin_text_domain); ?>
+						<br /><input type="radio" name="<?php echo $this->plugin_option_pref; ?>like_button_place_on_custom_post_types" value="both" <?php if($this->plugin_option['like_button_place_on_custom_post_types'] == 'both') echo 'checked="checked"'; ?>  /> <?php _e('Both',$this->plugin_text_domain); ?>
 					</p>
 					<p>
 						<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>like_button_exclude_post_type"><?php _e('Exclude Post types (for custom post_type, example: post,page,etc...)',$this->plugin_text_domain); ?></label>
@@ -148,10 +148,25 @@
 					<div id="#preview_like_button" class="awd_preview" style="text-align:center;">
 						<h2><?php _e('Preview',$this->plugin_text_domain);?></h2>
 						<?php echo $this->get_the_like_button(); ?>
-					</div>
-
-				
-				
+						<hr />
+						<div class="awd_pre" style="text-align:left;">
+							<p>
+							<strong>Shorcode: [AWD_likebutton]</strong>
+							<br /><br />
+							<u>Options:</u><br />
+							* url<br />
+							* send<br />
+							* width<br />
+							* colorscheme<br />
+							* faces<br />
+							* fonts<br />
+							* action<br />
+							* layout<br />
+							* height<br />
+							* xfbml<br />
+							</p>
+						</div>
+					</div>				
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -205,6 +220,22 @@
 					<div id="#preview_like_box" class="awd_preview" style="text-align:center;">
 						<h2><?php _e('Preview',$this->plugin_text_domain);?></h2>
 						<?php echo $this->get_the_like_box(); ?>
+						<hr />
+						<div class="awd_pre" style="text-align:left;">
+							<p>
+							<strong>Shorcode: [AWD_likebox]</strong>
+							<br /><br />
+							<u>Options:</u><br />
+							* url<br />
+							* width<br />
+							* colorscheme<br />
+							* faces<br />
+							* height<br />
+							* xfbml<br />
+							* stream<br />
+							* header<br />
+							</p>
+						</div>
 					</div>
 				</div>
 				<div class="clear"></div>
@@ -258,6 +289,24 @@
 					<div id="#preview_activity" class="awd_preview" style="text-align:center;">
 						<h2><?php _e('Preview',$this->plugin_text_domain);?></h2>
 						<?php echo $this->get_the_activity_box(); ?>
+						<hr />
+						<div class="awd_pre" style="text-align:left;">
+							<p>
+							<strong>Shorcode: [AWD_activity]</strong>
+							<br /><br />
+							<u>Options:</u><br />
+							* domain<br />
+							* width<br />
+							* colorscheme<br />
+							* faces<br />
+							* height<br />
+							* xfbml<br />
+							* fonts<br />
+							* border_color<br />
+							* header<br />
+							* recommendations<br />
+							</p>
+						</div>
 					</div>
 				</div>
 				<div class="clear"></div>
@@ -307,8 +356,24 @@
 								<h2 style="text-align:center;"><?php _e('Preview',$this->plugin_text_domain);?></h2>
 								<?php 
 								//echo the button or profile
+								$fcbk_content = '';
 								$fcbk_content = $this->get_the_login_button();
 								echo $fcbk_content;
+								?>
+								<hr />
+								<div class="awd_pre" style="text-align:left;">
+									<p>
+									<strong>Shorcode: [AWD_loginbutton]</strong>
+									<br /><br />
+									<u>Options:</u><br />
+									* profile_picture<br />
+									* width<br />
+									* faces<br />
+									* maxrow<br />
+									* logout_value<br />
+									</p>
+								</div>
+								<?php
 								//echo the code for custom css
 								echo '<br /><hr /><h2>'.__("Code html to help in css",$this->plugin_text_domain).'</h2><div class="awd_pre left">'.str_replace("/n","<br />",htmlentities($fcbk_content)).'</div>';
 								?>
@@ -322,6 +387,97 @@
 					}
 				}else{
 					echo '<div class="ui-state-error">'.__('You must enable FB Connect and set parameters in settings of the plugins',$this->plugin_text_domain).'</div>';
+				}
+				?>
+			</div>
+			<?php
+			/**
+			* login button settings
+			*/
+			?>
+			<div id="comments_settings">
+				<?php
+				//if FB parse xfbml
+				if($this->plugin_option['parse_xfbml'] == 1){
+				?>
+					<div class="block_50">
+						<p><i><?php _e('All that settings are defaults, you can redefine them in shortcodes, and themes functions',$this->plugin_text_domain); ?></i></p>
+						<p><i><?php _e('Note: Your themes must use the "comments_template()" function php to work.',$this->plugin_text_domain); ?></i></p>
+						<p>
+							<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>comments_url"><?php _e('URL to comment on',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('comments_url'); ?></label>
+							<input type="text" name="<?php echo $this->plugin_option_pref; ?>comments_url" value="<?php echo $this->plugin_option['comments_url']; ?>" size="30" />
+						</p>
+						<p>
+							<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>comments_nb"><?php _e('Number of posts',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('comments_nb'); ?></label>
+							<input type="text" name="<?php echo $this->plugin_option_pref; ?>comments_nb" value="<?php echo $this->plugin_option['comments_nb']; ?>" size="6" />
+						</p>
+						<p>
+							<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>comments_on_pages"><?php _e('Add "Comments Box" to pages',$this->plugin_text_domain); ?></label>
+							<input type="radio" id="<?php echo $this->plugin_option_pref; ?>comments_on_pages_on" name="<?php echo $this->plugin_option_pref; ?>comments_on_pages" value="1" <?php if($this->plugin_option['comments_on_pages'] == '1') echo 'checked="checked"'; ?> onclick="jQuery('#start_or_end_comments_pages').slideDown('fast');"/> <?php _e('Yes',$this->plugin_text_domain); ?>
+							<input type="radio" name="<?php echo $this->plugin_option_pref; ?>comments_on_pages" value="0" <?php if($this->plugin_option['comments_on_pages'] == '0') echo 'checked="checked"'; ?> onclick="jQuery('#start_or_end_comments_pages').slideUp('fast');"/> <?php _e('No',$this->plugin_text_domain); ?>
+						</p>
+						<p>
+							<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>comments_on_posts"><?php _e('Add "Comments Box" to posts',$this->plugin_text_domain); ?></label>
+							<input type="radio" id="<?php echo $this->plugin_option_pref; ?>comments_on_posts_on" name="<?php echo $this->plugin_option_pref; ?>comments_on_posts" value="1" <?php if($this->plugin_option['comments_on_posts'] == '1') echo 'checked="checked"'; ?> onclick="jQuery('#start_or_end_comments_posts').slideDown('fast');" /> <?php _e('Yes',$this->plugin_text_domain); ?>
+							<input type="radio" name="<?php echo $this->plugin_option_pref; ?>comments_on_posts" value="0" <?php if($this->plugin_option['comments_on_posts'] == '0') echo 'checked="checked"'; ?> onclick="jQuery('#start_or_end_comments_posts').slideUp('fast');" /> <?php _e('No',$this->plugin_text_domain); ?>
+						</p>
+						<p>
+							<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>comments_on_custom_post_types"><?php _e('Add "Comments Box" to custom post types',$this->plugin_text_domain); ?></label>
+							<input type="radio" id="<?php echo $this->plugin_option_pref; ?>comments_on_custom_post_types_on" name="<?php echo $this->plugin_option_pref; ?>comments_on_custom_post_types" value="1" <?php if($this->plugin_option['comments_on_custom_post_types'] == '1') echo 'checked="checked"'; ?> onclick="jQuery('#start_or_end_comments_custom_post_types').slideDown('fast');"/> <?php _e('Yes',$this->plugin_text_domain); ?>
+							<input type="radio" name="<?php echo $this->plugin_option_pref; ?>comments_on_custom_post_types" value="0" <?php if($this->plugin_option['comments_on_custom_post_types'] == '0') echo 'checked="checked"'; ?> onclick="jQuery('#start_or_end_comments_custom_post_types').slideUp('fast');"/> <?php _e('No',$this->plugin_text_domain); ?>
+						</p>
+						<p>
+							<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>comments_exclude_post_id"><?php _e('Exclude Posts or Pages ID (example: 12,46,234)',$this->plugin_text_domain); ?></label>
+							<input type="text" name="<?php echo $this->plugin_option_pref; ?>comments_exclude_post_id" value="<?php echo $this->plugin_option['comments_exclude_post_id']; ?>" size="30" />
+						</p>
+						<p>
+							<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>comments_width"><?php _e('Width of box',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_width'); ?></label>
+							<input type="text" name="<?php echo $this->plugin_option_pref; ?>comments_width" value="<?php echo $this->plugin_option['comments_width']; ?>" size="6" />
+						</p>
+						<p>
+							<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>comments_colorscheme"><?php _e('Color Scheme',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_colorscheme'); ?></label>
+							<input type="radio" name="<?php echo $this->plugin_option_pref; ?>comments_colorscheme" value="light" <?php if($this->plugin_option['comments_colorscheme'] == 'light') echo 'checked="checked"'; ?>  /> <?php echo __('Light',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?> 
+							<input type="radio" name="<?php echo $this->plugin_option_pref; ?>comments_colorscheme" value="dark" <?php if($this->plugin_option['comments_colorscheme'] == 'dark') echo 'checked="checked"'; ?>  /> <?php _e('Dark',$this->plugin_text_domain); ?>
+						</p>
+						<p>
+							<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>comments_send_notification_uid"><?php _e('User ID to send a notification to upon someone posting a comment. (Only one facebook uid allowed).',$this->plugin_text_domain); ?></label>
+							<input type="text" name="<?php echo $this->plugin_option_pref; ?>comments_send_notification_uid" value="<?php echo $this->plugin_option['comments_send_notification_uid']; ?>" size="30" />
+						</p>
+						<p>
+							<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>comments_css"><?php _e('URL of custom css file. (.css)',$this->plugin_text_domain); ?> <a href="http://www.ahwebdev.fr/plugins/documentation/facebook-awd/css-fb-comments.html" target="_blank"><img src="<?php echo $this->plugin_url_images; ?>info.png" style="vertical-align:top;"/></a></label>
+							<input type="text" name="<?php echo $this->plugin_option_pref; ?>comments_css" value="<?php echo $this->plugin_option['comments_css']; ?>" size="30" />
+						</p>
+					</div>
+					<div class="block_50">
+						<div id="#preview_login_button" class="awd_preview">
+							<h2 style="text-align:center;"><?php _e('Preview',$this->plugin_text_domain);?></h2>
+							<?php 
+							//echo the button or profile
+							$fcbk_content = '';
+							$fcbk_content = $this->get_the_comments_box("",array("comments_width"=>"420"));
+							echo $fcbk_content;
+							?>
+							<hr />
+							<div class="awd_pre" style="text-align:left;">
+								<p>
+								<strong>Shorcode: [AWD_comments]</strong>
+								<br /><br />
+								<u>Options:</u><br />
+								* url<br />
+								* xid<br />
+								* nb<br />
+								* width<br />
+								* colorscheme<br />
+								* css<br />
+								* notification_uid<br />
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="clear"></div>
+				<?php
+				}else{
+					echo '<div class="ui-state-error">'.__('You must enable XFBML parsing, in settings of the plugin',$this->plugin_text_domain).'</div>';
 				}
 				?>
 			</div>

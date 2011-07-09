@@ -142,7 +142,6 @@ if($this->plugin_option['connect_enable'] == '')
 if($this->plugin_option['open_graph_enable'] == '')
 	$this->plugin_option['open_graph_enable'] = 1;
 
-
 //****************************************************************************************
 //  like button
 //****************************************************************************************
@@ -174,6 +173,8 @@ if($this->plugin_option['like_button_action'] == '')
 	$this->plugin_option['like_button_action'] = 'like';
 if($this->plugin_option['like_button_layout'] == '')
 	$this->plugin_option['like_button_layout'] = 'standard';
+if($this->plugin_option['like_button_url'] == '')
+	$this->plugin_option['like_button_url'] = get_bloginfo('url');
 
 //****************************************************************************************
 //  like box
@@ -198,6 +199,7 @@ if($this->plugin_option['like_box_header'] == '')
 //****************************************************************************************
 //  activity
 //****************************************************************************************
+
 if($this->plugin_option['activity_colorscheme'] == '')
 	$this->plugin_option['activity_colorscheme'] = 'light';
 if($this->plugin_option['activity_width'] == '')
@@ -224,7 +226,17 @@ if($this->plugin_option['login_button_faces'] == '')
 if($this->plugin_option['login_button_logout_value'] == '')
 	$this->plugin_option['login_button_logout_value'] = __('Logout',$this->plugin_text_domain);
 
-
+//****************************************************************************************
+// comments
+//****************************************************************************************
+if($this->plugin_option['comments_url'] == '')
+	$this->plugin_option['comments_url'] = get_bloginfo('url');
+if($this->plugin_option['comments_colorscheme'] == '')
+	$this->plugin_option['comments_colorscheme'] = 'light';
+if($this->plugin_option['comments_width'] == '')
+	$this->plugin_option['comments_width'] = 500;
+if($this->plugin_option['comments_nb'] == '')
+	$this->plugin_option['comments_nb'] = 10;
 
 
 //****************************************************************************************
@@ -318,6 +330,17 @@ foreach($this->plugin_option as $option=>$value){
 //****************************************************************************************
 
 //****************************************************************************************
+//  Langs
+//****************************************************************************************
+if(empty($this->plugin_option['locale']))
+	if(defined('WPLANG'))
+		if(WPLANG==''){
+			$this->plugin_option['locale'] = "en_US";
+		}else{
+			$this->plugin_option['locale'] = WPLANG;
+		}
+
+//****************************************************************************************
 //  Desactive all xfbml
 //****************************************************************************************
 if($this->plugin_option['parse_xfbml'] == '' || $this->plugin_option['parse_xfbml'] == 0){
@@ -327,7 +350,9 @@ if($this->plugin_option['parse_xfbml'] == '' || $this->plugin_option['parse_xfbm
 	$this->plugin_option['like_box_xfbml'] = 0;
 	$this->plugin_option['activity_xfbml'] = 0;
 }
-$this->plugin_option['perms'] = rtrim('email,'.$this->plugin_option['perms'],',');
+$array_perms = explode(",",$this->plugin_option['perms']);
+if(!in_array('email',$array_perms))
+	$this->plugin_option['perms'] = rtrim('email,'.$this->plugin_option['perms'],',');
 
 //define current user in this object
 $this->current_user();
@@ -340,6 +365,14 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 	$this->init_php();
 	//perform login process
 	$this->login_user();
+	//set admin id to admin user if empty and if connect is used
+	if($this->plugin_option['admins'] == ''){
+		$admin_email = get_option('admin_email');
+		$admin_user = get_user_by('email', $admin_email);
+		$fbadmin_uid = get_user_meta($admin_user->ID,'fb_uid', true);
+		$this->plugin_option['admins'] = $fbadmin_uid;
+		$this->plugin_option['comments_send_notification_uid'] = $fbadmin_uid;
+	}
 	add_action('admin_print_footer_scripts',array(&$this,'connect_footer'));
 	add_action('wp_footer',array(&$this,'connect_footer'));
 	
@@ -358,6 +391,7 @@ add_action('admin_print_scripts', array(&$this,'enqueue_fbjs'));
 
 //filter for button post
 add_filter('the_content', array(&$this,'the_content'));
+add_action('comments_template', array(&$this,'the_comments_form'));
 
 //add action to get button like
 add_action('AWD_facebook_like_button', array(&$this,'print_the_like_button'));
@@ -373,4 +407,8 @@ add_shortcode('AWD_likebutton', array(&$this,'shortcode_like_button'));
 add_shortcode('AWD_likebox', array(&$this,'shortcode_like_box'));
 add_shortcode('AWD_activitybox', array(&$this,'shortcode_activity_box'));
 add_shortcode('AWD_loginbutton', array(&$this,'shortcode_login_button'));
+
+//filter hook for all options
+$this->plugin_option = apply_filters('AWD_options', $this->plugin_option);
+
 ?>

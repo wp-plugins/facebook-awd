@@ -43,7 +43,6 @@ msgstr "Extensions"
 
 #: AWD_facebook.php:148
 #: AWD_facebook.php:166
-#: inc/help/help_settings.php:37
 #: inc/help_settings.php:38
 #: inc/help_settings.php:58
 #@ AWD_facebook
@@ -81,118 +80,121 @@ msgstr "Open Graph Metas"
 msgid "Comments"
 msgstr "Commentaires"
 
-#: AWD_facebook.php:199
+#: AWD_facebook.php:191
 #@ AWD_facebook
 msgid "You can use Pattern code in fields, paste it where you need:"
 msgstr "Vous pouvez utiliser des raccourcis. Collez les ou vous en avez besoin"
 
-#: AWD_facebook.php:203
-#: AWD_facebook.php:212
+#: AWD_facebook.php:195
+#: AWD_facebook.php:204
+#: AWD_facebook.php:211
 #: AWD_facebook.php:219
-#: AWD_facebook.php:227
-#: AWD_facebook.php:240
+#: AWD_facebook.php:232
 #@ AWD_facebook
 msgid "Use blog name"
 msgstr "Utiliser le nom du blog"
 
-#: AWD_facebook.php:204
-#: AWD_facebook.php:213
+#: AWD_facebook.php:196
+#: AWD_facebook.php:205
+#: AWD_facebook.php:212
 #: AWD_facebook.php:220
-#: AWD_facebook.php:228
-#: AWD_facebook.php:241
+#: AWD_facebook.php:233
 #@ AWD_facebook
 msgid "Use blog description"
 msgstr "Utiliser la description du blog"
 
-#: AWD_facebook.php:205
-#: AWD_facebook.php:214
+#: AWD_facebook.php:197
+#: AWD_facebook.php:206
+#: AWD_facebook.php:213
 #: AWD_facebook.php:221
-#: AWD_facebook.php:229
-#: AWD_facebook.php:242
+#: AWD_facebook.php:234
 #@ AWD_facebook
 msgid "Use blog url"
 msgstr "Utiliser l'url du blog"
 
-#: AWD_facebook.php:206
+#: AWD_facebook.php:198
 #@ AWD_facebook
 msgid "Use term name"
 msgstr "Utiliser le nom du ”term”"
 
-#: AWD_facebook.php:207
+#: AWD_facebook.php:199
 #@ AWD_facebook
 msgid "Use term description"
 msgstr "Utiliser la description du ”term”"
 
-#: AWD_facebook.php:222
+#: AWD_facebook.php:214
 #@ AWD_facebook
 msgid "Use archive name"
 msgstr "Utiliser le nom de l'archive"
 
-#: AWD_facebook.php:230
-#: AWD_facebook.php:243
+#: AWD_facebook.php:222
+#: AWD_facebook.php:235
 #@ AWD_facebook
 msgid "Use title of post"
 msgstr "Utiliser le titre de l'article"
 
-#: AWD_facebook.php:231
-#: AWD_facebook.php:244
+#: AWD_facebook.php:223
+#: AWD_facebook.php:236
 #@ AWD_facebook
 msgid "Use excerpt"
 msgstr "Utiliser l'excerpt"
 
-#: AWD_facebook.php:232
-#: AWD_facebook.php:245
+#: AWD_facebook.php:224
+#: AWD_facebook.php:237
 #@ AWD_facebook
 msgid "Use featured image (if activated)"
 msgstr "Utiliser l'image de prsentation de l'article (featured image, si activé)"
 
-#: AWD_facebook.php:301
+#: AWD_facebook.php:293
 #@ AWD_facebook
 msgid "Image"
 msgstr "Image"
 
-#: AWD_facebook.php:314
+#: AWD_facebook.php:306
 #@ AWD_facebook
 msgid "Mp3 song"
 msgstr "Musique MP3"
 
-#: AWD_facebook.php:336
+#: AWD_facebook.php:328
 #@ AWD_facebook
 msgid "Video"
 msgstr "Vidéo"
 
-#: AWD_facebook.php:372
+#: AWD_facebook.php:364
 #@ AWD_facebook
 msgid "Disable Tags for this page ?"
 msgstr "Désactiver les metatags de cette page ?"
 
-#: AWD_facebook.php:376
+#: AWD_facebook.php:368
 #@ AWD_facebook
 msgid "Disable Tags for this type ? "
 msgstr "Désactiver les metatags de ce type de page ?"
 
-#: AWD_facebook.php:376
+#: AWD_facebook.php:368
 #@ AWD_facebook
 msgid "You can override settings on each page individually"
 msgstr "Vous pouvez redéfinir les réglages sur chaque page individuellement."
 
-#: AWD_facebook.php:380
-#: AWD_facebook.php:389
+#: AWD_facebook.php:372
+#: AWD_facebook.php:381
 #: inc/admin_plugins.php:53
 #: inc/admin_plugins.php:64
 #: inc/admin_plugins.php:75
 #: inc/admin_plugins.php:98
 #: inc/admin_plugins.php:108
-#: inc/admin_plugins.php:190
-#: inc/admin_plugins.php:195
-#: inc/admin_plugins.php:200
-#: inc/admin_plugins.php:228
-#: inc/admin_plugins.php:253
-#: inc/admin_plugins.php:280
-#: inc/admin_plugins.php:285
+#: inc/admin_plugins.php:205
+#: inc/admin_plugins.php:210
+#: inc/admin_plugins.php:215
+#: inc/admin_plugins.php:259
+#: inc/admin_plugins.php:284
+#: inc/admin_plugins.php:329
+#: inc/admin_plugins.php:334
+#: inc/admin_plugins.php:416
+#: inc/admin_plugins.php:421
+#: inc/admin_plugins.php:426
 #: inc/admin_settings.php:24
-#: inc/admin_settings.php:34
-#: inc/admin_settings.php:39
+#: inc/admin_settings.php:46
+#: inc/admin_settings.php:51
 #: inc/widgets/widget_activity.php:123
 #: inc/widgets/widget_like_box.php:102
 #: inc/widgets/widget_like_box.php:112
@@ -205,23 +207,26 @@ msgstr "Vous pouvez redéfinir les réglages sur chaque page individuellement."
 msgid "Yes"
 msgstr "Oui"
 
-#: AWD_facebook.php:381
-#: AWD_facebook.php:390
+#: AWD_facebook.php:373
+#: AWD_facebook.php:382
 #: inc/admin_plugins.php:54
 #: inc/admin_plugins.php:65
 #: inc/admin_plugins.php:76
 #: inc/admin_plugins.php:99
 #: inc/admin_plugins.php:109
-#: inc/admin_plugins.php:191
-#: inc/admin_plugins.php:196
-#: inc/admin_plugins.php:201
-#: inc/admin_plugins.php:229
-#: inc/admin_plugins.php:254
-#: inc/admin_plugins.php:281
-#: inc/admin_plugins.php:286
+#: inc/admin_plugins.php:206
+#: inc/admin_plugins.php:211
+#: inc/admin_plugins.php:216
+#: inc/admin_plugins.php:260
+#: inc/admin_plugins.php:285
+#: inc/admin_plugins.php:330
+#: inc/admin_plugins.php:335
+#: inc/admin_plugins.php:417
+#: inc/admin_plugins.php:422
+#: inc/admin_plugins.php:427
 #: inc/admin_settings.php:25
-#: inc/admin_settings.php:35
-#: inc/admin_settings.php:40
+#: inc/admin_settings.php:47
+#: inc/admin_settings.php:52
 #: inc/widgets/widget_activity.php:124
 #: inc/widgets/widget_like_box.php:103
 #: inc/widgets/widget_like_box.php:113
@@ -234,143 +239,145 @@ msgstr "Oui"
 msgid "No"
 msgstr "Non"
 
-#: AWD_facebook.php:388
+#: AWD_facebook.php:380
 #@ AWD_facebook
 msgid "Redefine Tags for this page ?"
 msgstr "Redéfinir les Tags pour cette page ?"
 
-#: AWD_facebook.php:395
+#: AWD_facebook.php:387
 #@ AWD_facebook
 msgid "Tags"
 msgstr "Tags"
 
-#: AWD_facebook.php:426
+#: AWD_facebook.php:418
+#: AWD_facebook.php:421
+#: AWD_facebook.php:424
 #@ AWD_facebook
 msgid "Use custom value instead default"
 msgstr "Utiliser une valeur personnalisée au lieu de celle par défaut."
 
-#: AWD_facebook.php:429
-#: AWD_facebook.php:456
-#: AWD_facebook.php:480
+#: AWD_facebook.php:427
+#: AWD_facebook.php:454
+#: AWD_facebook.php:478
 #@ AWD_facebook
 msgid "Upload"
 msgstr "Upload"
 
-#: AWD_facebook.php:447
+#: AWD_facebook.php:445
 #@ AWD_facebook
 msgid "Video Attachement"
 msgstr "Piece jointe: Vidéo"
 
-#: AWD_facebook.php:449
+#: AWD_facebook.php:447
 #@ AWD_facebook
 msgid "Facebook supports embedding video in SWF format only. File ith extension \".swf\""
 msgstr "Facebook ne supporte que les vidéos en format SWF."
 
-#: AWD_facebook.php:450
+#: AWD_facebook.php:448
 #@ AWD_facebook
 msgid "You must include a valid Image for your video in Tags section to be displayed in the news feed."
 msgstr "Vous devez spécifier une image valide dans les tags pour que votre vidéo apparaisse dans les flux d'activités facebook."
 
-#: AWD_facebook.php:472
+#: AWD_facebook.php:470
 #@ AWD_facebook
 msgid "Audio Attachement"
 msgstr "pièce jointe: Audio"
 
-#: AWD_facebook.php:474
+#: AWD_facebook.php:472
 #@ AWD_facebook
 msgid "In a similar fashion to Video you can add an audio file to your markup"
 msgstr "De la même manière que les vidéos, vous pouvez ajouter une fichier audio aux tags."
 
-#: AWD_facebook.php:500
+#: AWD_facebook.php:498
 #@ AWD_facebook
 msgid "code"
 msgstr "code"
 
-#: AWD_facebook.php:502
+#: AWD_facebook.php:500
 #@ AWD_facebook
 msgid "For products which have a UPC code or ISBN number"
 msgstr "Pour les page produit qui auraient des codes UPC ou ISBN"
 
-#: AWD_facebook.php:509
+#: AWD_facebook.php:507
 #@ AWD_facebook
 msgid "Contact infos"
 msgstr "Informations de contact"
 
-#: AWD_facebook.php:511
+#: AWD_facebook.php:509
 #@ AWD_facebook
 msgid "Consider including contact information if your page is about an entity that can be contacted."
 msgstr "Ajouter des tags contact dans votre page si c'est pour être contacté. (par exemple sur votre page contact.)"
 
-#: AWD_facebook.php:527
+#: AWD_facebook.php:525
 #@ AWD_facebook
 msgid "Location infos"
 msgstr "Lieux"
 
-#: AWD_facebook.php:529
+#: AWD_facebook.php:527
 #@ AWD_facebook
 msgid "This is useful if your pages is a business profile or about anything else with a real-world location. You can specify location via latitude and longitude, a full address, or both."
 msgstr "Ceci utile si vos pages sont des pages d'entreprises ou autre, et que l'on trouve sur des lieux réels. Vous pouvez spécifier la latitude, longitude, une adresse complète, ou les deux."
 
-#: AWD_facebook.php:661
-#: inc/init.php:225
+#: AWD_facebook.php:659
+#: inc/init.php:227
 #@ AWD_facebook
 msgid "Logout"
 msgstr "Se déconnecter"
 
-#: AWD_facebook.php:742
+#: AWD_facebook.php:740
 #, php-format
 #@ AWD_facebook
 msgid "You should enable FB connect in %sApp settings%s to use Login buttons"
 msgstr "Vous devez activer FB Connect dans les  %sparamètres%s pour utiliser les boutons Connexion"
 
-#: AWD_facebook.php:816
+#: AWD_facebook.php:813
 #@ AWD_facebook
 msgid "Options updated"
 msgstr "Options mises à jour"
 
-#: AWD_facebook.php:818
+#: AWD_facebook.php:815
 #@ AWD_facebook
 msgid "Options not updated there is an error..."
 msgstr "Options non mises à jour, il y a une erreur ..."
 
-#: AWD_facebook.php:1038
+#: AWD_facebook.php:1054
 #@ AWD_facebook
 msgid "Error No tags..."
 msgstr "Erreur Pas de tags ..."
 
-#: AWD_facebook.php:1228
+#: AWD_facebook.php:1245
 #@ AWD_facebook
 msgid "WARNING Image is emtpy"
 msgstr "AVERTISSEMENT L'image est vide"
 
-#: AWD_facebook.php:1230
+#: AWD_facebook.php:1247
 #@ AWD_facebook
 msgid "WARNING Title is empty"
 msgstr "AVERTISSEMENT Le titre est vide"
 
-#: AWD_facebook.php:1232
+#: AWD_facebook.php:1249
 #@ AWD_facebook
 msgid "WARNING Site Name is empty"
 msgstr "AVERTISSEMENT Le nom du site est vide"
 
-#: AWD_facebook.php:1234
+#: AWD_facebook.php:1253
 #@ AWD_facebook
 msgid "WARNING Admins id or app ID are empty"
 msgstr "AVERTISSEMENT les Identifiants Administrateurs ou l identifiant d'Application sont vides"
 
-#: AWD_facebook.php:1295
+#: AWD_facebook.php:1314
 #@ AWD_facebook
 msgid "There is an error, please verify the settings for the Like Button URL"
 msgstr "Il y a une erreur, Vérifiez les paramètres de l'URL de bouton Like"
 
-#: AWD_facebook.php:1343
-#: AWD_facebook.php:1349
+#: AWD_facebook.php:1408
+#: AWD_facebook.php:1414
 #@ AWD_facebook
 msgid "There is an error, please verify the settings for the Like Box URL"
 msgstr "Il y a une erreur, vérifiez l'URL de la Like box"
 
-#: AWD_facebook.php:1383
-#: AWD_facebook.php:1389
+#: AWD_facebook.php:1448
+#: AWD_facebook.php:1454
 #@ AWD_facebook
 msgid "There is an error, please verify the settings for the Acivity Box DOMAIN"
 msgstr "Il y a une erreur, vérifiez l'URL du plugin Acitvity"
@@ -421,8 +428,8 @@ msgid "There is no Taxonomies"
 msgstr "Il n'y a pas de taxinomies"
 
 #: inc/admin_open_graph.php:157
-#: inc/admin_plugins.php:332
-#: inc/admin_settings.php:57
+#: inc/admin_plugins.php:488
+#: inc/admin_settings.php:69
 #@ AWD_facebook
 msgid "Save all settings"
 msgstr "Enregistrer tous les paramètres"
@@ -492,8 +499,7 @@ msgid "Default Url to like"
 msgstr "URL par défaut à Aimer"
 
 #: inc/admin_plugins.php:48
-#: inc/admin_plugins.php:168
-#: inc/help/help_settings.php:26
+#: inc/admin_plugins.php:183
 #: inc/help_settings.php:27
 #: inc/widgets/widget_activity.php:61
 #: inc/widgets/widget_like_box.php:61
@@ -503,7 +509,7 @@ msgid "XFBML"
 msgstr "XFBML"
 
 #: inc/admin_plugins.php:49
-#: inc/admin_plugins.php:169
+#: inc/admin_plugins.php:184
 #: inc/widgets/widget_activity.php:62
 #: inc/widgets/widget_like_box.php:62
 #: inc/widgets/widget_like_button.php:62
@@ -520,18 +526,19 @@ msgstr "IFRAME"
 #: inc/admin_plugins.php:109
 #: inc/admin_plugins.php:133
 #: inc/admin_plugins.php:140
-#: inc/admin_plugins.php:169
-#: inc/admin_plugins.php:177
-#: inc/admin_plugins.php:191
-#: inc/admin_plugins.php:196
-#: inc/admin_plugins.php:201
-#: inc/admin_plugins.php:228
-#: inc/admin_plugins.php:233
-#: inc/admin_plugins.php:254
-#: inc/admin_plugins.php:281
-#: inc/admin_plugins.php:286
+#: inc/admin_plugins.php:184
+#: inc/admin_plugins.php:192
+#: inc/admin_plugins.php:206
+#: inc/admin_plugins.php:211
+#: inc/admin_plugins.php:216
+#: inc/admin_plugins.php:259
+#: inc/admin_plugins.php:264
+#: inc/admin_plugins.php:285
+#: inc/admin_plugins.php:330
+#: inc/admin_plugins.php:335
+#: inc/admin_plugins.php:439
 #: inc/admin_settings.php:25
-#: inc/admin_settings.php:40
+#: inc/admin_settings.php:52
 #@ AWD_facebook
 msgid "(default)"
 msgstr "(Par défaut)"
@@ -578,6 +585,7 @@ msgid "Exclude Categories or other terms (slug or id example: photos,34,50)"
 msgstr "Exclure des catégories ou d'autres terms (par exemple slogan ou ID: photos, 34,50)"
 
 #: inc/admin_plugins.php:93
+#: inc/admin_plugins.php:430
 #@ AWD_facebook
 msgid "Exclude Posts or Pages ID (example: 12,46,234)"
 msgstr "Exclure les Articles ou ou les Pages (exemple: 12,46,234)"
@@ -596,8 +604,9 @@ msgid "Colorscheme of button"
 msgstr "Couleurs du bouton"
 
 #: inc/admin_plugins.php:103
-#: inc/admin_plugins.php:177
-#: inc/admin_plugins.php:233
+#: inc/admin_plugins.php:192
+#: inc/admin_plugins.php:264
+#: inc/admin_plugins.php:439
 #: inc/widgets/widget_activity.php:78
 #: inc/widgets/widget_like_box.php:78
 #: inc/widgets/widget_like_button.php:89
@@ -606,8 +615,9 @@ msgid "Light"
 msgstr "Clair"
 
 #: inc/admin_plugins.php:104
-#: inc/admin_plugins.php:178
-#: inc/admin_plugins.php:234
+#: inc/admin_plugins.php:193
+#: inc/admin_plugins.php:265
+#: inc/admin_plugins.php:440
 #: inc/widgets/widget_activity.php:79
 #: inc/widgets/widget_like_box.php:79
 #: inc/widgets/widget_like_button.php:90
@@ -616,8 +626,8 @@ msgid "Dark"
 msgstr "Foncé"
 
 #: inc/admin_plugins.php:107
-#: inc/admin_plugins.php:189
-#: inc/admin_plugins.php:279
+#: inc/admin_plugins.php:204
+#: inc/admin_plugins.php:328
 #: inc/widgets/widget_like_box.php:100
 #: inc/widgets/widget_like_button.php:111
 #: inc/widgets/widget_login_button.php:47
@@ -626,7 +636,7 @@ msgid "Show Faces ?"
 msgstr "Afficher les visages?"
 
 #: inc/admin_plugins.php:112
-#: inc/admin_plugins.php:289
+#: inc/admin_plugins.php:338
 #: inc/widgets/widget_like_button.php:97
 #: inc/widgets/widget_login_button.php:67
 #@ AWD_facebook
@@ -687,120 +697,123 @@ msgid "Box Count"
 msgstr "Boîte Compteur"
 
 #: inc/admin_plugins.php:149
-#: inc/admin_plugins.php:206
-#: inc/admin_plugins.php:259
-#: inc/admin_plugins.php:307
+#: inc/admin_plugins.php:221
+#: inc/admin_plugins.php:290
+#: inc/admin_plugins.php:356
+#: inc/admin_plugins.php:453
 #@ AWD_facebook
 msgid "Preview"
 msgstr "Aperçu"
 
-#: inc/admin_plugins.php:165
+#: inc/admin_plugins.php:180
 #@ AWD_facebook
 msgid "The like box is added via shortcodes, widgets, and themes functions"
 msgstr "La Like box est ajoutée via des shortcodes, des widgets, et des fonctions php"
 
-#: inc/admin_plugins.php:172
+#: inc/admin_plugins.php:187
 #: inc/widgets/widget_like_box.php:69
 #: inc/widgets/widget_like_button.php:69
 #@ AWD_facebook
 msgid "Url of the page"
 msgstr "URL de la page"
 
-#: inc/admin_plugins.php:176
-#: inc/admin_plugins.php:232
+#: inc/admin_plugins.php:191
+#: inc/admin_plugins.php:263
 #: inc/widgets/widget_activity.php:76
 #: inc/widgets/widget_like_box.php:76
 #@ AWD_facebook
 msgid "Colorscheme of box"
 msgstr "Couleurs de la box"
 
-#: inc/admin_plugins.php:181
-#: inc/admin_plugins.php:219
+#: inc/admin_plugins.php:196
+#: inc/admin_plugins.php:250
+#: inc/admin_plugins.php:434
 #: inc/widgets/widget_activity.php:86
 #: inc/widgets/widget_like_box.php:86
 #@ AWD_facebook
 msgid "Width of box"
 msgstr "Largeur de la box"
 
-#: inc/admin_plugins.php:185
+#: inc/admin_plugins.php:200
 #: inc/widgets/widget_like_box.php:93
 #@ AWD_facebook
 msgid "Height of box (only for iframe)"
 msgstr "Hauteur de la box (seulement pour les iframes)"
 
-#: inc/admin_plugins.php:194
+#: inc/admin_plugins.php:209
 #: inc/widgets/widget_like_box.php:110
 #@ AWD_facebook
 msgid "Show Stream ?"
 msgstr "Montrer le flux d'activités ?"
 
-#: inc/admin_plugins.php:199
-#: inc/admin_plugins.php:227
+#: inc/admin_plugins.php:214
+#: inc/admin_plugins.php:258
 #: inc/widgets/widget_activity.php:121
 #: inc/widgets/widget_like_box.php:120
 #@ AWD_facebook
 msgid "Show Header ?"
 msgstr "Montrer l'entête Facebok ?"
 
-#: inc/admin_plugins.php:223
+#: inc/admin_plugins.php:254
 #: inc/widgets/widget_activity.php:93
 #@ AWD_facebook
 msgid "Height of box"
 msgstr "Hauteur de la box"
 
-#: inc/admin_plugins.php:237
+#: inc/admin_plugins.php:268
 #: inc/widgets/widget_activity.php:100
 #: inc/widgets/widget_like_button.php:140
 #@ AWD_facebook
 msgid "Font"
 msgstr "Police d'écriture"
 
-#: inc/admin_plugins.php:248
+#: inc/admin_plugins.php:279
 #: inc/widgets/widget_activity.php:114
 #@ AWD_facebook
 msgid "Border color"
 msgstr "Couleur de bordure"
 
-#: inc/admin_plugins.php:252
+#: inc/admin_plugins.php:283
 #@ AWD_facebook
 msgid "Show Recommendations ?"
 msgstr "Montrer les recommandations?"
 
-#: inc/admin_plugins.php:284
+#: inc/admin_plugins.php:333
 #: inc/widgets/widget_login_button.php:57
 #@ AWD_facebook
 msgid "Show Profile picture ?"
 msgstr "Afficher l'image de profil?"
 
-#: inc/admin_plugins.php:293
+#: inc/admin_plugins.php:342
 #: inc/widgets/widget_login_button.php:74
 #@ AWD_facebook
 msgid "Max Rows (faces)"
 msgstr "Rangées Max (visages)"
 
-#: inc/admin_plugins.php:297
+#: inc/admin_plugins.php:346
 #: inc/widgets/widget_login_button.php:81
 #@ AWD_facebook
 msgid "Logout Phrase"
 msgstr "Phrase de Déconnexion"
 
-#: inc/admin_plugins.php:301
+#: inc/admin_plugins.php:350
 #: inc/widgets/widget_login_button.php:88
 #@ AWD_facebook
 msgid "Custom Css"
 msgstr "CSS personnalisé"
 
-#: inc/admin_plugins.php:313
+#: inc/admin_plugins.php:378
 #@ AWD_facebook
 msgid "Code html to help in css"
 msgstr "Code HTML pour aider dans le css"
 
-#: inc/admin_plugins.php:320
+#: inc/admin_plugins.php:385
+#: inc/admin_plugins.php:480
 #@ AWD_facebook
 msgid "You must enable XFBML parsing, in settings of the plugin"
 msgstr "Vous devez activer l'analyse XFBML, dans les paramètres du plugin"
 
-#: inc/admin_plugins.php:324
+#: inc/admin_plugins.php:389
 #@ AWD_facebook
 msgid "You must enable FB Connect and set parameters in settings of the plugins"
 msgstr "Vous devez activer FB Connect et définir les paramètres dans les réglages de l'extension"
@@ -820,70 +833,67 @@ msgstr "Activer l'analyse XFBML?"
 msgid "If you set this option to \"No\" you will never be able to use xfbml"
 msgstr "Si vous définissez cette option sur Non vous ne pourrez jamais utiliser XFBML"
 
-#: inc/admin_settings.php:29
-#: inc/help/help_settings.php:15
 #: inc/help_settings.php:16
 #@ AWD_facebook
 msgid "App ID"
 msgstr "Identifiant de l'application"
 
-#: inc/admin_settings.php:33
+#: inc/admin_settings.php:45
 #@ AWD_facebook
 msgid "Activate Open Graph ?"
 msgstr "Activer Open Graph ?"
 
-#: inc/admin_settings.php:34
+#: inc/admin_settings.php:46
 #@ AWD_facebook
 msgid "(recommended)"
 msgstr "(Recommandé)"
 
-#: inc/admin_settings.php:38
+#: inc/admin_settings.php:50
 #@ AWD_facebook
 msgid "Activate FB Connect ?"
 msgstr "Activer FB Connect?"
 
-#: inc/admin_settings.php:44
+#: inc/admin_settings.php:56
 #@ AWD_facebook
 msgid "App SECRET KEY"
 msgstr "Clé secrète de l'application"
 
-#: inc/admin_settings.php:48
+#: inc/admin_settings.php:60
 #, php-format
 #@ AWD_facebook
 msgid "Facebook Connect permissions (example: publish_stream,user_photos,user_status) %sSee%s the list of permissions "
 msgstr "Facebook Connect autorisations (par exemple: publish_stream, user_photos, User_status) %svoir%s la liste des autorisations"
 
-#: inc/admin_settings.php:48
+#: inc/admin_settings.php:60
 #@ AWD_facebook
 msgid "(Default:none)"
 msgstr "(Par défaut: rien)"
 
-#: inc/classes/class.ahwebdev_wpplugin.php:92
+#: inc/classes/class.ahwebdev_wpplugin.php:98
 #@ AWD_facebook
 msgid "Developed by AH WEB DEV"
 msgstr "Développé par AH WEB DEV"
 
-#: inc/classes/class.ahwebdev_wpplugin.php:94
+#: inc/classes/class.ahwebdev_wpplugin.php:100
 #, php-format
 #@ AWD_facebook
 msgid "This version is under developpement, please report bug if you find it to help us. You can report bug %shere%s"
 msgstr "Cette version est cours de développement, s'il vous plaît si vous trouvez des bugs. Vous pouvez  le signaler %sici%s"
 
-#: inc/help/help_settings.php:16
+#: inc/help/help_settings.php:15
 #: inc/help_settings.php:17
 #, php-format
 #@ AWD_facebook
 msgid "This is the id of your application on Facebook, if you have not yet an application, you can create one %shere%s."
 msgstr "C'est l'ID de votre application sur Facebook, si vous n'avez pas encore une application, vous pouvez en créer une %sici%s"
 
-#: inc/help/help_settings.php:27
+#: inc/help/help_settings.php:20
 #: inc/help_settings.php:28
 #, php-format
 #@ AWD_facebook
 msgid "Use xfbml parsing, Only for old applications. Visit %sthis page%s"
 msgstr "Utiliser l'analyse XFBML, seulement pour les anciennes applications. Visitez cette %spage%s"
 
-#: inc/help/help_settings.php:38
 #: inc/help_settings.php:39
 #, php-format
 #@ AWD_facebook
@@ -908,7 +918,6 @@ msgstr ""
 "\\\tand you can target ads to people who like your content. The structured data you provide via the Open Graph Protocol \n"
 "\\\tdefines how your page will be represented on Facebook. %sRead more%s"
 
-#: inc/help/help_settings.php:58
 #: inc/help_settings.php:59
 #, php-format
 #@ AWD_facebook
@@ -1330,7 +1339,7 @@ msgstr "Bouton de connexion Faceook"
 msgid "Both"
 msgstr "Les deux"
 
-#: inc/admin_plugins.php:215
+#: inc/admin_plugins.php:246
 #@ AWD_facebook
 msgid "Domain"
 msgstr "Domaine"
@@ -1436,16 +1445,6 @@ msgstr "Montrer la Photo de l'utilisateur lorsqu'il est connecté"
 msgid "Show the profile stream for the public profile"
 msgstr "Voir le flux du profil pour le profil public"
 
-#: inc/help/help_plugins.php:140
-#@ AWD_facebook
-msgid "The url to like"
-msgstr "L'url à aimer"
-
-#: inc/help/help_settings.php:57
-#@ AWD_facebook
-msgid "FB Connect"
-msgstr "FB Connect"
-
 #: inc/init.php:32
 #@ AWD_facebook
 msgid "App IDs"
@@ -1465,4 +1464,126 @@ msgstr "Ajouter un bouton Like sur les custom posts types"
 #@ AWD_facebook
 msgid "Facebook Activity Box"
 msgstr "Activité récentes"
+
+#: AWD_facebook.php:1251
+#@ AWD_facebook
+msgid "WARNING Description is empty"
+msgstr "Attention La description est vide"
+
+#: AWD_facebook.php:1364
+#@ AWD_facebook
+msgid "There is an error, please verify the settings for the Comments box url"
+msgstr "Il y a une erreur, Vérifiez les paramètres de l'URL de la boîte de Commentaires"
+
+#: AWD_facebook.php:1366
+#@ AWD_facebook
+msgid "There is an error, you must enable XFBML in plugin settings"
+msgstr "Il y a une erreur, vous devez activer XFBML dans les paramètres du plugin"
+
+#: inc/admin_plugins.php:404
+#@ AWD_facebook
+msgid "All that settings are defaults, you can redefine them in shortcodes, and themes functions"
+msgstr ""
+
+#: inc/admin_plugins.php:405
+#@ AWD_facebook
+msgid "Note: Your themes must use the \"comments_template()\" function php to work."
+msgstr "Note: Votre thèmes doivent utiliser la fonction \\\"comments_template()\\\" php pour fonctionner."
+
+#: inc/admin_plugins.php:407
+#@ AWD_facebook
+msgid "URL to comment on"
+msgstr "URL à commenter"
+
+#: inc/admin_plugins.php:411
+#@ AWD_facebook
+msgid "Number of posts"
+msgstr "Nombre de commentaires à afficher"
+
+#: inc/admin_plugins.php:415
+#@ AWD_facebook
+msgid "Add \"Comments Box\" to pages"
+msgstr "Ajouter une \\\"Boîte de Commentaires\\\" sur les pages"
+
+#: inc/admin_plugins.php:420
+#@ AWD_facebook
+msgid "Add \"Comments Box\" to posts"
+msgstr "Ajouter une \\\"Boîte de Commentaires\\\" sur les articles"
+
+#: inc/admin_plugins.php:425
+#@ AWD_facebook
+msgid "Add \"Comments Box\" to custom post types"
+msgstr "Ajouter une \\\"Boîte de Commentaires\\\" sur les custom posts types"
+
+#: inc/admin_plugins.php:438
+#@ AWD_facebook
+msgid "Color Scheme"
+msgstr "Couleur"
+
+#: inc/admin_plugins.php:443
+#@ AWD_facebook
+msgid "User ID to send a notification to upon someone posting a comment. (Only one facebook uid allowed)."
+msgstr "Id utilisateur du compte facebook à notifier en cas de nouveau commentaires"
+
+#: inc/admin_plugins.php:447
+#@ AWD_facebook
+msgid "URL of custom css file. (.css)"
+msgstr "URL du fichier css. (.css)"
+
+#: inc/admin_settings.php:29
+#@ AWD_facebook
+msgid "App ID (facebook)"
+msgstr "Id de l'application (facebook)"
+
+#: inc/admin_settings.php:33
+#@ AWD_facebook
+msgid "Admins IDs (facebook)"
+msgstr "id des administrateurs (facebook)"
+
+#: inc/admin_settings.php:37
+#@ AWD_facebook
+msgid "Page Admin ID (facebook)"
+msgstr "Id par défaut des page d'administration (facebook)"
+
+#: inc/admin_settings.php:41
+#@ AWD_facebook
+msgid "locale"
+msgstr "Langues"
+
+#: inc/classes/class.ahwebdev_wpplugin.php:88
+#@ AWD_facebook
+msgid "Support this plugin"
+msgstr "Soutenez ce Plugin"
+
+#: inc/classes/class.ahwebdev_wpplugin.php:95
+#@ AWD_facebook
+msgid "Rate this plugin"
+msgstr "Noter ce plugin"
+
+#: inc/help/help_plugins.php:140
+#@ AWD_facebook
+msgid "The default Url to comment on ex:http://www.ahwebdev.fr"
+msgstr "L'URL par défaut à commenter ex: http://www.ahwebdev.fr"
+
+#: inc/help/help_plugins.php:145
+#@ AWD_facebook
+msgid "The number of comments to display"
+msgstr "Le nombre de commentaires à afficher"
+
+#: inc/help/help_settings.php:26
+#, php-format
+#@ AWD_facebook
+msgid "The Open Graph Protocol enables you to integrate your Web pages into the social graph. It is currently designed for Web pages representing profiles of real-world things — things like movies, sports teams, celebrities, and restaurants. Including Open Graph tags on your Web page, makes your page equivalent to a Facebook Page. This means when a user clicks a Like button on your page, a connection is made between your page and the user. Your page will appear in the ”Likes and Interests” section of the user’s profile, and you have the ability to publish updates to the user. Your page will show up in the same places that Facebook pages show up around the site (e.g. search), and you can target ads to people who like your content. The structured data you provide via the Open Graph Protocol defines how your page will be represented on Facebook. %sRead more%s"
+msgstr ""
+
+#: inc/help/help_settings.php:31
+#, php-format
+#@ AWD_facebook
+msgid "Facebook helps you simplify and enhance user registration and sign-in by using Facebook as your login system. Users no longer need to fill in yet another registration form or remember another username and password to use your site. As long as the user is signed into Facebook, they are automatically signed into your site as well. Using Facebook for login provides you with all the information you need to create a social, personalized experience from the moment the user visits your site in their browser. %sRead more%s"
+msgstr ""
+
+#: inc/help/help_settings.php:36
+#@ AWD_facebook
+msgid "Lang to use with Facebook (default to en_US, or equal to WPLANG Constant if set in wp-config.php)"
+msgstr "Langues à utiliser avec Facebook (par défaut à en_US, ou égale à la constante WPLANG  si elle est définie dans le fichier wp-config.php)"
 

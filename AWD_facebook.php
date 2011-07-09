@@ -182,15 +182,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		//js hook for admin fcbk		
 		add_action('admin_enqueue_scripts', array(&$this,'admin_enqueue_js'));
 		add_action('admin_enqueue_scripts', array(&$this,'admin_enqueue_css'));
-		/*add_action('load-'.$this->blog_admin_page_hook, array(&$this,'admin_enqueue_js'));
-		if($this->plugin_option['open_graph_enable'] == 1)
-			add_action('load-'.$this->blog_admin_opengraph_hook, array(&$this,'admin_enqueue_js'));
-		add_action('load-'.$this->blog_admin_insights_hook, array(&$this,'admin_enqueue_js'));
-		add_action('admin_print_styles-'.$this->blog_admin_page_hook, array(&$this,'admin_enqueue_css'));
-		if($this->plugin_option['open_graph_enable'] == 1)
-			add_action('admin_print_styles-'.$this->blog_admin_opengraph_hook, array(&$this,'admin_enqueue_css'));
-		add_action('admin_print_styles-'.$this->blog_admin_insights_hook, array(&$this,'admin_enqueue_css'));
-		*/
+		
 	}
 	/*
 	* Get help box
@@ -425,6 +417,12 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 						case 'app_id':
 							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : $this->plugin_option['app_id']).'" /> <i>'.__('Use custom value instead default',$this->plugin_text_domain).'</i>';
 						break;
+						case 'admins':
+							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : $this->plugin_option['admins']).'" /> <i>'.__('Use custom value instead default',$this->plugin_text_domain).'</i>';
+						break;
+						case 'page_id':
+							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : $this->plugin_option['admins_page_id']).'" /> <i>'.__('Use custom value instead default',$this->plugin_text_domain).'</i>';
+						break;
 						case 'image':
 							$input = '<input class="ogwidefat" id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" /><img id="'.$prefix.'upload_image" src="'.$this->plugin_url_images.'upload_image.png" alt="'.__('Upload',$this->plugin_text_domain).'" class="AWD_button_media"/>';
 						break;
@@ -619,7 +617,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function AWD_comments_content(){
 		?>
-		<fb:comments href="http://www.ahwebdev.fr/plugins/facebook-awd.html" num_posts="10" width=""></fb:comments>
+		<fb:comments href="http://www.ahwebdev.fr/plugins/facebook-awd.html" num_posts="10"></fb:comments>
 		<?php
 	}
 	/*
@@ -685,7 +683,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$maxrow = ($options['login_button_maxrow'] == '' ? $this->plugin_option['login_button_maxrow'] : $options['login_button_maxrow']);
 		$logout_value = ($options['login_button_logout_value'] == '' ? $this->plugin_option['login_button_logout_value'] : $options['login_button_logout_value']);
 		//we set faces options to false, if user not connected
-		$login_button = '<fb:login-button perms="'.rtrim('email,'.$this->plugin_option['perms'],',').'" show-faces="'.($this->me ? $show_faces : 'false').'" width="'.$width.'" max-rows="'.$maxrow.'" size="medium" ></fb:login-button>';
+		$login_button = '<fb:login-button perms="'.$this->plugin_option['perms'].'" show-faces="'.($this->me ? $show_faces : 'false').'" width="'.$width.'" max-rows="'.$maxrow.'" size="medium" ></fb:login-button>';
 		
 		//if some options defined
 		if(empty($options['case'])){
@@ -707,7 +705,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		switch($case){
 			case 'profile':
 				$html = '';
-				$html .= '<div class="AWD_profile">'."\n";
+				$html .= '<div class="AWD_profile '.$options['profile_css_classes'].'">'."\n";
 				if($show_profile_picture == 1 && $show_faces == 'false'){
 					$html .= '<div class="AWD_profile_image"><a href="'.$this->me['link'].'" target="_blank"><img src="https://graph.facebook.com/'.$this->uid.'/picture"></a></div>'."\n";
 				}
@@ -731,7 +729,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			
 			case 'login':
 				return '
-				<div class="AWD_facebook_login">
+				<div class="AWD_facebook_login '.$options['login_button_css_classes'].'">
 					<a href="'.$this->login_url.'" ><img src="http://static.ak.fbcdn.net/rsrc.php/zB6N8/hash/4li2k73z.gif"></a>
 				</div>'."\n";
 			break;
@@ -770,19 +768,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		wp_enqueue_script($this->plugin_slug.'-js-cookie',$this->plugin_url.'/js/jquery.cookie.js',array('jquery'));
 		wp_enqueue_script($this->plugin_slug.'-js',$this->plugin_url.'/js/facebook_awd.js',array('jquery'));
 	}
-	/*
-	 * FBJS every where
-	 */
-	public function enqueue_fbjs(){
-		//facebook script
-		if( defined('WPLANG') )
-			if(WPLANG==''){
-				$connect_lang = "en_US";
-			}else{
-				$connect_lang = WPLANG;
-			}
-		//wp_enqueue_script( 'AWD_facebook_js', 'http://connect.facebook.net/'.$connect_lang.'/all.js'.($this->plugin_option['parse_xfbml'] == 1 ? '#xfbml=1' : ''));
-	}
+	
 	/*
 	 * options metabox columns etc...
 	 */
@@ -801,6 +787,17 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			if(ereg('ogtags_',$__post) AND trim($val) !=''){
 				update_post_meta($post_id, $__post, $val);
 			}
+		}
+		
+		$permalink = get_permalink($post_id);
+		$url = 'http://developers.facebook.com/tools/lint/?url='.urlencode($permalink);
+		if(function_exists('url_init')){
+			$curl = curl_init();
+			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_URL, $url);
+			curl_exec($curl);
+			curl_close($curl);
 		}
 	}
 	/*
@@ -986,6 +983,23 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		return $content;
 	}
 	/*
+	* filter the comment form to add fbcomments
+	*/
+	public function the_comments_form(){
+		global $post;
+		$exclude_post_page_id = explode(",",$this->plugin_option['comments_exclude_post_id']);
+		if(!in_array($post->ID,$exclude_post_page_id)){
+			if($post->post_type == 'page' && $this->plugin_option['comments_on_pages']){
+				echo '<br />'.$this->get_the_comments_box($post);
+	        }elseif($post->post_type == 'post' && $this->plugin_option['comments_on_posts']){
+			    echo '<br />'.$this->get_the_comments_box($post);
+			}elseif($post->post_type != '' && $this->plugin_option['comments_on_custom_post_types']){
+				echo '<br />'.$this->get_the_comments_box($post);
+			}
+		}
+		
+	}
+	/*
 	* Add Js init fcbk to footer  ADMIN AND FRONT 
 	* Print debug if active here
 	*/
@@ -1013,12 +1027,14 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
                     }
                     <?php } ?>
                 });
+               
                 //add some js with plugin or admin
             	<?php do_action('AWD_custom_fbjs'); ?>
             };
+            
 			(function() {
                 var e = document.createElement('script');
-                e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+                e.src = document.location.protocol + '//connect.facebook.net/<?php echo $this->plugin_option["locale"]; ?>/all.js';
                 e.async = true;
                 document.getElementById('fb-root').appendChild(e);
               }());
@@ -1082,6 +1098,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 					//set url with a pattern
 					if($tag == 'url')
 						$option_value = '%CURRENT_URL%';
+					
+						
 					//proces the patern replace
 					$option_value = str_ireplace($array_pattern,$array_replace,$option_value);
 					//clean the \r\n value and replace by space
@@ -1112,7 +1130,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		return $options;
 	}
 	/*
-	* echo the open graph tags
+	* define the open graph tags
 	* option array() 
 	*/
 	public function define_open_graph_tags_header(){
@@ -1121,7 +1139,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$blog_name = get_bloginfo('name');
 		$blog_description = str_replace(array("\n","\r"),"",get_bloginfo('description'));
 		$home_url = home_url();
-	
 		switch(1){
 			//for posts
 			case is_front_page():
@@ -1152,7 +1169,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 						}
 					}
 				//thumbnails if thumb support and has one
-				if(has_post_thumbnail($post->ID)) {
+				if(current_theme_supports('post_thumbnails') && has_post_thumbnail($post->ID)) {
                 	$thumbURL = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID),'');
                 	$img = $thumbURL[0];
                 }else{
@@ -1230,6 +1247,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 				echo '<!-- '.__("WARNING Title is empty", $this->plugin_text_domain).' | '.$this->plugin_name.' -->'."\n";
 			if(empty($options['og:site_name']))
 				echo '<!-- '.__("WARNING Site Name is empty", $this->plugin_text_domain).' | '.$this->plugin_name.' -->'."\n";
+			if(empty($options['og:site_name']))
+				echo '<!-- '.__("WARNING Description is empty", $this->plugin_text_domain).' | '.$this->plugin_name.' -->'."\n";
 			if(empty($options['fb:admins']) AND empty($options['fb:app_id']))
 				echo '<!-- '.__("WARNING Admins id or app ID are empty", $this->plugin_text_domain).' | '.$this->plugin_name.' -->'."\n";
 			echo '<!-- '.$this->plugin_name.' END Open Graph Tags -->'."\n";
@@ -1288,11 +1307,11 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		if($this->plugin_option['like_button_content'] !='')
 			return $this->plugin_option['like_button_content'];
 		else if($xfbml && $this->plugin_option['parse_xfbml'] == 1){
-			return '<div id="AWD_like_button"><fb:like href="'.$href.'" send="'.$send.'" width="'.$width.'" colorscheme="'.$colorscheme.'" layout='.$layout.' show_faces="'.$show_faces.'" font="'.$fonts.'" action="'.$action.'"></fb:like></div>';
+			return '<div class="AWD_like_button '.$options['like_button_css_classes'].'"><fb:like href="'.$href.'" send="'.$send.'" width="'.$width.'" colorscheme="'.$colorscheme.'" layout='.$layout.' show_faces="'.$show_faces.'" font="'.$fonts.'" action="'.$action.'"></fb:like></div>';
 		}else if(!$xfbml || $this->plugin_option['parse_xfbml'] == 0){
-			return '<div id="AWD_like_button"><iframe src="http://www.facebook.com/plugins/like.php?href='.urlencode($href).'&amp;send='.$send.'&amp;layout='.$layout.'&amp;width='.$width.'&amp;show_faces='.$show_faces.'&amp;action='.$action.'&amp;colorscheme='.$colorscheme.'&amp;font='.$fonts.'&amp;height='.$height.'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:'.$width.'px; height:'.$height.'px;" allowTransparency="true"></iframe></div>';
+			return '<div class="AWD_like_button '.$options['like_button_css_classes'].'"><iframe src="http://www.facebook.com/plugins/like.php?href='.urlencode($href).'&amp;send='.$send.'&amp;layout='.$layout.'&amp;width='.$width.'&amp;show_faces='.$show_faces.'&amp;action='.$action.'&amp;colorscheme='.$colorscheme.'&amp;font='.$fonts.'&amp;height='.$height.'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:'.$width.'px; height:'.$height.'px;" allowTransparency="true"></iframe></div>';
 		}else
-			return '<div style="color:red;">'.__("There is an error, please verify the settings for the Like Button URL",$this->plugin_text_domain).'</div>';
+			return '<div class="AWD_like_button '.$options['like_button_css_classes'].'" style="color:red;">'.__("There is an error, please verify the settings for the Like Button URL",$this->plugin_text_domain).'</div>';
 		
 	}
 	/*
@@ -1300,6 +1319,52 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function print_the_like_button(){
 		echo $this->get_the_like_button();
+	}
+	//****************************************************************************************
+	//	COMMENT BOX
+	//****************************************************************************************
+	/*
+	* Return the like button shortcode
+	*/
+	public function shortcode_comments_box($atts=array()) {
+		$new_atts = array();
+		if(is_array($atts)){
+			extract(shortcode_atts(array("init"=>"init"), $atts )); 
+			foreach($atts as $att=>$value){
+				$new_atts['comments_'.$att] = $value;
+			}
+		}
+		//check if we want to use post in this shortcode or different url
+		if($new_atts['comments_url'] == '')
+			global $post;
+		return $this->get_the_comments_box($post,$new_atts);
+	}
+	
+	/*
+	* Return the like button
+	*/
+	public function get_the_comments_box($post="",$options=array()){
+		$href = get_permalink($post->ID);
+		if(is_object($post))
+		    $href = get_permalink($post->ID);
+		else    
+            $href =($options['comments_url'] == '' ? $this->plugin_option['comments_url'] : $options['comments_url']);
+		$xid =(int)$href;
+		$nb = ($options['comments_nb'] == '' ? $this->plugin_option['comments_nb'] : $options['comments_nb']);
+		$width = ($options['comments_width'] == '' ? $this->plugin_option['comments_width'] : $options['comments_width']);
+		$colorscheme = ($options['comments_colorscheme'] == '' ? $this->plugin_option['comments_colorscheme'] : $options['comments_colorscheme']);
+		$css = ($options['comments_css'] == '' ? $this->plugin_option['comments_css'] : $options['comments_css']);
+		$id_notif = ($options['send_notification_uid'] == '' ? $this->plugin_option['send_notification_uid'] : $options['send_notification_uid']);
+		
+		if($this->plugin_option['comments_content'] !='')
+			return 'class="AWD_comments '.$options['comments_css_classes'].'"'.$this->plugin_option['comments_content'].'</div>';
+		if($this->plugin_option['parse_xfbml'] == 1 && $href!=''){
+			return '<div class="AWD_comments '.$options['comments_css_classes'].'"><fb:comments xid="'.$xid.'" href="'.$href.'" num_posts="'.$nb.'" width="'.$width.'" colorscheme="'.$colorscheme.'" ></fb:comments></div>';
+		}elseif($href==''){
+			return '<div class="AWD_comments '.$options['comments_css_classes'].'" style="color:red;">'.__("There is an error, please verify the settings for the Comments box url",$this->plugin_text_domain).'</div>';
+		}elseif($this->plugin_option['parse_xfbml'] == 0){
+			return '<div class="AWD_comments '.$options['comments_css_classes'].'" style="color:red;">'.__("There is an error, you must enable XFBML in plugin settings",$this->plugin_text_domain).'</div>';
+		}
 	}
 	//****************************************************************************************
 	//	LIKE BOX 
@@ -1340,13 +1405,13 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		}
 		
 		if($this->plugin_option['like_box_url'] == '' && $href == '')
-			return '<div style="color:red;">'.__("There is an error, please verify the settings for the Like Box URL",$this->plugin_text_domain).'</div>';
+			return '<div class="AWD_like_box '.$options['like_box_css_classes'].'" style="color:red;">'.__("There is an error, please verify the settings for the Like Box URL",$this->plugin_text_domain).'</div>';
 		else if($xfbml && $this->plugin_option['parse_xfbml'] == 1){
-			return '<div id="AWD_like_box"><fb:like-box href="'.$href.'" width="'.$width.'" colorscheme="'.$colorscheme.'" show_faces="'.$show_faces.'" stream="'.$show_stream.'" header="'.$show_header.'"></fb:like-box></div>';
+			return '<div class="AWD_like_box '.$options['like_box_css_classes'].'"><fb:like-box href="'.$href.'" width="'.$width.'" colorscheme="'.$colorscheme.'" show_faces="'.$show_faces.'" stream="'.$show_stream.'" header="'.$show_header.'"></fb:like-box></div>';
 		}else if(!$xfbml || $this->plugin_option['parse_xfbml'] == 0){
-			return '<div id="AWD_like_box"><iframe src="http://www.facebook.com/plugins/likebox.php?href='.urlencode($href).'&amp;width='.$width.'&amp;colorscheme='.$colorscheme.'&amp;show_faces='.$show_faces.'&amp;stream='.$show_stream.'&amp;header='.$show_header.'&amp;height='.$height.'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:'.$width.'px; height:'.$height.'px;" allowTransparency="true"></iframe></div>';
+			return '<div class="AWD_like_box '.$options['like_box_css_classes'].'"><iframe src="http://www.facebook.com/plugins/likebox.php?href='.urlencode($href).'&amp;width='.$width.'&amp;colorscheme='.$colorscheme.'&amp;show_faces='.$show_faces.'&amp;stream='.$show_stream.'&amp;header='.$show_header.'&amp;height='.$height.'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:'.$width.'px; height:'.$height.'px;" allowTransparency="true"></iframe></div>';
 		}else
-			return '<div style="color:red;">'.__("There is an error, please verify the settings for the Like Box URL",$this->plugin_text_domain).'</div>';
+			return '<div style="color:red;" '.$options['like_box_css_classes'].'>'.__("There is an error, please verify the settings for the Like Box URL",$this->plugin_text_domain).'</div>';
 	}
 	//****************************************************************************************
 	//	ACTIVITY BOX 
@@ -1380,11 +1445,11 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 
 		
 		if($this->plugin_option['activity_domain'] == '' && $domain == '')
-			return '<div style="color:red;">'.__("There is an error, please verify the settings for the Acivity Box DOMAIN",$this->plugin_text_domain).'</div>';
+			return '<div style="color:red;" class="AWD_activity '.$options['activity_css_classes'].'">'.__("There is an error, please verify the settings for the Acivity Box DOMAIN",$this->plugin_text_domain).'</div>';
 		else if($xfbml && $this->plugin_option['parse_xfbml'] == 1){
-			return '<div id="AWD_activity"><fb:activity site="'.$domain.'" width="'.$width.'" height="'.$height.'" header="'.$show_header.'" font="'.$fonts.'" border_color="#'.$border_color.'" recommendations="'.$recommendations.'"></fb:activity></div>';
+			return '<div class="AWD_activity '.$options['activity_css_classes'].'"><fb:activity site="'.$domain.'" width="'.$width.'" height="'.$height.'" header="'.$show_header.'" font="'.$fonts.'" border_color="#'.$border_color.'" recommendations="'.$recommendations.'"></fb:activity></div>';
 		}else if(!$xfbml || $this->plugin_option['parse_xfbml'] == 0){
-			return '<div id="AWD_activity"><iframe src="http://www.facebook.com/plugins/activity.php?site='.$domain.'&amp;width='.$width.'&amp;height='.$height.'&amp;header='.$show_header.'&amp;colorscheme='.$colorscheme.'&amp;font='.$fonts.'&amp;border_color=%23'.$border_color.'&amp;recommendations='.$recommendations.'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:'.$width.'px; height:'.$height.'px;" allowTransparency="true"></iframe></div>';
+			return '<div class="AWD_activity '.$options['activity_css_classes'].'"><iframe src="http://www.facebook.com/plugins/activity.php?site='.$domain.'&amp;width='.$width.'&amp;height='.$height.'&amp;header='.$show_header.'&amp;colorscheme='.$colorscheme.'&amp;font='.$fonts.'&amp;border_color=%23'.$border_color.'&amp;recommendations='.$recommendations.'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:'.$width.'px; height:'.$height.'px;" allowTransparency="true"></iframe></div>';
 		}else
 			return '<div style="color:red;">'.__("There is an error, please verify the settings for the Acivity Box DOMAIN",$this->plugin_text_domain).'</div>';
 	}

@@ -1,10 +1,10 @@
 === Facebook AWD All in one ===
 Contributors: AHWEBDEV 
 Donate link: http://www.ahwebdev.fr/plugins/facebook-awd.html
-Tags: facebook, fb,opengraph, open graph, connect, like, box, all in one,comments,fbconnect, Facebook plugins,
+Tags: facebook, fb,opengraph, open graph, connect, like, box, all in one,comments,fbconnect, Facebook plugins,fb:comments
 Requires at least: 3.1
 Tested up to: 3.2
-Stable tag: 0.9.5.9
+Stable tag: 0.9.6
 
 Facebook AWD is an all in one Facebook capabilities for wordpress.
 Add Socials plugins, Open Graph and FB connect to your site.
@@ -12,7 +12,7 @@ Add Socials plugins, Open Graph and FB connect to your site.
 == Description ==
 = This version is still under development =
 Facebook AWD is an all in one Facebook capabilities for wordpress.  
-Add Socials plugins, Open Graph, and FB connect.
+Add Socials plugins, Open Graph, Comments and FB connect.
 
 = Socials plugins: =
 
@@ -20,6 +20,7 @@ Add Socials plugins, Open Graph, and FB connect.
 *   Like Box
 *   Activity Box
 *   Login Button
+*   Comments
 
 = Langs: =
 
@@ -103,6 +104,18 @@ Options:
 * faces
 * maxrow
 * logout_value
+
+`[AWD_comments]`
+Options:
+
+* url
+* xid
+* nb
+* width
+* colorscheme
+* css
+
+
 
 [Create an Application on Facebook](https://www.facebook.com/developers/createapp.php/ "Create an application")
 

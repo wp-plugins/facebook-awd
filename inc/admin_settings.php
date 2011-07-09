@@ -26,8 +26,20 @@
 					<i><?php _e('If you set this option to "No" you will never be able to use xfbml',$this->plugin_text_domain); ?></i>
 				</p>
 				<p>
-					<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>app_id"><?php _e('App ID',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('app_id'); ?></label>
+					<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>app_id"><?php _e('App ID (facebook)',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('app_id'); ?></label>
 					<input type="text" name="<?php echo $this->plugin_option_pref; ?>app_id" value="<?php echo $this->plugin_option['app_id']; ?>" size="30" />
+				</p>
+				<p>
+					<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>admins"><?php _e('Admins IDs (facebook)',$this->plugin_text_domain); ?></label>
+					<input type="text" name="<?php echo $this->plugin_option_pref; ?>admins" value="<?php echo $this->plugin_option['admins']; ?>" size="30" />
+				</p>
+				<p>
+					<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>page_id"><?php _e('Page Admin ID (facebook)',$this->plugin_text_domain); ?></label>
+					<input type="text" name="<?php echo $this->plugin_option_pref; ?>page_id" value="<?php echo $this->plugin_option['page_id']; ?>" size="30" />
+				</p>
+				<p>
+					<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>locale"><?php _e('locale',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('locale'); ?></label>
+					<input type="text" name="<?php echo $this->plugin_option_pref; ?>locale" value="<?php echo $this->plugin_option['locale']; ?>" size="6" />
 				</p>
 				<p>
 					<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>open_graph_enable"><?php _e('Activate Open Graph ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('open_graph'); ?></label>
