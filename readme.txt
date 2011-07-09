@@ -16,7 +16,7 @@ Add Socials plugins, Open Graph, Comments and FB connect.
 
 = Socials plugins: =
 
-*   Like Button
+*   [Like Button]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/utiliser-le-bouton-like.html")
 *   Like Box
 *   Activity Box
 *   Login Button
@@ -132,4 +132,4 @@ Options:
 
 == Changelog ==
 = 0.9.6 =
-[Changelog](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-6.html")
+[Changelog]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-6.html")
