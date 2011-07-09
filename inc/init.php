@@ -366,7 +366,7 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 	//perform login process
 	$this->login_user();
 	//set admin id to admin user if empty and if connect is used
-	if($this->plugin_option['admins'] == ''){
+	if($this->plugin_option['admins'] == '' || $this->plugin_option['comments_send_notification_uid'] ==''){
 		$admin_email = get_option('admin_email');
 		$admin_user = get_user_by('email', $admin_email);
 		$fbadmin_uid = get_user_meta($admin_user->ID,'fb_uid', true);
