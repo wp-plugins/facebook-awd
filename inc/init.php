@@ -371,6 +371,14 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 		$admin_user = get_user_by('email', $admin_email);
 		$fbadmin_uid = get_user_meta($admin_user->ID,'fb_uid', true);
 		$this->plugin_option['admins'] = $fbadmin_uid;
+	}
+	//try here to set the comments notifications uid from 
+	if($this->plugin_option['comments_send_notification_uid']== ''){
+		if(!$fbadmin_uid){
+			$admin_email = get_option('admin_email');
+			$admin_user = get_user_by('email', $admin_email);
+			$fbadmin_uid = get_user_meta($admin_user->ID,'fb_uid', true);
+		}
 		$this->plugin_option['comments_send_notification_uid'] = $fbadmin_uid;
 	}
 	add_action('admin_print_footer_scripts',array(&$this,'connect_footer'));
