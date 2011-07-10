@@ -3,7 +3,7 @@
 Plugin Name: AWD Facebook
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph, Plugins from facebook, and FB connect, with SDK JS AND SDK PHP Facebook
-Version: 0.9.6
+Version: 0.9.6.1
 Author: AH WEB DEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AH WEB DEV
@@ -1271,7 +1271,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			}
 		}
 		//check if we want to use post in this shortcode or different url
-		if($new_atts['like_button_href'] == '')
+		if($new_atts['like_button_url'] == '')
 			global $post;
 		return $this->get_the_like_button($post,$new_atts);
 	}
