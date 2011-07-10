@@ -410,6 +410,7 @@ add_shortcode('AWD_likebutton', array(&$this,'shortcode_like_button'));
 add_shortcode('AWD_likebox', array(&$this,'shortcode_like_box'));
 add_shortcode('AWD_activitybox', array(&$this,'shortcode_activity_box'));
 add_shortcode('AWD_loginbutton', array(&$this,'shortcode_login_button'));
+add_shortcode('AWD_comments', array(&$this,'shortcode_comments_box'));
 
 //filter hook for all options
 $this->plugin_option = apply_filters('AWD_options', $this->plugin_option);
