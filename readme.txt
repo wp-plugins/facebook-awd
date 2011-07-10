@@ -7,7 +7,7 @@ Tested up to: 3.2
 Stable tag: 0.9.6.3
 
 Facebook AWD is an all in one Facebook capabilities for wordpress.
-Add like button, like box, activity box, FB Comments, Open Graph and FB connect to your site.
+Add like button, like box, activity box, FB Comments, Open Graph and FB connect
 
 == Description ==
 = This version is still under development =
