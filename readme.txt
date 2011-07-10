@@ -4,7 +4,7 @@ Donate link: http://www.ahwebdev.fr/plugins/facebook-awd.html
 Tags: facebook, fb,opengraph, open graph, connect, like, box, all in one,comments,fbconnect, Facebook plugins,fb:comments
 Requires at least: 3.1
 Tested up to: 3.2
-Stable tag: 0.9.6
+Stable tag: 0.9.6.1
 
 Facebook AWD is an all in one Facebook capabilities for wordpress.
 Add Socials plugins, Open Graph and FB connect to your site.
@@ -131,4 +131,5 @@ Options:
 9. Widget Activity box
 
 == Changelog ==
-= 0.9.6 [view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-6.html") =
+= 0.9.6 =
+[view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-6.html")
