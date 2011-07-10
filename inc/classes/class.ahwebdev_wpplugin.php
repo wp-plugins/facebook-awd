@@ -85,17 +85,20 @@ class AHWEBDEV_wpplugin{
 	public function infos_content(){
 	    ?>
 	    <p><fb:like href="http://www.ahwebdev.fr/plugins/facebook-awd.html" send="true" width="255" show_faces="false" font="lucida grande"></fb:like></p>
-	    <p style="font-size:1.3em;"><?php _e('Support this plugin',$this->plugin_text_domain); ?></p>
-	    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+	    <p style="text-align:center; font-size:1.3em;"><?php _e('Support this plugin',$this->plugin_text_domain); ?>
+	    <form style="width:153px;" action="https://www.paypal.com/cgi-bin/webscr" method="post">
 			<input type="hidden" name="cmd" value="_s-xclick">
 			<input type="hidden" name="hosted_button_id" value="ZQ2VL33YXHJLC">
 			<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
 		</form>
+		</p>
 
-		<p style="font-size:1.3em;"><a href="http://wordpress.org/extend/plugins/facebook-awd/"><?php _e('Rate this plugin',$this->plugin_text_domain); ?></a></p>
+		<p style="text-align:center;font-size:1.3em;"><a href="http://wordpress.org/extend/plugins/facebook-awd/"><?php _e('Rate this plugin',$this->plugin_text_domain); ?></a></p>
 
 
-	    <p><a href="http://www.ahwebdev.fr"><?php _e('Developed by AH WEB DEV',$this->plugin_text_domain); ?></a></p>
+	    <p style="text-align:center;">
+	    <a href="http://www.ahwebdev.fr"><img src="http://www.ahwebdev.fr/wp-content/themes/ahwebdev/images/logos/logo-flat-ahwebdev.png" width="150" height="63" style="vertical-align:middle"/></a>
+	    </p>
 	    <p><a href="mailto:contact@ahwebdev.fr" title="Mail">Contact</a></p>
 	    <p><?php printf(__('This version is under developpement, please report bug if you find it to help us. You can report bug %shere%s',$this->plugin_text_domain),'<a href="http://wordpress.org/tags/facebook-awd?forum_id=10#postform">','</a>'); ?></p>
 	    <?php
