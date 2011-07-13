@@ -37,7 +37,7 @@ When a user logging in to your site using Facebook, this plugin will auto regist
 If you are a developer you can use the API of facebook and opengraph api directly from your themes and plugins. Simply use defined objects set by this plugin. (Javascript SDK AND PHP SDK) 
 
 = Widget And Shortcodes: =
-You can use widgets and shotcode to display Facebook socials plugins
+You can use widgets and shotcodes to display Facebook socials plugins
 
 * [Like Button]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/utiliser-le-bouton-like.html") [AWD_likebutton]
 * Like Box [AWD_likebox]
