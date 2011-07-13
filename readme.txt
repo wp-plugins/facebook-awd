@@ -36,13 +36,13 @@ if FB connect enable, you can ask special permissions, and link Facebook user wi
 When a user logging in to your site using Facebook, this plugin will auto register user. If user unregister from Facebook, his account will be not remove.
 If you are a developer you can use the API of facebook and opengraph api directly from your themes and plugins. Simply use defined objects set by this plugin. (Javascript SDK AND PHP SDK) 
 
-= Widget And Themes functions: =
-You can use widgets to display socials plugins form Facebook
+= Widget And Shortcodes: =
+You can use widgets and shotcode to display Facebook socials plugins
 
-* [Like Button]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/utiliser-le-bouton-like.html")
-* Like Box
-* Activity Box
-* Login Button
+* [Like Button]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/utiliser-le-bouton-like.html") [AWD_likebutton]
+* Like Box [AWD_likebox]
+* Activity Box [AWD_activitybox]
+* Login Button [AWD_loginbutton]
 
 = Multisite compatible: =
 This plugin is compatible with Wordpress multisite.
