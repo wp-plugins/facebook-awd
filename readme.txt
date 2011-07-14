@@ -10,11 +10,14 @@ Facebook AWD is an all in one Facebook capabilities for wordpress.
 Add like button, like box, activity box, FB Comments, Open Graph and FB connect
 
 == Description ==
-= This version is still under development =
 Facebook AWD is an all in one Facebook capabilities for wordpress.  
-Add Socials plugins, Open Graph, Comments and FB connect.
+Add Socials plugins, OpenGraph, Comments and FB connect.
+Easy to install and setup. Use Iframe or Xfbml
+Add Like button and comments to pages, posts and custom posts types, at top, bottom or both.
+Widgets and Shortcodes available for each socials plugins.
 
-= Socials plugins: =
+ 
+= Socials plugins iframe or xfbml: =
 
 *   [Like Button]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/utiliser-le-bouton-like.html")
 *   Like Box
