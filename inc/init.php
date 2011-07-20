@@ -362,7 +362,7 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 		add_action('admin_notices',array(&$this,'message_register_disabled'));
 	}
 	//init OAuth SDK php
-	$this->init_php();
+	$this->sdk_init();
 	//perform login process
 	$this->login_user();
 	//set admin id to admin user if empty and if connect is used

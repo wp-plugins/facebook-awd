@@ -3,11 +3,12 @@
 Plugin Name: Facebook AWD All in One
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph, Plugins from facebook, and FB connect, with SDK JS AND SDK PHP Facebook
-Version: 0.9.6.3
+Version: 0.9.6.4
 Author: AH WEB DEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AH WEB DEV
 Text Domain: AWD_facebook
+Last modification: 15/07/2011
 */
 
 /* Class Parent LIB */
@@ -20,47 +21,47 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
     //****************************************************************************************
 	//	VARS
 	//****************************************************************************************
-    /*
+    /***
     * public
     * Name of the plugin
     */
     public $plugin_name = 'Facebook';
-    /*
+    /**
     * public
     * slug of the plugin
     */
     public $plugin_slug = 'awd_fcbk';
-    /*
+    /**
     * private
     * preffix blog option
     */
     private $plugin_option_pref = 'awd_fcbk_option_';
-    /*
+    /**
     * public
     * preffix blog option
     */
     public $plugin_page_admin_name = 'Facebook Admin';
-    /*
+    /**
     * public
     * preffix blog option
     */
     public $plugin_text_domain = 'AWD_facebook';
-    /*
+    /**
     * private
     * position of the menu in admin
     */
     private $blog_admin_hook_position;
-    /*
+    /**
     * private
     * hook admin
     */
     public $blog_admin_page_hook;
-    /*
+    /**
     * public
     * Debug this object
     */
     public $debug_active = false;
-    /*
+    /**
     * public
     * Debug and add list of debug in this array
     * if $debug_active == true, so we write $debug_echo in footer
@@ -71,7 +72,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	//****************************************************************************************
 	//	INIT
 	//****************************************************************************************
-	/*
+	/**
 	 * plugin construct
 	 */
 	public function __construct(){		
@@ -83,24 +84,18 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		//like box widget register
 		add_action('widgets_init',  array(&$this,'register_AWD_facebook_widgets'));
 	}
-	/*
+	/**
 	 * plugin init
 	 */
 	public function initial(){
 		global $wpdb;
 		include_once(dirname(__FILE__).'/inc/init.php');
 	}
-	/*
-	 * plugin version
-	 */
-	public function get_version(){
-		if (!function_exists('get_plugins'))
-	    	require_once(ABSPATH.'wp-admin/includes/plugin.php');
-	    $plugin_folder = get_plugins('/'.plugin_basename( dirname( __FILE__ )));
-	    $plugin_file = basename( ( __FILE__ ) );
-	    return $plugin_folder[$plugin_file]['Version'];
-	}
-	/*
+	
+	//****************************************************************************************
+	//	MESSAGE ADMIN
+	//****************************************************************************************
+	/**
 	* missing config notices
 	*/
 	public function missing_config(){
@@ -110,7 +105,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		</div> 
 		<?php	
 	}
-	/*
+	/**
 	* missing config notices
 	*/
 	public function message_register_disabled(){
@@ -120,7 +115,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		</div> 
 		<?php	
 	}
-	/*
+	/**
 	* Get the help
 	* $elem string element to get (id of the div in help pages) 
 	* $class string class name global for help span
@@ -134,22 +129,26 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	//****************************************************************************************
 	//	ADMIN
 	//****************************************************************************************
-	/*
-	 * Admin plugin init
+	/**
+	 * Admin plugin init menu
 	 * call form init.php
 	 */
 	public function admin_menu(){
 		//admin hook
-
 		$this->blog_admin_page_hook = add_menu_page($this->plugin_page_admin_name, __($this->plugin_name,$this->plugin_text_domain), 'administrator', $this->plugin_slug, array($this,'admin_content'), $this->plugin_url_images.'facebook-mini.png',$this->blog_admin_hook_position);
 		$this->blog_admin_settings_hook = add_submenu_page($this->plugin_slug, __('Settings',$this->plugin_text_domain), __('Settings',$this->plugin_text_domain), 'administrator', $this->plugin_slug);
 		$this->blog_admin_plugins_hook = add_submenu_page($this->plugin_slug, __('Plugins',$this->plugin_text_domain), __('Plugins',$this->plugin_text_domain), 'administrator', $this->plugin_slug.'_plugins', array($this,'admin_content'));
 		if($this->plugin_option['open_graph_enable'] == 1)
 			$this->blog_admin_opengraph_hook = add_submenu_page($this->plugin_slug, __('Open Graph',$this->plugin_text_domain), __('Open Graph',$this->plugin_text_domain), 'administrator', $this->plugin_slug.'_open_graph', array($this,'admin_content'));
+	    $this->blog_admin_support_hook = add_submenu_page($this->plugin_slug, __('Support',$this->plugin_text_domain), __('Support',$this->plugin_text_domain), 'administrator', $this->plugin_slug.'_support', array($this,'admin_content'));
+
 		//$this->blog_admin_insights_hook = add_submenu_page($this->plugin_slug, __('Insights',$this->plugin_text_domain), __('Insights',$this->plugin_text_domain), 'administrator', $this->plugin_slug.'_insights', array($this,'admin_content'));
 		//$this->blog_admin_faq_hook = add_submenu_page($this->plugin_slug, __('FAQ',$this->plugin_text_domain), __('FAQ',$this->plugin_text_domain), 'administrator', $this->plugin_slug.'_faq', array($this,'admin_content'));
 		
 	}
+	/**
+	* Admin initialisation
+	*/
 	public function admin_initialisation(){
 		
 		//sidebar boxes
@@ -161,10 +160,14 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		add_meta_box($this->plugin_slug."_plugins", __('Plugins Settings',$this->plugin_text_domain), array(&$this,'plugins_content'),  $this->plugin_slug.'_plugins_box' , 'normal', 'core');
 		add_meta_box($this->plugin_slug."_settings", __('Settings',$this->plugin_text_domain), array(&$this,'settings_content'), $this->plugin_slug.'_settings_box' , 'normal', 'core');
 		
+		
 		//open graph meta box
 		if($this->plugin_option['open_graph_enable'] == 1)
 			add_meta_box($this->plugin_slug."_open_graph", __('Open Graph',$this->plugin_text_domain), array(&$this,'open_graph_content'),  $this->plugin_slug.'_open_graph_box' , 'normal', 'core');
 		
+		//support box
+		add_meta_box($this->plugin_slug."_support",  __('Comments',$this->plugin_text_domain), array(&$this,'support_content'),  $this->plugin_slug.'_support_box' , 'normal', 'core');
+
 		//add post page and custom post type box opengraph meta
 		if($this->plugin_option['open_graph_enable'] == 1){
 			$post_types = get_post_types();
@@ -173,18 +176,12 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			}
 			add_action('save_post', array(&$this,'save_options_post_editor'));
 		}
-		
-		//if xfbml show comment box for ths plugin
-		if($this->plugin_option['parse_xfbml'] == 1){
-			add_meta_box($this->plugin_slug."_comment",  __('Comments',$this->plugin_text_domain), array(&$this,'AWD_comments_content'),  $this->plugin_slug.'_box' , 'normal', 'core');
-		}
-		
 		//js hook for admin fcbk		
 		add_action('admin_enqueue_scripts', array(&$this,'admin_enqueue_js'));
 		add_action('admin_enqueue_scripts', array(&$this,'admin_enqueue_css'));
 		
 	}
-	/*
+	/**
 	* Get help box
 	*/
 	public function get_the_help_box($type){
@@ -239,7 +236,619 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		}
 		return $html;
 	}
+	/**
+	* Admin content
+	*/
+	public function admin_content(){
+		global $message;
+		$page = $_GET['page'];
+		//add_filter('screen_layout_columns', array(&$this, 'screen_layout'));
+      	?>
+		<div class="AWD_facebook_wrap" id="AWD_facebook_wrap">
+			<?php 
+			if($this->message){
+				echo $this->message;
+				unset($this->message); 
+			}
+			
+			?>
+			<div id="poststuff" class="metabox-holder has-right-sidebar">
+				<form method="post">
+					<div id="side-info-column" class="inner-sidebar">
+						<div class="header_AWD_facebook_wrap">
+							<h2 style="color:#627AAD;margin-top:0px;">
+								<img style="vertical-align:middle;" src="<?php echo $this->plugin_url_images; ?>facebook.png" alt="facebook logo" class="AWD_button_media" /><?php _e($this->plugin_page_admin_name,$this->plugin_text_domain); ?>
+								<sup style="color:#627AAD;font-size:0.6em;">v<?php echo $this->get_version(); ?></sup>
+							</h2>
+						</div>
+			
+						<?php
+							//side bar always here
+							do_meta_boxes($this->plugin_slug.'_box','side',null);
+						?>
+					</div>
+					<div id="post-body" class="has-sidebar">
+						<div id="post-body-content" class="has-sidebar-content">
+							<?php 
+							if($page == $this->plugin_slug)
+								do_meta_boxes($this->plugin_slug.'_settings_box','normal',null);
+							elseif($page == $this->plugin_slug.'_open_graph')
+								do_meta_boxes($this->plugin_slug.'_open_graph_box','normal',null);
+							elseif($page == $this->plugin_slug.'_plugins')
+								do_meta_boxes($this->plugin_slug.'_plugins_box','normal',null);
+							elseif($page == $this->plugin_slug.'_support')
+								do_meta_boxes($this->plugin_slug.'_support_box','normal',null);
+							
+							do_meta_boxes($this->plugin_slug.'_box','normal',null);
+							?>
+					   </div>
+					</div>
+				</form>
+			</div>
+			<script type="text/javascript">
+				//<![CDATA[
+				jQuery(document).ready( function($) {
+					// close postboxes that should be closed
+					$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
+					// postboxes setup
+					postboxes.add_postbox_toggles('<?php echo $this->blog_admin_page_hook; ?>');
+				});
+				//]]>
+			</script>
+		</div>
+		<div class="clear"></div>
+		<?php
+	}
+	/**
+	* Open graph admin content
+	*/
+	public function open_graph_content(){
+		include_once(dirname(__FILE__).'/inc/admin_open_graph.php');
+	}
+	/**
+	* Comments on plugins contents 
+	*/
+	public function support_content(){
+		if($this->plugin_option['parse_xfbml'] == 1){
+			echo '<fb:comments href="http://www.ahwebdev.fr/plugins/facebook-awd.html" num_posts="20"></fb:comments>';
+		}else{
+			echo '<div style="color:red;">'.sprintf(__('You must activate xfbml if you want to see support form (FB:comments) Or %sgo to this page%s at bottom','<a href="http://ahwebdev.fr/plugins/facebook-awd.html">','</a>'),$this->plugin_text_domain).'</div>';
+		} 
+	}
+	/**
+	* Activity contents
+	*/
+	public function activity_content(){
+		$url = str_replace('http://','',home_url());
+		if($this->plugin_option['parse_xfbml'] == 1){
+			?>
+			<fb:activity site="<?php echo $url; ?>" width="258" height="200" header="false" font="lucida grande" border_color="#F9F9F9" recommendations="true"></fb:activity>
+		<?php }else{ ?>
+			<iframe src="http://www.facebook.com/plugins/activity.php?site=<?php echo $url; ?>&amp;width=258&amp;height=300&amp;header=false&amp;colorscheme=light&amp;font=lucida+grande&amp;border_color=%23F9F9F9&amp;recommendations=true" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:258px; height:200px;" allowTransparency="true"></iframe>
+			<?php 
+		}
+	}
+	/**
+	* plugin Options
+	*/
+	public function plugins_content(){
+		include_once(dirname(__FILE__).'/inc/admin_plugins.php');
+		include_once(dirname(__FILE__).'/inc/help/help_plugins.php');
+	}
+	/**
+	* Settings Options
+	*/
+	public function settings_content(){
+		include_once(dirname(__FILE__).'/inc/admin_settings.php');
+		include_once(dirname(__FILE__).'/inc/help/help_settings.php');
+	}
+	/**
+	* Admin fcbk info content
+	*/
+	public function fcbk_content(){
+		$options = array();
+		$options['login_button_width'] = 200;
+		$options['login_button_profile_picture'] = 1;
+		$options['login_button_faces'] = 'false';
+		$options['login_button_maxrow'] = 1;
+		$options['login_button_logout_value'] = __("Logout",$this->plugin_text_domain);
+		$this->print_the_login_button($options);
+	}
+	/**
+	 * Admin css
+	 */
+	public function admin_enqueue_css(){
+		wp_enqueue_style($this->plugin_slug.'-admin', $this->plugin_url.'/css/admin_styles.css',array($this->plugin_slug.'-jquery-ui'));
+		wp_enqueue_style($this->plugin_slug.'-jquery-ui', $this->plugin_url.'/css/jquery-ui-1.8.12.custom.css');
+		wp_enqueue_style('thickbox'); 
+	}
+	/**
+	 * JS all admin
+	 */
+	public function admin_enqueue_js(){
+		wp_enqueue_script('media-upload');
+		wp_enqueue_script('thickbox');
+		wp_enqueue_script('common');
+		wp_enqueue_script('wp-list');
+		wp_enqueue_script('postbox');
+		wp_enqueue_script($this->plugin_slug.'-jquery-ui',$this->plugin_url.'/js/jquery-ui-1.8.12.custom.min.js',array('jquery'));
+		wp_enqueue_script($this->plugin_slug.'-js-cookie',$this->plugin_url.'/js/jquery.cookie.js',array('jquery'));
+		wp_enqueue_script($this->plugin_slug.'-js',$this->plugin_url.'/js/facebook_awd.js',array('jquery'));
+	}
+	/**
+	 * options metabox columns etc...
+	 */
+	public function screen_layout($columns, $screen) {
+		if ($screen == $this->$blog_admin_page_hook) {
+			$columns[$this->$blog_admin_page_hook] = 2;
+		}
+		return $columns;
+	}
+	/**
+	* Save the post custom from open graph form
+	*/
+	public function save_options_post_editor($post_id){
+		foreach($_POST as $__post=>$val){
+			//should have ogtags in prefix present to be saved
+			if(ereg('ogtags_',$__post) AND trim($val) !=''){
+				update_post_meta($post_id, $__post, $val);
+			}
+		}
+		
+		$permalink = get_permalink($post_id);
+		$url = 'http://developers.facebook.com/tools/lint/?url='.urlencode($permalink);
+		if(function_exists('url_init')){
+			$curl = curl_init();
+			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_URL, $url);
+			curl_exec($curl);
+			curl_close($curl);
+		}
+	}
+	/**
+	* if some option were saved via post
+	*/
+	public function hook_post_from_plugin_options(){		
+		if($_POST[$this->plugin_option_pref.'submit'] AND wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_options_update_field'],$this->plugin_slug.'_update_options')){
+			//unset submit to not be stored
+			unset($_POST[$this->plugin_option_pref.'submit']);
+			unset($_POST[$this->plugin_option_pref.'_nonce_options_update_field']);
+			unset($_POST['_wp_http_referer']);
+			if($this->update_options_from_post())
+				$this->message = '<div id="message" class="updated"><p>'.__('Options updated',$this->plugin_text_domain).'</p></div>';
+			else
+				$this->message = '<div id="message" class="error"><p>'.__('Options not updated there is an error...',$this->plugin_text_domain).'</p></div>';
+		}
+	}
+	
+	//****************************************************************************************
+	//	FRONT AND CONTENT
+	//****************************************************************************************
+	/**
+	* INIT PHP SDK FACEBOOK
+	*/
+	public function sdk_init(){
+		$this->fcbk = new Facebook(array(
+			'appId'  => $this->plugin_option['app_id'],
+			'secret' => $this->plugin_option['app_secret_key'],
+			'cookie' => true,
+		));
+		
+		//we need to update api call fucntion in facebook class. 01/05/2011 (add stripslashes() in validateSessionObject function)
+		$this->session = $this->fcbk->getSession();
+		//fot the debug
+		$this->debug_echo['Fcbk session'] = $this->session;
+		$this->me = null;
+		// Session based API call.
+		if($this->session){
+			try{
+				$this->uid = $this->fcbk->getUser();
+				$this->me = $this->fcbk->api('/me');
+				$updated = date("l, F j, Y", strtotime($me['updated_time']));
+			}catch(FacebookApiException $e){
+				error_log($e);
+			}
+		}
+		// login or logout url will be needed depending on current user state.
+		if($this->me){
+			$this->logout_url = $this->fcbk->getLogoutUrl();
+			//modify logout url
+			add_filter('logout_url', array(&$this,'logout_url'));
+		}else{
+			$this->login_url = $this->fcbk->getLoginUrl();
+		}
 	/*
+	* Waiting for PHP SDK 3.0 version
+	public function init_php(){
+		$this->fcbk = new Facebook(array(
+			'appId'  => $this->plugin_option['app_id'],
+			'secret' => $this->plugin_option['app_secret_key'],
+		));
+		
+		$this->me = null;
+		// Get User ID
+		$this->uid = $this->fcbk->getUser();
+		if($this->uid) {
+			try {
+				// Proceed knowing you have a logged in user who's authenticated.
+				$this->me = $facebook->api('/me');
+				
+				//$updated = date("l, F j, Y", strtotime($me['updated_time']));
+			} catch (FacebookApiException $e) {
+				error_log($e);
+				$this->uid = null;
+				echo '00000';
+			}
+		}
+		// login or logout url will be needed depending on current user state.
+		if($this->uid){
+			$this->logout_url = $this->fcbk->getLogoutUrl();
+			//modify logout url
+			add_filter('logout_url', array(&$this,'logout_url'));
+		}else{
+			$this->login_url = $this->fcbk->getLoginUrl(
+				array(
+                	'scope'         => $this->plugin_option['perms'],
+                	'redirect_uri'  => home_url()
+            	)
+            );
+		}
+	}
+	*/}
+	/**
+	* login user with facebook account
+	*/
+	public function login_user(){
+		include_once(dirname(__FILE__).'/inc/login_process.php');
+	}
+	/**
+	* Change logout url for users connected with Facebook
+	*/
+	public function logout_url($url,$redirect=""){
+		if($this->session)
+			//here we can use $this->logout_url;
+			//but that's better to use FBJS to logout
+			return "javascript:FB.logout(function(){location.href='" .$url."'})";
+		else
+			return $url;
+	}
+	/**
+	* filter the content
+	*/
+	public function the_content($content){
+		global $post;
+		$exclude_post_type = explode(",",$this->plugin_option['like_button_exclude_post_type']);
+		$exclude_post_page_id = explode(",",$this->plugin_option['like_button_exclude_post_id']);
+		$exclude_terms_slug = explode(",",$this->plugin_option['like_button_exclude_terms_slug']);
+		
+		//get the all terms for the post
+		$taxonomies=get_taxonomies($args,'objects'); 
+		$terms = array();
+		if($taxonomies){
+			foreach ($taxonomies  as $taxonomy) {
+				$temp_terms = get_the_terms($post->id, $taxonomy->name);
+				if($temp_terms)
+				foreach ($temp_terms  as $temp_term)
+					if($temp_term){
+						$terms[] = $temp_term->slug;
+						$terms[] = $temp_term->term_id;
+					}
+			}
+		}  
+		//say if we need to exclude this post for terms
+		$is_term_to_exclude = false;
+		if($terms)
+			foreach($terms as $term){
+				if(in_array($term,$exclude_terms_slug))
+					$is_term_to_exclude = true;
+			}
+		
+		if(!in_array($post->post_type,$exclude_post_type) && !in_array($post->ID,$exclude_post_page_id) && !$is_term_to_exclude){
+			$like_button = $this->get_the_like_button($post);
+			if($post->post_type == 'page' && $this->plugin_option['like_button_on_pages']){
+				if($this->plugin_option['like_button_place_on_pages'] == 'bottom')
+					return $content.$like_button;
+				elseif($this->plugin_option['like_button_place_on_pages'] == 'both')
+					return $like_button.$content.$like_button;
+				elseif($this->plugin_option['like_button_place_on_pages'] == 'top')
+				    return $like_button.$content;
+	        }elseif($post->post_type == 'post' && $this->plugin_option['like_button_on_posts']){
+			    if($this->plugin_option['like_button_place_on_posts'] == 'bottom')
+					return $content.$like_button;
+				elseif($this->plugin_option['like_button_place_on_posts'] == 'both')
+					return $like_button.$content.$like_button;
+				elseif($this->plugin_option['like_button_place_on_posts'] == 'top')
+				    return $like_button.$content;
+			}elseif($post->post_type != '' && $this->plugin_option['like_button_on_custom_post_types']){
+				//for other custom post type
+				if($this->plugin_option['like_button_place_on_custom_post_types'] == 'bottom')
+					return $content.$like_button;
+				elseif($this->plugin_option['like_button_place_on_custom_post_types'] == 'both')
+					return $like_button.$content.$like_button;
+				elseif($this->plugin_option['like_button_place_on_custom_post_types'] == 'top')
+				    return $like_button.$content;
+			}
+		}
+		return $content;
+	}
+	/**
+	* filter the comment form to add fbcomments
+	*/
+	public function the_comments_form(){
+		global $post;
+		$exclude_post_page_id = explode(",",$this->plugin_option['comments_exclude_post_id']);
+		if(!in_array($post->ID,$exclude_post_page_id)){
+			if($post->post_type == 'page' && $this->plugin_option['comments_on_pages']){
+				echo '<br />'.$this->get_the_comments_box($post);
+	        }elseif($post->post_type == 'post' && $this->plugin_option['comments_on_posts']){
+			    echo '<br />'.$this->get_the_comments_box($post);
+			}elseif($post->post_type != '' && $this->plugin_option['comments_on_custom_post_types']){
+				echo '<br />'.$this->get_the_comments_box($post);
+			}
+		}
+		
+	}
+	/**
+	* Add Js init fcbk to footer  ADMIN AND FRONT 
+	* Print debug if active here
+	*/
+	public function connect_footer(){
+		?>
+		<div id="fb-root"></div>
+		<script type="text/javascript">
+            window.fbAsyncInit = function(){
+                FB.init({
+                    appId   : '<?php echo  $this->plugin_option["app_id"]; ?>',
+                    status  : true, // check login status
+                    <?php if($this->session){ echo "session : ".json_encode($this->session).","; } 
+                    ?>//get the session with php sdk
+                    cookie  : true, // enable cookies to allow the server to access the session
+                    xfbml   : <?php echo ($this->plugin_option['parse_xfbml'] == 1 ? 'true' : 'false'); ?>// parse XFBML
+                	//add some js with plugin or admin
+            		<?php do_action('AWD_custom_fbinit'); ?>
+                });
+                
+				FB.Event.subscribe('auth.sessionChange', function(response) {
+                    <?php if(!$this->session || !is_user_logged_in()){ ?>
+                    if (response.session) {
+                        // A user has logged in, and a new cookie has been saved
+                      	window.location.href = window.location.href;
+                    }
+                    <?php } ?>
+                });
+               
+                //add some js with plugin or admin
+            	<?php do_action('AWD_custom_fbjs'); ?>
+            };
+            
+			(function() {
+                var e = document.createElement('script');
+                e.src = document.location.protocol + '//connect.facebook.net/<?php echo $this->plugin_option["locale"]; ?>/all.js';
+                e.async = true;
+                document.getElementById('fb-root').appendChild(e);
+              }());
+		</script>
+	<?php
+	}
+
+	//****************************************************************************************
+	//	OPENGRAPH
+	//****************************************************************************************
+	/**
+	* generate the open graph tags
+	* option array() 
+	*/
+	public function get_the_open_graph_tags($options=array()){
+		if(!empty($options)){
+			foreach($options as $tag=>$tag_value){
+				$html .= '<meta property="'.$tag.'" content="'.$tag_value.'"/>'."\n";
+			}
+		}else{
+			$html .= '<!-- '.__('Error No tags...',$this->plugin_text_domain).' -->'."\n";
+		}
+		return $html;
+	}
+	/**
+	* construct the open graph tags
+	* prefix string
+	* array_pattern array() list of pattern to replace
+	* array_replace array() list of value to replace
+	* custom_post object post if exist
+	*/
+	public function construct_open_graph_tags($prefix_option,$array_pattern,$array_replace,$custom_post=array()){
+		$og_tags = $this->og_tags;
+		//define all tags we need to display
+		foreach($this->og_attachement_field as $type=>$tag_fields){
+			foreach($tag_fields as $tag=>$tag_name){
+				$tag_attachment_fields[$tag] = $tag_name;
+			}
+		}
+		//add attachment fields to global fields for display
+		$og_tags_final = array_merge($og_tags,$tag_attachment_fields);
+		//foreach tags, set value
+		foreach($og_tags_final as $tag=>$tag_name){
+			$option_value = '';
+			//if tags is empty because not set in plugin for retro actif on post and page
+			if($custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == '')
+				$custom_post[$this->plugin_option_pref.'ogtags_disable'][0] = 0;
+ 			//if tags is enable from editor
+ 			if($custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == 0){
+				//if general settings of this type is enable
+				if($this->plugin_option[$prefix_option.'disable'] == 0 && $this->plugin_option[$prefix_option.'disable'] != ''){
+					//if choose to redefine from post
+					if($custom_post[$this->plugin_option_pref.'ogtags_redefine'][0] == 1){
+						$option_value = $custom_post[$this->plugin_option_pref.'ogtags_'.$tag][0];
+						$audio = $custom_post[$this->plugin_option_pref.'ogtags_audio'][0];
+						$video = $custom_post[$this->plugin_option_pref.'ogtags_video'][0];
+						$image = $custom_post[$this->plugin_option_pref.'ogtags_image'][0];
+					//else use general settings
+					}else{
+						$option_value = $this->plugin_option[$prefix_option.$tag];
+						$audio = $this->plugin_option[$prefix_option.'audio'];
+						$video = $this->plugin_option[$prefix_option.'video'];
+						$image = $this->plugin_option[$prefix_option.'image'];
+					}
+					//set url with a pattern
+					if($tag == 'url')
+						$option_value = '%CURRENT_URL%';
+					
+						
+					//proces the patern replace
+					$option_value = str_ireplace($array_pattern,$array_replace,$option_value);
+					//clean the \r\n value and replace by space
+					$option_value = str_replace("\n"," ",$option_value);
+					$option_value = str_replace("\r","",$option_value);
+					$option_value = str_replace("\t","",$option_value);
+					//for video	and audio
+					//if video src or audio src is null so don't display tags
+					if(ereg('audio',$tag) && $audio =='')
+						continue;
+					elseif(ereg('video',$tag) && $video =='')
+						continue;
+					//need image for video to work
+					elseif(ereg('video',$tag) && $image =='')
+						continue;
+					elseif(($tag == 'app_id' || $tag == 'admins' || $tag == 'page_id') && $option_value!='')
+						$options['fb:'.$tag] = $option_value;
+					elseif($option_value !='')
+						$options['og:'.$tag] = $option_value;
+				}
+			
+			
+				
+		
+			}
+		
+		}
+		return $options;
+	}
+	/**
+	* define the open graph tags
+	* option array() 
+	*/
+	public function define_open_graph_tags_header(){
+		$current_post_type = get_post_type();
+		$options = array();
+		$blog_name = get_bloginfo('name');
+		$blog_description = str_replace(array("\n","\r"),"",get_bloginfo('description'));
+		$home_url = home_url();
+		switch(1){
+			//for posts
+			case is_front_page():
+			case is_home():
+				$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%",'%CURRENT_URL%');
+				$array_replace = array($blog_name,$blog_description,$home_url,$home_url);
+				$options = $this->construct_open_graph_tags('ogtags_frontpage_',$array_pattern,$array_replace);
+			break;
+			//for all type of post
+			case is_page():
+			case is_single():
+				global $post;
+				$custom_post = get_post_custom($post->ID);
+				$postypes_media = get_post_types(array('label'=>'Media'),'objects');
+				$postypes = get_post_types(array('show_ui'=>true),'objects');
+				//if find attachement type
+				if(is_object($postypes_media['attachment']))
+					$postypes['attachment'] = $postypes_media['attachment'];				
+				//post types
+				//change name of prefix for post type and post page
+				if($current_post_type == 'post') $prefix_option = 'ogtags_post_';
+				elseif($current_post_type == 'page') $prefix_option = 'ogtags_page_';
+				else
+					foreach($postypes as $postypes_name=>$type_values){
+						if($current_post_type == $postypes_name){
+						 	$prefix_option = 'ogtags_custom_post_types_'.$postypes_name.'_';						 	
+							$type = $type_values->label;
+						}
+					}
+				//thumbnails if thumb support and has one
+				if(current_theme_supports('post_thumbnails') && has_post_thumbnail($post->ID)) {
+                	$thumbURL = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID),'');
+                	$img = $thumbURL[0];
+                }else{
+                    unset($img);
+                    if($wpzoom_cf_use == 'Yes'){
+                    	$img = get_post_meta($post->ID, $wpzoom_cf_photo, true);
+                	}else{
+                    	if(!$img){
+                    		$img = $this->catch_that_image($post->ID);
+                   		}
+                	}
+                }
+				$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%","%POST_TITLE%","%POST_EXCERPT%","%POST_IMAGE%","%CURRENT_URL%");
+				$array_replace = array($blog_name,$blog_description,$home_url,$post->post_title,$post->post_excerpt,$img,get_permalink($post->ID));
+				$options = $this->construct_open_graph_tags($prefix_option,$array_pattern,$array_replace,$custom_post);
+			break;
+			//for tag archives
+			case is_author():
+				global $wp_query;
+				$author_slug = $wp_query->query_vars['author_name'];
+				$current_author = get_user_by('slug',$author_slug);
+				$current_archive_url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+				$type =  'Authors';
+				//get avatar for replace in pattern
+				$avatar = get_avatar($current_author->ID, '50', '','');
+				//get the url of avatar
+				if($avatar)
+				    $gravatar_attributes = simplexml_load_string($avatar);
+				if(!empty($gravatar_attributes['src']))
+					$gravatar_url = $gravatar_attributes['src'];
+				$prefix_option = 'ogtags_author_';
+				$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%","%AUTHOR_TITLE%","%AUTHOR_IMAGE%","%AUTHOR_DESCRIPTION%","%CURRENT_URL%");
+				$array_replace = array($blog_name,$blog_description,$home_url,trim(wp_title('',false)),$gravatar_url,$current_author->description,$current_archive_url);
+				$options = $this->construct_open_graph_tags($prefix_option,$array_pattern,$array_replace);
+			break;
+			case is_tag():
+			case is_date():
+				$current_archive_url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+				$type =  'Archives';
+				$prefix_option = 'ogtags_archive_';
+				$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%","%ARCHIVE_TITLE%","%CURRENT_URL%");
+				$array_replace = array($blog_name,$blog_description,$home_url,trim(wp_title('',false)),$current_archive_url);
+				$options = $this->construct_open_graph_tags($prefix_option,$array_pattern,$array_replace);
+			break;
+			//for taxonomies register public
+			case is_tax():
+				global $wp_query;
+				$taxonomy_slug = $wp_query->query_vars['taxonomy'];
+				$taxonomy_name = get_term_by('slug',$value,$taxonomy_slug);
+				$current_archive_url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+				$type =  'Taxonomies';
+				$prefix_option = 'ogtags_taxonomies_'.$taxonomy_slug.'_';
+				$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%","%TERM_TITLE%","%TERM_DESCRIPTION%","%CURRENT_URL%");
+				$array_replace = array($blog_name,$blog_description,$home_url,trim(wp_title('',false)),term_description(),$current_archive_url);
+				$options = $this->construct_open_graph_tags($prefix_option,$array_pattern,$array_replace);
+				$type = 'TAX';
+			break;
+			//for categories
+			case is_category():
+					$current_archive_url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+					$type =  'Categories';
+					$prefix_option = 'ogtags_taxonomies_category_';
+					$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%","%TERM_TITLE%","%TERM_DESCRIPTION%","%CURRENT_URL%");
+					$array_replace = array($blog_name,$blog_description,$home_url,trim(wp_title('',false)),category_description(),$current_archive_url);
+					$options = $this->construct_open_graph_tags($prefix_option,$array_pattern,$array_replace);
+			break;
+		}
+		//if no options, no tags
+		if(!empty($options)){
+			echo "\n".'<!-- '.$this->plugin_name.' [v'.$this->get_version().'] START Open Graph Tags for '.$type.' -->'."\n";
+			echo $this->get_the_open_graph_tags($options);
+			if(empty($options['og:image']))
+				echo '<!-- '.__("WARNING Image is emtpy", $this->plugin_text_domain).' | '.$this->plugin_name.' -->'."\n";
+			if(empty($options['og:title']))
+				echo '<!-- '.__("WARNING Title is empty", $this->plugin_text_domain).' | '.$this->plugin_name.' -->'."\n";
+			if(empty($options['og:site_name']))
+				echo '<!-- '.__("WARNING Site Name is empty", $this->plugin_text_domain).' | '.$this->plugin_name.' -->'."\n";
+			if(empty($options['og:site_name']))
+				echo '<!-- '.__("WARNING Description is empty", $this->plugin_text_domain).' | '.$this->plugin_name.' -->'."\n";
+			if(empty($options['fb:admins']) AND empty($options['fb:app_id']))
+				echo '<!-- '.__("WARNING Admins id or app ID are empty", $this->plugin_text_domain).' | '.$this->plugin_name.' -->'."\n";
+			echo '<!-- '.$this->plugin_name.' END Open Graph Tags -->'."\n";
+		}
+	}
+	/**
 	* Open Graph meta form in post and custom post type
 	* used both in open graph settings
 	*/
@@ -545,121 +1154,11 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		</div>
 		<?php //fin start fucntion div
 	}
-	/*
-	* Admin content
-	*/
-	public function admin_content(){
-		global $message;
-		$page = $_GET['page'];
-		//add_filter('screen_layout_columns', array(&$this, 'screen_layout'));
-      	?>
-		<div class="AWD_facebook_wrap" id="AWD_facebook_wrap">
-			<?php 
-			if($this->message){
-				echo $this->message;
-				unset($this->message); 
-			}
-			
-			?>
-			<div id="poststuff" class="metabox-holder has-right-sidebar">
-				<form method="post">
-					<div id="side-info-column" class="inner-sidebar">
-						<div class="header_AWD_facebook_wrap">
-							<h2 style="color:#627AAD;margin-top:0px;">
-								<img style="vertical-align:middle;" src="<?php echo $this->plugin_url_images; ?>facebook.png" alt="facebook logo" class="AWD_button_media" /><?php _e($this->plugin_page_admin_name,$this->plugin_text_domain); ?>
-								<sup style="color:#627AAD;font-size:0.6em;">v<?php echo $this->get_version(); ?></sup>
-							</h2>
-						</div>
-			
-						<?php
-							//side bar always here
-							do_meta_boxes($this->plugin_slug.'_box','side',null);
-						?>
-					</div>
-					<div id="post-body" class="has-sidebar">
-						<div id="post-body-content" class="has-sidebar-content">
-							<?php 
-							if($page == $this->plugin_slug)
-								do_meta_boxes($this->plugin_slug.'_settings_box','normal',null);
-							elseif($page == $this->plugin_slug.'_open_graph')
-								do_meta_boxes($this->plugin_slug.'_open_graph_box','normal',null);
-							elseif($page == $this->plugin_slug.'_plugins')
-								do_meta_boxes($this->plugin_slug.'_plugins_box','normal',null);
-							
-							do_meta_boxes($this->plugin_slug.'_box','normal',null);
-							?>
-					   </div>
-					</div>
-				</form>
-			</div>
-			<script type="text/javascript">
-				//<![CDATA[
-				jQuery(document).ready( function($) {
-					// close postboxes that should be closed
-					$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
-					// postboxes setup
-					postboxes.add_postbox_toggles('<?php echo $this->blog_admin_page_hook; ?>');
-				});
-				//]]>
-			</script>
-		</div>
-		<div class="clear"></div>
-		<?php
-	}
-	/*
-	* Open graph admin
-	*/
-	public function open_graph_content(){
-		include_once(dirname(__FILE__).'/inc/admin_open_graph.php');
-	}
-	/*
-	* Comments on plugins contents 
-	*/
-	public function AWD_comments_content(){
-		?>
-		<fb:comments href="http://www.ahwebdev.fr/plugins/facebook-awd.html" num_posts="10"></fb:comments>
-		<?php
-	}
-	/*
-	* Activity contents
-	*/
-	public function activity_content(){
-		$url = str_replace('http://','',home_url());
-		if($this->plugin_option['parse_xfbml'] == 1){
-			?>
-			<fb:activity site="<?php echo $url; ?>" width="258" height="200" header="false" font="lucida grande" border_color="#F9F9F9" recommendations="true"></fb:activity>
-		<?php }else{ ?>
-			<iframe src="http://www.facebook.com/plugins/activity.php?site=<?php echo $url; ?>&amp;width=258&amp;height=300&amp;header=false&amp;colorscheme=light&amp;font=lucida+grande&amp;border_color=%23F9F9F9&amp;recommendations=true" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:258px; height:200px;" allowTransparency="true"></iframe>
-			<?php 
-		}
-	}
-	/*
-	* plugin Options
-	*/
-	public function plugins_content(){
-		include_once(dirname(__FILE__).'/inc/admin_plugins.php');
-		include_once(dirname(__FILE__).'/inc/help/help_plugins.php');
-	}
-	/*
-	* Settings Options
-	*/
-	public function settings_content(){
-		include_once(dirname(__FILE__).'/inc/admin_settings.php');
-		include_once(dirname(__FILE__).'/inc/help/help_settings.php');
-	}
-	/*
-	* Admin fcbk info content
-	*/
-	public function fcbk_content(){
-		$options = array();
-		$options['login_button_width'] = 200;
-		$options['login_button_profile_picture'] = 1;
-		$options['login_button_faces'] = 'false';
-		$options['login_button_maxrow'] = 1;
-		$options['login_button_logout_value'] = __("Logout",$this->plugin_text_domain);
-		$this->print_the_login_button($options);
-	}
-	/*
+	
+	//****************************************************************************************
+	//	LOGIN BUTTON
+	//****************************************************************************************
+	/**
 	* Return the loggin button  shortcode
 	*/
 	public function shortcode_login_button($atts=array()) {
@@ -672,7 +1171,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		}
 		return $this->get_the_login_button($new_atts);
 	}
-	/*
+	/**
 	* return the html for login button
 	*/
 	public function get_the_login_button($options=array()){
@@ -741,525 +1240,17 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			break;
 		}
 	}
-	/*
+	/**
 	* print the content off the login/logut
 	*/
 	public function print_the_login_button($options=array()){
 		echo $this->get_the_login_button($options);
 	}
-	/*
-	 * Admin css
-	 */
-	public function admin_enqueue_css(){
-		wp_enqueue_style($this->plugin_slug.'-admin', $this->plugin_url.'/css/admin_styles.css',array($this->plugin_slug.'-jquery-ui'));
-		wp_enqueue_style($this->plugin_slug.'-jquery-ui', $this->plugin_url.'/css/jquery-ui-1.8.12.custom.css');
-		wp_enqueue_style('thickbox'); 
-	}
-	/*
-	 * JS all admin
-	 */
-	public function admin_enqueue_js(){
-		wp_enqueue_script('media-upload');
-		wp_enqueue_script('thickbox');
-		wp_enqueue_script('common');
-		wp_enqueue_script('wp-list');
-		wp_enqueue_script('postbox');
-		wp_enqueue_script($this->plugin_slug.'-jquery-ui',$this->plugin_url.'/js/jquery-ui-1.8.12.custom.min.js',array('jquery'));
-		wp_enqueue_script($this->plugin_slug.'-js-cookie',$this->plugin_url.'/js/jquery.cookie.js',array('jquery'));
-		wp_enqueue_script($this->plugin_slug.'-js',$this->plugin_url.'/js/facebook_awd.js',array('jquery'));
-	}
-	
-	/*
-	 * options metabox columns etc...
-	 */
-	public function screen_layout($columns, $screen) {
-		if ($screen == $this->$blog_admin_page_hook) {
-			$columns[$this->$blog_admin_page_hook] = 2;
-		}
-		return $columns;
-	}
-	/*
-	* Save the post custom from open graph form
-	*/
-	public function save_options_post_editor($post_id){
-		foreach($_POST as $__post=>$val){
-			//should have ogtags in prefix present to be saved
-			if(ereg('ogtags_',$__post) AND trim($val) !=''){
-				update_post_meta($post_id, $__post, $val);
-			}
-		}
-		
-		$permalink = get_permalink($post_id);
-		$url = 'http://developers.facebook.com/tools/lint/?url='.urlencode($permalink);
-		if(function_exists('url_init')){
-			$curl = curl_init();
-			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($curl, CURLOPT_URL, $url);
-			curl_exec($curl);
-			curl_close($curl);
-		}
-	}
-	/*
-	* if some option were saved via post
-	*/
-	public function hook_post_from_plugin_options(){		
-		if($_POST[$this->plugin_option_pref.'submit'] AND wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_options_update_field'],$this->plugin_slug.'_update_options')){
-			//unset submit to not be stored
-			unset($_POST[$this->plugin_option_pref.'submit']);
-			unset($_POST[$this->plugin_option_pref.'_nonce_options_update_field']);
-			unset($_POST['_wp_http_referer']);
-			if($this->update_options_from_post())
-				$this->message = '<div id="message" class="updated"><p>'.__('Options updated',$this->plugin_text_domain).'</p></div>';
-			else
-				$this->message = '<div id="message" class="error"><p>'.__('Options not updated there is an error...',$this->plugin_text_domain).'</p></div>';
-		}
-	}
-	/*
-	* function to catch firest image in html
-	*/
-	function catch_that_image() {
-  		global $post, $posts;
-  		$first_img = '';
-  		ob_start();
-  		ob_end_clean();
-  		$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
-  		$first_img = $matches [1] [0];
-  		if(empty($first_img)){ //Defines a default image
-    		//$first_img = "/images/default.jpg";
-  		}
-  		return $first_img;
-	}
-	//****************************************************************************************
-	//	FRONT AND CONTENT
-	//****************************************************************************************
-	/*
-	* INIT fcbk
-	*/
-	public function init_php(){
-		$this->fcbk = new Facebook(array(
-			'appId'  => $this->plugin_option['app_id'],
-			'secret' => $this->plugin_option['app_secret_key'],
-			'cookie' => true,
-		));
-		
-		//we need to update api call fucntion in facebook class. 01/05/2011 (add stripslashes() in validateSessionObject function)
-		$this->session = $this->fcbk->getSession();
-		//fot the debug
-		$this->debug_echo['Fcbk session'] = $this->session;
-		$this->me = null;
-		// Session based API call.
-		if($this->session){
-			try{
-				$this->uid = $this->fcbk->getUser();
-				$this->me = $this->fcbk->api('/me');
-				$updated = date("l, F j, Y", strtotime($me['updated_time']));
-			}catch(FacebookApiException $e){
-				error_log($e);
-			}
-		}
-		// login or logout url will be needed depending on current user state.
-		if($this->me){
-			$this->logout_url = $this->fcbk->getLogoutUrl();
-			//modify logout url
-			add_filter('logout_url', array(&$this,'logout_url'));
-		}else{
-			$this->login_url = $this->fcbk->getLoginUrl();
-		}
-	}
-	/*
-	* Waiting for PHP SDK 3.0 version
-	public function init_php(){
-		$this->fcbk = new Facebook(array(
-			'appId'  => $this->plugin_option['app_id'],
-			'secret' => $this->plugin_option['app_secret_key'],
-		));
-		
-		$this->me = null;
-		// Get User ID
-		$this->uid = $this->fcbk->getUser();
-		if($this->uid) {
-			try {
-				// Proceed knowing you have a logged in user who's authenticated.
-				$this->me = $facebook->api('/me');
-				
-				//$updated = date("l, F j, Y", strtotime($me['updated_time']));
-			} catch (FacebookApiException $e) {
-				error_log($e);
-				$this->uid = null;
-				echo '00000';
-			}
-		}
-		// login or logout url will be needed depending on current user state.
-		if($this->uid){
-			$this->logout_url = $this->fcbk->getLogoutUrl();
-			//modify logout url
-			add_filter('logout_url', array(&$this,'logout_url'));
-		}else{
-			$this->login_url = $this->fcbk->getLoginUrl(
-				array(
-                	'scope'         => $this->plugin_option['perms'],
-                	'redirect_uri'  => home_url()
-            	)
-            );
-		}
-	}
-	*/
-	
-	/*
-	* login user with facebook account
-	*/
-	public function login_user(){
-		include_once(dirname(__FILE__).'/inc/login_process.php');
-	}
-	/*
-	* Change logout url for users connected with Facebook
-	*/
-	public function logout_url($url,$redirect=""){
-		if($this->session)
-			//here we can use $this->logout_url;
-			//but that's better to use FBJS to logout
-			return "javascript:FB.logout(function(){location.href='" .$url."'})";
-		else
-			return $url;
-	}
-	/*
-	* filter the content
-	*/
-	public function the_content($content){
-		global $post;
-		$exclude_post_type = explode(",",$this->plugin_option['like_button_exclude_post_type']);
-		$exclude_post_page_id = explode(",",$this->plugin_option['like_button_exclude_post_id']);
-		$exclude_terms_slug = explode(",",$this->plugin_option['like_button_exclude_terms_slug']);
-		
-		//get the all terms for the post
-		$taxonomies=get_taxonomies($args,'objects'); 
-		$terms = array();
-		if($taxonomies){
-			foreach ($taxonomies  as $taxonomy) {
-				$temp_terms = get_the_terms($post->id, $taxonomy->name);
-				if($temp_terms)
-				foreach ($temp_terms  as $temp_term)
-					if($temp_term){
-						$terms[] = $temp_term->slug;
-						$terms[] = $temp_term->term_id;
-					}
-			}
-		}  
-		//say if we need to exclude this post for terms
-		$is_term_to_exclude = false;
-		if($terms)
-			foreach($terms as $term){
-				if(in_array($term,$exclude_terms_slug))
-					$is_term_to_exclude = true;
-			}
-		
-		if(!in_array($post->post_type,$exclude_post_type) && !in_array($post->ID,$exclude_post_page_id) && !$is_term_to_exclude){
-			$like_button = $this->get_the_like_button($post);
-			if($post->post_type == 'page' && $this->plugin_option['like_button_on_pages']){
-				if($this->plugin_option['like_button_place_on_pages'] == 'bottom')
-					return $content.$like_button;
-				elseif($this->plugin_option['like_button_place_on_pages'] == 'both')
-					return $like_button.$content.$like_button;
-				elseif($this->plugin_option['like_button_place_on_pages'] == 'top')
-				    return $like_button.$content;
-	        }elseif($post->post_type == 'post' && $this->plugin_option['like_button_on_posts']){
-			    if($this->plugin_option['like_button_place_on_posts'] == 'bottom')
-					return $content.$like_button;
-				elseif($this->plugin_option['like_button_place_on_posts'] == 'both')
-					return $like_button.$content.$like_button;
-				elseif($this->plugin_option['like_button_place_on_posts'] == 'top')
-				    return $like_button.$content;
-			}elseif($post->post_type != '' && $this->plugin_option['like_button_on_custom_post_types']){
-				//for other custom post type
-				if($this->plugin_option['like_button_place_on_custom_post_types'] == 'bottom')
-					return $content.$like_button;
-				elseif($this->plugin_option['like_button_place_on_custom_post_types'] == 'both')
-					return $like_button.$content.$like_button;
-				elseif($this->plugin_option['like_button_place_on_custom_post_types'] == 'top')
-				    return $like_button.$content;
-			}
-		}
-		return $content;
-	}
-	/*
-	* filter the comment form to add fbcomments
-	*/
-	public function the_comments_form(){
-		global $post;
-		$exclude_post_page_id = explode(",",$this->plugin_option['comments_exclude_post_id']);
-		if(!in_array($post->ID,$exclude_post_page_id)){
-			if($post->post_type == 'page' && $this->plugin_option['comments_on_pages']){
-				echo '<br />'.$this->get_the_comments_box($post);
-	        }elseif($post->post_type == 'post' && $this->plugin_option['comments_on_posts']){
-			    echo '<br />'.$this->get_the_comments_box($post);
-			}elseif($post->post_type != '' && $this->plugin_option['comments_on_custom_post_types']){
-				echo '<br />'.$this->get_the_comments_box($post);
-			}
-		}
-		
-	}
-	/*
-	* Add Js init fcbk to footer  ADMIN AND FRONT 
-	* Print debug if active here
-	*/
-	public function connect_footer(){
-		?>
-		<div id="fb-root"></div>
-		<script type="text/javascript">
-            window.fbAsyncInit = function(){
-                FB.init({
-                    appId   : '<?php echo  $this->plugin_option["app_id"]; ?>',
-                    status  : true, // check login status
-                    <?php if($this->session){ echo "session : ".json_encode($this->session).","; } 
-                    ?>//get the session with php sdk
-                    cookie  : true, // enable cookies to allow the server to access the session
-                    xfbml   : <?php echo ($this->plugin_option['parse_xfbml'] == 1 ? 'true' : 'false'); ?>// parse XFBML
-                	//add some js with plugin or admin
-            		<?php do_action('AWD_custom_fbinit'); ?>
-                });
-                
-				FB.Event.subscribe('auth.sessionChange', function(response) {
-                    <?php if(!$this->session || !is_user_logged_in()){ ?>
-                    if (response.session) {
-                        // A user has logged in, and a new cookie has been saved
-                      	window.location.href = window.location.href;
-                    }
-                    <?php } ?>
-                });
-               
-                //add some js with plugin or admin
-            	<?php do_action('AWD_custom_fbjs'); ?>
-            };
-            
-			(function() {
-                var e = document.createElement('script');
-                e.src = document.location.protocol + '//connect.facebook.net/<?php echo $this->plugin_option["locale"]; ?>/all.js';
-                e.async = true;
-                document.getElementById('fb-root').appendChild(e);
-              }());
-		</script>
-	<?php
-	}
-	/*
-	* generate the open graph tags
-	* option array() 
-	*/
-	public function get_the_open_graph_tags($options=array()){
-		if(!empty($options)){
-			foreach($options as $tag=>$tag_value){
-				$html .= '<meta property="'.$tag.'" content="'.$tag_value.'"/>'."\n";
-			}
-		}else{
-			$html .= '<!-- '.__('Error No tags...',$this->plugin_text_domain).' -->'."\n";
-		}
-		return $html;
-	}
-	/*
-	* construct the open graph tags
-	* prefix string
-	* array_pattern array() list of pattern to replace
-	* array_replace array() list of value to replace
-	* custom_post object post if exist
-	*/
-	public function construct_open_graph_tags($prefix_option,$array_pattern,$array_replace,$custom_post=array()){
-		$og_tags = $this->og_tags;
-		//define all tags we need to display
-		foreach($this->og_attachement_field as $type=>$tag_fields){
-			foreach($tag_fields as $tag=>$tag_name){
-				$tag_attachment_fields[$tag] = $tag_name;
-			}
-		}
-		//add attachment fields to global fields for display
-		$og_tags_final = array_merge($og_tags,$tag_attachment_fields);
-		//foreach tags, set value
-		foreach($og_tags_final as $tag=>$tag_name){
-			$option_value = '';
-			//if tags is empty because not set in plugin for retro actif on post and page
-			if($custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == '')
-				$custom_post[$this->plugin_option_pref.'ogtags_disable'][0] = 0;
- 			//if tags is enable from editor
- 			if($custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == 0){
-				//if general settings of this type is enable
-				if($this->plugin_option[$prefix_option.'disable'] == 0 && $this->plugin_option[$prefix_option.'disable'] != ''){
-					//if choose to redefine from post
-					if($custom_post[$this->plugin_option_pref.'ogtags_redefine'][0] == 1){
-						$option_value = $custom_post[$this->plugin_option_pref.'ogtags_'.$tag][0];
-						$audio = $custom_post[$this->plugin_option_pref.'ogtags_audio'][0];
-						$video = $custom_post[$this->plugin_option_pref.'ogtags_video'][0];
-						$image = $custom_post[$this->plugin_option_pref.'ogtags_image'][0];
-					//else use general settings
-					}else{
-						$option_value = $this->plugin_option[$prefix_option.$tag];
-						$audio = $this->plugin_option[$prefix_option.'audio'];
-						$video = $this->plugin_option[$prefix_option.'video'];
-						$image = $this->plugin_option[$prefix_option.'image'];
-					}
-					//set url with a pattern
-					if($tag == 'url')
-						$option_value = '%CURRENT_URL%';
-					
-						
-					//proces the patern replace
-					$option_value = str_ireplace($array_pattern,$array_replace,$option_value);
-					//clean the \r\n value and replace by space
-					$option_value = str_replace("\n"," ",$option_value);
-					$option_value = str_replace("\r","",$option_value);
-					$option_value = str_replace("\t","",$option_value);
-					//for video	and audio
-					//if video src or audio src is null so don't display tags
-					if(ereg('audio',$tag) && $audio =='')
-						continue;
-					elseif(ereg('video',$tag) && $video =='')
-						continue;
-					//need image for video to work
-					elseif(ereg('video',$tag) && $image =='')
-						continue;
-					elseif(($tag == 'app_id' || $tag == 'admins' || $tag == 'page_id') && $option_value!='')
-						$options['fb:'.$tag] = $option_value;
-					elseif($option_value !='')
-						$options['og:'.$tag] = $option_value;
-				}
-			
-			
-				
-		
-			}
-		
-		}
-		return $options;
-	}
-	/*
-	* define the open graph tags
-	* option array() 
-	*/
-	public function define_open_graph_tags_header(){
-		$current_post_type = get_post_type();
-		$options = array();
-		$blog_name = get_bloginfo('name');
-		$blog_description = str_replace(array("\n","\r"),"",get_bloginfo('description'));
-		$home_url = home_url();
-		switch(1){
-			//for posts
-			case is_front_page():
-			case is_home():
-				$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%",'%CURRENT_URL%');
-				$array_replace = array($blog_name,$blog_description,$home_url,$home_url);
-				$options = $this->construct_open_graph_tags('ogtags_frontpage_',$array_pattern,$array_replace);
-			break;
-			//for all type of post
-			case is_page():
-			case is_single():
-				global $post;
-				$custom_post = get_post_custom($post->ID);
-				$postypes_media = get_post_types(array('label'=>'Media'),'objects');
-				$postypes = get_post_types(array('show_ui'=>true),'objects');
-				//if find attachement type
-				if(is_object($postypes_media['attachment']))
-					$postypes['attachment'] = $postypes_media['attachment'];				
-				//post types
-				//change name of prefix for post type and post page
-				if($current_post_type == 'post') $prefix_option = 'ogtags_post_';
-				elseif($current_post_type == 'page') $prefix_option = 'ogtags_page_';
-				else
-					foreach($postypes as $postypes_name=>$type_values){
-						if($current_post_type == $postypes_name){
-						 	$prefix_option = 'ogtags_custom_post_types_'.$postypes_name.'_';						 	
-							$type = $type_values->label;
-						}
-					}
-				//thumbnails if thumb support and has one
-				if(current_theme_supports('post_thumbnails') && has_post_thumbnail($post->ID)) {
-                	$thumbURL = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID),'');
-                	$img = $thumbURL[0];
-                }else{
-                    unset($img);
-                    if($wpzoom_cf_use == 'Yes'){
-                    	$img = get_post_meta($post->ID, $wpzoom_cf_photo, true);
-                	}else{
-                    	if(!$img){
-                    		$img = $this->catch_that_image($post->ID);
-                   		}
-                	}
-                }
-				$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%","%POST_TITLE%","%POST_EXCERPT%","%POST_IMAGE%","%CURRENT_URL%");
-				$array_replace = array($blog_name,$blog_description,$home_url,$post->post_title,$post->post_excerpt,$img,get_permalink($post->ID));
-				$options = $this->construct_open_graph_tags($prefix_option,$array_pattern,$array_replace,$custom_post);
-			break;
-			//for tag archives
-			case is_author():
-				global $wp_query;
-				$author_slug = $wp_query->query_vars['author_name'];
-				$current_author = get_user_by('slug',$author_slug);
-				$current_archive_url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-				$type =  'Authors';
-				//get avatar for replace in pattern
-				$avatar = get_avatar($current_author->ID, '50', '','');
-				//get the url of avatar
-				if($avatar)
-				    $gravatar_attributes = simplexml_load_string($avatar);
-				if(!empty($gravatar_attributes['src']))
-					$gravatar_url = $gravatar_attributes['src'];
-				$prefix_option = 'ogtags_author_';
-				$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%","%AUTHOR_TITLE%","%AUTHOR_IMAGE%","%AUTHOR_DESCRIPTION%","%CURRENT_URL%");
-				$array_replace = array($blog_name,$blog_description,$home_url,trim(wp_title('',false)),$gravatar_url,$current_author->description,$current_archive_url);
-				$options = $this->construct_open_graph_tags($prefix_option,$array_pattern,$array_replace);
-			break;
-			case is_tag():
-			case is_date():
-				$current_archive_url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-				$type =  'Archives';
-				$prefix_option = 'ogtags_archive_';
-				$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%","%ARCHIVE_TITLE%","%CURRENT_URL%");
-				$array_replace = array($blog_name,$blog_description,$home_url,trim(wp_title('',false)),$current_archive_url);
-				$options = $this->construct_open_graph_tags($prefix_option,$array_pattern,$array_replace);
-			break;
-			//for taxonomies register public
-			case is_tax():
-				global $wp_query;
-				$taxonomy_slug = $wp_query->query_vars['taxonomy'];
-				$taxonomy_name = get_term_by('slug',$value,$taxonomy_slug);
-				$current_archive_url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-				$type =  'Taxonomies';
-				$prefix_option = 'ogtags_taxonomies_'.$taxonomy_slug.'_';
-				$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%","%TERM_TITLE%","%TERM_DESCRIPTION%","%CURRENT_URL%");
-				$array_replace = array($blog_name,$blog_description,$home_url,trim(wp_title('',false)),term_description(),$current_archive_url);
-				$options = $this->construct_open_graph_tags($prefix_option,$array_pattern,$array_replace);
-				$type = 'TAX';
-			break;
-			//for categories
-			case is_category():
-					$current_archive_url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-					$type =  'Categories';
-					$prefix_option = 'ogtags_taxonomies_category_';
-					$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%","%TERM_TITLE%","%TERM_DESCRIPTION%","%CURRENT_URL%");
-					$array_replace = array($blog_name,$blog_description,$home_url,trim(wp_title('',false)),category_description(),$current_archive_url);
-					$options = $this->construct_open_graph_tags($prefix_option,$array_pattern,$array_replace);
-			break;
-		}
-		//if no options, no tags
-		if(!empty($options)){
-			echo "\n".'<!-- '.$this->plugin_name.' [v'.$this->get_version().'] START Open Graph Tags for '.$type.' -->'."\n";
-			echo $this->get_the_open_graph_tags($options);
-			if(empty($options['og:image']))
-				echo '<!-- '.__("WARNING Image is emtpy", $this->plugin_text_domain).' | '.$this->plugin_name.' -->'."\n";
-			if(empty($options['og:title']))
-				echo '<!-- '.__("WARNING Title is empty", $this->plugin_text_domain).' | '.$this->plugin_name.' -->'."\n";
-			if(empty($options['og:site_name']))
-				echo '<!-- '.__("WARNING Site Name is empty", $this->plugin_text_domain).' | '.$this->plugin_name.' -->'."\n";
-			if(empty($options['og:site_name']))
-				echo '<!-- '.__("WARNING Description is empty", $this->plugin_text_domain).' | '.$this->plugin_name.' -->'."\n";
-			if(empty($options['fb:admins']) AND empty($options['fb:app_id']))
-				echo '<!-- '.__("WARNING Admins id or app ID are empty", $this->plugin_text_domain).' | '.$this->plugin_name.' -->'."\n";
-			echo '<!-- '.$this->plugin_name.' END Open Graph Tags -->'."\n";
-		}
-	}
-	
 	
 	//****************************************************************************************
 	//	LIKE BUTTON
 	//****************************************************************************************
-	/*
+	/**
 	* Return the like button shortcode
 	*/
 	public function shortcode_like_button($atts=array()) {
@@ -1275,8 +1266,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			global $post;
 		return $this->get_the_like_button($post,$new_atts);
 	}
-	
-	/*
+	/**
 	* Return the like button
 	*/
 	public function get_the_like_button($post="",$options=array()){
@@ -1314,7 +1304,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			return '<div class="AWD_like_button '.$options['like_button_css_classes'].'" style="color:red;">'.__("There is an error, please verify the settings for the Like Button URL",$this->plugin_text_domain).'</div>';
 		
 	}
-	/*
+	/**
 	* Print the like button
 	*/
 	public function print_the_like_button(){
@@ -1323,7 +1313,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	//****************************************************************************************
 	//	COMMENT BOX
 	//****************************************************************************************
-	/*
+	/**
 	* Return the like button shortcode
 	*/
 	public function shortcode_comments_box($atts=array()) {
@@ -1339,8 +1329,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			global $post;
 		return $this->get_the_comments_box($post,$new_atts);
 	}
-	
-	/*
+	/**
 	* Return the like button
 	*/
 	public function get_the_comments_box($post="",$options=array()){
@@ -1369,7 +1358,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	//****************************************************************************************
 	//	LIKE BOX 
 	//****************************************************************************************
-	/*
+	/**
 	* Return the like box shortcode
 	*/
 	public function shortcode_like_box($atts=array()) {
@@ -1382,7 +1371,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		}
 		return $this->get_the_like_box($new_atts);
 	}
-	/*
+	/**
 	* Return the like button
 	*/
 	public function get_the_like_box($options=array()){
@@ -1416,7 +1405,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	//****************************************************************************************
 	//	ACTIVITY BOX 
 	//****************************************************************************************
-	/*
+	/**
 	* Return the activity box shortcode
 	*/
 	public function shortcode_activity_box($atts=array()){
@@ -1429,7 +1418,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
         }
         return $this->get_the_activity_box($new_atts);
     }
-	/*
+	/**
 	* Return the activity button
 	*/
 	public function get_the_activity_box($options=array()){
@@ -1457,7 +1446,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	//****************************************************************************************
 	//	REGISTER WIDGET
 	//****************************************************************************************
-	/*
+	/**
 	* Like box register widgets
 	*/
 	public function register_AWD_facebook_widgets(){
@@ -1470,7 +1459,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	//****************************************************************************************
 	//	DEBUG AND DEV
 	//****************************************************************************************
-	/*
+	/**
 	* Debug
 	*/
 	public function debug_content(){
@@ -1489,5 +1478,4 @@ include_once(dirname(__FILE__).'/inc/widgets/widget_like_box.php');
 include_once(dirname(__FILE__).'/inc/widgets/widget_login_button.php');
 include_once(dirname(__FILE__).'/inc/widgets/widget_like_button.php');
 include_once(dirname(__FILE__).'/inc/widgets/widget_activity.php');
-
 ?>
