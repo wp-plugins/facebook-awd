@@ -1348,7 +1348,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		if($this->plugin_option['comments_content'] !='')
 			return 'class="AWD_comments '.$options['comments_css_classes'].'"'.$this->plugin_option['comments_content'].'</div>';
 		if($this->plugin_option['parse_xfbml'] == 1 && $href!=''){
-			return '<div class="AWD_comments '.$options['comments_css_classes'].'"><fb:comments xid="'.$xid.'" href="'.$href.'" num_posts="'.$nb.'" width="'.$width.'" colorscheme="'.$colorscheme.'" ></fb:comments></div>';
+			return '<div class="AWD_comments '.$options['comments_css_classes'].'"><fb:comments xid="'.$xid.'" href="'.$href.'" num_posts="'.$nb.'" width="'.$width.'" colorscheme="'.$colorscheme.'" css="'.$css.'"></fb:comments></div>';
 		}elseif($href==''){
 			return '<div class="AWD_comments '.$options['comments_css_classes'].'" style="color:red;">'.__("There is an error, please verify the settings for the Comments box url",$this->plugin_text_domain).'</div>';
 		}elseif($this->plugin_option['parse_xfbml'] == 0){
