@@ -1342,13 +1342,12 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$nb = ($options['comments_nb'] == '' ? $this->plugin_option['comments_nb'] : $options['comments_nb']);
 		$width = ($options['comments_width'] == '' ? $this->plugin_option['comments_width'] : $options['comments_width']);
 		$colorscheme = ($options['comments_colorscheme'] == '' ? $this->plugin_option['comments_colorscheme'] : $options['comments_colorscheme']);
-		$css = ($options['comments_css'] == '' ? $this->plugin_option['comments_css'] : $options['comments_css']);
 		$id_notif = ($options['send_notification_uid'] == '' ? $this->plugin_option['send_notification_uid'] : $options['send_notification_uid']);
 		
 		if($this->plugin_option['comments_content'] !='')
 			return 'class="AWD_comments '.$options['comments_css_classes'].'"'.$this->plugin_option['comments_content'].'</div>';
 		if($this->plugin_option['parse_xfbml'] == 1 && $href!=''){
-			return '<div class="AWD_comments '.$options['comments_css_classes'].'"><fb:comments xid="'.$xid.'" href="'.$href.'" num_posts="'.$nb.'" width="'.$width.'" colorscheme="'.$colorscheme.'" css="'.$css.'"></fb:comments></div>';
+			return '<div class="AWD_comments '.$options['comments_css_classes'].'"><fb:comments href="'.$href.'" num_posts="'.$nb.'" width="'.$width.'" colorscheme="'.$colorscheme.'"></fb:comments></div>';
 		}elseif($href==''){
 			return '<div class="AWD_comments '.$options['comments_css_classes'].'" style="color:red;">'.__("There is an error, please verify the settings for the Comments box url",$this->plugin_text_domain).'</div>';
 		}elseif($this->plugin_option['parse_xfbml'] == 0){

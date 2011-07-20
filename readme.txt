@@ -57,7 +57,7 @@ Need PHP 5.*
 
 == Frequently Asked Questions ==
 
-[Create an Application on Facebook](https://www.facebook.com/developers/createapp.php/ "Create an application")
+[Create an Application on Facebook]("http://www.facebook.com/developers/createapp.php/")
 
 = Shortcodes: =
 `[AWD_likebutton]`
@@ -115,11 +115,9 @@ Options:
 Options:
 
 * url
-* xid
 * nb
 * width
 * colorscheme
-* [css]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/css-fb-comments.html")
 
 
 == Screenshots ==

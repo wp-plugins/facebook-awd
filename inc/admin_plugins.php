@@ -443,10 +443,6 @@
 							<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>comments_send_notification_uid"><?php _e('User ID to send a notification to upon someone posting a comment. (Only one facebook uid allowed).',$this->plugin_text_domain); ?></label>
 							<input type="text" name="<?php echo $this->plugin_option_pref; ?>comments_send_notification_uid" value="<?php echo $this->plugin_option['comments_send_notification_uid']; ?>" size="30" />
 						</p>
-						<p>
-							<label class="up_label" for="<?php echo $this->plugin_option_pref; ?>comments_css"><?php _e('URL of custom css file. (.css)',$this->plugin_text_domain); ?> <a href="http://www.ahwebdev.fr/plugins/documentation/facebook-awd/css-fb-comments.html" target="_blank"><img src="<?php echo $this->plugin_url_images; ?>info.png" style="vertical-align:top;"/></a></label>
-							<input type="text" name="<?php echo $this->plugin_option_pref; ?>comments_css" value="<?php echo $this->plugin_option['comments_css']; ?>" size="30" />
-						</p>
 					</div>
 					<div class="block_50">
 						<div id="#preview_login_button" class="awd_preview">
