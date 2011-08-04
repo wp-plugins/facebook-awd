@@ -44,18 +44,6 @@ jQuery(document).ready( function(){
 		e.preventDefault();
 	});
 	
-	//tooltip
-	jQuery(".help").click(function(e){
-		jQuery('#message_'+this.id).dialog({
-			title: "?",
-			show: "fade",
-			hide: "fade",
-			modal: true,
-			minWidth: 350
-		});
-		e.preventDefault();
-	});
-	
 	//for the shortcode in admin form		
 	jQuery(".awd_pre").addClass('ui-corner-all');
 	//get the focus element
@@ -70,4 +58,7 @@ jQuery(document).ready( function(){
 		var value = jQuery("#"+id_focused).val();
 		jQuery("#"+id_focused).val(value + b.html());
 	});
+	
+	//hide fadelement
+	jQuery(".fadeOnload").delay(4000).fadeOut();
 });
