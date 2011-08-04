@@ -3,10 +3,10 @@
 Plugin Name: Facebook AWD All in One
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph, Plugins from facebook, and FB connect, with SDK JS AND SDK PHP Facebook
-Version: 0.9.7
+Version: 0.9.7.1
 Author: AHWEBDEV
 Author URI: http://www.ahwebdev.fr
-License: Copywrite AH WEB DEV
+License: Copywrite AHWEBDEV
 Text Domain: AWD_facebook
 Last modification: 15/07/2011
 */
@@ -422,12 +422,16 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	/**
 	*
 	*/
-	public function get_avatar($avatar, $id_or_email, $size, $default, $alt){
+	public function get_avatar($avatar, $comments_objects, $size, $default, $alt){
 		//$avatar format includes the tag <img>
-		$fbuid = get_user_meta($id_or_email,'fb_uid', true);
-		$fb_avatar_url = 'http://graph.facebook.com/'.$fbuid.'/picture';
-		$my_avatar = "<img src='".$fb_avatar_url."' class='avatar AWD_fbavatar' alt='".$alt."' height='".$size."' width='".$size."' />";
-		return $my_avatar;
+		$fbuid = get_user_meta($comments_objects->user_id,'fb_uid', true);
+		if($fbuid !=''){
+			$fb_avatar_url = 'http://graph.facebook.com/'.$fbuid.'/picture';
+			$my_avatar = "<img src='".$fb_avatar_url."' class='avatar AWD_fbavatar' alt='".$alt."' height='".$size."' width='".$size."' />";
+			return $my_avatar;
+		}else
+			return "<img src='".$default."' class='avatar AWD_fbavatar' alt='".$alt."' height='".$size."' width='".$size."' />";
+		
 	}
 	/**
 	* INIT PHP SDK FACEBOOK
