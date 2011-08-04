@@ -109,23 +109,20 @@ class AHWEBDEV_wpplugin{
 	*/
 	public function infos_content(){
 	    ?>
-	    <p><fb:like href="http://www.ahwebdev.fr/plugins/facebook-awd.html" send="true" width="255" show_faces="false" font="lucida grande"></fb:like></p>
-	    <p style="text-align:center; font-size:1.3em;"><?php _e('Support this plugin',$this->plugin_text_domain); ?>
-	    <form style="width:153px;" action="https://www.paypal.com/cgi-bin/webscr" method="post">
-			<input type="hidden" name="cmd" value="_s-xclick">
-			<input type="hidden" name="hosted_button_id" value="ZQ2VL33YXHJLC">
-			<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-		</form>
-		</p>
-
-		<p style="text-align:center;font-size:1.3em;"><a href="http://wordpress.org/extend/plugins/facebook-awd/"><?php _e('Rate this plugin',$this->plugin_text_domain); ?></a></p>
-
-
-	    <p style="text-align:center;">
-	    <a href="http://www.ahwebdev.fr"><img src="http://www.ahwebdev.fr/wp-content/themes/ahwebdev/images/logos/logo-flat-ahwebdev.png" width="150" height="63" style="vertical-align:middle"/></a>
-	    </p>
-	    <p><a href="mailto:contact@ahwebdev.fr" title="Mail">Contact</a></p>
-	    <p><?php printf(__('This version is under developpement, please report bug if you find it to help us. You can report bug %shere%s',$this->plugin_text_domain),'<a href="http://wordpress.org/tags/facebook-awd?forum_id=10#postform">','</a>'); ?></p>
+	    <div style="text-align:center;">
+			<div class="header_AWD_facebook_wrap">
+				<h2 style="color:#627AAD;margin:0px;">
+					<img style="vertical-align:middle;" src="<?php echo $this->plugin_url_images; ?>facebook.png" alt="facebook logo" class="AWD_button_media" width="35" height="35"/>Facebook AWD
+					<sup style="color:#627AAD;font-size:0.6em;">v<?php echo $this->get_version(); ?></sup>
+				</h2>
+			</div>
+			<a href="http://wordpress.org/extend/plugins/facebook-awd/" target="_blank" class="uiButton uiButtonNormal"><?php _e('Rate this plugin',$this->plugin_text_domain); ?></a>
+			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZQ2VL33YXHJLC" target="_blank" class="uiButton uiButtonNormal"><?php _e('Donate',$this->plugin_text_domain); ?></a>
+			<a href="http://www.ahwebdev.fr/contact/" target="_blank" class="uiButton uiButtonNormal">Contact</a><br /><br />
+			<?php echo do_shortcode('[AWD_likebutton url="http://www.ahwebdev.fr/plugins/facebook-awd.html" layout="standart" width="258" height="30" faces="0" xfbml="0"]'); ?><br />
+			<?php echo do_shortcode('[AWD_likebox url="http://www.ahwebdev.fr" colorscheme="light" stream="0" xfbml="0" header="0" width="257" height="180"]'); ?>
+	    </div>
+	    <p><?php printf(__('Please if you find Bug, report it to help us. You can report bug %shere%s',$this->plugin_text_domain),'<a href="http://wordpress.org/tags/facebook-awd?forum_id=10#postform">','</a>'); ?></p>
 	    <?php
 	}
 }

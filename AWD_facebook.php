@@ -3,8 +3,8 @@
 Plugin Name: Facebook AWD All in One
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph, Plugins from facebook, and FB connect, with SDK JS AND SDK PHP Facebook
-Version: 0.9.6.4
-Author: AH WEB DEV
+Version: 0.9.7
+Author: AHWEBDEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AH WEB DEV
 Text Domain: AWD_facebook
@@ -16,8 +16,6 @@ if(!class_exists('AHWEBDEV_wpplugin'))
     require_once(dirname(__FILE__).'/inc/classes/class.ahwebdev_wpplugin.php');
 
 Class AWD_facebook extends AHWEBDEV_wpplugin{
-    
-    
     //****************************************************************************************
 	//	VARS
 	//****************************************************************************************
@@ -79,7 +77,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		/* Class FCBK */
 		if(!class_exists('Facebook'))
 			require_once(dirname(__FILE__).'/inc/classes/facebook.php');
-			//For 3.0 sdk php require_once(dirname(__FILE__).'/inc/classes/facebook/facebook.php');
+			//require_once(dirname(__FILE__).'/inc/classes/facebook/facebook.php');
 		add_action('init',array(&$this,'initial'),11);//11 start init later to be comatible with custom post types
 		//like box widget register
 		add_action('widgets_init',  array(&$this,'register_AWD_facebook_widgets'));
@@ -99,11 +97,22 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* missing config notices
 	*/
 	public function missing_config(){
-		?>
-		<div class="error">
-			<p><?php printf( __( 'Facebook Connect plugin is almost ready. To start using Facebook <strong>you need to set your Facebook Application API ID and Faceook Application secret key</strong>. You can do that in <a href="%1s">Facebook Connect settings page</a>. (Notification from Facebook AWD)', $this->plugin_text_domain), admin_url( 'admin.php?page='.$this->plugin_slug)); ?></p>
-		</div> 
-		<?php	
+		//error for connect
+		if($this->plugin_option['connect_enable'] == 1 && ($this->plugin_option['app_id'] =='' OR $this->plugin_option['app_secret_key'] =='')){
+			?>
+			<div class="error">
+				<p><?php printf( __( 'Facebook Connect plugin is almost ready. To start using Facebook <strong>you need to set your Facebook Application API ID and Faceook Application secret key</strong>. You can do that in <a href="%1s">Facebook Connect settings page</a>. (Notification from Facebook AWD)', $this->plugin_text_domain), admin_url( 'admin.php?page='.$this->plugin_slug)); ?></p>
+			</div> 
+			<?php	
+		}
+		//error from open Graph ID application
+		if($this->plugin_option['app_id'] == '' && $this->plugin_option['admins'] ==''){
+			?>
+			<div class="error">
+				<p><?php printf( __('Facebook AWD is almost ready... Go to settings and set a FB app Id (Notification from Facebook AWD)', $this->plugin_text_domain), admin_url( 'admin.php?page='.$this->plugin_slug)); ?></p>
+			</div> 
+			<?php	
+		}
 	}
 	/**
 	* missing config notices
@@ -122,8 +131,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* $image string nema of the image to dispplay (icon)
 	*/
 	public function get_the_help($elem,$class="help",$image='info.png'){
-	    return '<span class="'.$class.'" id="'.$class.'_'.$elem.'"><img src="'.$this->plugin_url_images.$image.'" /></span>';
-	
+	    //return '<span ><img src="'.$this->plugin_url_images.$image.'" /></span>';
+	    return '<a href="#" class="help uiLightboxHTML" id="help_'.$elem.'" data-backdrop="true"><img src="'.$this->plugin_url_images.$image.'" /></a>';
 	}
 	
 	//****************************************************************************************
@@ -242,7 +251,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	public function admin_content(){
 		global $message;
 		$page = $_GET['page'];
-		//add_filter('screen_layout_columns', array(&$this, 'screen_layout'));
       	?>
 		<div class="AWD_facebook_wrap" id="AWD_facebook_wrap">
 			<?php 
@@ -253,15 +261,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			
 			?>
 			<div id="poststuff" class="metabox-holder has-right-sidebar">
-				<form method="post">
 					<div id="side-info-column" class="inner-sidebar">
-						<div class="header_AWD_facebook_wrap">
-							<h2 style="color:#627AAD;margin-top:0px;">
-								<img style="vertical-align:middle;" src="<?php echo $this->plugin_url_images; ?>facebook.png" alt="facebook logo" class="AWD_button_media" /><?php _e($this->plugin_page_admin_name,$this->plugin_text_domain); ?>
-								<sup style="color:#627AAD;font-size:0.6em;">v<?php echo $this->get_version(); ?></sup>
-							</h2>
-						</div>
-			
 						<?php
 							//side bar always here
 							do_meta_boxes($this->plugin_slug.'_box','side',null);
@@ -283,7 +283,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 							?>
 					   </div>
 					</div>
-				</form>
 			</div>
 			<script type="text/javascript">
 				//<![CDATA[
@@ -359,7 +358,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	 */
 	public function admin_enqueue_css(){
 		wp_enqueue_style($this->plugin_slug.'-admin', $this->plugin_url.'/css/admin_styles.css',array($this->plugin_slug.'-jquery-ui'));
-		wp_enqueue_style($this->plugin_slug.'-jquery-ui', $this->plugin_url.'/css/jquery-ui-1.8.12.custom.css');
+		wp_enqueue_style($this->plugin_slug.'-jquery-ui', $this->plugin_url.'/css/jquery-ui-1.8.14.custom.css');
+		wp_enqueue_style($this->plugin_slug.'-ui-toolkit', $this->plugin_url.'/css/ui-toolkit.css');
 		wp_enqueue_style('thickbox'); 
 	}
 	/**
@@ -371,18 +371,11 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		wp_enqueue_script('common');
 		wp_enqueue_script('wp-list');
 		wp_enqueue_script('postbox');
-		wp_enqueue_script($this->plugin_slug.'-jquery-ui',$this->plugin_url.'/js/jquery-ui-1.8.12.custom.min.js',array('jquery'));
+		wp_enqueue_script($this->plugin_slug.'-jquery-ui',$this->plugin_url.'/js/jquery-ui-1.8.14.custom.min.js',array('jquery'));
 		wp_enqueue_script($this->plugin_slug.'-js-cookie',$this->plugin_url.'/js/jquery.cookie.js',array('jquery'));
 		wp_enqueue_script($this->plugin_slug.'-js',$this->plugin_url.'/js/facebook_awd.js',array('jquery'));
-	}
-	/**
-	 * options metabox columns etc...
-	 */
-	public function screen_layout($columns, $screen) {
-		if ($screen == $this->$blog_admin_page_hook) {
-			$columns[$this->$blog_admin_page_hook] = 2;
-		}
-		return $columns;
+		wp_enqueue_script($this->plugin_slug.'-ui-toolkit',$this->plugin_url.'/js/ui-toolkit.js',array('jquery'));
+		
 	}
 	/**
 	* Save the post custom from open graph form
@@ -393,6 +386,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			if(ereg('ogtags_',$__post) AND trim($val) !=''){
 				update_post_meta($post_id, $__post, $val);
 			}
+			
 		}
 		
 		$permalink = get_permalink($post_id);
@@ -410,13 +404,13 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* if some option were saved via post
 	*/
 	public function hook_post_from_plugin_options(){		
-		if($_POST[$this->plugin_option_pref.'submit'] AND wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_options_update_field'],$this->plugin_slug.'_update_options')){
+		if(wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_options_update_field'],$this->plugin_slug.'_update_options')){
 			//unset submit to not be stored
 			unset($_POST[$this->plugin_option_pref.'submit']);
 			unset($_POST[$this->plugin_option_pref.'_nonce_options_update_field']);
 			unset($_POST['_wp_http_referer']);
 			if($this->update_options_from_post())
-				$this->message = '<div id="message" class="updated"><p>'.__('Options updated',$this->plugin_text_domain).'</p></div>';
+				$this->message = '<div id="message" class="updated fadeOnload"><p>'.__('Options updated',$this->plugin_text_domain).'</p></div>';
 			else
 				$this->message = '<div id="message" class="error"><p>'.__('Options not updated there is an error...',$this->plugin_text_domain).'</p></div>';
 		}
@@ -425,6 +419,16 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	//****************************************************************************************
 	//	FRONT AND CONTENT
 	//****************************************************************************************
+	/**
+	*
+	*/
+	public function get_avatar($avatar, $id_or_email, $size, $default, $alt){
+		//$avatar format includes the tag <img>
+		$fbuid = get_user_meta($id_or_email,'fb_uid', true);
+		$fb_avatar_url = 'http://graph.facebook.com/'.$fbuid.'/picture';
+		$my_avatar = "<img src='".$fb_avatar_url."' class='avatar AWD_fbavatar' alt='".$alt."' height='".$size."' width='".$size."' />";
+		return $my_avatar;
+	}
 	/**
 	* INIT PHP SDK FACEBOOK
 	*/
@@ -458,27 +462,33 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		}else{
 			$this->login_url = $this->fcbk->getLoginUrl();
 		}
+	}
 	/*
 	* Waiting for PHP SDK 3.0 version
-	public function init_php(){
+	*/
+	/*
+	public function sdk_init(){
 		$this->fcbk = new Facebook(array(
 			'appId'  => $this->plugin_option['app_id'],
 			'secret' => $this->plugin_option['app_secret_key'],
+			'cookie' => true
 		));
 		
 		$this->me = null;
 		// Get User ID
 		$this->uid = $this->fcbk->getUser();
+		
+		
 		if($this->uid) {
 			try {
 				// Proceed knowing you have a logged in user who's authenticated.
-				$this->me = $facebook->api('/me');
-				
-				//$updated = date("l, F j, Y", strtotime($me['updated_time']));
+				$this->me = $this->fcbk->api('/me');
+				//call avatar from facebook and replace it with default avatar
+				add_filter('avatar_defaults', array(&$this,'fb_avatar'));
+			//$updated = date("l, F j, Y", strtotime($me['updated_time']));
 			} catch (FacebookApiException $e) {
 				error_log($e);
 				$this->uid = null;
-				echo '00000';
 			}
 		}
 		// login or logout url will be needed depending on current user state.
@@ -494,8 +504,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
             	)
             );
 		}
-	}
-	*/}
+	}*/
+			
 	/**
 	* login user with facebook account
 	*/
@@ -505,8 +515,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	/**
 	* Change logout url for users connected with Facebook
 	*/
-	public function logout_url($url,$redirect=""){
-		if($this->session)
+	public function logout_url($url){
+		if($this->uid)
 			//here we can use $this->logout_url;
 			//but that's better to use FBJS to logout
 			return "javascript:FB.logout(function(){location.href='" .$url."'})";
@@ -595,43 +605,83 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function connect_footer(){
 		?>
-		<div id="fb-root"></div>
+		<?php if($this->plugin_option['connect_enable'] == 1){ ?>
 		<script type="text/javascript">
             window.fbAsyncInit = function(){
                 FB.init({
                     appId   : '<?php echo  $this->plugin_option["app_id"]; ?>',
                     status  : true, // check login status
-                    <?php if($this->session){ echo "session : ".json_encode($this->session).","; } 
-                    ?>//get the session with php sdk
+                    <?php if($this->session){ echo "session : ".json_encode($this->session).","; } ?>//get the session with php sdk
                     cookie  : true, // enable cookies to allow the server to access the session
-                    xfbml   : <?php echo ($this->plugin_option['parse_xfbml'] == 1 ? 'true' : 'false'); ?>// parse XFBML
-                	//add some js with plugin or admin
-            		<?php do_action('AWD_custom_fbinit'); ?>
+                    xfbml   : <?php echo ($this->plugin_option['parse_xfbml'] == 1 ? 'true' : 'false'); ?>,// parse XFBML
+            		oauth : false //wait for php SDK compatible with cookie
                 });
-                
-				FB.Event.subscribe('auth.sessionChange', function(response) {
+                // if pop up are blocked, we go to facebook with the php login url SDK 3
+				/*window.open_facebook = window.open;
+				window.open = function(url,name,specs,replace) {
+					login_handler = window.open_facebook(url,name,specs,replace);
+					if(!login_handler) {
+						//window.location.href = "<?php echo $this->login_url; ?>";	  
+					}
+				}
+				//function to call when we want to init the login process SDK 3
+                function UpdateLoginStatus(response){
+                	if(response.authResponse){
+                        //A user has logged in, and a new cookie has been saved
+                      	//window.location.href = window.location.href;
+                    }else{
+                    	//display some button
+                    	FB.login(function(response) {
+                    		//check if pop up blocked
+                    	    window.open = window.open_facebook;
+                    	    //check if user connected
+	  						if (response.authResponse) {
+	  						alert('toto');
+            					window.location.href = window.location.href;
+          					}else{
+            					//user cancelled login or did not grant authorization
+          					}
+        				}, {scope:'<?php echo $this->plugin_option["perms"]; ?>'});
+                    }
+                }
+                //run once with current status and whenever the status changes
+                <?php if(!is_user_logged_in()){ ?>
+  					//FB.getLoginStatus(UpdateLoginStatus);
+  				<?php } ?>
+  				*/
+  				//old sdk...
+  				FB.Event.subscribe('auth.login', function(response) {
                     <?php if(!$this->session || !is_user_logged_in()){ ?>
                     if (response.session) {
                         // A user has logged in, and a new cookie has been saved
-                      	window.location.href = window.location.href;
+                      	window.location.reload();
                     }
                     <?php } ?>
                 });
-               
+  				
                 //add some js with plugin or admin
             	<?php do_action('AWD_custom_fbjs'); ?>
             };
-            
-			(function() {
+		</script>
+		<?php 
+		}
+	}
+	/**
+	* Load the javascript sdk Facebook
+	*/
+	public function load_sdj_js(){
+		?>
+		<div id="fb-root"></div>
+		<script type="text/javascript">
+		(function() {
                 var e = document.createElement('script');
-                e.src = document.location.protocol + '//connect.facebook.net/<?php echo $this->plugin_option["locale"]; ?>/all.js';
+                e.src = document.location.protocol + '//connect.facebook.net/<?php echo $this->plugin_option["locale"]; ?>/all.js<?php if($this->plugin_option["parse_xfbml"]==1) echo "#xfbml=1"; ?>';
                 e.async = true;
                 document.getElementById('fb-root').appendChild(e);
               }());
 		</script>
-	<?php
+		<?php
 	}
-
 	//****************************************************************************************
 	//	OPENGRAPH
 	//****************************************************************************************
@@ -669,10 +719,10 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		//foreach tags, set value
 		foreach($og_tags_final as $tag=>$tag_name){
 			$option_value = '';
-			//if tags is empty because not set in plugin for retro actif on post and page
+			//if tags are empty because not set in plugin for retro actif on post and page
 			if($custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == '')
 				$custom_post[$this->plugin_option_pref.'ogtags_disable'][0] = 0;
- 			//if tags is enable from editor
+ 			//if tags are enable from editor
  			if($custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == 0){
 				//if general settings of this type is enable
 				if($this->plugin_option[$prefix_option.'disable'] == 0 && $this->plugin_option[$prefix_option.'disable'] != ''){
@@ -979,9 +1029,9 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			}
 			?>
 			<input type="radio" name="<?php echo $prefix.'disable';?>" <?php if($custom[$prefix.'disable'][0] == 1 OR ($custom[$prefix.'disable'][0] == '' && !is_object($post))){echo 'checked="checked"';} ?> id="<?php echo $prefix.'disable_on';?>" value="1"/> <?php _e('Yes',$this->plugin_text_domain); ?>
-			<input type="radio" name="<?php echo $prefix.'disable';?>" <?php if($custom[$prefix.'disable'][0] == 0 && $custom[$prefix.'disable'][0] != ''){echo 'checked="checked"';} ?> id="<?php echo $prefix.'disable_off';?>" value="0"/> <?php _e('No',$this->plugin_text_domain); ?>
+			<input type="radio" name="<?php echo $prefix.'disable';?>" <?php if($custom[$prefix.'disable'][0] == "0" OR (is_object($post) && $custom[$prefix.'disable'][0]=='')){echo 'checked="checked"';} ?> id="<?php echo $prefix.'disable_off';?>" value="0"/> <?php _e('No',$this->plugin_text_domain); ?>
 		</p>
-		<div class="ui_ogtags_allform<?php echo $customTemp; ?> <?php if($custom[$prefix.'disable'][0] == 1 OR $custom[$prefix.'disable'][0] == ''){echo 'hidden';} ?>">
+		<div class="ui_ogtags_allform<?php echo $customTemp; ?> <?php if($custom[$prefix.'disable'][0] == 1 OR ($custom[$prefix.'disable'][0] == '' && !is_object($post))){echo 'hidden';} ?>">
 		<?php 
 	    //if post or global form
         if(is_object($post)){ ?>	
@@ -991,10 +1041,12 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			<input type="radio" name="<?php echo $prefix.'redefine';?>" <?php if($custom[$prefix.'redefine'][0] == 0){echo 'checked="checked"';} ?> id="<?php echo $prefix.'redefine_off';?>" value="0"/> <?php _e('No',$this->plugin_text_domain); ?>
 		</p>
 		<?php }	?>
-		<div class="ui_ogtags_form ui_ogtags_form<?php echo $customTemp; ?> <?php if(is_object($post)){if($custom[$prefix.'redefine'][0] == 0){echo 'hidden';}} ?>">
+		<div class="ui_ogtags_form ui_ogtags_form<?php echo $customTemp; ?> <?php if($custom[$prefix.'redefine'][0]!= 1 && is_object($post)){echo 'hidden';} ?>">
 			<?php echo $this->get_the_help_box($custom_help); ?>
 			<<?php echo $custom_header; ?>><a href="#"><?php _e('Tags',$this->plugin_text_domain); ?></a></<?php echo $custom_header; ?>>
 			<div>
+			<div class="uiForm">
+				<table class="AWD_form_table">
 				<?php
 				foreach($this->og_tags as $tag=>$tag_name){
 					$prefixtag = $prefix.$tag;
@@ -1024,13 +1076,13 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 							$input = '<textarea class="widefat" id="'.$prefixtag.'" name="'.$prefixtag.'">'.($custom_value != '' ? $custom_value : $post->excerpt).'</textarea>';
 						break;
 						case 'app_id':
-							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : $this->plugin_option['app_id']).'" /> <i>'.__('Use custom value instead default',$this->plugin_text_domain).'</i>';
+							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : $this->plugin_option['app_id']).'" />';
 						break;
 						case 'admins':
-							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : $this->plugin_option['admins']).'" /> <i>'.__('Use custom value instead default',$this->plugin_text_domain).'</i>';
+							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : $this->plugin_option['admins']).'" />';
 						break;
 						case 'page_id':
-							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : $this->plugin_option['admins_page_id']).'" /> <i>'.__('Use custom value instead default',$this->plugin_text_domain).'</i>';
+							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : $this->plugin_option['admins_page_id']).'" />';
 						break;
 						case 'image':
 							$input = '<input class="ogwidefat" id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" /><img id="'.$prefix.'upload_image" src="'.$this->plugin_url_images.'upload_image.png" alt="'.__('Upload',$this->plugin_text_domain).'" class="AWD_button_media"/>';
@@ -1040,11 +1092,18 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 					}
 					if($tag_name){
 						?>
-						<p><label class="up_label"><?php echo $tag_name; ?></label><?php echo $input; ?></p>
+						<tr class="dataRow">
+							<th class="label"><?php echo $tag_name; ?></th>
+							<td class="data">
+								<?php echo $input; ?>
+							</td>
+						</tr>
 						<?php
 					}
 				}
 				?>
+				</table>
+			</div>
 			</div>
 			<?php
 			foreach($this->og_attachement_field as $type=>$tag_fields){
@@ -1052,9 +1111,12 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 					//video form
 					case 'video':
 						echo '<'.$custom_header.'><a href="#">'.__('Video Attachement',$this->plugin_text_domain).'</a></'.$custom_header.'>';
-						echo '<div>';
-							echo '<i>'.__('Facebook supports embedding video in SWF format only. File ith extension ".swf"',$this->plugin_text_domain).'</i>';
-							echo '<div id="'.$prefix.'message_video" class="ui-state-highlight hidden">'.__('You must include a valid Image for your video in Tags section to be displayed in the news feed.',$this->plugin_text_domain).'</div>';
+						echo '
+						<div>
+						<i>'.__('Facebook supports embedding video in SWF format only. File ith extension ".swf"',$this->plugin_text_domain).'</i>
+						<div class="uiForm">
+							<div id="'.$prefix.'message_video" class="ui-state-highlight hidden">'.__('You must include a valid Image for your video in Tags section to be displayed in the news feed.',$this->plugin_text_domain).'</div>
+							<table class="AWD_form_table">';
 							foreach($tag_fields as $tag=>$tag_name){
 								$prefixtag = $prefix.$tag;
 								$custom_value = $custom[$prefixtag][0];
@@ -1069,34 +1131,51 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 										$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" />';
 								}
 								?>
-								<p><label class="up_label"><?php echo $tag_name; ?></label><?php echo $input; ?></p>
+								<tr class="dataRow">
+									<th class="label"><?php echo $tag_name; ?></th>
+									<td class="data">
+										<?php echo $input; ?>
+									</td>
+								</tr>
 								<?php
 							}
-						echo '</div>';//fin toogle
+						echo '</table>
+						</div>
+						</div>';//fin toogle
 					break;
 					//audio form
 					case 'audio':
 						echo '<'.$custom_header.'><a href="#">'.__('Audio Attachement',$this->plugin_text_domain).'</a></'.$custom_header.'>';
-						echo '<div>';
-							echo '<i>'.__('In a similar fashion to Video you can add an audio file to your markup',$this->plugin_text_domain).'</i>';
-							foreach($tag_fields as $tag=>$tag_name){
-								$prefixtag = $prefix.$tag;
-								$custom_value = $custom[$prefixtag][0];
-								switch($tag){
-									case 'audio':
-										$input = '<input class="ogwidefat" id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" /><img id="'.$prefix.'upload_mp3" src="'.$this->plugin_url_images.'upload_image.png" alt="'.__('Upload',$this->plugin_text_domain).'" class="AWD_button_media"/>';
-									break;
-									case 'audio_type':
-										$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" readonly="readonly" value="'.($custom_value != '' ? $custom_value : 'application/mp3').'" />';
-									break;
-									default:
-										$input = '<input  id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" />';
+						echo '
+						<div>
+							<i>'.__('In a similar fashion to Video you can add an audio file to your markup',$this->plugin_text_domain).'</i>
+							<div class="uiForm">
+								<table class="AWD_form_table">';
+								foreach($tag_fields as $tag=>$tag_name){
+									$prefixtag = $prefix.$tag;
+									$custom_value = $custom[$prefixtag][0];
+									switch($tag){
+										case 'audio':
+											$input = '<input class="ogwidefat" id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" /><img id="'.$prefix.'upload_mp3" src="'.$this->plugin_url_images.'upload_image.png" alt="'.__('Upload',$this->plugin_text_domain).'" class="AWD_button_media"/>';
+										break;
+										case 'audio_type':
+											$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" readonly="readonly" value="'.($custom_value != '' ? $custom_value : 'application/mp3').'" />';
+										break;
+										default:
+											$input = '<input  id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" />';
+									}
+									?>
+									<tr class="dataRow">
+										<th class="label"><?php echo $tag_name; ?></th>
+										<td class="data">
+											<?php echo $input; ?>
+										</td>
+									</tr>
+									<?php
 								}
-								?>
-								<p><label class="up_label"><?php echo $tag_name; ?></label><?php echo $input; ?></p>
-								<?php
-							}
-						echo '</div>';//fin toogle
+						echo '</table>
+						</div>
+						</div>';//fin toogle
 					break;
 					//isbn and upc code
 					case 'isbn':
@@ -1104,48 +1183,73 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 						foreach($tag_fields as $tag=>$tag_name){
 							$prefixtag = $prefix.$tag;
 							$custom_value = $custom[$prefixtag][0];
-								echo '<'.$custom_header.'><a href="#">'.strtoupper($type).' '.__('code',$this->plugin_text_domain).'</a></'.$custom_header.'>';
-								echo '<div>';
-								echo '<label class="up_label">'.__('For products which have a UPC code or ISBN number',$this->plugin_text_domain).'</label>';
-								echo '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" />';
-							echo '</div>';
+							echo '<'.$custom_header.'><a href="#">'.strtoupper($type).' '.__('code',$this->plugin_text_domain).'</a></'.$custom_header.'>';
+							echo '
+							<div>
+							<div class="uiForm">
+								<table class="AWD_form_table">
+									<tr class="dataRow">
+										<th class="label">'.__('For products which have a UPC code or ISBN number',$this->plugin_text_domain).'</th>
+										<td class="data"><input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" /></td>
+									</tr>
+								</table>
+							</div>
+							</div>';
 						}
 					break;
 					//contact form
 					case 'contact':
 						echo '<'.$custom_header.'><a href="#">'.__('Contact infos',$this->plugin_text_domain).'</a></'.$custom_header.'>';
 						echo '<div>';
-							echo '<i>'.__('Consider including contact information if your page is about an entity that can be contacted.',$this->plugin_text_domain).'</i>';
-							foreach($tag_fields as $tag=>$tag_name){
-								$prefixtag = $prefix.$tag;
-								$custom_value = $custom[$prefixtag][0];
-								switch($tag){
-									default:
-										$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" />';
+							echo '<i>'.__('Consider including contact information if your page is about an entity that can be contacted.',$this->plugin_text_domain).'</i>
+							<div class="uiForm">
+								<table class="AWD_form_table">';
+								foreach($tag_fields as $tag=>$tag_name){
+									$prefixtag = $prefix.$tag;
+									$custom_value = $custom[$prefixtag][0];
+									switch($tag){
+										default:
+											$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" />';
+									}
+									?>
+									<tr class="dataRow">
+										<th class="label"><?php echo $tag_name; ?></th>
+										<td class="data">
+											<?php echo $input; ?>
+										</td>
+									</tr>
+									<?php
 								}
-								?>
-								<p><label class="up_label"><?php echo $tag_name; ?></label><?php echo $input; ?></p>
-								<?php
-							}
-						echo '</div>';
+						echo '</table>
+						</div>
+						</div>';//fin toogle
 					break;
 					//location form
 					case 'location':
 						echo '<'.$custom_header.'><a href="#">'.__('Location infos',$this->plugin_text_domain).'</a></'.$custom_header.'>';
 						echo '<div>';
-							echo '<i>'.__('This is useful if your pages is a business profile or about anything else with a real-world location. You can specify location via latitude and longitude, a full address, or both.',$this->plugin_text_domain).'</i>';
-							foreach($tag_fields as $tag=>$tag_name){
-								$prefixtag = $prefix.$tag;
-								$custom_value = $custom[$prefixtag][0];
-								switch($tag){
-									default:
-										$input = '<input size="25" id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" />';
+							echo '<i>'.__('This is useful if your pages is a business profile or about anything else with a real-world location. You can specify location via latitude and longitude, a full address, or both.',$this->plugin_text_domain).'</i>
+							<div class="uiForm">
+								<table class="AWD_form_table">';
+								foreach($tag_fields as $tag=>$tag_name){
+									$prefixtag = $prefix.$tag;
+									$custom_value = $custom[$prefixtag][0];
+									switch($tag){
+										default:
+											$input = '<input size="25" id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" />';
+									}
+									?>
+									<tr class="dataRow">
+										<th class="label"><?php echo $tag_name; ?></th>
+										<td class="data">
+											<?php echo $input; ?>
+										</td>
+									</tr>
+									<?php
 								}
-								?>
-								<p><label class="up_label"><?php echo $tag_name; ?></label><?php echo $input; ?></p>
-								<?php
-							}
-						echo '</div>';
+						echo '</table>
+						</div>
+						</div>';//fin toogle
 					break;
 				}
 			}
@@ -1181,8 +1285,9 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$show_faces = (($options['login_button_faces'] == '' ? $this->plugin_option['login_button_faces'] : $options['login_button_faces']) == 1 ? 'true' : 'false');
 		$maxrow = ($options['login_button_maxrow'] == '' ? $this->plugin_option['login_button_maxrow'] : $options['login_button_maxrow']);
 		$logout_value = ($options['login_button_logout_value'] == '' ? $this->plugin_option['login_button_logout_value'] : $options['login_button_logout_value']);
+		$logout_redirect_url = ($options['login_button_logout_url'] == '' ? $this->plugin_option['login_button_logout_url'] : $options['login_button_logout_url']);
 		//we set faces options to false, if user not connected
-		$login_button = '<fb:login-button perms="'.$this->plugin_option['perms'].'" show-faces="'.($this->me ? $show_faces : 'false').'" width="'.$width.'" max-rows="'.$maxrow.'" size="medium" ></fb:login-button>';
+		$login_button = '<fb:login-button show-faces="'.($this->me ? $show_faces : 'false').'" width="'.$width.'" max-rows="'.$maxrow.'" size="medium" ></fb:login-button>';
 		
 		//if some options defined
 		if(empty($options['case'])){
@@ -1206,7 +1311,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 				$html = '';
 				$html .= '<div class="AWD_profile '.$options['profile_css_classes'].'">'."\n";
 				if($show_profile_picture == 1 && $show_faces == 'false'){
-					$html .= '<div class="AWD_profile_image"><a href="'.$this->me['link'].'" target="_blank"><img src="https://graph.facebook.com/'.$this->uid.'/picture"></a></div>'."\n";
+					$html .= '<div class="AWD_profile_image"><a href="'.$this->me['link'].'" target="_blank"><img src="http://graph.facebook.com/'.$this->uid.'/picture"></a></div>'."\n";
 				}
 				$html .='<div class="AWD_right">'."\n";
 					if($show_faces == 'true'){
@@ -1214,7 +1319,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 					}else{
 						$html .='<div class="AWD_name"><a href="'.$this->me['link'].'" target="_blank">'.$this->me['name'].'</a></div>'."\n";
 					}
-						$html .='<div class="AWD_logout"><a href="'.wp_logout_url().'">'.$logout_value.'</a></div>'."\n";
+						$html .='<div class="AWD_logout"><a href="'.wp_logout_url($logout_redirect_url).'">'.$logout_value.'</a></div>'."\n";
 				$html .='</div>'."\n";
 				$html .='<div class="clear"></div>'."\n";
 				$html .='</div>'."\n";
@@ -1236,7 +1341,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			case 'message_connect_active':
 				if(is_admin())
 				return '
-				<div class="ui-state-highlight">'.sprintf(__('You should enable FB connect in %sApp settings%s to use Login buttons',$this->plugin_text_domain),'<a href="admin.php?page='.$this->blog_admin_page_hook.'">','</a>').'</div>';
+				<div class="ui-state-highlight">'.sprintf(__('You should enable FB connect in %sApp settings%s to use Login buttons',$this->plugin_text_domain),'<a href="admin.php?page='.$this->plugin_slug.'">','</a>').'</div>';
 			break;
 		}
 	}
@@ -1342,12 +1447,13 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$nb = ($options['comments_nb'] == '' ? $this->plugin_option['comments_nb'] : $options['comments_nb']);
 		$width = ($options['comments_width'] == '' ? $this->plugin_option['comments_width'] : $options['comments_width']);
 		$colorscheme = ($options['comments_colorscheme'] == '' ? $this->plugin_option['comments_colorscheme'] : $options['comments_colorscheme']);
+		$css = ($options['comments_css'] == '' ? $this->plugin_option['comments_css'] : $options['comments_css']);
 		$id_notif = ($options['send_notification_uid'] == '' ? $this->plugin_option['send_notification_uid'] : $options['send_notification_uid']);
 		
 		if($this->plugin_option['comments_content'] !='')
 			return 'class="AWD_comments '.$options['comments_css_classes'].'"'.$this->plugin_option['comments_content'].'</div>';
 		if($this->plugin_option['parse_xfbml'] == 1 && $href!=''){
-			return '<div class="AWD_comments '.$options['comments_css_classes'].'"><fb:comments href="'.$href.'" num_posts="'.$nb.'" width="'.$width.'" colorscheme="'.$colorscheme.'"></fb:comments></div>';
+			return '<div class="AWD_comments '.$options['comments_css_classes'].'"><fb:comments xid="'.$xid.'" href="'.$href.'" num_posts="'.$nb.'" width="'.$width.'" colorscheme="'.$colorscheme.'" css="'.$css.'" ></fb:comments></div>';
 		}elseif($href==''){
 			return '<div class="AWD_comments '.$options['comments_css_classes'].'" style="color:red;">'.__("There is an error, please verify the settings for the Comments box url",$this->plugin_text_domain).'</div>';
 		}elseif($this->plugin_option['parse_xfbml'] == 0){
@@ -1461,8 +1567,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	/**
 	* Debug
 	*/
-	public function debug_content(){
-		$this->Debug(array("$AWD_facebook->me"=>$this->me,"DEBUG FCBK"=>$this->debug_echo));
+	private function debug_content(){
+		$this->Debug(array('$AWD_facebook->me'=>$this->me,"DEBUG FCBK"=>$this->fcbk));
 	}
 
 }

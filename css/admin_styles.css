@@ -4,13 +4,10 @@
 * (C) 2011 AH WEB DEV
 * Hermann.alexandre@ahwebdev.fr
 */
-form label{
-	display:block;
-}
 div.header_AWD_facebook_wrap h2{
 	color:#627AAD;
-	margin-right:10px;
-	margin-top:0px;
+	margin:0;
+	padding:0;
 	font-weight:200;
 	text-align:center;
 	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -38,22 +35,22 @@ div.header_AWD_facebook_wrap h2{
 	display:block;
 }
 
-
-
-.up_label {
-	font-weight: bold;
-	margin-top:7px;
-	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,sans-serif;
-    margin-top:15px;
+.clear{
+	clear:both;
 }
-.clear{clear:both;}
-.hidden_state{
+.center{
+	text-align:center;
+}
+tr.hidden_state{
+	display:none;
+	background-color: #EAE9E9;
+}
+tr.hidden_state td,tr.hidden_state th{
 	border-top:1px solid #ccc;
 	border-bottom:1px solid #ccc;
-	display:none;
-	width:50%;
-	padding:5px 5px 5px 20px;
-	background-color: #EFEFEF;
+}
+tr.dataRow td,tr.dataRow th{
+	padding:5px;
 }
 .hidden{
 	display:none;
@@ -64,12 +61,12 @@ div.header_AWD_facebook_wrap h2{
 }
 
 .help:hover{
-	cursor:pointer;
+	cursor:help;
 }
 .help img{
 	vertical-align: top;
-	width:14px;
-	height:14px;
+	width:10px;
+	height:10px;
 }
 .awd_pre{
 	line-height: 15px;

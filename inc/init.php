@@ -33,6 +33,8 @@ $this->og_tags = array(
 	'page_id' => __('Page IDs',$this->plugin_text_domain),
 	'site_name'=> __('Site Name',$this->plugin_text_domain)
 );
+$this->og_tags = apply_filters('AWD_og_tags', $this->og_tags);
+
 $this->og_types = array(
     'activities' => array(
         'activity'=>__('Activity',$this->plugin_text_domain),
@@ -88,6 +90,8 @@ $this->og_types = array(
         'article'=>__('Article',$this->plugin_text_domain)
      )
 );
+$this->og_types = apply_filters('AWD_og_types', $this->og_types);
+
 //attachement
 $this->og_attachement_field = array(
 	'video' => array(
@@ -125,6 +129,7 @@ $this->og_attachement_field = array(
 		'upc'=>__('Upc',$this->plugin_text_domain)
 	)
 );
+$this->og_attachement_field = apply_filters('AWD_og_attachement_field', $this->og_attachement_field);
 
 //****************************************************************************************
 //  Settings
@@ -141,7 +146,8 @@ if($this->plugin_option['connect_enable'] == '')
 	$this->plugin_option['connect_enable'] = 0;
 if($this->plugin_option['open_graph_enable'] == '')
 	$this->plugin_option['open_graph_enable'] = 1;
-
+if($this->plugin_option['connect_fbavatar'] == '')
+	$this->plugin_option['connect_fbavatar'] == 0;
 //****************************************************************************************
 //  like button
 //****************************************************************************************
@@ -365,28 +371,31 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 	$this->sdk_init();
 	//perform login process
 	$this->login_user();
+	add_filter('avatar_defaults', array($this,'fb_avatar'));
+	
+	if($this->plugin_option['connect_fbavatar'] == 1)
+		add_filter('get_avatar', array($this, 'get_avatar'), 10, 5);
 	//set admin id to admin user if empty and if connect is used
-	if($this->plugin_option['admins'] == '' || $this->plugin_option['comments_send_notification_uid'] ==''){
-		$admin_email = get_option('admin_email');
-		$admin_user = get_user_by('email', $admin_email);
-		$fbadmin_uid = get_user_meta($admin_user->ID,'fb_uid', true);
+	$admin_email = get_option('admin_email');
+	$admin_user = get_user_by('email', $admin_email);
+	$fbadmin_uid = get_user_meta($admin_user->ID,'fb_uid', true);
+	
+	if($this->plugin_option['admins'] == '')
 		$this->plugin_option['admins'] = $fbadmin_uid;
-	}
 	//try here to set the comments notifications uid from 
-	if($this->plugin_option['comments_send_notification_uid']== ''){
-		if(!$fbadmin_uid){
-			$admin_email = get_option('admin_email');
-			$admin_user = get_user_by('email', $admin_email);
-			$fbadmin_uid = get_user_meta($admin_user->ID,'fb_uid', true);
-		}
+	if($this->plugin_option['comments_send_notification_uid']== '')
 		$this->plugin_option['comments_send_notification_uid'] = $fbadmin_uid;
-	}
+	
 	add_action('admin_print_footer_scripts',array(&$this,'connect_footer'));
 	add_action('wp_footer',array(&$this,'connect_footer'));
 	
-}elseif($this->plugin_option['connect_enable'] == 1){
-	add_action('admin_notices',array(&$this,'missing_config'));
 }
+
+add_action('admin_notices',array(&$this,'missing_config'));
+
+//load sdk js in footer
+add_action('admin_print_footer_scripts',array(&$this,'load_sdj_js'));
+add_action('wp_footer',array(&$this,'load_sdj_js'));
 
 //init admin
 add_action('admin_menu', array(&$this,'admin_menu'));
@@ -396,14 +405,13 @@ add_action('admin_init', array(&$this,'admin_initialisation'));
 add_filter('the_content', array(&$this,'the_content'));
 add_action('comments_template', array(&$this,'the_comments_form'));
 
-//add action to get button like
-add_action('AWD_facebook_like_button', array(&$this,'print_the_like_button'));
-
 //call the open tags in header
 add_action('wp_head',array(&$this,'define_open_graph_tags_header'));
 
 if($this->debug_active)
 	add_action('wp_footer',array(&$this,'debug_content'));
+
+
 	
 //add shortcode 
 add_shortcode('AWD_likebutton', array(&$this,'shortcode_like_button'));
@@ -414,5 +422,6 @@ add_shortcode('AWD_comments', array(&$this,'shortcode_comments_box'));
 
 //filter hook for all options
 $this->plugin_option = apply_filters('AWD_options', $this->plugin_option);
-
+if($this->current_user->ID == 1)
+//$this->Debug(get_class_methods("AWD_facebook"));
 ?>

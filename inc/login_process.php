@@ -6,7 +6,7 @@
 * Hermann.alexandre@ahwebdev.fr
 *
 */
-if($this->session){
+/*if($this->session){
 	//if user is logged in, then we just need to associate FB account with WordPress account
 	if(is_user_logged_in()){
 		$fb_uid = get_user_meta($this->current_user->ID,'fb_uid', true);
@@ -88,6 +88,7 @@ if($this->session){
 				
 				if($new_user->errors){
 					$this->Debug($new_user->errors);
+					
 					exit();
 				}elseif(is_int($new_user)){
 					update_user_meta( $new_user, 'fb_uid', $this->uid );
@@ -107,11 +108,10 @@ if($this->session){
 			}
 		}	    	
 	}
-}
+}*/
 /*
 * Version for PHP SDK 3.0, Waiting for javascript sdk 3 too.
 */
-/*
 if($this->uid){
 	//if user is logged in, then we just need to associate FB account with WordPress account
 	if(is_user_logged_in()){
@@ -193,8 +193,7 @@ if($this->uid){
 				
 				
 				if($new_user->errors){
-					$this->Debug($new_user->errors);
-					exit();
+					wp_die($this->Debug($new_user->errors));
 				}elseif(is_int($new_user)){
 					update_user_meta( $new_user, 'fb_uid', $this->uid );
 					$user_info = get_userdata($new_user);
@@ -209,11 +208,11 @@ if($this->uid){
 					exit();
 				}
 			}else{
-				wp_die(__('Facebook registration is disabled, contact the administrator',$this-plugin_text_domain));
+				wp_die(__('Wordpress registration is disabled, contact the administrator',$this-plugin_text_domain));
 			}
 		}	    	
 	}
 }
 
-*/
+
 ?>
