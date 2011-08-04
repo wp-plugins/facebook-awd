@@ -13,7 +13,7 @@ Facebook AWD is an all in one Facebook capabilities for wordpress.
 Add Socials plugins, OpenGraph, Comments and FB connect.
 Easy to install and setup. Use Iframe or Xfbml
 Add Like button and comments to pages, posts and custom posts types, at top, bottom or both.
-Widgets and Shortcodes available for each facevook socials plugins.
+Widgets and Shortcodes available for each Facebook socials plugins.
 Use post thumbnail for openGraph, Fix like button with url linter, use pattern to defined custom openGraph meta, etc...
  
 = Socials plugins iframe or xfbml: =
