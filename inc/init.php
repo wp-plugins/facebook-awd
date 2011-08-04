@@ -338,7 +338,6 @@ foreach($this->plugin_option as $option=>$value){
 //****************************************************************************************
 //  Langs
 //****************************************************************************************
-$this->plugin_option['locale'] = "en_US";
 if(empty($this->plugin_option['locale']))
 	if(defined('WPLANG'))
 		if(WPLANG!=''){
