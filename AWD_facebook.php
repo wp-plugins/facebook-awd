@@ -654,7 +654,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
   				<?php } ?>
   				*/
   				//old sdk...
-  				FB.Event.subscribe('auth.login', function(response) {
+  				FB.Event.subscribe('auth.sessionChange', function(response) {
                     <?php if(!$this->session || !is_user_logged_in()){ ?>
                     if (response.session) {
                         // A user has logged in, and a new cookie has been saved
