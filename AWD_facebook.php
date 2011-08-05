@@ -3,7 +3,7 @@
 Plugin Name: Facebook AWD All in One
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph, Plugins from facebook, and FB connect, with SDK JS AND SDK PHP Facebook
-Version: 0.9.7.1
+Version: 0.9.7.2
 Author: AHWEBDEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AHWEBDEV
@@ -1291,7 +1291,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$logout_value = ($options['login_button_logout_value'] == '' ? $this->plugin_option['login_button_logout_value'] : $options['login_button_logout_value']);
 		$logout_redirect_url = ($options['login_button_logout_url'] == '' ? $this->plugin_option['login_button_logout_url'] : $options['login_button_logout_url']);
 		//we set faces options to false, if user not connected
-		$login_button = '<fb:login-button show-faces="'.($this->me ? $show_faces : 'false').'" width="'.$width.'" max-rows="'.$maxrow.'" size="medium" ></fb:login-button>';
+		$login_button = '<fb:login-button perms="'.$this->plugin_option['perms'].'" show-faces="'.($this->me ? $show_faces : 'false').'" width="'.$width.'" max-rows="'.$maxrow.'" size="medium" ></fb:login-button>';
 		
 		//if some options defined
 		if(empty($options['case'])){
