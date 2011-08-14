@@ -161,4 +161,6 @@ Options:
 [view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-6.html")
 = 0.9.7 =
 [view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7.html")
-Special update API Facebook PHP and JS to V3.1.1 (0.9.7.3)
+= 0.9.7.3 =
+[view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-3.html")
+Special update API Facebook PHP and JS to V3.1.1
