@@ -57,7 +57,7 @@ Need PHP 5.*
 
 == Frequently Asked Questions ==
 
-[Create an Application on Facebook](http://www.facebook.com/developers/createapp.php/)
+[Create an Application on Facebook](http://developers.facebook.com/apps/)
 
 = Like box does not work =
 Verify that url you enter is an url form a Facebook Page and not from a website.
