@@ -130,7 +130,7 @@ Options:
 * width
 * colorscheme
 
-= API hook Actions: (doc soon)=
+= API hook Actions: (doc soon) =
 * AWD_facebook_plugins_init
 * AWD_facebook_plugins_menu
 * AWD_facebook_plugins_form
