@@ -4,6 +4,7 @@ Donate link: http://www.ahwebdev.fr/plugins/facebook-awd.html
 Tags: facebook, oauth2, like button,opengraph, open graph, comments, connect, likebox, activity box, all in one, fb connect, fb comments, facebook comments
 Requires at least: 3.1
 Tested up to: 3.2.1
+Stable tag: 0.9.7.3
 Facebook AWD is an all in one Facebook capabilities for wordpress.
 Add like button, like box, activity box, FB Comments, Open Graph and FB connect
 
@@ -66,7 +67,7 @@ This error come from facebook.
 In your App settings, on facebook, you should go to the connect tab, and you should set an url, and a domain for the connect api.
 
 = How can i get my Facebook ID and My Facebook App Api info =
-[Search here]("http://developers.facebook.com/apps") 
+[Search here]("http://developers.facebook.com/apps/") 
 
 = Shortcodes: =
 `[AWD_likebutton]`
@@ -129,7 +130,7 @@ Options:
 * width
 * colorscheme
 
-= API hook Actions: (doc soon)=
+= API hook Actions: (doc soon) =
 * AWD_facebook_plugins_init
 * AWD_facebook_plugins_menu
 * AWD_facebook_plugins_form
@@ -138,7 +139,7 @@ Options:
 * AWD_facebook_js_not_authorized
 * AWD_facebook_js_authorized
 
-= API hook Filters: (doc soon)=
+= API hook Filters: (doc soon) =
 * AWD_facebook_options
 * AWD_facebook_og_tags
 * AWD_facebook_og_types
