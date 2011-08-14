@@ -4,7 +4,6 @@ Donate link: http://www.ahwebdev.fr/plugins/facebook-awd.html
 Tags: facebook, oauth2, like button,opengraph, open graph, comments, connect, likebox, activity box, all in one, fb connect, fb comments, facebook comments
 Requires at least: 3.1
 Tested up to: 3.2.1
-Stable tag: 0.9.7.3
 Facebook AWD is an all in one Facebook capabilities for wordpress.
 Add like button, like box, activity box, FB Comments, Open Graph and FB connect
 
