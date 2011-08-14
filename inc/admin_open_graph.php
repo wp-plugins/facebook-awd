@@ -8,7 +8,7 @@
 */
 ?>
 <div id="div_options_content">
-	<form method="POST" action="">
+	<form method="POST" action="" id="<?php echo $this->plugin_slug; ?>_form_opg">
 		<div id="div_options_content_tabs">
 			<ul class="tabs_ul">
 				<li><a href="#ogtags_frontpage"><?php _e('Frontpage',$this->plugin_text_domain); ?></a></li>
@@ -154,6 +154,22 @@
 		<br />
 		<?php wp_nonce_field($this->plugin_slug.'_update_options',$this->plugin_option_pref.'_nonce_options_update_field'); ?>
 		<br />
-		<input type="submit"  name="<?php echo $this->plugin_option_pref; ?>submit" id="<?php echo $this->plugin_option_pref; ?>submit" value="<?php _e('Save all settings',$this->plugin_text_domain); ?>" />
+		<div class="center">
+			<a href="#" id="submit_opg" class="uiButton uiButtonSubmit"><?php _e('Save all settings',$this->plugin_text_domain); ?></a>
+		</div>
 	</form>
 </div>
+<?php
+/*
+* Javascript for admin
+*/
+?>
+<script type="text/javascript">
+	jQuery(document).ready( function(){
+		jQuery('#submit_opg').click(function(){
+			jQuery('#<?php echo $this->plugin_slug; ?>_form_opg').submit();
+			jQuery("body").css("cursor", "progress");
+			return false;
+		});
+	});
+</script>

@@ -88,6 +88,7 @@
 			jQuery('#<?php echo $this->plugin_slug; ?>_form_settings').submit();
 			return false;
 		});
+		
 		hide_state("#<?php echo $this->plugin_option_pref; ?>connect_enable_on",".connect_options");
 	});
 </script>

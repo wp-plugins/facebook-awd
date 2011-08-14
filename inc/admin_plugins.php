@@ -11,7 +11,7 @@
 <div id="div_options_content">
 	<form method="POST" action="" id="<?php echo $this->plugin_slug; ?>_form_settings">
 		<div id="div_options_content_tabs">
-			<ul class="tabs_ul">
+			<ul class="tabs_ul">			
 				<li><a href="#like_button_settings"><?php _e('Like Button',$this->plugin_text_domain); ?></a></li>
 				<li><a href="#activity_settings"><?php _e('Activity Feed',$this->plugin_text_domain); ?></a></li>
 				<li><a href="#login_button_settings"><?php _e('Login Button',$this->plugin_text_domain); ?></a></li>
@@ -21,6 +21,7 @@
 				<li><a href="#"><?php _e('Recommendations',$this->plugin_text_domain); ?></a></li>
 				<li><a href="#"><?php _e('Send Button',$this->plugin_text_domain); ?></a></li>
 				<li><a href="#"><?php _e('Facepile',$this->plugin_text_domain); ?></a></li>-->
+				<?php do_action("AWD_facebook_plugins_menu"); ?>
 			</ul>
 			<?php
 			/**
@@ -207,16 +208,16 @@
 									<br />
 									<div id="egoptions_likebutton"  class="hidden">
                                         <u>Options:</u><br />
-                                        * url<br />
-                                        * send<br />
-                                        * width<br />
-                                        * colorscheme<br />
-                                        * faces<br />
-                                        * fonts<br />
-                                        * action<br />
-                                        * layout<br />
-                                        * height<br />
-                                        * xfbml<br />
+                                        * url (string)<br />
+                                        * send (0 or 1)<br />
+                                        * width (number)<br />
+                                        * colorscheme (light or dark)<br />
+                                        * faces (0 or 1)<br />
+                                        * fonts (string)<br />
+                                        * action (like or recommend)<br />
+                                        * layout (standart, box_count or button_count)<br />
+                                        * height (number)<br />
+                                        * xfbml (0 or 1)<br />
 									</div>
 									</p>
 								</div>
@@ -302,14 +303,14 @@
 									<br />
 									<div id="egoptions_likebox"  class="hidden">
                                         <u>Options:</u><br />
-                                        * url<br />
-                                        * width<br />
-                                        * colorscheme<br />
-                                        * faces<br />
-                                        * height<br />
-                                        * xfbml<br />
-                                        * stream<br />
-                                        * header<br />
+                                        * url (string)<br />
+                                        * width (number)<br />
+                                        * colorscheme (light or dark)<br />
+                                        * faces (0 or 1)<br />
+                                        * height (number)<br />
+                                        * xfbml (0 or 1)<br />
+                                        * stream (0 or 1)<br />
+                                        * header (0 or 1)<br />
                                     </div>
 									</p>
 								</div>
@@ -322,6 +323,13 @@
 			    <p><i><?php _e('The activity box is added via shortcodes, widgets, and themes functions',$this->plugin_text_domain); ?></i></p>
 				<div class="uiForm">
                     <table class="AWD_form_table">
+                    	<tr class="dataRow">
+							<th class="label"><?php echo $label_xfbml; ?> <?php echo $this->get_the_help('like_button_fbml'); ?></th>
+							<td class="data">
+								<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>activity_xfbml_on" name="<?php echo $this->plugin_option_pref; ?>activity_xfbml" value="1" <?php if($this->plugin_option['parse_xfbml'] == 0){ echo 'disabled="disabled"'; }elseif($this->plugin_option['activity_xfbml'] == '1') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>activity_xfbml_on"><?php echo __('XFBML',$this->plugin_text_domain); ?></label><br />
+								<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>activity_xfbml_off" name="<?php echo $this->plugin_option_pref; ?>activity_xfbml" value="0" <?php if($this->plugin_option['activity_xfbml'] == '0') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>activity_xfbml_off"><?php echo __('IFRAME',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain);?></label>
+							</td>
+						</tr>
                         <tr class="dataRow">
                             <th class="label"><?php _e('Domain',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('activity_domain'); ?></th>
                             <td class="data">
@@ -392,20 +400,20 @@
 								<br />
 								<div class="awd_pre" style="text-align:left;">
 									<p>
-									<strong>Shorcode: [AWD_activity]</strong> <a href="#" style="float:right;" onclick="jQuery('#egoptions_activity').toggle(300); return false;"><?php _e('-show options-',$this->plugin_text_domain); ?></a>
+									<strong>Shorcode: [AWD_activitybox]</strong> <a href="#" style="float:right;" onclick="jQuery('#egoptions_activity').toggle(300); return false;"><?php _e('-show options-',$this->plugin_text_domain); ?></a>
 									<br />
 									<div id="egoptions_activity"  class="hidden">
                                         <u>Options:</u><br />
-                                        * domain<br />
-                                        * width<br />
-                                        * colorscheme<br />
-                                        * faces<br />
-                                        * height<br />
-                                        * xfbml<br />
-                                        * fonts<br />
-                                        * border_color<br />
-                                        * header<br />
-                                        * recommendations<br />
+                                        * domain (string)<br />
+                                        * width (number)<br />
+                                        * colorscheme (light or dark)<br />
+                                        * faces (0 or 1)<br />
+                                        * height (number)<br />
+                                        * xfbml (0 or 1)<br />
+                                        * fonts (string)<br />
+                                        * border_color (string color)<br />
+                                        * header (0 or 1)<br />
+                                        * recommendations (0 or 1)<br />
                                     </div>
 									</p>
 								</div>
@@ -423,94 +431,100 @@
 				<?php
 				//if FB connect enable
 				if($this->plugin_option['connect_enable'] == 1){
-					//if FB parse xfbml
-					if($this->plugin_option['parse_xfbml'] == 1){
-					?>
-						<div class="uiForm">
-							<table class="AWD_form_table">
-								<tr class="dataRow">
-									<th class="label"><?php _e('Show Faces ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_faces'); ?></th>
-									<td class="data">
-										<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>login_button_faces_on" name="<?php echo $this->plugin_option_pref; ?>login_button_faces" value="1" <?php if($this->plugin_option['login_button_faces'] == '1') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>login_button_faces_on"><?php _e('Yes',$this->plugin_text_domain); ?></label><br /> 
-										<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>login_button_faces_off" name="<?php echo $this->plugin_option_pref; ?>login_button_faces" value="0" <?php if($this->plugin_option['login_button_faces'] == '0') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>login_button_faces_off"><?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?></label>
-									</td>
-								</tr>
-								<tr class="dataRow">
-									<th class="label"><?php _e('Show Profile picture ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_profile_picture'); ?></th>
-									<td class="data">
-										<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture_on" name="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture" value="1" <?php if($this->plugin_option['login_button_profile_picture'] == '1') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture_on"><?php _e('Yes',$this->plugin_text_domain); ?></label><br /> 
-										<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture_off" name="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture" value="0" <?php if($this->plugin_option['login_button_profile_picture'] == '0') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture_off"><?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?><label>
-									</td>
-								</tr>
-								<tr class="dataRow">
-									<th class="label"><?php _e('Width of button',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_width'); ?></th>
-									<td class="data">
-										<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_width" name="<?php echo $this->plugin_option_pref; ?>login_button_width" value="<?php echo $this->plugin_option['login_button_width']; ?>" size="6" />
-									</td>
-								</tr>
-								<tr class="dataRow">
-									<th class="label"><?php _e('Max Rows (faces)',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_maxrow'); ?></th>
-									<td class="data">
-										<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_maxrow" name="<?php echo $this->plugin_option_pref; ?>login_button_maxrow" value="<?php echo $this->plugin_option['login_button_maxrow']; ?>" size="6" />
-									</td>
-								</tr>
-								<tr class="dataRow">
-									<th class="label"><?php _e('Logout Phrase',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_logout'); ?></th>
-									<td class="data">
-										<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_logout_value" name="<?php echo $this->plugin_option_pref; ?>login_button_logout_value" value="<?php echo $this->plugin_option['login_button_logout_value']; ?>" size="30" />
-									</td>
-								</tr>
-								<tr class="dataRow">
-									<th class="label"><?php _e('Redirect url after logout',$this->plugin_text_domain); ?></th>
-									<td class="data">
-										<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_logout_url" name="<?php echo $this->plugin_option_pref; ?>login_button_logout_url" value="<?php echo $this->plugin_option['login_button_logout_url']; ?>" size="30" />
-									</td>
-								</tr>
-								<tr class="dataRow">
-									<th class="label"><?php _e('Custom Css',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_css'); ?></th>
-									<td class="data">
-										<textarea rows="10" class="uiTextarea" cols="35" id="<?php echo $this->plugin_option_pref; ?>login_button_css" name="<?php echo $this->plugin_option_pref; ?>login_button_css"><?php echo $this->plugin_option['login_button_css']; ?></textarea>
-									</td>
-								</tr>
-								<tr class="dataRow">
-									<td>&nbsp;</td>
-								</tr>
-								<tr class="dataRow">
-									<th class="label" colspan="2"><h3 class="center"><?php _e('Preview',$this->plugin_text_domain);?></h3></th>
-								</tr>
-								<tr class="dataRow">
-									<td class="data center" colspan="2">
-										<?php 
-										//echo the button or profile
-										$fcbk_content = '';
-										$fcbk_content = $this->get_the_login_button();
-										echo $fcbk_content;
-										?>										
+				?>
+					<div class="uiForm">
+						<table class="AWD_form_table">
+							<tr class="dataRow">
+								<th class="label"><?php _e('Show Profile picture ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_profile_picture'); ?></th>
+								<td class="data">
+									<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture_on" name="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture" value="1" <?php if($this->plugin_option['login_button_profile_picture'] == '1') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture_on"><?php _e('Yes',$this->plugin_text_domain); ?></label><br /> 
+									<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture_off" name="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture" value="0" <?php if($this->plugin_option['login_button_profile_picture'] == '0') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture_off"><?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?><label>
+								</td>
+							</tr>
+							<tr class="dataRow">
+								<th class="label"><?php _e('Width of button',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_width'); ?></th>
+								<td class="data">
+									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_width" name="<?php echo $this->plugin_option_pref; ?>login_button_width" value="<?php echo $this->plugin_option['login_button_width']; ?>" size="6" />
+								</td>
+							</tr>
+							<tr class="dataRow">
+								<th class="label"><?php _e('Show Faces ? (only if xfbml)',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_faces'); ?></th>
+								<td class="data">
+									<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>login_button_faces_on" name="<?php echo $this->plugin_option_pref; ?>login_button_faces" value="1" <?php if($this->plugin_option['login_button_faces'] == '1') echo 'checked="checked"'; ?> <?php if($this->plugin_option['parse_xfbml'] == 0){ echo 'disabled="disabled"';} ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>login_button_faces_on"><?php _e('Yes',$this->plugin_text_domain); ?></label><br /> 
+									<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>login_button_faces_off" name="<?php echo $this->plugin_option_pref; ?>login_button_faces" value="0" <?php if($this->plugin_option['login_button_faces'] == '0') echo 'checked="checked"'; ?> <?php if($this->plugin_option['parse_xfbml'] == 0){ echo 'disabled="disabled"';} ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>login_button_faces_off"><?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?></label>
+								</td>
+							</tr>
+							<tr class="dataRow">
+								<th class="label"><?php _e('Max Rows (only if show faces = Yes)',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_maxrow'); ?></th>
+								<td class="data">
+									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_maxrow" name="<?php echo $this->plugin_option_pref; ?>login_button_maxrow" value="<?php echo $this->plugin_option['login_button_maxrow']; ?>" <?php if($this->plugin_option['parse_xfbml'] == 0){ echo 'disabled="disabled"';} ?> size="6" />
+								</td>
+							</tr>
+							<tr class="dataRow">
+								<th class="label"><?php _e('Logout Phrase',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_logout'); ?></th>
+								<td class="data">
+									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_logout_value" name="<?php echo $this->plugin_option_pref; ?>login_button_logout_value" value="<?php echo $this->plugin_option['login_button_logout_value']; ?>" size="30" />
+								</td>
+							</tr>
+							<tr class="dataRow">
+								<th class="label"><?php _e('Redirect url after login',$this->plugin_text_domain); ?>. <?php _e('You can use pattern %BLOG_URL%. Defautl: current url',$this->plugin_text_domain); ?></th>
+								<td class="data">
+									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_login_url" name="<?php echo $this->plugin_option_pref; ?>login_button_login_url" value="<?php echo $this->plugin_option['login_button_login_url']; ?>" size="30" />
+								</td>
+							</tr>
+							<tr class="dataRow">
+								<th class="label"><?php _e('Redirect url after logout',$this->plugin_text_domain); ?>. <?php _e('You can use pattern %BLOG_URL%. Defautl: current url',$this->plugin_text_domain); ?></th>
+								<td class="data">
+									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_logout_url" name="<?php echo $this->plugin_option_pref; ?>login_button_logout_url" value="<?php echo $this->plugin_option['login_button_logout_url']; ?>" size="30" />
+								</td>
+							</tr>
+							<tr class="dataRow">
+								<th class="label"><?php _e('Button Image',$this->plugin_text_domain); ?></th>
+								<td class="data">
+									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_image" name="<?php echo $this->plugin_option_pref; ?>login_button_image" value="<?php echo $this->plugin_option['login_button_image']; ?>" size="30" /><img id="<?php echo $this->plugin_option_pref; ?>login_button_upload_image" src="<?php echo $this->plugin_url_images; ?>upload_image.png" alt="<?php _e('Upload',$this->plugin_text_domain); ?>" class="AWD_button_media"/>
+								</td>
+							</tr>
+							<tr class="dataRow">
+								<th class="label"><?php _e('Custom Css',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_css'); ?></th>
+								<td class="data">
+									<textarea rows="10" class="uiTextarea" cols="35" id="<?php echo $this->plugin_option_pref; ?>login_button_css" name="<?php echo $this->plugin_option_pref; ?>login_button_css"><?php echo $this->plugin_option['login_button_css']; ?></textarea>
+								</td>
+							</tr>
+							<tr class="dataRow">
+								<td>&nbsp;</td>
+							</tr>
+							<tr class="dataRow">
+								<th class="label" colspan="2"><h3 class="center"><?php _e('Preview',$this->plugin_text_domain);?></h3></th>
+							</tr>
+							<tr class="dataRow">
+								<td class="data center" colspan="2">
+									<?php 
+									//echo the button or profile
+									$fcbk_content = '';
+									$fcbk_content = $this->get_the_login_button();
+									echo $fcbk_content;
+									?>										
+									<br />
+									<div class="awd_pre" style="text-align:left;">
+										<p>
+										<strong>Shorcode: [AWD_loginbutton]</strong> <a href="#" style="float:right;" onclick="jQuery('#egoptions_loginbutton').toggle(300); return false;"><?php _e('-show options-',$this->plugin_text_domain); ?></a>
 										<br />
-										<div class="awd_pre" style="text-align:left;">
-											<p>
-											<strong>Shorcode: [AWD_loginbutton]</strong> <a href="#" style="float:right;" onclick="jQuery('#egoptions_loginbutton').toggle(300); return false;"><?php _e('-show options-',$this->plugin_text_domain); ?></a>
-											<br />
-											<div id="egoptions_loginbutton"  class="hidden">
-												<u>Options:</u><br />
-												* profile_picture<br />
-												* width<br />
-												* faces<br />
-												* maxrow<br />
-												* logout_value<br />
-												* logout_url
-											</div>
-											</p>
+										<div id="egoptions_loginbutton"  class="hidden">
+											<u>Options:</u><br />
+											* profile_picture (0 or 1)<br />
+											* width (number)<br />
+											* faces (0 or 1)<br />
+											* maxrow (number)<br />
+											* logout_value (string)<br />
+											* logout_url (string)
 										</div>
-									</td>
-								</tr>
-							</table>
-						</div>
+										</p>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
 					<?php
-					}else{
-						echo '<div class="ui-state-error">'.__('You must enable XFBML parsing, in settings of the plugin',$this->plugin_text_domain).'</div>';
-	
-					}
 				}else{
 					echo '<div class="ui-state-error">'.__('You must enable FB Connect and set parameters in settings of the plugins',$this->plugin_text_domain).'</div>';
 				}
@@ -609,13 +623,13 @@
 										<br />
 										<div id="egoptions_comments"  class="hidden">
 											<u>Options:</u><br />
-											* url<br />
-											* xid<br />
-											* nb<br />
-											* width<br />
-											* colorscheme<br />
-											* css<br />
-											* notification_uid
+											* url (string)<br />
+											* xid (number)<br />
+											* nb (number)<br />
+											* width (number)<br />
+											* colorscheme (light or dark)<br />
+											* css (string)<br />
+											* notification_uid (FB uid )
 										</div>
 										</p>
 									</div>
@@ -629,6 +643,9 @@
 				}
 				?>
 			</div>
+			
+			<?php do_action("AWD_facebook_plugins_form"); ?>
+
 			<?php wp_nonce_field($this->plugin_slug.'_update_options',$this->plugin_option_pref.'_nonce_options_update_field'); ?>
 		</div>
 		<?php wp_nonce_field($this->plugin_slug.'_update_options',$this->plugin_option_pref.'_nonce_options_update_field'); ?>
@@ -644,6 +661,18 @@
 ?>
 <script type="text/javascript">
 	jQuery(document).ready( function(){
+		jQuery("#<?php echo $this->plugin_option_pref; ?>login_button_upload_image").click(function() {
+			var formfield = jQuery("#<?php echo $this->plugin_option_pref; ?>login_button_image").attr('name');
+			tb_show("<?php echo __('Button Image',$this->plugin_text_domain).' '.$this->plugin_name; ?>", 'media-upload.php?type=image&amp;TB_iframe=true');
+			
+			window.send_to_editor = function(html) {
+				var imgurl = jQuery('img',html).attr('src');
+				jQuery("#<?php echo $this->plugin_option_pref; ?>login_button_image").val(imgurl);
+				tb_remove();
+			}
+			return false;
+		});
+
 		jQuery('#submit_settings').click(function(){
 			jQuery('#<?php echo $this->plugin_slug; ?>_form_settings').submit();
 			jQuery("body").css("cursor", "progress");

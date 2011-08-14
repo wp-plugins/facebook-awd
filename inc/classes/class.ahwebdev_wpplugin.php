@@ -6,7 +6,6 @@
 * Hermann.alexandre@ahwebdev.fr
 * Last modification : 15/07/2011
 */
-
 class AHWEBDEV_wpplugin{
     /**
     * public
@@ -33,7 +32,6 @@ class AHWEBDEV_wpplugin{
 			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		else
 			$ip = $_SERVER['REMOTE_ADDR'];        
-		return $ip;
 	}
 	/**
 	 * plugin version
@@ -44,6 +42,7 @@ class AHWEBDEV_wpplugin{
 	    $plugin_folder = get_plugins('/'.plugin_basename( dirname(dirname(dirname( __FILE__ )))));
 	    return $plugin_folder[$this->file_name]['Version'];
 	}
+	
 	/**
 	* Update Options from post
 	*/
@@ -120,7 +119,7 @@ class AHWEBDEV_wpplugin{
 			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZQ2VL33YXHJLC" target="_blank" class="uiButton uiButtonNormal"><?php _e('Donate',$this->plugin_text_domain); ?></a>
 			<a href="http://www.ahwebdev.fr/contact/" target="_blank" class="uiButton uiButtonNormal">Contact</a><br /><br />
 			<?php echo do_shortcode('[AWD_likebutton url="http://www.ahwebdev.fr/plugins/facebook-awd.html" layout="standart" width="258" height="30" faces="0" xfbml="0"]'); ?><br />
-			<?php echo do_shortcode('[AWD_likebox url="http://www.ahwebdev.fr" colorscheme="light" stream="0" xfbml="0" header="0" width="257" height="180"]'); ?>
+			<?php echo do_shortcode('[AWD_likebox url="http://www.ahwebdev.fr" colorscheme="light" stream="0" xfbml="0" header="0" width="257" height="180" faces="1"]'); ?>
 	    </div>
 	    <p><?php printf(__('Please if you find Bug, report it to help us. You can report bug %shere%s',$this->plugin_text_domain),'<a href="http://wordpress.org/tags/facebook-awd?forum_id=10#postform">','</a>'); ?></p>
 	    <?php

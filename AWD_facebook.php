@@ -3,7 +3,7 @@
 Plugin Name: Facebook AWD All in One
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph, Plugins from facebook, and FB connect, with SDK JS AND SDK PHP Facebook
-Version: 0.9.7.2
+Version: 0.9.7.3
 Author: AHWEBDEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AHWEBDEV
@@ -33,7 +33,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
     * private
     * preffix blog option
     */
-    private $plugin_option_pref = 'awd_fcbk_option_';
+    public $plugin_option_pref = 'awd_fcbk_option_';
     /**
     * public
     * preffix blog option
@@ -76,8 +76,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	public function __construct(){		
 		/* Class FCBK */
 		if(!class_exists('Facebook'))
-			require_once(dirname(__FILE__).'/inc/classes/facebook.php');
-			//require_once(dirname(__FILE__).'/inc/classes/facebook/facebook.php');
+			require_once(dirname(__FILE__).'/inc/classes/facebook/facebook.php');
 		add_action('init',array(&$this,'initial'),11);//11 start init later to be comatible with custom post types
 		//like box widget register
 		add_action('widgets_init',  array(&$this,'register_AWD_facebook_widgets'));
@@ -279,6 +278,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 							elseif($page == $this->plugin_slug.'_support')
 								do_meta_boxes($this->plugin_slug.'_support_box','normal',null);
 							
+							do_action("AWD_facebook_custom_metabox");
+							
 							do_meta_boxes($this->plugin_slug.'_box','normal',null);
 							?>
 					   </div>
@@ -308,10 +309,10 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* Comments on plugins contents 
 	*/
 	public function support_content(){
-		if($this->plugin_option['parse_xfbml'] == 1){
+		if($this->plugin_option['parse_xfbml'] == 0){
 			echo '<fb:comments href="http://www.ahwebdev.fr/plugins/facebook-awd.html" num_posts="20"></fb:comments>';
 		}else{
-			echo '<div style="color:red;">'.sprintf(__('You must activate xfbml if you want to see support form (FB:comments) Or %sgo to this page%s at bottom','<a href="http://ahwebdev.fr/plugins/facebook-awd.html">','</a>'),$this->plugin_text_domain).'</div>';
+			echo '<div class="ui-state-error">'.sprintf(__('You must activate xfbml if you want to see support form (FB:comments) Or %sgo to this page%s at bottom',$this->plugin_text_domain),'<a href="http://www.ahwebdev.fr/plugins/facebook-awd.html">','</a>').'</div>';
 		} 
 	}
 	/**
@@ -351,7 +352,9 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$options['login_button_faces'] = 'false';
 		$options['login_button_maxrow'] = 1;
 		$options['login_button_logout_value'] = __("Logout",$this->plugin_text_domain);
-		$this->print_the_login_button($options);
+		$this->print_the_login_button($options)."<br />";
+		if($this->uid)
+			echo "<p>".sprintf(__("My Facebook ID: <strong>%s</strong>",$this->plugin_text_domain),$this->uid)."</p>";
 	}
 	/**
 	 * Admin css
@@ -422,60 +425,31 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	/**
 	*
 	*/
-	public function get_avatar($avatar, $comments_objects, $size, $default, $alt){
+	public function fb_get_avatar($avatar, $comments_objects, $size, $default, $alt){
 		//$avatar format includes the tag <img>
-		$fbuid = get_user_meta($comments_objects->user_id,'fb_uid', true);
+		if(is_object($comments_objects))
+			$fbuid = get_user_meta($comments_objects->user_id,'fb_uid', true);
+		elseif($comments_objects !='')
+			$fbuid = get_user_meta($comments_objects,'fb_uid', true);
+		else
+			$fbuid = get_user_meta($this->current_user->ID,'fb_uid', true);
+
 		if($fbuid !=''){
 			$fb_avatar_url = 'http://graph.facebook.com/'.$fbuid.'/picture';
 			$my_avatar = "<img src='".$fb_avatar_url."' class='avatar AWD_fbavatar' alt='".$alt."' height='".$size."' width='".$size."' />";
 			return $my_avatar;
 		}else
-			return "<img src='".$default."' class='avatar AWD_fbavatar' alt='".$alt."' height='".$size."' width='".$size."' />";
-		
+			return $avatar;
 	}
-	/**
-	* INIT PHP SDK FACEBOOK
+	
+	/*
+	* INIT PHP SDK 3 version
 	*/
+	
 	public function sdk_init(){
 		$this->fcbk = new Facebook(array(
 			'appId'  => $this->plugin_option['app_id'],
-			'secret' => $this->plugin_option['app_secret_key'],
-			'cookie' => true,
-		));
-		
-		//we need to update api call fucntion in facebook class. 01/05/2011 (add stripslashes() in validateSessionObject function)
-		$this->session = $this->fcbk->getSession();
-		//fot the debug
-		$this->debug_echo['Fcbk session'] = $this->session;
-		$this->me = null;
-		// Session based API call.
-		if($this->session){
-			try{
-				$this->uid = $this->fcbk->getUser();
-				$this->me = $this->fcbk->api('/me');
-				$updated = date("l, F j, Y", strtotime($me['updated_time']));
-			}catch(FacebookApiException $e){
-				error_log($e);
-			}
-		}
-		// login or logout url will be needed depending on current user state.
-		if($this->me){
-			$this->logout_url = $this->fcbk->getLogoutUrl();
-			//modify logout url
-			add_filter('logout_url', array(&$this,'logout_url'));
-		}else{
-			$this->login_url = $this->fcbk->getLoginUrl();
-		}
-	}
-	/*
-	* Waiting for PHP SDK 3.0 version
-	*/
-	/*
-	public function sdk_init(){
-		$this->fcbk = new Facebook(array(
-			'appId'  => $this->plugin_option['app_id'],
-			'secret' => $this->plugin_option['app_secret_key'],
-			'cookie' => true
+			'secret' => $this->plugin_option['app_secret_key']
 		));
 		
 		$this->me = null;
@@ -487,8 +461,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			try {
 				// Proceed knowing you have a logged in user who's authenticated.
 				$this->me = $this->fcbk->api('/me');
-				//call avatar from facebook and replace it with default avatar
-				add_filter('avatar_defaults', array(&$this,'fb_avatar'));
 			//$updated = date("l, F j, Y", strtotime($me['updated_time']));
 			} catch (FacebookApiException $e) {
 				error_log($e);
@@ -508,7 +480,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
             	)
             );
 		}
-	}*/
+	}
 			
 	/**
 	* login user with facebook account
@@ -614,61 +586,82 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
             window.fbAsyncInit = function(){
                 FB.init({
                     appId   : '<?php echo  $this->plugin_option["app_id"]; ?>',
-                    status  : true, // check login status
-                    <?php if($this->session){ echo "session : ".json_encode($this->session).","; } ?>//get the session with php sdk
+					//status  : true, // check login status
+                    //if($this->session){ echo "session : ".json_encode($this->session).","; } ?>//get the session with php sdk 
                     cookie  : true, // enable cookies to allow the server to access the session
                     xfbml   : <?php echo ($this->plugin_option['parse_xfbml'] == 1 ? 'true' : 'false'); ?>,// parse XFBML
-            		oauth : false //wait for php SDK compatible with cookie
+            		oauth : true //wait for php SDK compatible with cookie
                 });
                 // if pop up are blocked, we go to facebook with the php login url SDK 3
-				/*window.open_facebook = window.open;
+				window.open_facebook = window.open;
 				window.open = function(url,name,specs,replace) {
 					login_handler = window.open_facebook(url,name,specs,replace);
 					if(!login_handler) {
-						//window.location.href = "<?php echo $this->login_url; ?>";	  
+						alert("<?php _e('You should allow popup to login with Facebook',$this->plugin_text_domain); ?>");
 					}
 				}
-				//function to call when we want to init the login process SDK 3
-                function UpdateLoginStatus(response){
-                	if(response.authResponse){
-                        //A user has logged in, and a new cookie has been saved
-                      	//window.location.href = window.location.href;
-                    }else{
-                    	//display some button
-                    	FB.login(function(response) {
-                    		//check if pop up blocked
-                    	    window.open = window.open_facebook;
-                    	    //check if user connected
-	  						if (response.authResponse) {
-	  						alert('toto');
-            					window.location.href = window.location.href;
-          					}else{
-            					//user cancelled login or did not grant authorization
-          					}
-        				}, {scope:'<?php echo $this->plugin_option["perms"]; ?>'});
-                    }
-                }
-                //run once with current status and whenever the status changes
-                <?php if(!is_user_logged_in()){ ?>
-  					//FB.getLoginStatus(UpdateLoginStatus);
-  				<?php } ?>
-  				*/
-  				//old sdk...
-  				FB.Event.subscribe('auth.sessionChange', function(response) {
-                    <?php if(!$this->session || !is_user_logged_in()){ ?>
-                    if (response.session) {
-                        // A user has logged in, and a new cookie has been saved
-                      	window.location.reload();
-                    }
-                    <?php } ?>
-                });
-  				
+				
+                FB.getLoginStatus(function(response) {
+					if (response.status === 'connected') {
+						// the user is logged in and connected to your
+						// app, and response.authResponse supplies
+						// the user’s ID, a valid access token, a signed
+						// request, and the time the access token 
+						// and signed request each expire
+						<?php if(!is_user_logged_in()){							
+							do_action("AWD_facebook_redirect_login");
+						}?>
+						var fb_uid = response.authResponse.userID;
+						var fb_accessToken = response.authResponse.accessToken;
+					}else if(response.status === 'not_authorized') {
+						// the user is logged in to Facebook, 
+						//but not connected to the app
+						<?php do_action("AWD_facebook_js_not_authorized"); ?>
+					}else{
+						<?php do_action("AWD_facebook_js_authorized"); ?>
+					}
+				});
+                FB.Event.subscribe('auth.login', function(response) {
+					window.location.reload();
+				});
+				/*FB.Event.subscribe('auth.logout', function(response) {
+				  window.location.reload();
+				});*/
+				
+						
                 //add some js with plugin or admin
             	<?php do_action('AWD_custom_fbjs'); ?>
             };
+            function AWD_facebook_connect(login_url){
+            		//display some button
+					FB.login(function(response) {
+						//check if pop up blocked
+						window.open = window.open_facebook;
+						//check if user connected
+						if(response.authResponse) {
+							if(login_url != ''){
+								window.location.href = login_url;
+							}else{
+								<?php do_action('AWD_facebook_redirect_login'); ?>
+							}
+						}else{
+							//reload page if not connected. (cancel button)
+				  			window.location.reload();
+						}
+					}, {scope:'<?php echo $this->plugin_option["perms"]; ?>'});
+				}
 		</script>
 		<?php 
 		}
+	}
+	/**
+	* redirect after login hook
+	*/
+	public function js_redirect_after_login(){
+		if($this->plugin_option['login_button_login_url'] =='')
+			echo 'window.location.reload();';
+		else
+			echo 'window.location.href = "'.$this->plugin_option['login_button_login_url'].'";';
 	}
 	/**
 	* Load the javascript sdk Facebook
@@ -817,11 +810,12 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 						}
 					}
 				//thumbnails if thumb support and has one
-				if(current_theme_supports('post_thumbnails') && has_post_thumbnail($post->ID)) {
+				if(has_post_thumbnail($post->ID)) {
                 	$thumbURL = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID),'');
                 	$img = $thumbURL[0];
                 }else{
                     unset($img);
+                    global $wpzoom_cf_use;
                     if($wpzoom_cf_use == 'Yes'){
                     	$img = get_post_meta($post->ID, $wpzoom_cf_photo, true);
                 	}else{
@@ -842,7 +836,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 				$current_archive_url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 				$type =  'Authors';
 				//get avatar for replace in pattern
-				$avatar = get_avatar($current_author->ID, '50', '','');
+				$avatar = get_avatar($current_author->ID, '50');
 				//get the url of avatar
 				if($avatar)
 				    $gravatar_attributes = simplexml_load_string($avatar);
@@ -1290,8 +1284,11 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$maxrow = ($options['login_button_maxrow'] == '' ? $this->plugin_option['login_button_maxrow'] : $options['login_button_maxrow']);
 		$logout_value = ($options['login_button_logout_value'] == '' ? $this->plugin_option['login_button_logout_value'] : $options['login_button_logout_value']);
 		$logout_redirect_url = ($options['login_button_logout_url'] == '' ? $this->plugin_option['login_button_logout_url'] : $options['login_button_logout_url']);
+		$login_redirect_url = ($options['login_button_login_url'] == '' ? $this->plugin_option['login_button_login_url'] : $options['login_button_login_url']);
+		$login_button_image = ($options['login_button_image'] == '' ? $this->plugin_option['login_button_image'] : $options['login_button_image']);
 		//we set faces options to false, if user not connected
-		$login_button = '<fb:login-button perms="'.$this->plugin_option['perms'].'" show-faces="'.($this->me ? $show_faces : 'false').'" width="'.$width.'" max-rows="'.$maxrow.'" size="medium" ></fb:login-button>';
+		//old perms perms="'.$this->plugin_option['perms'].'"
+		$login_button = '<fb:login-button show-faces="'.($this->me ? $show_faces : 'false').'" width="'.$width.'" max-rows="'.$maxrow.'" size="medium" ></fb:login-button>';
 		
 		//if some options defined
 		if(empty($options['case'])){
@@ -1315,7 +1312,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 				$html = '';
 				$html .= '<div class="AWD_profile '.$options['profile_css_classes'].'">'."\n";
 				if($show_profile_picture == 1 && $show_faces == 'false'){
-					$html .= '<div class="AWD_profile_image"><a href="'.$this->me['link'].'" target="_blank"><img src="http://graph.facebook.com/'.$this->uid.'/picture"></a></div>'."\n";
+					$html .= '<div class="AWD_profile_image"><a href="'.$this->me['link'].'" target="_blank"> '.get_avatar($this->current_user->ID,'50').'</a></div>'."\n";
 				}
 				$html .='<div class="AWD_right">'."\n";
 					if($show_faces == 'true'){
@@ -1323,22 +1320,24 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 					}else{
 						$html .='<div class="AWD_name"><a href="'.$this->me['link'].'" target="_blank">'.$this->me['name'].'</a></div>'."\n";
 					}
-						$html .='<div class="AWD_logout"><a href="'.wp_logout_url($logout_redirect_url).'">'.$logout_value.'</a></div>'."\n";
+					$logout_redirect_url =str_ireplace("%BLOG_URL%",home_url(),$logout_redirect_url);
+					$html .='<div class="AWD_logout"><a href="'.wp_logout_url($logout_redirect_url).'">'.$logout_value.'</a></div>'."\n";
 				$html .='</div>'."\n";
 				$html .='<div class="clear"></div>'."\n";
 				$html .='</div>'."\n";
 				return $html;
 			break;	
 		
-			case 'login_xfbml':
+			/*case 'login_xfbml':
 				return '
 				<div class="AWD_facebook_login">'.$login_button.'</div>'."\n";;
-			break;
+			break;*/
 			
+			case 'login_xfbml'://login xfbml no more supported... xfbml button is only show if faces = 1
 			case 'login':
 				return '
 				<div class="AWD_facebook_login '.$options['login_button_css_classes'].'">
-					<a href="'.$this->login_url.'" ><img src="http://static.ak.fbcdn.net/rsrc.php/zB6N8/hash/4li2k73z.gif"></a>
+					<a href="'.$this->login_url.'" onclick="AWD_facebook_connect(\''.$login_redirect_url.'\'); return false;"><img src="'.$login_button_image.'"></a>
 				</div>'."\n";
 			break;
 		

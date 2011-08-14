@@ -33,7 +33,7 @@ $this->og_tags = array(
 	'page_id' => __('Page IDs',$this->plugin_text_domain),
 	'site_name'=> __('Site Name',$this->plugin_text_domain)
 );
-$this->og_tags = apply_filters('AWD_og_tags', $this->og_tags);
+$this->og_tags = apply_filters('AWD_facebook_og_tags', $this->og_tags);
 
 $this->og_types = array(
     'activities' => array(
@@ -90,7 +90,7 @@ $this->og_types = array(
         'article'=>__('Article',$this->plugin_text_domain)
      )
 );
-$this->og_types = apply_filters('AWD_og_types', $this->og_types);
+$this->og_types = apply_filters('AWD_facebook_og_types', $this->og_types);
 
 //attachement
 $this->og_attachement_field = array(
@@ -129,7 +129,7 @@ $this->og_attachement_field = array(
 		'upc'=>__('Upc',$this->plugin_text_domain)
 	)
 );
-$this->og_attachement_field = apply_filters('AWD_og_attachement_field', $this->og_attachement_field);
+$this->og_attachement_field = apply_filters('AWD_facebook_og_attachement_fields', $this->og_attachement_field);
 
 //****************************************************************************************
 //  Settings
@@ -231,7 +231,9 @@ if($this->plugin_option['login_button_faces'] == '')
 	$this->plugin_option['login_button_faces'] = 0;
 if($this->plugin_option['login_button_logout_value'] == '')
 	$this->plugin_option['login_button_logout_value'] = __('Logout',$this->plugin_text_domain);
-
+if($this->plugin_option['login_button_image'] == '')
+	$this->plugin_option['login_button_image'] = $this->plugin_url_images.'f-connect.png';
+	
 //****************************************************************************************
 // comments
 //****************************************************************************************
@@ -370,15 +372,18 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 	$this->sdk_init();
 	//perform login process
 	$this->login_user();
-	add_filter('avatar_defaults', array($this,'fb_avatar'));
+	//use this hook to set the redirect url after JS login.
+	add_action("AWD_facebook_redirect_login",array(&$this,'js_redirect_after_login'));
+	
+	//avatar swap
+	//add_filter('avatar_defaults', array($this,'fb_avatar'));
 	
 	if($this->plugin_option['connect_fbavatar'] == 1)
-		add_filter('get_avatar', array($this, 'get_avatar'), 10, 5);
+		add_filter('get_avatar', array($this, 'fb_get_avatar'), 100, 5);//modify in last... 
 	//set admin id to admin user if empty and if connect is used
 	$admin_email = get_option('admin_email');
 	$admin_user = get_user_by('email', $admin_email);
 	$fbadmin_uid = get_user_meta($admin_user->ID,'fb_uid', true);
-	
 	if($this->plugin_option['admins'] == '')
 		$this->plugin_option['admins'] = $fbadmin_uid;
 	//try here to set the comments notifications uid from 
@@ -418,9 +423,9 @@ add_shortcode('AWD_likebox', array(&$this,'shortcode_like_box'));
 add_shortcode('AWD_activitybox', array(&$this,'shortcode_activity_box'));
 add_shortcode('AWD_loginbutton', array(&$this,'shortcode_login_button'));
 add_shortcode('AWD_comments', array(&$this,'shortcode_comments_box'));
-
+//load some plugin if exists
+do_action("AWD_facebook_plugins_init");
 //filter hook for all options
-$this->plugin_option = apply_filters('AWD_options', $this->plugin_option);
-if($this->current_user->ID == 1)
-//$this->Debug(get_class_methods("AWD_facebook"));
+$this->plugin_option = apply_filters('AWD_facebook_options', $this->plugin_option);
+
 ?>

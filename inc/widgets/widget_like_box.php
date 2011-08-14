@@ -15,8 +15,11 @@ class AWD_facebook_like_box extends WP_Widget {
 		//globalise plugin object
 		global $AWD_facebook;
 		$this->AWD_facebook = $AWD_facebook;
+		//load translation fro widgets
+		load_plugin_textdomain($this->AWD_facebook->plugin_text_domain,false,dirname(dirname( plugin_basename( __FILE__ ) ) ) . '/langs/');
+
 		$like_box_widjet_info = array('description' => __('Add a Facebook Like Box. Customise the code, or use predefined Like box in settings',$this->AWD_facebook->plugin_text_domain));
-        parent::WP_Widget(false, $name='Facebook Like Box' , $like_box_widjet_info);	
+        parent::WP_Widget(false, $name=__('Facebook Like Box',$this->AWD_facebook->plugin_text_domain) , $like_box_widjet_info);	
     }
     /*
 	 * form admin widget

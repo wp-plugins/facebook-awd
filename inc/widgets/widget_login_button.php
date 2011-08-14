@@ -35,68 +35,71 @@ class AWD_facebook_login_button extends WP_Widget {
 	
 	    echo '<h2 style="text-align:center;color:#627AAD;border:1px solid #ccc; padding:5px;"><img style="vertical-align:middle;" src="'.$this->AWD_facebook->plugin_url_images.'facebook-mini.png" alt="facebook logo"/> '.__('Facebook Login Button',$this->AWD_facebook->plugin_text_domain).'</h2><br />';
 	
-		
-		echo '
-		<p>
-			<label for="'.$this->get_field_id('login_button_title').'">'._e('Title',$this->AWD_facebook->plugin_text_domain).' 
-				<input class="widefat" id="'.$this->get_field_id('login_button_title').'" name="'.$this->get_field_name('login_button_title').'" type="text" value="'.$title.'" />
-			</label>
-		</p>';
-		
-		echo '
-		<p>
-			<label for="'.$this->get_field_id('login_button_faces').'">'._e('Show Faces ?',$this->AWD_facebook->plugin_text_domain).' 
-				<select class="widefat" id="'.$this->get_field_id('login_button_faces').'" name="'.$this->get_field_name('login_button_faces').'">
-					<option value="1" '.($login_button['login_button_faces'] == '1' ? 'selected="selected"':'').'>'.__('Yes',$this->AWD_facebook->plugin_text_domain).'</option>
-					<option value="0" '.($login_button['login_button_faces'] == '0' ? 'selected="selected"':'').'>'.__('No',$this->AWD_facebook->plugin_text_domain).'</option>
-				</select>
-			</label>
-		</p>';
-		
-		echo '
-		<p>
-			<label for="'.$this->get_field_id('login_button_profile_picture').'">'._e('Show Profile picture ?',$this->AWD_facebook->plugin_text_domain).' 
-				<select class="widefat" id="'.$this->get_field_id('login_button_faces').'" name="'.$this->get_field_name('login_button_profile_picture').'">
-					<option value="1" '.($login_button['login_button_profile_picture'] == '1' ? 'selected="selected"':'').'>'.__('Yes',$this->AWD_facebook->plugin_text_domain).'</option>
-					<option value="0" '.($login_button['login_button_profile_picture'] == '0' ? 'selected="selected"':'').'>'.__('No',$this->AWD_facebook->plugin_text_domain).'</option>
-				</select>
-			</label>
-		</p>';
-		
-		echo '
-		<p>
-			<label for="'.$this->get_field_id('login_button_width').'">'._e('Width of button',$this->AWD_facebook->plugin_text_domain).' 
-				<input id="'.$this->get_field_id('login_button_width').'" name="'.$this->get_field_name('login_button_width').'" type="text" value="'.$login_button['login_button_width'].'" size="6" />
-			</label>
-		</p>';
-		
-		echo '
-		<p>
-			<label for="'.$this->get_field_id('login_button_maxrow').'">'._e('Max Rows (faces)',$this->AWD_facebook->plugin_text_domain).' 
-				<input id="'.$this->get_field_id('login_button_maxrow').'" name="'.$this->get_field_name('login_button_maxrow').'" type="text" value="'.$login_button['login_button_maxrow'].'" size="6" />
-			</label>
-		</p>';
-		
-		echo '
-		<p>
-			<label for="'.$this->get_field_id('login_button_logout_value').'">'._e('Logout Phrase',$this->AWD_facebook->plugin_text_domain).' 
-				<input class="widefat" id="'.$this->get_field_id('login_button_logout_value').'" name="'.$this->get_field_name('login_button_logout_value').'" type="text" value="'.$login_button['login_button_logout_value'].'"/>
-			</label>
-		</p>';
-		echo '
-		<p>
-			<label for="'.$this->get_field_id('login_button_logout_url').'">'._e('Logout Url redirect',$this->AWD_facebook->plugin_text_domain).' 
-				<input class="widefat" id="'.$this->get_field_id('login_button_logout_url').'" name="'.$this->get_field_name('login_button_logout_url').'" type="text" value="'.$login_button['login_button_logout_url'].'"/>
-			</label>
-		</p>';
-		
-		echo '
-		<p>
-			<label for="'.$this->get_field_id('login_button_css').'">'._e('Custom Css',$this->AWD_facebook->plugin_text_domain).'
-			<textarea rows="12" class="widefat" id="'.$this->get_field_id('login_button_css').'" name="'.$this->get_field_name('login_button_css').'">'.$login_button['login_button_css'].'</textarea>
-			</label>
-		</p>
-		';
+		if($this->AWD_facebook->plugin_option['connect_enable'] == 1){
+			echo '
+			<p>
+				<label for="'.$this->get_field_id('login_button_title').'">'._e('Title',$this->AWD_facebook->plugin_text_domain).' 
+					<input class="widefat" id="'.$this->get_field_id('login_button_title').'" name="'.$this->get_field_name('login_button_title').'" type="text" value="'.$title.'" />
+				</label>
+			</p>';
+			
+			echo '
+			<p>
+				<label for="'.$this->get_field_id('login_button_profile_picture').'">'._e('Show Profile picture ?',$this->AWD_facebook->plugin_text_domain).' 
+					<select class="widefat" id="'.$this->get_field_id('login_button_faces').'" name="'.$this->get_field_name('login_button_profile_picture').'">
+						<option value="1" '.($login_button['login_button_profile_picture'] == '1' ? 'selected="selected"':'').'>'.__('Yes',$this->AWD_facebook->plugin_text_domain).'</option>
+						<option value="0" '.($login_button['login_button_profile_picture'] == '0' ? 'selected="selected"':'').'>'.__('No',$this->AWD_facebook->plugin_text_domain).'</option>
+					</select>
+				</label>
+			</p>';
+			
+			echo '
+			<p>
+				<label for="'.$this->get_field_id('login_button_width').'">'._e('Width of button',$this->AWD_facebook->plugin_text_domain).' 
+					<input id="'.$this->get_field_id('login_button_width').'" name="'.$this->get_field_name('login_button_width').'" type="text" value="'.$login_button['login_button_width'].'" size="6" />
+				</label>
+			</p>';
+			
+			echo '
+			<p>
+				<label for="'.$this->get_field_id('login_button_faces').'">'._e('Show Faces ? (only if xfbml)',$this->AWD_facebook->plugin_text_domain).' 
+					<select class="widefat" id="'.$this->get_field_id('login_button_faces').'" name="'.$this->get_field_name('login_button_faces').'" '.($this->AWD_facebook->plugin_option['parse_xfbml'] == 0 ? 'disabled="disabled"' :'').'>
+						<option value="1" '.($login_button['login_button_faces'] == '1' ? 'selected="selected"':'').'>'.__('Yes',$this->AWD_facebook->plugin_text_domain).'</option>
+						<option value="0" '.($login_button['login_button_faces'] == '0' ? 'selected="selected"':'').'>'.__('No',$this->AWD_facebook->plugin_text_domain).'</option>
+					</select>
+				</label>
+			</p>';
+			
+			echo '
+			<p>
+				<label for="'.$this->get_field_id('login_button_maxrow').'">'._e('Max Rows (only if show faces = Yes)',$this->AWD_facebook->plugin_text_domain).' 
+					<input id="'.$this->get_field_id('login_button_maxrow').'" name="'.$this->get_field_name('login_button_maxrow').'" type="text" value="'.$login_button['login_button_maxrow'].'" '.($this->AWD_facebook->plugin_option['parse_xfbml'] == 0 ? 'disabled="disabled"' :'').' size="6" />
+				</label>
+			</p>';
+			
+			echo '
+			<p>
+				<label for="'.$this->get_field_id('login_button_logout_value').'">'._e('Logout Phrase',$this->AWD_facebook->plugin_text_domain).' 
+					<input class="widefat" id="'.$this->get_field_id('login_button_logout_value').'" name="'.$this->get_field_name('login_button_logout_value').'" type="text" value="'.$login_button['login_button_logout_value'].'"/>
+				</label>
+			</p>';
+			echo '
+			<p>
+				<label for="'.$this->get_field_id('login_button_logout_url').'">'._e('Logout Url redirect',$this->AWD_facebook->plugin_text_domain).' 
+					<input class="widefat" id="'.$this->get_field_id('login_button_logout_url').'" name="'.$this->get_field_name('login_button_logout_url').'" type="text" value="'.$login_button['login_button_logout_url'].'"/>
+				</label>
+			</p>';
+			
+			echo '
+			<p>
+				<label for="'.$this->get_field_id('login_button_css').'">'._e('Custom Css',$this->AWD_facebook->plugin_text_domain).'
+				<textarea rows="12" class="widefat" id="'.$this->get_field_id('login_button_css').'" name="'.$this->get_field_name('login_button_css').'">'.$login_button['login_button_css'].'</textarea>
+				</label>
+			</p>
+			';
+		}else{
+			echo '<div class="ui-state-error">'.__('You must enable FB Connect and set parameters in settings of the plugins',$this->plugin_text_domain).'</div>';
+		}
 	}
 	/*
 	 * update
