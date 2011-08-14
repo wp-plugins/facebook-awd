@@ -67,7 +67,7 @@ This error come from facebook.
 In your App settings, on facebook, you should go to the connect tab, and you should set an url, and a domain for the connect api.
 
 = How can i get my Facebook ID and My Facebook App Api info =
-[Search here]("http://developers.facebook.com/apps") 
+[Search here]("http://developers.facebook.com/apps/") 
 
 = Shortcodes: =
 `[AWD_likebutton]`
