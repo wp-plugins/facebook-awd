@@ -139,7 +139,7 @@ Options:
 * AWD_facebook_js_not_authorized
 * AWD_facebook_js_authorized
 
-= API hook Filters: (doc soon)=
+= API hook Filters: (doc soon) =
 * AWD_facebook_options
 * AWD_facebook_og_tags
 * AWD_facebook_og_types
