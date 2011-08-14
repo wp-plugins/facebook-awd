@@ -42,10 +42,10 @@ If you are a developer you can use the API of facebook and opengraph api directl
 = Widget And Shortcodes: =
 You can use widgets and shotcodes to display Facebook socials plugins
 
-* [Like Button]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/utiliser-le-bouton-like.html") [AWD_likebutton]
+* [Like Button](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/utiliser-le-bouton-like.html) [AWD_likebutton]
 * Like Box [AWD_likebox]
 * Activity Box [AWD_activitybox]
-* Login Button [AWD_loginbutton]
+* [Login Button](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/activer-facebook-connect-sur-son-blog-wordpress.html) [AWD_loginbutton]
 
 = Multisite compatible: =
 This plugin is compatible with Wordpress multisite.
@@ -57,7 +57,7 @@ Need PHP 5.*
 
 == Frequently Asked Questions ==
 
-[Create an Application on Facebook]("http://www.facebook.com/developers/createapp.php/")
+[Create an Application on Facebook](http://www.facebook.com/developers/createapp.php/)
 
 = Like box does not work =
 Verify that url you enter is an url form a Facebook Page and not from a website.
