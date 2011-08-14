@@ -19,10 +19,10 @@ Use both SDK's PHP v.3.1.1 AND JS v3.0
  
 = Socials plugins iframe or xfbml: =
 
-*   [Like Button]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/utiliser-le-bouton-like.html")
+*   [Like Button](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/utiliser-le-bouton-like.html)
 *   Like Box
 *   Activity Box
-*   Login Button
+*   [Login Button](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/activer-facebook-connect-sur-son-blog-wordpress.html)
 *   Comments
 
 = Langs: =
@@ -67,7 +67,7 @@ This error come from facebook.
 In your App settings, on facebook, you should go to the connect tab, and you should set an url, and a domain for the connect api.
 
 = How can i get my Facebook ID and My Facebook App Api info =
-[Search here]("http://developers.facebook.com/apps/") 
+[Search here](http://developers.facebook.com/apps/) 
 
 = Shortcodes: =
 `[AWD_likebutton]`
@@ -158,9 +158,9 @@ Options:
 
 == Changelog ==
 = 0.9.6 =
-[view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-6.html")
+[view changes](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-6.html)
 = 0.9.7 =
-[view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7.html")
+[view changes](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7.html)
 = 0.9.7.3 =
-[view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-3.html")
+[view changes](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-3.html)
 Special update API Facebook PHP and JS to V3.1.1
