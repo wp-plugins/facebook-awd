@@ -467,13 +467,13 @@
 								</td>
 							</tr>
 							<tr class="dataRow">
-								<th class="label"><?php _e('Redirect url after login',$this->plugin_text_domain); ?>. <?php _e('You can use pattern %BLOG_URL%. Defautl: current url',$this->plugin_text_domain); ?></th>
+								<th class="label"><?php _e('Redirect url after login',$this->plugin_text_domain); ?>. <?php _e('You can use pattern %BLOG_URL%. Default: current url',$this->plugin_text_domain); ?></th>
 								<td class="data">
 									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_login_url" name="<?php echo $this->plugin_option_pref; ?>login_button_login_url" value="<?php echo $this->plugin_option['login_button_login_url']; ?>" size="30" />
 								</td>
 							</tr>
 							<tr class="dataRow">
-								<th class="label"><?php _e('Redirect url after logout',$this->plugin_text_domain); ?>. <?php _e('You can use pattern %BLOG_URL%. Defautl: current url',$this->plugin_text_domain); ?></th>
+								<th class="label"><?php _e('Redirect url after logout',$this->plugin_text_domain); ?>. <?php _e('You can use pattern %BLOG_URL%. Default: current url',$this->plugin_text_domain); ?></th>
 								<td class="data">
 									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_logout_url" name="<?php echo $this->plugin_option_pref; ?>login_button_logout_url" value="<?php echo $this->plugin_option['login_button_logout_url']; ?>" size="30" />
 								</td>
