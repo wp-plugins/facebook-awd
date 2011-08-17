@@ -1366,6 +1366,18 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		echo $this->get_the_login_button($options);
 	}
 	
+	/**
+	* return WP user from Fbuid...
+	*/
+	public function get_user_from_fbuid($fb_uid){
+		$existing_user = $this->wpdb->get_var( 'SELECT DISTINCT `u`.`ID` FROM `' . $this->wpdb->users . '` `u` JOIN `' . $this->wpdb->usermeta . '` `m` ON `u`.`ID` = `m`.`user_id`  WHERE (`m`.`meta_key` = "fb_uid" AND `m`.`meta_value` = "' . $fb_uid . '" )  LIMIT 1 ');
+		if($existing_user){
+			$user = get_userdata($existing_user);
+			return $user;
+		}else{
+			return false;
+		}
+	}
 	//****************************************************************************************
 	//	LIKE BUTTON
 	//****************************************************************************************
