@@ -487,8 +487,9 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		// login or logout url will be needed depending on current user state.
 		if($this->uid){
 			$this->logout_url = $this->fcbk->getLogoutUrl();
-			//modify logout url
+			//logout url
 			add_filter('logout_url', array(&$this,'logout_url'));
+
 		}else{
 			$this->login_url = $this->fcbk->getLoginUrl(
 				array(
