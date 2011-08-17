@@ -77,16 +77,12 @@ class AHWEBDEV_wpplugin{
 	/**
 	* function to catch firest image in html
 	*/
-	public function catch_that_image() {
-  		global $post, $posts;
-  		$first_img = '';
-  		ob_start();
-  		ob_end_clean();
-  		$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
+	public function catch_that_image($post_content="") {
+		global $post;
+		if($post_content=="" && is_object($post))
+			$post_content = $post->post_content;
+  		$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post_content, $matches);
   		$first_img = $matches [1] [0];
-  		if(empty($first_img)){ //Defines a default image
-    		//$first_img = "/images/default.jpg";
-  		}
   		return $first_img;
 	}
 	/*

@@ -3,7 +3,7 @@
 Plugin Name: Facebook AWD All in One
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph, Plugins from facebook, and FB connect, with SDK JS AND SDK PHP Facebook
-Version: 0.9.7.3
+Version: 0.9.7.5-Dev
 Author: AHWEBDEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AHWEBDEV
@@ -65,7 +65,11 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
     * if $debug_active == true, so we write $debug_echo in footer
     */
     public $debug_echo = array();
-    
+    /**
+    * public
+    * slug of the plugin
+    */
+    public $plugin_option = array();
 	
 	//****************************************************************************************
 	//	INIT
@@ -78,6 +82,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		if(!class_exists('Facebook'))
 			require_once(dirname(__FILE__).'/inc/classes/facebook/facebook.php');
 		add_action('init',array(&$this,'initial'),11);//11 start init later to be comatible with custom post types
+		add_action('after_setup_theme',array(&$this,'add_thumbnail_support'));//11 start init later to be comatible with custom post types
 		//like box widget register
 		add_action('widgets_init',  array(&$this,'register_AWD_facebook_widgets'));
 	}
@@ -89,6 +94,16 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		include_once(dirname(__FILE__).'/inc/init.php');
 	}
 	
+	/**
+	* add support for ogimage opengraph
+	*/
+	public function add_thumbnail_support(){
+		//add fetured image menu to get FB image in open Graph set image 50x50
+		if (function_exists('add_theme_support')) {
+			add_theme_support('post-thumbnails');
+			add_image_size('AWD_facebook_ogimage', 50, 50, true);
+		}
+	}
 	//****************************************************************************************
 	//	MESSAGE ADMIN
 	//****************************************************************************************
@@ -461,6 +476,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			try {
 				// Proceed knowing you have a logged in user who's authenticated.
 				$this->me = $this->fcbk->api('/me');
+				//perform login process
+				$this->login_user();
 			//$updated = date("l, F j, Y", strtotime($me['updated_time']));
 			} catch (FacebookApiException $e) {
 				error_log($e);
@@ -573,7 +590,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 				echo '<br />'.$this->get_the_comments_box($post);
 			}
 		}
-		
 	}
 	/**
 	* Add Js init fcbk to footer  ADMIN AND FRONT 
@@ -592,14 +608,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
                     xfbml   : <?php echo ($this->plugin_option['parse_xfbml'] == 1 ? 'true' : 'false'); ?>,// parse XFBML
             		oauth : true //wait for php SDK compatible with cookie
                 });
-                // if pop up are blocked, we go to facebook with the php login url SDK 3
-				window.open_facebook = window.open;
-				window.open = function(url,name,specs,replace) {
-					login_handler = window.open_facebook(url,name,specs,replace);
-					if(!login_handler) {
-						alert("<?php _e('You should allow popup to login with Facebook',$this->plugin_text_domain); ?>");
-					}
-				}
 				
                 FB.getLoginStatus(function(response) {
 					if (response.status === 'connected') {
@@ -635,8 +643,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
             function AWD_facebook_connect(login_url){
             		//display some button
 					FB.login(function(response) {
-						//check if pop up blocked
-						window.open = window.open_facebook;
 						//check if user connected
 						if(response.authResponse) {
 							if(login_url != ''){
@@ -809,20 +815,24 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 							$type = $type_values->label;
 						}
 					}
-				//thumbnails if thumb support and has one
-				if(has_post_thumbnail($post->ID)) {
-                	$thumbURL = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID),'');
-                	$img = $thumbURL[0];
-                }else{
-                    unset($img);
-                    global $wpzoom_cf_use;
-                    if($wpzoom_cf_use == 'Yes'){
+				global $wpzoom_cf_use;
+				//take from post thumbnail
+				if(current_theme_supports('post-thumbnails')){
+					if(has_post_thumbnail($post->ID)){
+						$img = $this->catch_that_image(get_the_post_thumbnail($post->ID, 'AWD_facebook_ogimage'));
+					}
+				}
+				//if no post thumbnail	
+				if($img == ""){
+                    if($wpzoom_cf_use == 'Yes')
                     	$img = get_post_meta($post->ID, $wpzoom_cf_photo, true);
-                	}else{
-                    	if(!$img){
-                    		$img = $this->catch_that_image($post->ID);
-                   		}
-                	}
+                    	if(!$img)
+                    		$img = $this->catch_that_image($post->post_content);
+                }
+                //take default if no image found.
+                if($img==""){
+                	is_single() ? $img = $this->plugin_option['ogtags_page_image'] : "";
+                	is_page() ? $img = $this->plugin_option['ogtags_post_image'] : "";
                 }
 				$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%","%POST_TITLE%","%POST_EXCERPT%","%POST_IMAGE%","%CURRENT_URL%");
 				$array_replace = array($blog_name,$blog_description,$home_url,$post->post_title,$post->post_excerpt,$img,get_permalink($post->ID));
@@ -1446,7 +1456,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		    $href = get_permalink($post->ID);
 		else    
             $href =($options['comments_url'] == '' ? $this->plugin_option['comments_url'] : $options['comments_url']);
-		$xid =(int)$href;
+		$xid=urlencode($href);
 		$nb = ($options['comments_nb'] == '' ? $this->plugin_option['comments_nb'] : $options['comments_nb']);
 		$width = ($options['comments_width'] == '' ? $this->plugin_option['comments_width'] : $options['comments_width']);
 		$colorscheme = ($options['comments_colorscheme'] == '' ? $this->plugin_option['comments_colorscheme'] : $options['comments_colorscheme']);
@@ -1456,7 +1466,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		if($this->plugin_option['comments_content'] !='')
 			return 'class="AWD_comments '.$options['comments_css_classes'].'"'.$this->plugin_option['comments_content'].'</div>';
 		if($this->plugin_option['parse_xfbml'] == 1 && $href!=''){
-			return '<div class="AWD_comments '.$options['comments_css_classes'].'"><fb:comments xid="'.$xid.'" href="'.$href.'" num_posts="'.$nb.'" width="'.$width.'" colorscheme="'.$colorscheme.'" css="'.$css.'" ></fb:comments></div>';
+			return '<div class="AWD_comments '.$options['comments_css_classes'].'"><fb:comments href="'.$href.'" num_posts="'.$nb.'" width="'.$width.'" colorscheme="'.$colorscheme.'" css="'.$css.'" xid="'.$xid.'" send_notification_uid="'.$id_notif.'"></fb:comments></div>';
 		}elseif($href==''){
 			return '<div class="AWD_comments '.$options['comments_css_classes'].'" style="color:red;">'.__("There is an error, please verify the settings for the Comments box url",$this->plugin_text_domain).'</div>';
 		}elseif($this->plugin_option['parse_xfbml'] == 0){

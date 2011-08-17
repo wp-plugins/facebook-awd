@@ -11,9 +11,10 @@
 */
 if($this->uid){
 	//test if we get email, if not call WP die to prevent empty user.
-	if($this->me['email'] =='')
-		wp_die(__('Fb connect need email permission to work. You should logout from facebook and add email permission in FB connect settings',$this-plugin_text_domain));
-
+	if($this->me['email'] ==''){
+		return false;
+		//wp_die(__('Fb connect need email permission to work. You should logout from facebook and add email permission in FB connect settings',$this-plugin_text_domain));
+	}
 	//if user is logged in, then we just need to associate FB account with WordPress account
 	if(is_user_logged_in()){
 		$fb_uid = get_user_meta($this->current_user->ID,'fb_uid', true);
