@@ -370,13 +370,8 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 	}
 	//init OAuth SDK php
 	$this->sdk_init();
-	//perform login process
-	$this->login_user();
 	//use this hook to set the redirect url after JS login.
 	add_action("AWD_facebook_redirect_login",array(&$this,'js_redirect_after_login'));
-	
-	//avatar swap
-	//add_filter('avatar_defaults', array($this,'fb_avatar'));
 	
 	if($this->plugin_option['connect_fbavatar'] == 1)
 		add_filter('get_avatar', array($this, 'fb_get_avatar'), 100, 5);//modify in last... 
