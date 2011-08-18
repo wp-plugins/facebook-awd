@@ -454,7 +454,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			$my_avatar = "<img src='".$fb_avatar_url."' class='avatar AWD_fbavatar' alt='".$alt."' height='".$size."' width='".$size."' />";
 			return $my_avatar;
 		}else
-			return $avatar;
+			return $avatar.'lolo';
 	}
 	
 	/*
