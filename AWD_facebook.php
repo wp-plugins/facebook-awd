@@ -445,7 +445,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$this->Debug('$comments_objects '.$comments_objects);
 		$this->Debug('$size '.$size);
 		$this->Debug('$default '.$default);
-		$this->Debug('$comments_objects '.$alt);
 		
 		//$avatar format includes the tag <img>
 		if(is_object($comments_objects))
@@ -458,6 +457,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		}else{
 			$fbuid = get_user_meta($this->current_user->ID,'fb_uid', true);
 		}
+				$this->Debug('$fbuid '.$fbuid);
+
 		if($fbuid !=''){
 			$fb_avatar_url = 'http://graph.facebook.com/'.$fbuid.'/picture';
 			$my_avatar = "<img src='".$fb_avatar_url."' class='avatar AWD_fbavatar' alt='".$alt."' height='".$size."' width='".$size."' />";
