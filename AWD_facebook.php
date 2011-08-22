@@ -450,6 +450,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		if(is_object($comments_objects))
 			$fbuid = get_user_meta($comments_objects->user_id,'fb_uid', true);
 		elseif(is_int($comments_objects)){
+		echo 1111111;
 			$fbuid = get_user_meta($comments_objects,'fb_uid', true);
 		}elseif($comments_objects !=''){
 			$user = get_user_by('email', $comments_objects);
