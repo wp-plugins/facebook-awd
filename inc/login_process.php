@@ -119,10 +119,13 @@ if($this->uid){
 				//add user meta fb_uid
 				update_user_meta( $new_user, 'fb_uid', $this->uid );
 				$user_info = get_userdata($new_user);
+				//send email new registration
+				wp_new_user_notification($new_user, $userdata['user_pass']);
 				//connnect the user
 				wp_set_auth_cookie($new_user, true, false);
 				do_action('wp_login', $user_info->user_login);
 				$this->debug_echo[] = "User register and was logged in";
+				
 				wp_redirect(home_url());
 				exit();
 			}
