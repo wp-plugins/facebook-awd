@@ -441,6 +441,12 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*
 	*/
 	public function fb_get_avatar($avatar, $comments_objects, $size, $default, $alt){
+		$this->Debug($avatar);
+		$this->Debug($comments_objects);
+		$this->Debug($size);
+		$this->Debug($default);
+		$this->Debug($alt);
+		
 		//$avatar format includes the tag <img>
 		if(is_object($comments_objects))
 			$fbuid = get_user_meta($comments_objects->user_id,'fb_uid', true);
