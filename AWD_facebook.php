@@ -452,7 +452,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		if($fbuid !=''){
 			$fb_avatar_url = 'http://graph.facebook.com/'.$fbuid.'/picture';
 			$my_avatar = "<img src='".$fb_avatar_url."' class='avatar AWD_fbavatar' alt='".$alt."' height='".$size."' width='".$size."' />";
-			return $my_avatar;
+			return $my_avatar.'lolo';
 		}else
 			return $avatar;
 	}
