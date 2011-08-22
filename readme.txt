@@ -16,7 +16,9 @@ Add Like button and comments to pages, posts and custom posts types, at top, bot
 Widgets and Shortcodes available for each Facebook socials plugins.
 Use post thumbnail for openGraph, Fix like button with url linter, use pattern to defined custom openGraph meta, etc...
 Use both SDK's PHP v.3.1.1 AND JS v3.0
- 
+
+Warning: You should set that your app Facebook is migrated to OAuth2 in settings of your Facebook Appllication.
+
 = Socials plugins iframe or xfbml: =
 
 *   [Like Button]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/utiliser-le-bouton-like.html")
@@ -68,6 +70,9 @@ In your App settings, on facebook, you should go to the connect tab, and you sho
 
 = How can i get my Facebook ID and My Facebook App Api info =
 [Search here]("http://developers.facebook.com/apps/") 
+
+= The plugin is not working after update 0.9.7 =
+Warning: You should set that your app Facebook is migrated to OAuth2 in settings of your Facebook Appllication. Because this plugin use the new version of the Facebook SDK.
 
 = Shortcodes: =
 `[AWD_likebutton]`
