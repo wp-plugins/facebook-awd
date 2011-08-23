@@ -435,6 +435,13 @@
 					<div class="uiForm">
 						<table class="AWD_form_table">
 							<tr class="dataRow">
+								<th class="label"><?php _e('Display the button on the login page (wp-login.php) ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_display_on_login_page'); ?></th>
+								<td class="data">
+									<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>login_button_display_on_login_page_on" name="<?php echo $this->plugin_option_pref; ?>login_button_display_on_login_page" value="1" <?php if($this->plugin_option['login_button_display_on_login_page'] == '1') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>login_button_display_on_login_page_on"><?php _e('Yes',$this->plugin_text_domain); ?></label><br /> 
+									<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>login_button_display_on_login_page_off" name="<?php echo $this->plugin_option_pref; ?>login_button_display_on_login_page" value="0" <?php if($this->plugin_option['login_button_display_on_login_page'] == '0') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>login_button_display_on_login_page_off"><?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?><label>
+								</td>
+							</tr>
+							<tr class="dataRow">
 								<th class="label"><?php _e('Show Profile picture ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_profile_picture'); ?></th>
 								<td class="data">
 									<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture_on" name="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture" value="1" <?php if($this->plugin_option['login_button_profile_picture'] == '1') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>login_button_profile_picture_on"><?php _e('Yes',$this->plugin_text_domain); ?></label><br /> 

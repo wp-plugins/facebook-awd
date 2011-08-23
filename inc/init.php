@@ -223,6 +223,8 @@ if($this->plugin_option['activity_header'] == '')
 //****************************************************************************************
 //  Login button
 //****************************************************************************************
+if($this->plugin_option['login_button_display_on_login_page'] == '')
+	$this->plugin_option['login_button_display_on_login_page'] = 0;
 if($this->plugin_option['login_button_width'] == '')
 	$this->plugin_option['login_button_width'] = 200;
 if($this->plugin_option['login_button_maxrow'] == '')
@@ -372,6 +374,10 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 	$this->sdk_init();
 	//use this hook to set the redirect url after JS login.
 	add_action("AWD_facebook_redirect_login",array(&$this,'js_redirect_after_login'));
+	
+	//add action to add the login button on the wp-login.php page...
+	if($this->plugin_option['login_button_display_on_login_page'] == 1)
+		add_action('login_head',array(&$this,'the_login_button_wp_login'));
 	
 	if($this->plugin_option['connect_fbavatar'] == 1)
 		add_filter('get_avatar', array($this, 'fb_get_avatar'), 100, 5);//modify in last... 
