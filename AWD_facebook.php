@@ -491,8 +491,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		if($this->uid){
 			$this->logout_url = $this->fcbk->getLogoutUrl();
 			//logout url
-			add_filter('logout_url', array(&$this,'logout_url'));
-
+			add_filter('logout_url', array(&$this,'logout_url'),10,1);
 		}else{
 			$this->login_url = $this->fcbk->getLoginUrl(
 				array(
@@ -513,12 +512,32 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* Change logout url for users connected with Facebook
 	*/
 	public function logout_url($url){
+		$params = explode('&',str_replace('&amp;','&',$url));
+		if(ereg('redirect_to',$params[1]))
+			$redirect_to = '&'.$params[1];
+		
 		if($this->uid)
-			//here we can use $this->logout_url;
-			//but that's better to use FBJS to logout
-			return "javascript:FB.logout(function(){location.href='" .$url."'})";
+			return $this->fcbk->getLogoutUrl(array('next' => home_url()."?action=fb_logout".$redirect_to));
 		else
 			return $url;
+	}
+	
+	/**
+	* Logout the user from the logout_url...
+	* If $_GET action == fb_logout
+	* If redirect is set, it will redirect to, else, try to get global info, else redirect to wp-login.php?loggedout=true
+	*/
+	public function logout_listener(){
+		if($_GET['action'] == 'fb_logout'){
+			wp_logout();
+			if($_GET['redirect_to'] != '')
+				wp_redirect($_GET['redirect_to']);
+			elseif($this->plugin_option['login_button_logout_url'] != '')
+				wp_redirect(str_ireplace("%BLOG_URL%",home_url(),$this->plugin_option['login_button_logout_url']));
+			else
+				wp_redirect(site_url().'/wp-login.php?loggedout=true');
+			exit();
+		}
 	}
 	/**
 	* filter the content
@@ -1334,7 +1353,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 					}else{
 						$html .='<div class="AWD_name"><a href="'.$this->me['link'].'" target="_blank">'.$this->me['name'].'</a></div>'."\n";
 					}
-					$logout_redirect_url =str_ireplace("%BLOG_URL%",home_url(),$logout_redirect_url);
+					$logout_redirect_url = str_ireplace("%BLOG_URL%",home_url(),$logout_redirect_url);
 					$html .='<div class="AWD_logout"><a href="'.wp_logout_url($logout_redirect_url).'">'.$logout_value.'</a></div>'."\n";
 				$html .='</div>'."\n";
 				$html .='<div class="clear"></div>'."\n";

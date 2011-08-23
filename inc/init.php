@@ -387,7 +387,6 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 	
 	add_action('admin_print_footer_scripts',array(&$this,'connect_footer'));
 	add_action('wp_footer',array(&$this,'connect_footer'));
-	
 }
 
 add_action('admin_notices',array(&$this,'missing_config'));
@@ -421,4 +420,6 @@ do_action("AWD_facebook_plugins_init");
 //filter hook for all options
 $this->plugin_option = apply_filters('AWD_facebook_options', $this->plugin_option);
 
+//Logout out listener, use that function to listen if we want to log out with the good way.
+$this->logout_listener();
 ?>
