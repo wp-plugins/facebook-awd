@@ -68,7 +68,7 @@
 										<td>
 											<?php _e('Layout style',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_layout'); ?><br />
 											<select id="<?php echo $this->plugin_option_pref; ?>like_button_layout" name="<?php echo $this->plugin_option_pref; ?>like_button_layout" class="uiSelectHTML" onchange="onchange_uiSelect(this.id);">
-												<option value="standard" <?php if($this->plugin_option['like_button_layout'] == "standard") echo 'selected="selected"'; ?> ><?php echo __("Standard",$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?></option>
+												<option value="standart" <?php if($this->plugin_option['like_button_layout'] == "standard") echo 'selected="selected"'; ?> ><?php echo __("Standard",$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?></option>
 												<option value="button_count" <?php if($this->plugin_option['like_button_layout'] == "button_count") echo 'selected="selected"'; ?> ><?php echo __("Button Count",$this->plugin_text_domain); ?></option>
 												<option value="box_count" <?php if($this->plugin_option['like_button_layout'] == "box_count") echo 'selected="selected"'; ?> ><?php echo __("Box Count",$this->plugin_text_domain); ?></option>
 											</select>
