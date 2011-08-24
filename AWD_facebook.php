@@ -1393,10 +1393,12 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function the_login_button_wp_login(){
 		?>
-		<div style="width:310px; margin:0 auto; text-align:center;">
-			<label><?php _e('Login with Facebook',$this->plugin_text_domain); ?></label>
+		<br />
+		<div class="AWD_facebook_connect_wplogin">
+			<label><?php _e('Connect with Facebook',$this->plugin_text_domain); ?></label>
 			<?php echo $this->get_the_login_button(); ?>
 		</div>
+		<br />
 		<?php
 		$this->load_sdj_js();
 		$this->connect_footer();
