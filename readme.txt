@@ -171,3 +171,5 @@ Options:
 Special update API Facebook PHP and JS to V3.1.1
 = 0.9.7.4 =
 [view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-4.html")
+= 0.9.7.5 =
+[view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-5.html")
