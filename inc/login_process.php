@@ -73,9 +73,9 @@ if($this->uid){
 			do_action('wp_login', $user_info->user_login);
 			
 			$this->debug_echo[] = "User login";
-			if($this->plugin_option['login_button_login_url'] != "")
-				wp_redirect(str_ireplace("%BLOG_URL%",home_url(),$this->plugin_option['login_button_login_url']));
-			else
+			//if($this->plugin_option['login_button_login_url'] != "")
+				//wp_redirect(str_ireplace("%BLOG_URL%",home_url(),$this->plugin_option['login_button_login_url']));
+			//else
 				wp_redirect($this->get_current_url());
 			exit();
 		break;
@@ -126,8 +126,11 @@ if($this->uid){
 				do_action('wp_login', $user_info->user_login);
 				$this->debug_echo[] = "User register and was logged in";
 				
-				wp_redirect(home_url());
-				exit();
+				//if($this->plugin_option['login_button_login_url'] != "")
+				    //wp_redirect(str_ireplace("%BLOG_URL%",home_url(),$this->plugin_option['login_button_login_url']));
+                //else
+                    wp_redirect($this->get_current_url());
+                exit();
 			}
 		break;
 		default :
