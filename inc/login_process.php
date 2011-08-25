@@ -76,7 +76,7 @@ if($this->uid){
 			if($this->plugin_option['login_button_login_url'] != "")
 				wp_redirect(str_ireplace("%BLOG_URL%",home_url(),$this->plugin_option['login_button_login_url']));
 			else
-				wp_redirect(home_url());
+				wp_redirect('http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
 			exit();
 		break;
 		
