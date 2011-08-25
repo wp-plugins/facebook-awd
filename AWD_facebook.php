@@ -1317,7 +1317,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$maxrow = ($options['login_button_maxrow'] == '' ? $this->plugin_option['login_button_maxrow'] : $options['login_button_maxrow']);
 		$logout_value = ($options['login_button_logout_value'] == '' ? $this->plugin_option['login_button_logout_value'] : $options['login_button_logout_value']);
 		$logout_redirect_url = ($options['login_button_logout_url'] == '' ? $this->plugin_option['login_button_logout_url'] : $options['login_button_logout_url']);
-		$login_redirect_url = ($options['login_button_login_url'] == '' ? $this->plugin_option['login_button_login_url'] : $options['login_button_login_url']);
+		$login_redirect_url = str_replace("%BLOG_URL%",home_url(),$options['login_button_login_url'] == '' ? $this->plugin_option['login_button_login_url'] : $options['login_button_login_url']));
 		$login_button_image = ($options['login_button_image'] == '' ? $this->plugin_option['login_button_image'] : $options['login_button_image']);
 		//we set faces options to false, if user not connected
 		//old perms perms="'.$this->plugin_option['perms'].'"
