@@ -100,6 +100,12 @@ class AHWEBDEV_wpplugin{
 			echo "</pre>";
 	}
 	/**
+	* Get current URL
+	*/
+	public function get_current_url(){
+	    return (empty($_SERVER['HTTPS']) ? 'http://' : 'https://').$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+	}
+	/**
 	* Admin Infos
 	*/
 	public function infos_content(){
