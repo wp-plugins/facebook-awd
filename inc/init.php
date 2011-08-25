@@ -377,7 +377,7 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 	
 	//add action to add the login button on the wp-login.php page...
 	if($this->plugin_option['login_button_display_on_login_page'] == 1)
-		add_action('login_head',array(&$this,'the_login_button_wp_login'));
+		add_action('login_form',array(&$this,'the_login_button_wp_login'));
 	
 	if($this->plugin_option['connect_fbavatar'] == 1)
 		add_filter('get_avatar', array($this, 'fb_get_avatar'), 100, 5);//modify in last... 
