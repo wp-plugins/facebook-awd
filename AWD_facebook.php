@@ -102,6 +102,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
     */
     public function define_options($options){
         include_once(dirname(__FILE__).'/inc/define_options.php');
+        return $options;
     }
 	/**
 	* return the fbuid of the admin

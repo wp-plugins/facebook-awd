@@ -224,5 +224,4 @@ $array_perms = explode(",",$options['perms']);
 if(!in_array('email',$array_perms))
     $options['perms'] = rtrim('email,'.$options['perms'],',');
 
-return $options;
 ?>
