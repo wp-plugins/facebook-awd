@@ -82,7 +82,7 @@ if($this->uid){
 				//wp_redirect($this->get_current_url());
 			//exit();
 */
-            if ($new_user !== false) {
+            if ($user_info !== false) {
                 $user = new WP_User($user_info->ID);
             }
             return $user;
