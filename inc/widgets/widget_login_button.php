@@ -32,7 +32,7 @@ class AWD_facebook_login_button extends WP_Widget {
 		$login_button['login_button_logout_value'] = (esc_attr($instance['login_button_logout_value']) == '' ? '' : $instance['login_button_logout_value']);
 		$login_button['login_button_css'] = (esc_attr($instance['login_button_css']) == '' ? '' : $instance['login_button_css']);
 		$login_button['login_button_logout_url'] = (esc_attr($instance['login_button_logout_url']) == '' ? '' : $instance['login_button_logout_url']);
-	
+		$login_button['login_button_login_url'] = (esc_attr($instance['login_button_login_url']) == '' ? '' : $instance['login_button_login_url']);
 	    echo '<h2 style="text-align:center;color:#627AAD;border:1px solid #ccc; padding:5px;"><img style="vertical-align:middle;" src="'.$this->AWD_facebook->plugin_url_images.'facebook-mini.png" alt="facebook logo"/> '.__('Facebook Login Button',$this->AWD_facebook->plugin_text_domain).'</h2><br />';
 	
 		if($this->AWD_facebook->plugin_option['connect_enable'] == 1){
@@ -89,6 +89,12 @@ class AWD_facebook_login_button extends WP_Widget {
 					<input class="widefat" id="'.$this->get_field_id('login_button_logout_url').'" name="'.$this->get_field_name('login_button_logout_url').'" type="text" value="'.$login_button['login_button_logout_url'].'"/>
 				</label>
 			</p>';
+			echo '
+			<p>
+				<label for="'.$this->get_field_id('login_button_login_url').'">'._e('Login Url redirect',$this->AWD_facebook->plugin_text_domain).' 
+					<input class="widefat" id="'.$this->get_field_id('login_button_login_url').'" name="'.$this->get_field_name('login_button_login_url').'" type="text" value="'.$login_button['login_button_login_url'].'"/>
+				</label>
+			</p>';
 			
 			echo '
 			<p>
@@ -114,6 +120,7 @@ class AWD_facebook_login_button extends WP_Widget {
 		$instance['login_button_logout_value'] = $new_instance['login_button_logout_value'];
 		$instance['login_button_css'] = $new_instance['login_button_css'];
 		$instance['login_button_logout_url'] = $new_instance['login_button_logout_url'];
+		$instance['login_button_login_url'] = $new_instance['login_button_login_url'];
 		
         return $instance;
 	}

@@ -22,7 +22,7 @@ load_plugin_textdomain($this->plugin_text_domain,false,dirname( plugin_basename(
 //call filter for undefined vars
 add_filter('AWD_facebook_options',array($this,'define_options'),10,1);
 //get the current user
-add_action("AWD_facebook_current_user",array(&$this, 'current_user'));
+//add_action("AWD_facebook_current_user",array(&$this, 'current_user'));
 //get the admin fbuid
 add_action("AWD_facebook_get_admin_fbuid",array(&$this,'get_admin_fbuid'));
 //add post thmubnial support for openGraph
@@ -48,17 +48,19 @@ add_shortcode('AWD_likebox', array(&$this,'shortcode_like_box'));
 add_shortcode('AWD_activitybox', array(&$this,'shortcode_activity_box'));
 add_shortcode('AWD_loginbutton', array(&$this,'shortcode_login_button'));
 add_shortcode('AWD_comments', array(&$this,'shortcode_comments_box'));
+
+//add action to get current user object
+add_action('AWD_facebook_oauth', array(&$this,'current_user'));
+//init of plugin, where we do the login.
+add_action('init',array(&$this,'wp_init'));
+
 //Debug
 if($this->debug_active)
 	add_action('wp_footer',array(&$this,'debug_content'));
 
-
-
-//CALL ACTION
-//define current user in this object (SOON)
-do_action("AWD_facebook_current_user");//it's called to soon we must identifier the first action is used that then we must call this action just before, and after he can be set....
 //load some plugin of FACEBOOK AWD if exists
 do_action("AWD_facebook_plugins_init");
+
 //apply filter hook for all options
 $this->plugin_option = apply_filters('AWD_facebook_options', $this->plugin_option);
 
@@ -67,7 +69,7 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 	if(get_option('users_can_register') == 0){
 		add_action('admin_notices',array(&$this,'message_register_disabled'));
 	}
-	add_filter('authenticate', array($this,'sdk_init'),10,3);
+	add_action('AWD_facebook_oauth', array(&$this,'sdk_init'));
 	//use this hook to set the redirect url after JS login.
 	add_action("AWD_facebook_redirect_login",array(&$this,'js_redirect_after_login'));
 	//add action to add the login button on the wp-login.php page...

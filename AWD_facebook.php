@@ -58,7 +58,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
     * public
     * Debug this object
     */
-    public $debug_active = true;
+    public $debug_active = false;
     /**
     * public
     * Debug and add list of debug in this array
@@ -85,10 +85,16 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		//load the objects for open graph
 		include_once(dirname(__FILE__).'/inc/opengraph_objects.php');
 		//init the plugin and action
-		add_action('plugins_loaded',array(&$this,'initial'),11);//11 start init later to be comatible with custom post types
+		add_action('plugins_loaded',array(&$this,'initial'));
 		//like box widget register
 		add_action('widgets_init',  array(&$this,'register_AWD_facebook_widgets'));
 		//$this->initial();
+	}
+	/**
+	* hook action added to init
+	*/
+	public function wp_init(){
+		do_action('AWD_facebook_oauth');
 	}
     /**
     * Redefine option for empty value or not set
@@ -487,7 +493,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	/*
 	* INIT PHP SDK 3 version
 	*/
-	public function sdk_init($user, $username, $password){
+	public function sdk_init(){
 		$this->fcbk = new Facebook(array(
 			'appId'  => $this->plugin_option['app_id'],
 			'secret' => $this->plugin_option['app_secret_key']
