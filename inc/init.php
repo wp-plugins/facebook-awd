@@ -364,7 +364,8 @@ if(!in_array('email',$array_perms))
 	$this->plugin_option['perms'] = rtrim('email,'.$this->plugin_option['perms'],',');
 
 //define current user in this object
-$this->current_user();
+//$this->current_user();
+do_action("AWD_facebook_current_user");
 //call the api facebook init (php) if connect enable
 if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id'] !='' && $this->plugin_option['app_secret_key'] !=''){
 	if(get_option('users_can_register') == 0){

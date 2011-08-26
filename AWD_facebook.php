@@ -86,7 +86,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		//add_action('init',array(&$this,'initial'),11);//11 start init later to be comatible with custom post types
 		$this->initial();
 		add_filter('authenticate', array(&$this,'sdk_init'));
-		add_action('after_setup_theme',array(&$this,'add_thumbnail_support'));//11 start init later to be comatible with custom post types
+		add_action("AWD_facebook_current_user",array(&$this, 'current_user'));
+		add_action('after_setup_theme',array(&$this,'add_thumbnail_support'));
 		//like box widget register
 		add_action('widgets_init',  array(&$this,'register_AWD_facebook_widgets'));
 	}
@@ -274,6 +275,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	public function admin_content(){
 		global $message;
 		$page = $_GET['page'];
+		do_action("AWD_facebook_save_settings");
       	?>
 		<div class="AWD_facebook_wrap" id="AWD_facebook_wrap">
 			<?php 
