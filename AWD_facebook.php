@@ -81,11 +81,20 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		/* Class FCBK */
 		if(!class_exists('Facebook'))
 			require_once(dirname(__FILE__).'/inc/classes/facebook/facebook.php');
-		add_action('init',array(&$this,'initial'),11);//11 start init later to be comatible with custom post types
+		
+		
+		//add_action('init',array(&$this,'initial'),11);//11 start init later to be comatible with custom post types
+		$this->initial();
+		add_filter('authenticate', array(&$this,'sdk_init'));
 		add_action('after_setup_theme',array(&$this,'add_thumbnail_support'));//11 start init later to be comatible with custom post types
 		//like box widget register
 		add_action('widgets_init',  array(&$this,'register_AWD_facebook_widgets'));
 	}
+	/*public function init(){
+	
+	}*/
+	
+	
 	/**
 	 * plugin init
 	 */

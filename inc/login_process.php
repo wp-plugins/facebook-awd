@@ -69,7 +69,7 @@ if($this->uid){
 			//get user infos
 			$user_info = get_userdata($existing_user);
 			//connect the user
-			wp_set_current_user($new_user);
+/*			wp_set_current_user($new_user);
                 wp_set_auth_cookie($new_user);
                 do_action('wp_signon', $new_user);
 			//wp_set_auth_cookie($existing_user, true, false);
@@ -81,6 +81,11 @@ if($this->uid){
 			//else
 				//wp_redirect($this->get_current_url());
 			//exit();
+*/
+            if ($new_user !== false) {
+                $user = new WP_User($user_info->ID);
+            }
+            return $user;
 		break;
 		
 		
