@@ -6,130 +6,39 @@
 * Hermann.alexandre@ahwebdev.fr
 *
 */
-//load text domain file
-load_plugin_textdomain($this->plugin_text_domain,false,dirname( plugin_basename( __FILE__ ) ) . '/langs/');
-
 $this->plugin_option = array();
-
-//check post and save
-add_action("AWD_facebook_save_settings",array(&$this,'hook_post_from_plugin_options'));
 $this->wpdb = $wpdb;
 $this->plugin_url = plugins_url("",dirname(__FILE__));
 $this->plugin_url_images = $this->plugin_url."/css/images/";
 
+//load text domain file
+load_plugin_textdomain($this->plugin_text_domain,false,dirname( plugin_basename( __FILE__ ) ) . '/langs/');
+//check post and save
+add_action("AWD_facebook_save_settings",array(&$this,'hook_post_from_plugin_options'));
+add_action('admin_notices',array(&$this,'missing_config'));
+//load sdk js in footer
+add_action('admin_print_footer_scripts',array(&$this,'load_sdj_js'));
+add_action('wp_footer',array(&$this,'load_sdj_js'));
+//init admin
+add_action('admin_menu', array(&$this,'admin_menu'));
+add_action('admin_init', array(&$this,'admin_initialisation'));
+//filter for button post
+add_filter('the_content', array(&$this,'the_content'));
+add_action('comments_template', array(&$this,'the_comments_form'));
+//call the open tags in header
+add_action('wp_head',array(&$this,'define_open_graph_tags_header'));
+//add shortcode 
+add_shortcode('AWD_likebutton', array(&$this,'shortcode_like_button'));
+add_shortcode('AWD_likebox', array(&$this,'shortcode_like_box'));
+add_shortcode('AWD_activitybox', array(&$this,'shortcode_activity_box'));
+add_shortcode('AWD_loginbutton', array(&$this,'shortcode_login_button'));
+add_shortcode('AWD_comments', array(&$this,'shortcode_comments_box'));
+//Debug
+if($this->debug_active)
+	add_action('wp_footer',array(&$this,'debug_content'));
 
 
-//****************************************************************************************
-//  Objects lib
-//****************************************************************************************
-$this->og_tags = array(
-	'url'=> __('Url',$this->plugin_text_domain),
-	'title'=> __('Title',$this->plugin_text_domain),
-	'type'=> __('Type',$this->plugin_text_domain),
-	'description'=> __('Description',$this->plugin_text_domain),
-	'image'=> __('Image url (50x50 is better)',$this->plugin_text_domain),
-	'admins' => __('Admin ids',$this->plugin_text_domain),
-	'app_id' => __('App IDs',$this->plugin_text_domain),
-	'page_id' => __('Page IDs',$this->plugin_text_domain),
-	'site_name'=> __('Site Name',$this->plugin_text_domain)
-);
-$this->og_tags = apply_filters('AWD_facebook_og_tags', $this->og_tags);
 
-$this->og_types = array(
-    'activities' => array(
-        'activity'=>__('Activity',$this->plugin_text_domain),
-        'sport'=>__('Sport',$this->plugin_text_domain)
-     ),
-     'businesses' => array(
-        'bar'=>__('Bar',$this->plugin_text_domain),
-        'company'=>__('Company',$this->plugin_text_domain),
-        'cafe'=>__('Cafe',$this->plugin_text_domain),
-        'hotel'=>__('Hotel',$this->plugin_text_domain),
-        'restaurant'=>__('Restaurant',$this->plugin_text_domain)
-     ),
-     'groups' => array(
-        'cause'=>__('Cause',$this->plugin_text_domain),
-        'sports_league'=>__('Sports league',$this->plugin_text_domain),
-        'sports_team'=>__('Sports team',$this->plugin_text_domain)
-     ),
-     'organizations' => array(
-        'band'=>__('Band',$this->plugin_text_domain),
-        'government'=>__('Government',$this->plugin_text_domain),
-        'non_profit'=>__('Non profit',$this->plugin_text_domain),
-        'school'=>__('School',$this->plugin_text_domain),
-        'university'=>__('University',$this->plugin_text_domain)
-     ),
-     'people' => array(
-        'actor'=>__('Actor',$this->plugin_text_domain),
-        'athlete'=>__('Athlete',$this->plugin_text_domain),
-        'director'=>__('Director',$this->plugin_text_domain),
-        'musician'=>__('Musician',$this->plugin_text_domain),
-        'politician'=>__('Politician',$this->plugin_text_domain),
-        'public_figure'=>__('Public figure',$this->plugin_text_domain)
-     ),
-     'places' => array(
-        'city'=>__('City',$this->plugin_text_domain),
-        'country'=>__('Country',$this->plugin_text_domain),
-        'landmark'=>__('Landmark',$this->plugin_text_domain),
-        'state_province'=>__('State province',$this->plugin_text_domain)
-     ),
-     'products' => array(
-        'album'=>__('Album',$this->plugin_text_domain),
-        'book'=>__('Book',$this->plugin_text_domain),
-        'drink'=>__('Drink',$this->plugin_text_domain),
-        'food'=>__('Food',$this->plugin_text_domain),
-        'game'=>__('Game',$this->plugin_text_domain),
-        'product'=>__('Product',$this->plugin_text_domain),
-        'song'=>__('Song',$this->plugin_text_domain),
-        'movie'=>__('Movie',$this->plugin_text_domain),
-        'tv_show'=>__('Tv show',$this->plugin_text_domain)
-     ),
-     'websites' => array(
-        'blog'=>__('Blog',$this->plugin_text_domain),
-        'website'=>__('Website',$this->plugin_text_domain),
-        'article'=>__('Article',$this->plugin_text_domain)
-     )
-);
-$this->og_types = apply_filters('AWD_facebook_og_types', $this->og_types);
-
-//attachement
-$this->og_attachement_field = array(
-	'video' => array(
-		'video'=>__('Video src (swf only) ',$this->plugin_text_domain),
-		'video_width'=>__('Width (max: 398px)',$this->plugin_text_domain),
-		'video_height'=>__('Height (max: 460px)',$this->plugin_text_domain),
-		'video_type'=>__('Type',$this->plugin_text_domain)
-	),
-	'audio' => array(
-		'audio'=>__('Audio src (mp3 only)',$this->plugin_text_domain),
-		'audio_title'=>__('Title',$this->plugin_text_domain),
-		'audio_artist'=>__('Artist',$this->plugin_text_domain),
-		'audio_album'=>__('Album',$this->plugin_text_domain),
-		'audio_type'=>__('Type',$this->plugin_text_domain)
-	),
-	'contact' => array(
-		'contact_email'=>__('Email',$this->plugin_text_domain),
-		'contact_phone_number'=>__('Phone number',$this->plugin_text_domain),
-		'contact_fax_number'=>__('Fax number',$this->plugin_text_domain),
-	)
-	,
-	'location' => array(
-		'location_latitude'=>__('Latitude',$this->plugin_text_domain),
-		'location_longitude'=>__('Longitude',$this->plugin_text_domain),
-		'location_street-address'=>__('Street address',$this->plugin_text_domain),
-		'location_locality'=>__('Locality',$this->plugin_text_domain),
-		'location_region'=>__('Region',$this->plugin_text_domain),
-		'location_postal-code'=>__('Postal code',$this->plugin_text_domain),
-		'location_country-name'=>__('Country name',$this->plugin_text_domain),
-	),
-	'isbn' => array(
-		'isbn'=>__('Isbn',$this->plugin_text_domain)
-	),
-	'upc' => array(
-		'upc'=>__('Upc',$this->plugin_text_domain)
-	)
-);
-$this->og_attachement_field = apply_filters('AWD_facebook_og_attachement_fields', $this->og_attachement_field);
 
 //****************************************************************************************
 //  Settings
@@ -337,6 +246,14 @@ foreach($this->plugin_option as $option=>$value){
 		$this->plugin_option[$option] = $set_var;
 	}
 }
+
+$fbadmin_uid = do_action("AWD_facebook_get_admin_fbuid");
+	
+if($this->plugin_option['admins'] == '')
+    $this->plugin_option['admins'] = $fbadmin_uid;
+//try here to set the comments notifications uid from 
+if($this->plugin_option['comments_send_notification_uid']== '')
+    $this->plugin_option['comments_send_notification_uid'] = $fbadmin_uid;
 //****************************************************************************************
 
 //****************************************************************************************
@@ -363,6 +280,13 @@ $array_perms = explode(",",$this->plugin_option['perms']);
 if(!in_array('email',$array_perms))
 	$this->plugin_option['perms'] = rtrim('email,'.$this->plugin_option['perms'],',');
 
+
+//****************************************************************************************
+// MUST GO IN INIT hook or before...
+
+//****************************************************************************************
+
+
 //define current user in this object
 $this->current_user();
 //do_action("AWD_facebook_current_user");
@@ -374,68 +298,22 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 	//init OAuth SDK php
 	//$this->sdk_init();
 	add_filter('authenticate', array(&$this,'sdk_init'));
-	
 	//use this hook to set the redirect url after JS login.
 	add_action("AWD_facebook_redirect_login",array(&$this,'js_redirect_after_login'));
-	
 	//add action to add the login button on the wp-login.php page...
 	if($this->plugin_option['login_button_display_on_login_page'] == 1)
 		add_action('login_form',array(&$this,'the_login_button_wp_login'));
-	
 	if($this->plugin_option['connect_fbavatar'] == 1)
 		add_filter('get_avatar', array($this, 'fb_get_avatar'), 100, 5);//modify in last... 
-	
-	$fbadmin_uid = do_action("AWD_facebook_get_admin_fbuid");
-	
-	if($this->plugin_option['admins'] == '')
-		$this->plugin_option['admins'] = $fbadmin_uid;
-	//try here to set the comments notifications uid from 
-	if($this->plugin_option['comments_send_notification_uid']== '')
-		$this->plugin_option['comments_send_notification_uid'] = $fbadmin_uid;
 	
 	add_action('admin_print_footer_scripts',array(&$this,'connect_footer'));
 	add_action('wp_footer',array(&$this,'connect_footer'));
 }
 
-add_action('admin_notices',array(&$this,'missing_config'));
-
-//load sdk js in footer
-add_action('admin_print_footer_scripts',array(&$this,'load_sdj_js'));
-add_action('wp_footer',array(&$this,'load_sdj_js'));
-
-//init admin
-add_action('admin_menu', array(&$this,'admin_menu'));
-add_action('admin_init', array(&$this,'admin_initialisation'));
-
-//filter for button post
-add_filter('the_content', array(&$this,'the_content'));
-add_action('comments_template', array(&$this,'the_comments_form'));
-
-//call the open tags in header
-add_action('wp_head',array(&$this,'define_open_graph_tags_header'));
-
-if($this->debug_active)
-	add_action('wp_footer',array(&$this,'debug_content'));
-
-//filter authenticate user
-add_filter('authenticate', array(&$this,'sdk_init'));
-add_action("AWD_facebook_current_user",array(&$this, 'current_user'));
-		add_action("AWD_facebook_get_admin_fbuid",array(&$this, 'get_admin_fbuid'));
-		add_action('after_setup_theme',array(&$this,'add_thumbnail_support'));
-		//like box widget register
-		add_action('widgets_init',  array(&$this,'register_AWD_facebook_widgets'));
-
-//add shortcode 
-add_shortcode('AWD_likebutton', array(&$this,'shortcode_like_button'));
-add_shortcode('AWD_likebox', array(&$this,'shortcode_like_box'));
-add_shortcode('AWD_activitybox', array(&$this,'shortcode_activity_box'));
-add_shortcode('AWD_loginbutton', array(&$this,'shortcode_login_button'));
-add_shortcode('AWD_comments', array(&$this,'shortcode_comments_box'));
 //load some plugin if exists
 do_action("AWD_facebook_plugins_init");
 //filter hook for all options
 $this->plugin_option = apply_filters('AWD_facebook_options', $this->plugin_option);
-
 //Logout out listener, use that function to listen if we want to log out with the good way.
 $this->logout_listener();
 ?>

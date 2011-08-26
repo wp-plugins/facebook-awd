@@ -82,6 +82,9 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		if(!class_exists('Facebook'))
 			require_once(dirname(__FILE__).'/inc/classes/facebook/facebook.php');
 		
+		//load the objects for open graph
+		include_once(dirname(__FILE__).'/inc/opengraph_objects.php');
+		
 		//init the plugin and action
 		add_filter('authenticate', array(&$this,'sdk_init'));
 		add_action("AWD_facebook_current_user",array(&$this, 'current_user'));
