@@ -54,7 +54,6 @@ do_action("AWD_facebook_current_user");//it's called to soon we must identifier 
 do_action("AWD_facebook_plugins_init");
 //apply filter hook for all options
 $this->plugin_option = apply_filters('AWD_facebook_options', $this->plugin_option);
-$this->Debug($this->plugin_option);
 
 //init the FB connect
 if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id'] !='' && $this->plugin_option['app_secret_key'] !=''){
