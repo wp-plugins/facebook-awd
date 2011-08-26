@@ -58,7 +58,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
     * public
     * Debug this object
     */
-    public $debug_active = false;
+    public $debug_active = true;
     /**
     * public
     * Debug and add list of debug in this array
@@ -96,6 +96,43 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		add_action('widgets_init',  array(&$this,'register_AWD_facebook_widgets'));
 		//$this->initial();
 	}
+    /**
+    * Redefine option for empty value or not set
+    * Call from init in apply filters
+    */
+    public function define_options($options){
+        include_once(dirname(__FILE__).'/inc/define_options.php');
+    }
+    
+    //get the fbuid of admins
+    $fbadmin_uid = do_action("AWD_facebook_get_admin_fbuid");
+    
+    if($options['admins'] == '')
+        $options['admins'] = $fbadmin_uid;
+    //try here to set the comments notifications uid from 
+    if($options['comments_send_notification_uid']== '')
+        $options['comments_send_notification_uid'] = $fbadmin_uid;
+    
+    //langs
+    if(empty($options['locale'])){
+        if(defined('WPLANG'))
+            if(WPLANG!=''){
+                $options['locale'] = WPLANG;
+            }
+    }
+    //Desactive all xfbml if xfbml is set to 0
+    if($options['parse_xfbml'] == '' || $options['parse_xfbml'] == 0){
+        $options['parse_xfbml'] = 0;
+        $options['like_button_xfbml'] = 0;
+        $options['like_button_send'] = 0;
+        $options['like_box_xfbml'] = 0;
+        $options['activity_xfbml'] = 0;
+    }
+    //Define the perms with always email
+    $array_perms = explode(",",$options['perms']);
+    if(!in_array('email',$array_perms))
+        $options['perms'] = rtrim('email,'.$options['perms'],',');
+    }
 	/**
 	* return the fbuid of the admin
 	*/
@@ -1653,7 +1690,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* Debug
 	*/
 	private function debug_content(){
-		$this->Debug(array('$AWD_facebook->me'=>$this->me,"DEBUG FCBK"=>$this->fcbk));
+		$this->Debug(array('$AWD_facebook->me'=>$this->me,"DEBUG FCBK"=>$this->fcbk,'$this'=>$this));
 	}
 
 }
