@@ -21,6 +21,12 @@ foreach($AWD_options as $options=>$object){
 load_plugin_textdomain($this->plugin_text_domain,false,dirname( plugin_basename( __FILE__ ) ) . '/langs/');
 //call filter for undefined vars
 add_filter('AWD_facebook_options',array($this,'define_options'),10,1);
+//get the current user
+add_action("AWD_facebook_current_user",array(&$this, 'current_user'));
+//get the admin fbuid
+add_action("AWD_facebook_get_admin_fbuid",array(&$this,'get_admin_fbuid'));
+//add post thmubnial support for openGraph
+add_action('after_setup_theme',array(&$this,'add_thumbnail_support'));
 //check post and save
 add_action("AWD_facebook_save_settings",array(&$this,'hook_post_from_plugin_options'));
 //add notice in admin if error found
@@ -45,6 +51,7 @@ add_shortcode('AWD_comments', array(&$this,'shortcode_comments_box'));
 //Debug
 if($this->debug_active)
 	add_action('wp_footer',array(&$this,'debug_content'));
+
 
 
 //CALL ACTION
