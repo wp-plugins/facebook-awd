@@ -195,5 +195,34 @@ foreach($options as $option=>$value){
         $options[$option] = $set_var;
     }
 }
+//get the fbuid of admins
+$fbadmin_uid = do_action("AWD_facebook_get_admin_fbuid");
+
+if($options['admins'] == '')
+    $options['admins'] = $fbadmin_uid;
+//try here to set the comments notifications uid from 
+if($options['comments_send_notification_uid']== '')
+    $options['comments_send_notification_uid'] = $fbadmin_uid;
+
+//langs
+if(empty($options['locale'])){
+    if(defined('WPLANG'))
+        if(WPLANG!=''){
+            $options['locale'] = WPLANG;
+        }
+}
+//Desactive all xfbml if xfbml is set to 0
+if($options['parse_xfbml'] == '' || $options['parse_xfbml'] == 0){
+    $options['parse_xfbml'] = 0;
+    $options['like_button_xfbml'] = 0;
+    $options['like_button_send'] = 0;
+    $options['like_box_xfbml'] = 0;
+    $options['activity_xfbml'] = 0;
+}
+//Define the perms with always email
+$array_perms = explode(",",$options['perms']);
+if(!in_array('email',$array_perms))
+    $options['perms'] = rtrim('email,'.$options['perms'],',');
+
 return $options;
 ?>
