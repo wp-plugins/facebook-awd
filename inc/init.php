@@ -67,7 +67,7 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 	if(get_option('users_can_register') == 0){
 		add_action('admin_notices',array(&$this,'message_register_disabled'));
 	}
-	add_filter('authenticate', array(&$this,'sdk_init'));
+	add_filter('authenticate', array($this,'sdk_init'));
 	//use this hook to set the redirect url after JS login.
 	add_action("AWD_facebook_redirect_login",array(&$this,'js_redirect_after_login'));
 	//add action to add the login button on the wp-login.php page...
