@@ -371,7 +371,9 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 		add_action('admin_notices',array(&$this,'message_register_disabled'));
 	}
 	//init OAuth SDK php
-	$this->sdk_init();
+	//$this->sdk_init();
+	add_filter('authenticate', array(&$this,'sdk_init'));
+	
 	//use this hook to set the redirect url after JS login.
 	add_action("AWD_facebook_redirect_login",array(&$this,'js_redirect_after_login'));
 	
