@@ -205,11 +205,14 @@ if($options['comments_send_notification_uid']== '')
     $options['comments_send_notification_uid'] = $fbadmin_uid;
 
 //langs
-if(empty($options['locale'])){
-    if(defined('WPLANG'))
-        if(WPLANG!=''){
+if($options['locale']==''){
+    if(defined('WPLANG')){
+        if(WPLANG==''){
+            $options['locale'] = "en_US";
+        }else{
             $options['locale'] = WPLANG;
         }
+    }
 }
 //Desactive all xfbml if xfbml is set to 0
 if($options['parse_xfbml'] == '' || $options['parse_xfbml'] == 0){
