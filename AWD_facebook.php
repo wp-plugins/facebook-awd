@@ -487,7 +487,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	/*
 	* INIT PHP SDK 3 version
 	*/
-	
 	public function sdk_init($user, $username, $password){
 		$this->fcbk = new Facebook(array(
 			'appId'  => $this->plugin_option['app_id'],
@@ -497,27 +496,23 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$this->me = null;
 		// Get User ID
 		$this->uid = $this->fcbk->getUser();
-		
-		
 		if($this->uid) {
 			try {
 				// Proceed knowing you have a logged in user who's authenticated.
 				$this->me = $this->fcbk->api('/me');
 				//perform login process
 				$this->login_user();
+				$this->logout_url = $this->fcbk->getLogoutUrl();
+			    //logout url
+			    add_filter('logout_url', array(&$this,'logout_url'),10,1);
 			//$updated = date("l, F j, Y", strtotime($me['updated_time']));
 			} catch (FacebookApiException $e) {
 				error_log($e);
 				$this->uid = null;
+				
 			}
-		}
-		// login or logout url will be needed depending on current user state.
-		if($this->uid){
-			$this->logout_url = $this->fcbk->getLogoutUrl();
-			//logout url
-			add_filter('logout_url', array(&$this,'logout_url'),10,1);
 		}else{
-			$this->login_url = $this->fcbk->getLoginUrl(
+		    $this->login_url = $this->fcbk->getLoginUrl(
 				array(
                 	'scope'         => $this->plugin_option['perms'],
                 	'redirect_uri'  => home_url()
