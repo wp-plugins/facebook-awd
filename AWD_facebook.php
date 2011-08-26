@@ -84,16 +84,23 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		
 		
 		//add_action('init',array(&$this,'initial'),11);//11 start init later to be comatible with custom post types
-		$this->initial();
 		add_filter('authenticate', array(&$this,'sdk_init'));
 		add_action("AWD_facebook_current_user",array(&$this, 'current_user'));
+		add_action("AWD_facebook_get_admin_fbuid",array(&$this, 'get_admin_fbuid'));
 		add_action('after_setup_theme',array(&$this,'add_thumbnail_support'));
 		//like box widget register
 		add_action('widgets_init',  array(&$this,'register_AWD_facebook_widgets'));
+		$this->initial();
 	}
-	/*public function init(){
-	
-	}*/
+	/**
+	* return the fbuid of the admin
+	*/
+	public function get_admin_fbuid(){
+        $admin_email = get_option('admin_email');
+        $admin_user = get_user_by('email', $admin_email);
+        $fbadmin_uid = get_user_meta($admin_user->ID,'fb_uid', true);
+        return $fbadmin_uid;
+	}
 	
 	
 	/**

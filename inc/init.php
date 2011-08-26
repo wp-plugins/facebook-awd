@@ -384,10 +384,9 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 	
 	if($this->plugin_option['connect_fbavatar'] == 1)
 		add_filter('get_avatar', array($this, 'fb_get_avatar'), 100, 5);//modify in last... 
-	//set admin id to admin user if empty and if connect is used
-	$admin_email = get_option('admin_email');
-	$admin_user = get_user_by('email', $admin_email);
-	$fbadmin_uid = get_user_meta($admin_user->ID,'fb_uid', true);
+	
+	$fbadmin_uid = do_action("AWD_facebook_get_admin_fbuid");
+	
 	if($this->plugin_option['admins'] == '')
 		$this->plugin_option['admins'] = $fbadmin_uid;
 	//try here to set the comments notifications uid from 
