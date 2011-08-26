@@ -83,14 +83,14 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			require_once(dirname(__FILE__).'/inc/classes/facebook/facebook.php');
 		
 		
-		//add_action('init',array(&$this,'initial'),11);//11 start init later to be comatible with custom post types
+		add_action('plugins_loaded',array(&$this,'initial'),11);//11 start init later to be comatible with custom post types
 		add_filter('authenticate', array(&$this,'sdk_init'));
 		add_action("AWD_facebook_current_user",array(&$this, 'current_user'));
 		add_action("AWD_facebook_get_admin_fbuid",array(&$this, 'get_admin_fbuid'));
 		add_action('after_setup_theme',array(&$this,'add_thumbnail_support'));
 		//like box widget register
 		add_action('widgets_init',  array(&$this,'register_AWD_facebook_widgets'));
-		$this->initial();
+		//$this->initial();
 	}
 	/**
 	* return the fbuid of the admin
