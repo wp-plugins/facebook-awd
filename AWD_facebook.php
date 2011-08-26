@@ -1659,7 +1659,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	/**
 	* Debug
 	*/
-	private function debug_content(){
+	public function debug_content(){
 		$this->Debug(array('$AWD_facebook->me'=>$this->me,"DEBUG FCBK"=>$this->fcbk,'$this'=>$this));
 	}
 
