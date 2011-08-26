@@ -12,7 +12,7 @@ load_plugin_textdomain($this->plugin_text_domain,false,dirname( plugin_basename(
 $this->plugin_option = array();
 
 //check post and save
-$this->hook_post_from_plugin_options();
+add_action("AWD_facebook_save_settings",array(&$this,'hook_post_from_plugin_options'));
 $this->wpdb = $wpdb;
 $this->plugin_url = plugins_url("",dirname(__FILE__));
 $this->plugin_url_images = $this->plugin_url."/css/images/";
