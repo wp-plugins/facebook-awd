@@ -20,7 +20,7 @@ foreach($AWD_options as $options=>$object){
 //load text domain file
 load_plugin_textdomain($this->plugin_text_domain,false,dirname( plugin_basename( __FILE__ ) ) . '/langs/');
 //call filter for undefined vars
-add_filter('AWD_facebook_options',array($this,'define_options'),0,1);
+add_filter('AWD_facebook_options',array($this,'define_options'),10,1);
 //check post and save
 add_action("AWD_facebook_save_settings",array(&$this,'hook_post_from_plugin_options'));
 //add notice in admin if error found
