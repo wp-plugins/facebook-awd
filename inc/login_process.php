@@ -69,15 +69,18 @@ if($this->uid){
 			//get user infos
 			$user_info = get_userdata($existing_user);
 			//connect the user
-			wp_set_auth_cookie($existing_user, true, false);
-			do_action('wp_login', $user_info->user_login);
+			wp_set_current_user($new_user);
+                wp_set_auth_cookie($new_user);
+                do_action('wp_signon', $new_user);
+			//wp_set_auth_cookie($existing_user, true, false);
+			//do_action('wp_login', $user_info->user_login);
 			
 			$this->debug_echo[] = "User login";
 			//if($this->plugin_option['login_button_login_url'] != "")
 				//wp_redirect(str_ireplace("%BLOG_URL%",home_url(),$this->plugin_option['login_button_login_url']));
 			//else
-				wp_redirect($this->get_current_url());
-			exit();
+				//wp_redirect($this->get_current_url());
+			//exit();
 		break;
 		
 		
@@ -122,15 +125,18 @@ if($this->uid){
 				//send email new registration
 				wp_new_user_notification($new_user, $userdata['user_pass']);
 				//connnect the user
-				wp_set_auth_cookie($new_user, true, false);
-				do_action('wp_login', $user_info->user_login);
+                wp_set_current_user($new_user);
+                wp_set_auth_cookie($new_user);
+                do_action('wp_signon', $new_user);
+
+				//do_action('wp_login', $user_info->user_login);
 				$this->debug_echo[] = "User register and was logged in";
 				
 				//if($this->plugin_option['login_button_login_url'] != "")
 				    //wp_redirect(str_ireplace("%BLOG_URL%",home_url(),$this->plugin_option['login_button_login_url']));
                 //else
-                    wp_redirect($this->get_current_url());
-                exit();
+                //    wp_redirect($this->get_current_url());
+                //exit();
 			}
 		break;
 		default :
