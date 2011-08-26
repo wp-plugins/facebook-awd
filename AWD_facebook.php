@@ -488,7 +488,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* INIT PHP SDK 3 version
 	*/
 	
-	public function sdk_init(){
+	public function sdk_init($user, $username, $password){
 		$this->fcbk = new Facebook(array(
 			'appId'  => $this->plugin_option['app_id'],
 			'secret' => $this->plugin_option['app_secret_key']
