@@ -58,6 +58,7 @@ add_action('init',array(&$this,'wp_init'));
 if($this->debug_active)
 	add_action('wp_footer',array(&$this,'debug_content'));
 
+$this->plugin_option = apply_filters('AWD_facebook_options', $this->plugin_option);
 //load some plugin of FACEBOOK AWD if exists
 do_action("AWD_facebook_plugins_init");
 
