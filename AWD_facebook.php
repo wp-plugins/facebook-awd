@@ -431,7 +431,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	public function save_options_post_editor($post_id){
 		foreach($_POST as $__post=>$val){
 			//should have ogtags in prefix present to be saved
-			if(ereg('ogtags_',$__post) AND trim($val) !=''){
+			if(preg_match('@ogtags_@',$__post) AND trim($val) !=''){
 				update_post_meta($post_id, $__post, $val);
 			}
 			
@@ -545,7 +545,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function logout_url($url){
 		$params = explode('&',str_replace('&amp;','&',$url));
-		if(ereg('redirect_to',$params[1]))
+		if(preg_match('@redirect_to@',$params[1]))
 			$redirect_to = '&'.$params[1];
 		
 		if($this->uid)
@@ -829,12 +829,12 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 					$option_value = str_replace("\t","",$option_value);
 					//for video	and audio
 					//if video src or audio src is null so don't display tags
-					if(ereg('audio',$tag) && $audio =='')
+					if(preg_match('@audio@',$tag) && $audio =='')
 						continue;
-					elseif(ereg('video',$tag) && $video =='')
+					elseif(preg_match('@video@',$tag) && $video =='')
 						continue;
 					//need image for video to work
-					elseif(ereg('video',$tag) && $image =='')
+					elseif(preg_match('@video@',$tag) && $image =='')
 						continue;
 					elseif(($tag == 'app_id' || $tag == 'admins' || $tag == 'page_id') && $option_value!='')
 						$options['fb:'.$tag] = $option_value;
@@ -997,7 +997,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 				//reconstruct the arry to be compatible with this function and args metabox
 				if($customTemp){
 					foreach($this->plugin_option as $option=>$value)
-						if(ereg($customTemp,$option))
+						if(preg_match('@'.$customTemp.'@',$option))
 							$custom[str_ireplace($customTemp.'_',"",$prefix).$option][0] = $value;
 				}
 				//use h4 or other

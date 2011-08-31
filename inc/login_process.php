@@ -72,7 +72,7 @@ if($this->uid){
 			$this->connect_the_user($user_info);
 			$this->debug_echo[] = "User login";
 			$current_url = $this->get_current_url();
-			if(ereg('wp-login.php',$current_url))
+			if(preg_match('@wp-login.php@',$current_url))
 				if($_REQUEST['redirect_to'] !='')
 					wp_redirect($_REQUEST['redirect_to']);
 				else
@@ -127,7 +127,13 @@ if($this->uid){
 				$this->connect_the_user($user_info);
 				//do_action('wp_login', $user_info->user_login);
 				$this->debug_echo[] = "User register and was logged in";
-                wp_redirect($this->get_current_url());
+				if(preg_match('@wp-login.php@',$current_url))
+                    if($_REQUEST['redirect_to'] !='')
+                        wp_redirect($_REQUEST['redirect_to']);
+                    else
+                        wp_redirect(home_url());
+				else
+                    wp_redirect($this->get_current_url());
                 exit();
 			}
 		break;
