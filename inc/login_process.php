@@ -66,14 +66,17 @@ if($this->uid){
 				update_user_meta($existing_user, 'fb_uid', $this->uid );
 			//get user infos
 			$user_info = get_userdata($existing_user);
+			
+				
 			//connect the user
-			wp_set_current_user($existing_user);
-			wp_set_auth_cookie($existing_user, true, false);
-			do_action('wp_login', $user_info->user_login);
+			$this->connect_the_user($user_info);
 			$this->debug_echo[] = "User login";
 			$current_url = $this->get_current_url();
 			if(ereg('wp-login.php',$current_url))
-				wp_redirect(home_url());
+				if($_REQUEST['redirect_to'] !='')
+					wp_redirect($_REQUEST['redirect_to']);
+				else
+					wp_redirect(home_url());
 			else
 				wp_redirect($current_url);
 			exit();
@@ -119,11 +122,9 @@ if($this->uid){
 				update_user_meta( $new_user, 'fb_uid', $this->uid );
 				$user_info = get_userdata($new_user);
 				//send email new registration
-				wp_new_user_notification($new_user, $userdata['user_pass']);
+				wp_new_user_notification($user_info->ID, $userdata['user_pass']);
 				//connnect the user
-                wp_set_current_user($new_user);
-                wp_set_auth_cookie($new_user);
-                do_action('wp_login', $user_info->user_login);
+				$this->connect_the_user($user_info);
 				//do_action('wp_login', $user_info->user_login);
 				$this->debug_echo[] = "User register and was logged in";
                 wp_redirect($this->get_current_url());

@@ -12,11 +12,7 @@ $this->wpdb = $wpdb;
 $this->plugin_url = plugins_url("",dirname(__FILE__));
 $this->plugin_url_images = $this->plugin_url."/css/images/";
 
-//Get options from bdd
-$AWD_options = $this->wpdb->get_results("SELECT option_name,option_value FROM ".$this->wpdb->options." WHERE option_name LIKE '%".$this->plugin_option_pref."%'",'OBJECT');
-foreach($AWD_options as $options=>$object){
-	$this->plugin_option[str_ireplace($this->plugin_option_pref,"",$object->option_name)] = $object->option_value;
-}
+
 //load text domain file
 load_plugin_textdomain($this->plugin_text_domain,false,dirname( plugin_basename( __FILE__ ) ) . '/langs/');
 //call filter for undefined vars
@@ -42,6 +38,8 @@ add_filter('the_content', array(&$this,'the_content'));
 add_action('comments_template', array(&$this,'the_comments_form'));
 //call the open tags in header
 add_action('wp_head',array(&$this,'define_open_graph_tags_header'));
+//define if user is logged in ajax
+add_action('wp_ajax_is_connect', array(&$this,'sdk_init'));
 //add shortcode 
 add_shortcode('AWD_likebutton', array(&$this,'shortcode_like_button'));
 add_shortcode('AWD_likebox', array(&$this,'shortcode_like_box'));
@@ -58,9 +56,17 @@ add_action('init',array(&$this,'wp_init'));
 if($this->debug_active)
 	add_action('wp_footer',array(&$this,'debug_content'));
 
-$this->plugin_option = apply_filters('AWD_facebook_options', $this->plugin_option);
+
 //load some plugin of FACEBOOK AWD if exists
 do_action("AWD_facebook_plugins_init");
+do_action("AWD_facebook_save_settings");
+//Get options from bdd
+$AWD_options = $this->wpdb->get_results("SELECT option_name,option_value FROM ".$this->wpdb->options." WHERE option_name LIKE '%".$this->plugin_option_pref."%'",'OBJECT');
+foreach($AWD_options as $options=>$object){
+	$this->plugin_option[str_ireplace($this->plugin_option_pref,"",$object->option_name)] = $object->option_value;
+}
+$this->plugin_option = apply_filters('AWD_facebook_options', $this->plugin_option);
+
 
 //apply filter hook for all options
 $this->plugin_option = apply_filters('AWD_facebook_options', $this->plugin_option);

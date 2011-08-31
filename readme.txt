@@ -126,6 +126,7 @@ Options:
 * maxrow
 * logout_value
 * logout_url
+* login_url
 
 `[AWD_comments]`
 Options:
@@ -137,12 +138,14 @@ Options:
 
 = API hook Actions: (doc soon) =
 * AWD_facebook_plugins_init
+* AWD_facebook_oauth
 * AWD_facebook_plugins_menu
 * AWD_facebook_plugins_form
 * AWD_facebook_custom_metabox
 * AWD_facebook_redirect_login
 * AWD_facebook_js_not_authorized
 * AWD_facebook_js_authorized
+* AWD_facebook_get_admin_fbuid
 
 = API hook Filters: (doc soon) =
 * AWD_facebook_options
@@ -171,3 +174,7 @@ Options:
 Special update API Facebook PHP and JS to V3.1.1
 = 0.9.7.4 =
 [view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-4.html")
+= 0.9.7.5 =
+[view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-5.html")
+= 0.9.7.6 =
+[view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-6.html")

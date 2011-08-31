@@ -258,7 +258,9 @@ label.uiRadio {
   font-weight:        normal;
   padding:            4px 0;
   width:              180px;
-  min-height:         200px;
+  min-height:         150px;
+  overflow: auto;
+  max-height:		  300px;
   position:           absolute;
   top:                21px;
   z-index: 			  200;

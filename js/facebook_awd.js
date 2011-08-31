@@ -8,7 +8,7 @@
 
 //Hide or show state
 function hide_state(elem,elem_to_hide){
-	if(jQuery(elem).attr('checked') == false){
+	if(jQuery(elem).attr('checked') != "checked"){
 		jQuery(elem_to_hide).fadeOut();
 	}else{
 		jQuery(elem_to_hide).show();
