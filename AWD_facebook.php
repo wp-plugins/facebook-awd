@@ -505,7 +505,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			'secret' => $this->plugin_option['app_secret_key']
 		));
 		
-		$signedrequest = $facebook->getSignedRequest();
+		$signedrequest = $this->fcbk->getSignedRequest();
         if( is_array($signedrequest) && array_key_exists("page", $signedrequest) ){
         // if this page is being displayed in an iframe, determine where it is
         // http://apollomatrix.com/content/facebook-get-current-url-current-facebook-page-get-current-facebook-url
