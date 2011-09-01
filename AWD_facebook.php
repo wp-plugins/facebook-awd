@@ -683,7 +683,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
             		oauth : true //wait for php SDK compatible with cookie
                 });
 				phpLoginStatus = <?php echo ($this->uid ? 'true' : 'false'); ?>;
-                /*FB.getLoginStatus(function(response) {
+                
+                FB.getLoginStatus(function(response) {
 					if (response.status === 'connected') {
 						// the user is logged in and connected to your
 						// app, and response.authResponse supplies
@@ -705,7 +706,9 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 					}else{
 						<?php do_action("AWD_facebook_js_authorized"); ?>
 					}
-				});*/
+				});
+				
+				
                 FB.Event.subscribe('auth.login', function(response) {
                     //reload only if php sdk think user is not logged in.
 					if(phpLoginStatus){
