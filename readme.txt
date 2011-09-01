@@ -15,9 +15,9 @@ Easy to install and setup. Use Iframe or Xfbml
 Add Like button and comments to pages, posts and custom posts types, at top, bottom or both.
 Widgets and Shortcodes available for each Facebook socials plugins.
 Use post thumbnail for openGraph, Fix like button with url linter, use pattern to defined custom openGraph meta, etc...
-Use both SDK's PHP v.3.1.1 AND JS v3.0
+Use both SDK's PHP v.3.1.1 AND JS v3
 
-Warning: You should set that your app Facebook is migrated to OAuth2 in settings of your Facebook Appllication.
+Warning: You should set that your app Facebook is migrated to OAuth2 in settings of your Facebook Appllication. (you should read FAQ)
  
 = Socials plugins iframe or xfbml: =
 
@@ -29,8 +29,8 @@ Warning: You should set that your app Facebook is migrated to OAuth2 in settings
 
 = Langs: =
 
-*   EN
-*   FR
+*   EN (en_US)
+*   FR (fr_FR)
 
 = OpenGraph protocol: =
 Customise Open Graph Tags for each type of posts (custom post support), archives, categories and taxonomies, attachements  
@@ -59,7 +59,30 @@ Need PHP 5.*
 
 == Frequently Asked Questions ==
 
-[Create an Application on Facebook]("http://www.facebook.com/developers/createapp.php/")
+[Create an Application on Facebook]("http://developers.facebook.com/apps/")
+
+= My site is always reloading when i'am connected to facebook =
+1. Verify that your are not using cache system
+2. You Facebook app must be migrated to Oauth2 in facebook settings
+3. Clear all cookies and cache from your browser (to prevent old cookies formats.)
+4. Desactive each plugin one by one, and try more tests (sometimes, plugins create confilcts.)
+
+= I have a fatal error with CURL extension =
+Facebook API cannot work without CURL php extension on your server.
+You should install it.
+
+= I have a fatal error with CURL extension =
+Facebook API cannot work without CURL php extension on your server.
+You should install it.
+
+= I can't manage my fb:comments (moderator view) =
+You should activate OpenGraph in settings, and set your facebook admin ID or Facebook app_id.
+
+= How can i get my Facebook ID and My Facebook App Api info =
+[Search here]("http://developers.facebook.com/apps/") 
+
+= The like button does not work, i have javascript error =
+You must set an locale option in settings, as "en_US" or "fr_FR" etc...
 
 = Like box does not work =
 Verify that url you enter is an url form a Facebook Page and not from a website.
@@ -68,8 +91,7 @@ Verify that url you enter is an url form a Facebook Page and not from a website.
 This error come from facebook.
 In your App settings, on facebook, you should go to the connect tab, and you should set an url, and a domain for the connect api.
 
-= How can i get my Facebook ID and My Facebook App Api info =
-[Search here]("http://developers.facebook.com/apps/") 
+
 
 = The plugin is not working after update 0.9.7 =
 Warning: You should set that your app Facebook is migrated to OAuth2 in settings of your Facebook Appllication. Because this plugin use the new version of the Facebook SDK.
