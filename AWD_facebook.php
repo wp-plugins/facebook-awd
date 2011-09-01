@@ -684,6 +684,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
                 });
 				phpLoginStatus = <?php echo ($this->uid ? 'true' : 'false'); ?>;
                 
+                //this function is used to verify if user is connected to faceboko and authorized the app.
                 FB.getLoginStatus(function(response) {
 					if (response.status === 'connected') {
 						// the user is logged in and connected to your
@@ -711,7 +712,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 				
                 FB.Event.subscribe('auth.login', function(response) {
                     //reload only if php sdk think user is not logged in.
-					if(phpLoginStatus){
+					if(!phpLoginStatus){
                         if(window.location != window.parent.location) {
                             // page is in iframe so we need to refresh it
                             top.location.href = '<? echo $this->facebook_page_url; ?>';
