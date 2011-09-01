@@ -524,10 +524,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			try {
 			    //exit('debug user connect fb');
 				// Proceed knowing you have a logged in user who's authenticated.
-				$user_acces_token = $this->fcbk->getUserAccessToken();
-				if(!$user_acces_token)
-				    exit($this->uid);
-
+				$acces_token = $this->fcbk->getAccessToken();
 				$this->me = $this->fcbk->api('/me');
 				//perform login process
 				$this->login_user();
