@@ -1404,7 +1404,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		
 		//if some options defined
 		if(empty($options['case'])){
-			if($this->me)
+			if($this->uid)
 				$case = 'profile';
 			//user not connected but he can in xfbml...
 			else if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['parse_xfbml'] == 1)
