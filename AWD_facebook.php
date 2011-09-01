@@ -533,7 +533,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			    add_filter('logout_url', array(&$this,'logout_url'),10,1);
 			//$updated = date("l, F j, Y", strtotime($me['updated_time']));
 			} catch (FacebookApiException $e) {
-				//error_log($e);
 				$this->uid = null;
 			}
 		}else{
