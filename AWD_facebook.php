@@ -744,6 +744,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 					}
 				},
 				{ scope:'<?php echo $this->plugin_option["perms"]; ?>'});
+				return false;
 			}
 				
 		</script>
@@ -1447,7 +1448,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			case 'login':
 				return '
 				<div class="AWD_facebook_login '.$options['login_button_css_classes'].'">
-					<a href="'.$this->login_url.'" onclick="AWD_facebook_connect(\''.$login_redirect_url.'\'); return false;"><img src="'.$login_button_image.'"></a>
+					<a href="'.$this->login_url.'" onclick="AWD_facebook_connect(\''.$login_redirect_url.'\'); return false;"><img src="'.$login_button_image.'" border="0"></a>
 				</div>'."\n";
 			break;
 		
