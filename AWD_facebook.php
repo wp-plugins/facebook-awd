@@ -510,9 +510,9 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
         // if this page is being displayed in an iframe, determine where it is
         // http://apollomatrix.com/content/facebook-get-current-url-current-facebook-page-get-current-facebook-url
         // http://stackoverflow.com/questions/3130433/get-facebook-fan-page-id
-            $facebookPageUrl = json_decode(file_get_contents("https://graph.facebook.com/" . $signedrequest['page']['id']))->{"link"} . "?sk=app_" . $facebook->getAppId();
+            $this->facebook_page_url = json_decode(file_get_contents("https://graph.facebook.com/" . $signedrequest['page']['id']))->{"link"} . "?sk=app_" . $facebook->getAppId();
         } else {
-            $facebookPageUrl = "";
+            $this->facebook_page_url = "";
         }
 		
 		
@@ -706,12 +706,18 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 					}else{
 						<?php do_action("AWD_facebook_js_authorized"); ?>
 					}
-				});
+				});*/
                 FB.Event.subscribe('auth.login', function(response) {
                     //reload only if php sdk think user is not logged in.
-                    if(!phpLoginStatus){
-					    window.location.reload(true);
-					}
+					if(phpLoginStatus){
+                        if(window.location != window.parent.location) {
+                            // page is in iframe so we need to refresh it
+                            top.location.href = '<? echo $this->facebook_page_url; ?>';
+                        }else{
+                            // page is displayed standalone
+                            window.location.reload(true);
+                        }
+                    }
 				});
 				/*FB.Event.subscribe('auth.logout', function(response) {
 				  window.location.reload();
