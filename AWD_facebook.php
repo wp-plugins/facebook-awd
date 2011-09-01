@@ -499,16 +499,28 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* INIT PHP SDK 3 version
 	*/
 	public function sdk_init(){
+	    header('P3P: CP="CAO PSA OUR"');
 		$this->fcbk = new Facebook(array(
 			'appId'  => $this->plugin_option['app_id'],
 			'secret' => $this->plugin_option['app_secret_key']
 		));
 		
+		$signedrequest = $facebook->getSignedRequest();
+        if( is_array($signedrequest) && array_key_exists("page", $signedrequest) ){
+        // if this page is being displayed in an iframe, determine where it is
+        // http://apollomatrix.com/content/facebook-get-current-url-current-facebook-page-get-current-facebook-url
+        // http://stackoverflow.com/questions/3130433/get-facebook-fan-page-id
+            $facebookPageUrl = json_decode(file_get_contents("https://graph.facebook.com/" . $signedrequest['page']['id']))->{"link"} . "?sk=app_" . $facebook->getAppId();
+        } else {
+            $facebookPageUrl = "";
+        }
+		
+		
 		$this->me = null;
 		// Get User ID
 		$this->uid = $this->fcbk->getUser();
-		//exit('debug userno');
 
+        
 		if($this->uid) {
 			try {
 			    //exit('debug user connect fb');
@@ -671,13 +683,17 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
             		oauth : true //wait for php SDK compatible with cookie
                 });
 				
-                FB.getLoginStatus(function(response) {
+                /*FB.getLoginStatus(function(response) {
 					if (response.status === 'connected') {
 						// the user is logged in and connected to your
 						// app, and response.authResponse supplies
 						// the user’s ID, a valid access token, a signed
 						// request, and the time the access token 
 						// and signed request each expire
+						// PHP SDK Login status
+                        phpLoginStatus = <?php echo ($this->uid ? 'true' : 'false'); ?>;
+
+
 						<?php if(!is_user_logged_in()):	?>	
 						<?php do_action("AWD_facebook_redirect_login"); ?>
 						<?php endif; ?>
@@ -692,7 +708,10 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 					}
 				});
                 FB.Event.subscribe('auth.login', function(response) {
-					window.location.reload(true);
+                    //reload only if php sdk think user is not logged in.
+                    if(!phpLoginStatus){
+					    window.location.reload(true);
+					}
 				});
 				/*FB.Event.subscribe('auth.logout', function(response) {
 				  window.location.reload();
