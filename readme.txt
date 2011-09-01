@@ -65,7 +65,7 @@ Need PHP 5.*
 1. Verify that your are not using cache system
 2. You Facebook app must be migrated to Oauth2 in facebook settings
 3. Clear all cookies and cache from your browser (to prevent old cookies formats.)
-4. Desactive each plugin one by one, and try more tests (sometimes, plugins create confilcts.)
+4. Desactive each plugin one by one, and try more tests (sometimes, plugins create confilcts.) 
 
 = I have a fatal error with CURL extension =
 Facebook API cannot work without CURL php extension on your server.
