@@ -3,7 +3,7 @@
 Plugin Name: Facebook AWD All in One
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph, Plugins from facebook, and FB connect, with SDK JS AND SDK PHP Facebook
-Version: 0.9.7.6-Beta1
+Version: 0.9.7.7-Beta1
 Author: AHWEBDEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AHWEBDEV
@@ -438,7 +438,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		}
 		
 		$permalink = get_permalink($post_id);
-		$url = 'http://developers.facebook.com/tools/lint/?url='.urlencode($permalink);
+		$url = 'http://developers.facebook.com/tools/debug/og/object?q='.urlencode($permalink);
 		if(function_exists('url_init')){
 			$curl = curl_init();
 			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
