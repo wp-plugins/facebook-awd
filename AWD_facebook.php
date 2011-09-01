@@ -515,7 +515,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
             $this->facebook_page_url = "";
         }
 		
-		$this->fcbk->getAccessToken();
 		$this->me = null;
 		// Get User ID
 		$this->uid = $this->fcbk->getUser();
@@ -525,6 +524,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 			try {
 			    //exit('debug user connect fb');
 				// Proceed knowing you have a logged in user who's authenticated.
+				$this->fcbk->getAccessToken();
 				$this->me = $this->fcbk->api('/me');
 				//perform login process
 				$this->login_user();
