@@ -682,7 +682,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
                     xfbml   : <?php echo ($this->plugin_option['parse_xfbml'] == 1 ? 'true' : 'false'); ?>,// parse XFBML
             		oauth : true //wait for php SDK compatible with cookie
                 });
-				
+				phpLoginStatus = <?php echo ($this->uid ? 'true' : 'false'); ?>;
                 /*FB.getLoginStatus(function(response) {
 					if (response.status === 'connected') {
 						// the user is logged in and connected to your
@@ -691,7 +691,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 						// request, and the time the access token 
 						// and signed request each expire
 						// PHP SDK Login status
-                        phpLoginStatus = <?php echo ($this->uid ? 'true' : 'false'); ?>;
 
 
 						<?php if(!is_user_logged_in()):	?>	
