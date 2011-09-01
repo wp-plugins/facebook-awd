@@ -110,7 +110,7 @@ class FacebookApiException extends Exception
  * Provides access to the Facebook Platform.  This class provides
  * a majority of the functionality needed, but the class is abstract
  * because it is designed to be sub-classed.  The subclass must
- * implement the four abstract methods listed at the bottom of
+ * implement the three abstract methods listed at the bottom of
  * the file.
  *
  * @author Naitik Shah <naitik@facebook.com>
@@ -343,7 +343,7 @@ abstract class BaseFacebook
         $this->setPersistentData('access_token', $access_token);
         return $access_token;
       }
-
+      
       // the JS SDK puts a code in with the redirect_uri of ''
       if (array_key_exists('code', $signed_request)) {
         $code = $signed_request['code'];
