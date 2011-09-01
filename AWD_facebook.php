@@ -521,7 +521,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$this->uid = $this->fcbk->getUser();
 
         
-		/*if($this->uid != 0) {
+		if($this->uid != 0) {
 			try {
 			    //exit('debug user connect fb');
 				// Proceed knowing you have a logged in user who's authenticated.
@@ -544,7 +544,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
                 	'redirect_uri'  => home_url()
             	)
             );
-		}*/
+		}
 	}
 	/**
 	* login user with facebook account
