@@ -759,6 +759,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$secure_cookie = is_ssl();
 		wp_set_current_user($user_object->ID);
 		wp_set_auth_cookie($user_object->ID, true, $secure_cookie);
+		//seems to have some problems.
 		//do_action('wp_login', $user_object->user_login);
 	}
 	/**
