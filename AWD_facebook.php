@@ -759,7 +759,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		$secure_cookie = is_ssl();
 		wp_set_current_user($user_object->ID);
 		wp_set_auth_cookie($user_object->ID, true, $secure_cookie);
-		do_action('wp_login', $user_object->user_login);
+		//do_action('wp_login', $user_object->user_login);
 	}
 	/**
 	* redirect after login hook
@@ -768,7 +768,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		if($this->plugin_option['login_button_login_url'] =='')
 			echo 'window.location.reload(true);';
 		else
-			echo 'window.location.href = "'.$this->plugin_option['login_button_login_url'].'";';
+			echo 'window.location.href = "'.str_replace('%BLOG_URL%',home_url(),$this->plugin_option['login_button_login_url']).'";';
 	}
 	/**
 	* Load the javascript sdk Facebook
