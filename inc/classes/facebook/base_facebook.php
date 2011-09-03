@@ -40,7 +40,6 @@ class FacebookApiException extends Exception
    * @param array $result The result from the API server
    */
   public function __construct($result) {
-    return false;
     $this->result = $result;
 
     $code = isset($result['error_code']) ? $result['error_code'] : 0;
@@ -1027,9 +1026,10 @@ abstract class BaseFacebook
    */
   protected function throwAPIException($result) {
     $e = new FacebookApiException($result);
+    error_log('AWD_facebook '.$e->getType().': '.$e->getMessage());
     switch ($e->getType()) {
       // OAuth 2.0 Draft 00 style
-      case 'OAuthException':
+      //case 'OAuthException':
         // OAuth 2.0 Draft 10 style
       case 'invalid_token':
         $message = $e->getMessage();
@@ -1041,7 +1041,7 @@ abstract class BaseFacebook
       }
     }
 
-    throw $e;
+    //throw $e;
   }
 
 
