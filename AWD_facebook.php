@@ -453,6 +453,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	*/
 	public function hook_post_from_plugin_options(){		
 		if(wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_options_update_field'],$this->plugin_slug.'_update_options')){
+			//do custom action for sub plugins or other exec.
+			do_action('AWD_facebook_save_custom_settings');
 			//unset submit to not be stored
 			unset($_POST[$this->plugin_option_pref.'submit']);
 			unset($_POST[$this->plugin_option_pref.'_nonce_options_update_field']);
