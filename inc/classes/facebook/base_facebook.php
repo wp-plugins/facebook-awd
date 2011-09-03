@@ -57,7 +57,7 @@ class FacebookApiException extends Exception
       $msg = 'Unknown Error. Check getResult()';
     }
 
-    parent::__construct($msg, $code);
+    //parent::__construct($msg, $code);
   }
 
   /**
