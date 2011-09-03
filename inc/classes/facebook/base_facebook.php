@@ -40,7 +40,7 @@ class FacebookApiException extends Exception
    * @param array $result The result from the API server
    */
   public function __construct($result) {
-    return;
+    return false;
     $this->result = $result;
 
     $code = isset($result['error_code']) ? $result['error_code'] : 0;
