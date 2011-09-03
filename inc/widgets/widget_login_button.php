@@ -29,10 +29,11 @@ class AWD_facebook_login_button extends WP_Widget {
 		$login_button['login_button_faces'] = (esc_attr($instance['login_button_faces']) == '' ? $this->AWD_facebook->plugin_option['login_button_faces'] : $instance['login_button_faces']);
 		$login_button['login_button_profile_picture'] = (esc_attr($instance['login_button_profile_picture']) == '' ? $this->AWD_facebook->plugin_option['login_button_profile_picture'] : $instance['login_button_profile_picture']);
 		$login_button['login_button_maxrow'] = (esc_attr($instance['login_button_maxrow']) == '' ? $this->AWD_facebook->plugin_option['login_button_maxrow'] : $instance['login_button_maxrow']);
-		$login_button['login_button_logout_value'] = (esc_attr($instance['login_button_logout_value']) == '' ? '' : $instance['login_button_logout_value']);
-		$login_button['login_button_css'] = (esc_attr($instance['login_button_css']) == '' ? '' : $instance['login_button_css']);
-		$login_button['login_button_logout_url'] = (esc_attr($instance['login_button_logout_url']) == '' ? '' : $instance['login_button_logout_url']);
-		$login_button['login_button_login_url'] = (esc_attr($instance['login_button_login_url']) == '' ? '' : $instance['login_button_login_url']);
+		$login_button['login_button_logout_value'] = (esc_attr($instance['login_button_logout_value']) == '' ? $this->AWD_facebook->plugin_option['login_button_logout_value'] : $instance['login_button_logout_value']);
+		$login_button['login_button_css'] = (esc_attr($instance['login_button_css']) == '' ? $this->AWD_facebook->plugin_option['login_button_css'] : $instance['login_button_css']);
+		$login_button['login_button_logout_url'] = (esc_attr($instance['login_button_logout_url']) == '' ? $this->AWD_facebook->plugin_option['login_button_logout_url'] : $instance['login_button_logout_url']);
+		$login_button['login_button_login_url'] = (esc_attr($instance['login_button_login_url']) == '' ? $this->AWD_facebook->plugin_option['login_button_login_url'] : $instance['login_button_login_url']);
+
 	    echo '<h2 style="text-align:center;color:#627AAD;border:1px solid #ccc; padding:5px;"><img style="vertical-align:middle;" src="'.$this->AWD_facebook->plugin_url_images.'facebook-mini.png" alt="facebook logo"/> '.__('Facebook Login Button',$this->AWD_facebook->plugin_text_domain).'</h2><br />';
 	
 		if($this->AWD_facebook->plugin_option['connect_enable'] == 1){
