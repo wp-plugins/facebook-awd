@@ -205,6 +205,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		
 		//sidebar boxes
 		add_meta_box($this->plugin_slug."_meta",  __('My Facebook',$this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->plugin_url_images.'facebook-mini.png" alt="facebook logo"/>', array(&$this,'fcbk_content'),  $this->plugin_slug.'_box' , 'side', 'core');
+		add_meta_box($this->plugin_slug."_discover",  __('Discover',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->plugin_slug.'_box' , 'side', 'core');
 		add_meta_box($this->plugin_slug."_info",  __('Informations',$this->plugin_text_domain), array(&$this,'infos_content'),  $this->plugin_slug.'_box' , 'side', 'core');
 		add_meta_box($this->plugin_slug."_activity",  __('Activity on your site',$this->plugin_text_domain), array(&$this,'activity_content'),  $this->plugin_slug.'_box' , 'side', 'core');
 		
@@ -287,6 +288,9 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 				$html .= '</div>';
 		}
 		return $html;
+	}
+	public function discover_content(){
+		echo '<img src="'.$this->plugin_url_images.'facebook-awd-seo-comments-promo.png" alt="SEO comments" />';
 	}
 	/**
 	* Admin content
