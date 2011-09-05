@@ -290,7 +290,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 		return $html;
 	}
 	public function discover_content(){
-		echo '<img src="'.$this->plugin_url_images.'facebook-awd-seo-comments-promo.png" alt="SEO comments" />';
+		echo '<a hre="http://www.ahwebdev.fr/plugins/facebook-awd-seo-comments.html" target="_blank"><img src="'.$this->plugin_url_images.'facebook-awd-seo-comments-promo.png" alt="SEO comments" width="258" height="105" border="0" /></a>';
 	}
 	/**
 	* Admin content
