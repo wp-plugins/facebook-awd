@@ -102,6 +102,12 @@ tr.dataRow td,tr.dataRow th{
 .left{
 	text-align:left;
 }
+.right{
+    text-align:right
+}
+.center{
+    text-align:center;
+}
 .block_50{
 	width:50%;
 	float:left;
