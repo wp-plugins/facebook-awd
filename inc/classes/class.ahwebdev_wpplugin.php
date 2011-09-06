@@ -36,10 +36,11 @@ class AHWEBDEV_wpplugin{
 	/**
 	 * plugin version
 	 */
-	public function get_version(){
+	public function get_version($plugin_folder=""){
 		if (!function_exists('get_plugins'))
 	    	require_once(ABSPATH.'wp-admin/includes/plugin.php');
-	    $plugin_folder = get_plugins('/'.plugin_basename( dirname(dirname(dirname( __FILE__ )))));
+	    if($plugin_folder =="")
+	        $plugin_folder = get_plugins('/'.plugin_basename( dirname(dirname(dirname( __FILE__ )))));
 	    return $plugin_folder[$this->file_name]['Version'];
 	}
 	
