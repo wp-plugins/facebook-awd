@@ -105,6 +105,9 @@ tr.dataRow td,tr.dataRow th{
 .right{
     text-align:right
 }
+.little_text{
+    font-size:10px;
+}
 .center{
     text-align:center;
 }
