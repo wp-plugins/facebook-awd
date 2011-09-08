@@ -24,6 +24,7 @@ if($this->uid){
 			$step = 'logged';
 		elseif(!$fb_uid){
 			update_user_meta($this->current_user->ID,'fb_uid',$this->uid);
+			update_user_meta($this->current_user->ID,'fb_email',$this->me['email']);
 			$step = 'logged';
 		}	
 
