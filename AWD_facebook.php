@@ -499,7 +499,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* INIT PHP SDK 3 version
 	*/
 	public function sdk_init(){
-	    header('P3P: CP="CAO PSA OUR"');
 		$this->fcbk = new Facebook(array(
 			'appId'  => $this->plugin_option['app_id'],
 			'secret' => $this->plugin_option['app_secret_key']
