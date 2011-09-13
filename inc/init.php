@@ -65,9 +65,6 @@ $AWD_options = $this->wpdb->get_results("SELECT option_name,option_value FROM ".
 foreach($AWD_options as $options=>$object){
 	$this->plugin_option[str_ireplace($this->plugin_option_pref,"",$object->option_name)] = $object->option_value;
 }
-$this->plugin_option = apply_filters('AWD_facebook_options', $this->plugin_option);
-
-
 //apply filter hook for all options
 $this->plugin_option = apply_filters('AWD_facebook_options', $this->plugin_option);
 
