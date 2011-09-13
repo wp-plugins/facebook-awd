@@ -50,7 +50,7 @@ add_shortcode('AWD_comments', array(&$this,'shortcode_comments_box'));
 //add action to get current user object
 add_action('AWD_facebook_oauth', array(&$this,'current_user'));
 //init of plugin, where we do the login.
-add_action('init',array(&$this,'wp_init'));
+add_action('auth_redirect',array(&$this,'wp_init'));
 
 //Debug
 if($this->debug_active)
@@ -76,8 +76,9 @@ if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id']
 	if(get_option('users_can_register') == 0){
 		add_action('admin_notices',array(&$this,'message_register_disabled'));
 	}
+	add_action('send_headers', 'sdk_init_headers');
 	add_action('AWD_facebook_oauth', array(&$this,'sdk_init'));
-	//use this hook to set the redirect url after JS login.
+    //use this hook to set the redirect url after JS login.
 	add_action("AWD_facebook_redirect_login",array(&$this,'js_redirect_after_login'));
 	//add action to add the login button on the wp-login.php page...
 	if($this->plugin_option['login_button_display_on_login_page'] == 1)
