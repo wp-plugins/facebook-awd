@@ -49,7 +49,7 @@ add_shortcode('AWD_comments', array(&$this,'shortcode_comments_box'));
 
 //add action to get current user object
 add_action('AWD_facebook_oauth', array(&$this,'current_user'));
-//init of plugin, where we do the login.
+//when wp is loaded, where we do the login.
 add_action('wp_loaded',array(&$this,'wp_init'));
 
 //Debug
