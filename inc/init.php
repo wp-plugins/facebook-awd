@@ -50,7 +50,7 @@ add_shortcode('AWD_comments', array(&$this,'shortcode_comments_box'));
 //add action to get current user object
 add_action('AWD_facebook_oauth', array(&$this,'current_user'));
 //init of plugin, where we do the login.
-add_action('auth_redirect',array(&$this,'wp_init'));
+add_action('wp_loaded',array(&$this,'wp_init'));
 
 //Debug
 if($this->debug_active)
