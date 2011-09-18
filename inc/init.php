@@ -62,6 +62,10 @@ $AWD_options = $this->wpdb->get_results("SELECT option_name,option_value FROM ".
 foreach($AWD_options as $options=>$object){
 	$this->plugin_option[str_ireplace($this->plugin_option_pref,"",$object->option_name)] = $object->option_value;
 }
+//save from post options
+do_action("AWD_facebook_save_settings");
+
+
 /****************************************************
 * load plugins AWD
 * save settings
