@@ -56,15 +56,16 @@ add_action('wp_loaded',array(&$this,'wp_init'));
 if($this->debug_active)
 	add_action('wp_footer',array(&$this,'debug_content'));
 
-
-//load some plugin of FACEBOOK AWD if exists
-do_action("AWD_facebook_plugins_init");
-do_action("AWD_facebook_save_settings");
 //Get options from bdd
 $AWD_options = $this->wpdb->get_results("SELECT option_name,option_value FROM ".$this->wpdb->options." WHERE option_name LIKE '%".$this->plugin_option_pref."%'",'OBJECT');
 foreach($AWD_options as $options=>$object){
 	$this->plugin_option[str_ireplace($this->plugin_option_pref,"",$object->option_name)] = $object->option_value;
 }
+
+//load some plugin of FACEBOOK AWD if exists
+do_action("AWD_facebook_plugins_init");
+do_action("AWD_facebook_save_settings");
+
 //apply filter hook for all options
 $this->plugin_option = apply_filters('AWD_facebook_options', $this->plugin_option);
 
