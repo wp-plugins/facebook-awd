@@ -101,7 +101,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* call in the send_headers action hook
 	*/
 	public function sdk_init_headers(){
-	    header('P3P: CP="CAO PSA OUR"');
+	    //header('P3P: CP="CAO PSA OUR"');
 	}
     /**
     * Redefine option for empty value or not set
