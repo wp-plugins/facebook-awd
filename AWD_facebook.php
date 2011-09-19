@@ -189,6 +189,12 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	//	ADMIN
 	//****************************************************************************************
 	/**
+	* Footer admin
+	*/ 
+	public function admin_footer_text($footer_text){
+	    return $footer_text."  ".__('| With:',$this->plugin_text_domain)." <a href='http://www.ahwebdev.fr/plugins/facebook-awd.html'>".$this->plugin_name." v".$this->get_version()."</a>";
+	}
+	/**
 	 * Admin plugin init menu
 	 * call form init.php
 	 */

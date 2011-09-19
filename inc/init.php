@@ -15,10 +15,10 @@ $this->plugin_url_images = $this->plugin_url."/css/images/";
 
 //load text domain file
 load_plugin_textdomain($this->plugin_text_domain,false,dirname( plugin_basename( __FILE__ ) ) . '/langs/');
+
+add_filter("admin_footer_text", array($this,'admin_footer_text'),10,1);
 //call filter for undefined vars
 add_filter('AWD_facebook_options',array($this,'define_options'),10,1);
-//get the current user
-//add_action("AWD_facebook_current_user",array(&$this, 'current_user'));
 //get the admin fbuid
 add_action("AWD_facebook_get_admin_fbuid",array(&$this,'get_admin_fbuid'));
 //add post thmubnial support for openGraph
@@ -62,6 +62,10 @@ $AWD_options = $this->wpdb->get_results("SELECT option_name,option_value FROM ".
 foreach($AWD_options as $options=>$object){
 	$this->plugin_option[str_ireplace($this->plugin_option_pref,"",$object->option_name)] = $object->option_value;
 }
+//get the default 
+$this->plugin_option = apply_filters('AWD_facebook_options', $this->plugin_option);
+
+
 /****************************************************
 * load plugins AWD
 * save settings
@@ -75,12 +79,12 @@ $AWD_options = $this->wpdb->get_results("SELECT option_name,option_value FROM ".
 foreach($AWD_options as $options=>$object){
 	$this->plugin_option[str_ireplace($this->plugin_option_pref,"",$object->option_name)] = $object->option_value;
 }
+//apply filter hook for all options
+$this->plugin_option = apply_filters('AWD_facebook_options', $this->plugin_option);
 /****************************************************/
 
 
 
-//apply filter hook for all options
-$this->plugin_option = apply_filters('AWD_facebook_options', $this->plugin_option);
 
 //init the FB connect
 if($this->plugin_option['connect_enable'] == 1 && $this->plugin_option['app_id'] !='' && $this->plugin_option['app_secret_key'] !=''){
