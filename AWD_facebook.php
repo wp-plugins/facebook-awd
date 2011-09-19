@@ -23,7 +23,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
     * public
     * Name of the plugin
     */
-    public $plugin_name = 'Facebook';
+    public $plugin_name = 'Facebook AWD';
     /**
     * public
     * slug of the plugin
