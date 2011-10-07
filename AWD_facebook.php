@@ -528,7 +528,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
         // if this page is being displayed in an iframe, determine where it is
         // http://apollomatrix.com/content/facebook-get-current-url-current-facebook-page-get-current-facebook-url
         // http://stackoverflow.com/questions/3130433/get-facebook-fan-page-id
-            $this->facebook_page_url = json_decode(file_get_contents("https://graph.facebook.com/" . $signedrequest['page']['id']))->{"link"} . "?sk=app_" . $facebook->getAppId();
+            $this->facebook_page_url = json_decode(file_get_contents("https://graph.facebook.com/" . $signedrequest['page']['id']))->{"link"} . "?sk=app_" . $this->fcbk->getAppId();
         } else {
             $this->facebook_page_url = "";
         }
