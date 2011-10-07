@@ -71,10 +71,6 @@ Need PHP 5.*
 Facebook API cannot work without CURL php extension on your server.
 You should install it.
 
-= I have a fatal error with CURL extension =
-Facebook API cannot work without CURL php extension on your server.
-You should install it.
-
 = I can't manage my fb:comments (moderator view) =
 You should activate OpenGraph in settings, and set your facebook admin ID or Facebook app_id.
 
