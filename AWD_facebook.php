@@ -744,7 +744,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 				
 						
                 //add some js with plugin or admin
-            	<?php do_action('AWD_custom_fbjs'); ?>
+            	<?php do_action('AWD_custom_fbevent'); ?>
             };
             function AWD_facebook_connect(login_url){
 				//display some button
@@ -764,7 +764,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 				{ scope:'<?php echo $this->plugin_option["perms"]; ?>'});
 				return false;
 			}
-				
+			<?php do_action('AWD_custom_fbjs'); ?>
 		</script>
 		<!--/mfunc-->
 		<?php 
