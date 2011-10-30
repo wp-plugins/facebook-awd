@@ -374,7 +374,7 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* Comments on plugins contents 
 	*/
 	public function support_content(){
-		?><iframe src="http://trac.awhwebdev.fr/projects/facebook-awd" width="100%" height="100%" scrolling="auto" frameborder="0"></iframe><?php
+		?><iframe src="http://trac.ahwebdev.fr/projects/facebook-awd" width="100%" height="800" scrolling="auto" frameborder="0"></iframe><?php
 	}
 	/**
 	* Activity contents
