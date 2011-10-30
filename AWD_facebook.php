@@ -710,9 +710,9 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 						// PHP SDK Login status
 
 
-						//<?php //if(!is_user_logged_in()):	?>	
-						//<?php //do_action("AWD_facebook_redirect_login"); ?>
-						//<?php //endif; ?>
+						<?php if(!is_user_logged_in()):	?>	
+						<?php do_action("AWD_facebook_redirect_login"); ?>
+						<?php endif; ?>
 						var fb_uid = response.authResponse.userID;
 						var fb_accessToken = response.authResponse.accessToken;
 					}else if(response.status === 'not_authorized') {
@@ -721,8 +721,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 						<?php do_action("AWD_facebook_js_not_authorized"); ?>
 					}else{
 						<?php do_action("AWD_facebook_js_authorized"); ?>
-						<?php do_action("AWD_facebook_redirect_login"); ?>
-
 					}
 				});
 				
