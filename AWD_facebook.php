@@ -370,12 +370,11 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	/**
 	* Comments on plugins contents 
 	*/
+	/**
+	* Comments on plugins contents 
+	*/
 	public function support_content(){
-		if($this->plugin_option['parse_xfbml'] == 1){
-			echo '<fb:comments href="http://www.ahwebdev.fr/plugins/facebook-awd.html" num_posts="20"></fb:comments>';
-		}else{
-			echo '<div class="ui-state-error">'.sprintf(__('You must activate xfbml if you want to see support form (FB:comments) Or %sgo to this page%s at bottom',$this->plugin_text_domain),'<a href="http://www.ahwebdev.fr/plugins/facebook-awd.html">','</a>').'</div>';
-		} 
+		?><iframe src="http://trac.awhwebdev.fr/projects/facebook-awd" width="100%" height="100%" scrolling="auto" frameborder="0"></iframe><?php
 	}
 	/**
 	* Activity contents
