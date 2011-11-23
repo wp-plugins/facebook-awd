@@ -60,3 +60,8 @@
 	?>
 	</p>
 </div>
+<div id="lightbox_help_timeout" class="hidden">
+	<p>
+	<?php _e('This value represents the maximum time in seconds to connect to the Facebook API. If your server is slow, increase this value, then try again'); ?>
+	</p>
+</div>
