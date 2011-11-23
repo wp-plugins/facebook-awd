@@ -96,13 +96,6 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	public function wp_init(){
 		do_action('AWD_facebook_oauth');
 	}
-	/**
-	* Send header P3P for facebook cookie format
-	* call in the send_headers action hook
-	*/
-	public function sdk_init_headers(){
-	    //header('P3P: CP="CAO PSA OUR"');
-	}
     /**
     * Redefine option for empty value or not set
     * Call from init in apply filters
@@ -521,7 +514,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	public function sdk_init(){
 		$this->fcbk = new Facebook(array(
 			'appId'  => $this->plugin_option['app_id'],
-			'secret' => $this->plugin_option['app_secret_key']
+			'secret' => $this->plugin_option['app_secret_key'],
+			'timeOut_AWD' => $this->plugin_option['timeout']
 		));
 		
 		$signedrequest = $this->fcbk->getSignedRequest();
