@@ -445,23 +445,25 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	* Save the post custom from open graph form
 	*/
 	public function save_options_post_editor($post_id){
-		foreach($_POST as $__post=>$val){
-			//should have ogtags in prefix present to be saved
-			if(preg_match('@ogtags_@',$__post) AND trim($val) !=''){
-				update_post_meta($post_id, $__post, $val);
+		if(!wp_is_post_revision( $post_id )){
+			foreach($_POST as $__post=>$val){
+				//should have ogtags in prefix present to be saved
+				if(preg_match('@ogtags_@',$__post) AND trim($val) !=''){
+					update_post_meta($post_id, $__post, $val);
+				}
+				
 			}
 			
-		}
-		
-		$permalink = get_permalink($post_id);
-		$url = 'http://developers.facebook.com/tools/debug/og/object?q='.urlencode($permalink);
-		if(function_exists('url_init')){
-			$curl = curl_init();
-			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($curl, CURLOPT_URL, $url);
-			curl_exec($curl);
-			curl_close($curl);
+			$permalink = get_permalink($post_id);
+			$url = 'http://developers.facebook.com/tools/debug/og/object?q='.urlencode($permalink);
+			if(function_exists('url_init')){
+				$curl = curl_init();
+				curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($curl, CURLOPT_URL, $url);
+				curl_exec($curl);
+				curl_close($curl);
+			}
 		}
 	}
 	/**
