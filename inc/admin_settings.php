@@ -68,6 +68,10 @@
 					<th class="label"><?php _e('Facebook Connect permissions',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('permissions'); ?></th>
 					<td class="data"><input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>perms" value="<?php echo $this->plugin_option['perms']; ?>" size="30" /></td>
 				</tr>
+				<tr class="dataRow hidden connect_options">
+					<th class="label"><?php _e('Timeout Facebook connect API',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('timeout'); ?></th>
+					<td class="data"><input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>timeout" value="<?php echo $this->plugin_option['timeout']; ?>" size="4" /></td>
+				</tr>
 			</table>
 		</div><?php //end settings ?>
 		<?php wp_nonce_field($this->plugin_slug.'_update_options',$this->plugin_option_pref.'_nonce_options_update_field'); ?>

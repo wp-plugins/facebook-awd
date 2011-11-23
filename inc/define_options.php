@@ -225,6 +225,10 @@ if($options['parse_xfbml'] == '' || $options['parse_xfbml'] == 0){
 //Define the perms with always email
 $array_perms = explode(",",$options['perms']);
 if(!in_array('email',$array_perms))
-    $options['perms'] = rtrim('email,'.$options['perms'],',');
+    $options['perms'] = rtrim('email,'.$options['perms'],',');  
+//Define the timout
+if($options['timeout'] == '')
+    $options['timeout'] = 10;
+
 
 ?>
