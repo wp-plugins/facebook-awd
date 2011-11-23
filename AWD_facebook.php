@@ -591,6 +591,8 @@ Class AWD_facebook extends AHWEBDEV_wpplugin{
 	public function logout_listener(){
 		if($_GET['action'] == 'fb_logout'){
 			wp_logout();
+			//destroy the data from facebook if exist.
+			$this->fcbk->destroySession();
 			if($_GET['redirect_to'] != '')
 				wp_redirect($_GET['redirect_to']);
 			elseif($this->plugin_option['login_button_logout_url'] != '')
