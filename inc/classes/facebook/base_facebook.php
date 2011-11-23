@@ -124,8 +124,9 @@ abstract class BaseFacebook
 
   /**
    * Default options for curl.
+   * Modified By AHWEBDEV for Facebook awd.
    */
-  public static $CURL_OPTS = array(
+  public $CURL_OPTS = array(
     CURLOPT_CONNECTTIMEOUT => 10,
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_TIMEOUT        => 60,
@@ -220,6 +221,8 @@ abstract class BaseFacebook
     if (!empty($state)) {
       $this->state = $this->getPersistentData('state');
     }
+    if($config['timeOut_AWD'])
+    	$this->CURL_OPTS[CURLOPT_CONNECTTIMEOUT] = $config['timeOut_AWD'];
   }
 
   /**
