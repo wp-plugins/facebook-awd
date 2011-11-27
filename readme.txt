@@ -20,7 +20,7 @@ Use both SDK's PHP v.3.1.1 AND JS v3
  
 = Socials plugins iframe or xfbml: =
 
-*   [Like Button]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/utiliser-le-bouton-like.html")
+*   [Like Button](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/utiliser-le-bouton-like.html "")
 *   Like Box
 *   Activity Box
 *   Login Button
@@ -51,9 +51,9 @@ You can use widgets and shotcodes to display Facebook socials plugins
 = Multisite compatible: =
 This plugin is compatible with Wordpress multisite.
 
-[= Support and Bug Tracker =]("http://trac.ahwebdev.fr/projects/facebook-awd")
+[Support and Bug Tracker](http://trac.ahwebdev.fr/projects/facebook-awd "")
 
-[= Wiki =]("http://trac.ahwebdev.fr/projects/facebook-awd/wiki")
+[Wiki](http://trac.ahwebdev.fr/projects/facebook-awd/wiki "")
 
 == Installation ==
 Extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
@@ -62,11 +62,11 @@ Need PHP 5.*
 
 == Frequently Asked Questions ==
 
-[= Support and Bug Tracker =]("http://trac.ahwebdev.fr/projects/facebook-awd")
+[Support and Bug Tracker](http://trac.ahwebdev.fr/projects/facebook-awd "")
 
-[= Wiki =]("http://trac.ahwebdev.fr/projects/facebook-awd/wiki")
+[Wiki](http://trac.ahwebdev.fr/projects/facebook-awd/wiki "")
 
-[Create an Application on Facebook]("http://developers.facebook.com/apps/")
+[Create an Application on Facebook](http://developers.facebook.com/apps/ "")
 
 Warning: You should set that your app Facebook is migrated to OAuth2 in settings of your Facebook Appllication. (you should read FAQ)
 
@@ -84,7 +84,7 @@ You should install it.
 You should activate OpenGraph in settings, and set your facebook admin ID or Facebook app_id.
 
 = How can i get my Facebook ID and My Facebook App Api info =
-[Search here]("http://developers.facebook.com/apps/") 
+[Search here](http://developers.facebook.com/apps/ "") 
 
 = The like button does not work, i have javascript error =
 You must set an locale option in settings, as "en_US" or "fr_FR" etc...
@@ -191,20 +191,20 @@ Options:
 
 == Changelog ==
 = 0.9.6 =
-[view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-6.html")
+[view changes](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-6.html "")
 = 0.9.7 =
-[view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7.html")
+[view changes](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7.html "")
 = 0.9.7.3 =
 [view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-3.html")
 Special update API Facebook PHP and JS to V3.1.1
 = 0.9.7.4 =
-[view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-4.html")
+[view changes](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-4.html "")
 = 0.9.7.5 =
-[view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-5.html")
+[view changes](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-5.html "")
 = 0.9.7.6 =
-[view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-6.html")
+[view changes](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-6.html "")
 = 0.9.7.7 =
-[view changes]("http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-7.html")
+[view changes](http://www.ahwebdev.fr/plugins/documentation/facebook-awd/change-log/version-0-9-7-7.html "")
 = 0.9.8 =
 New version, better performances!
-[view changes]("http://trac.ahwebdev.fr/versions/show/1")
+[view changes](http://trac.ahwebdev.fr/versions/show/1 "")
