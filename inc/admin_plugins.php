@@ -108,13 +108,13 @@
 						<tr class="dataRow">
 							<th class="label"><?php _e('Width of button',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_width'); ?></th>
 							<td class="data">
-								<input type="text" class="uiText" name="<?php echo $this->plugin_option_pref; ?>like_button_width" value="<?php echo $this->plugin_option['like_button_width']; ?>" size="6" />
+								<input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>like_button_width" value="<?php echo $this->plugin_option['like_button_width']; ?>" size="6" />
 							</td>
 						</tr>
 						<tr class="dataRow">
 							<th class="label"><?php _e('Height of button (only for iframe)',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_height'); ?></th>
 							<td class="data">
-								<input type="text" class="uiText" name="<?php echo $this->plugin_option_pref; ?>like_button_height" <?php if($this->plugin_option['like_button_xfbml'] == 1){ echo 'disabled="disabled"'; } ?> value="<?php echo $this->plugin_option['like_button_height']; ?>" size="6" />
+								<input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>like_button_height" <?php if($this->plugin_option['like_button_xfbml'] == 1){ echo 'disabled="disabled"'; } ?> value="<?php echo $this->plugin_option['like_button_height']; ?>" size="6" />
 							</td>
 						</tr>
 						<tr class="dataRow">
@@ -126,7 +126,7 @@
 						<tr class="dataRow">
 							<th class="label"><?php _e('Default Url to like',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_url'); ?></th>
 							<td class="data">
-								<input type="text" class="uiText" name="<?php echo $this->plugin_option_pref; ?>like_button_url" value="<?php echo $this->plugin_option['like_button_url']; ?>" size="30" />
+								<input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>like_button_url" value="<?php echo $this->plugin_option['like_button_url']; ?>" size="30" />
 							</td>
 						</tr>
 						<tr class="dataRow">
@@ -177,19 +177,19 @@
 						<tr class="dataRow">
 							<th class="label"><?php _e('Exclude Post types (for custom post_type, example: post,page,etc...)',$this->plugin_text_domain); ?></th>
 							<td class="data">
-								<input type="text" class="uiText" name="<?php echo $this->plugin_option_pref; ?>like_button_exclude_post_type" value="<?php echo $this->plugin_option['like_button_exclude_post_type']; ?>" size="30" />
+								<input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>like_button_exclude_post_type" value="<?php echo $this->plugin_option['like_button_exclude_post_type']; ?>" size="30" />
 							</td>
 						</tr>	
 						<tr class="dataRow">
 							<th class="label"><?php _e('Exclude Categories or other terms (slug or id example: photos,34,50)',$this->plugin_text_domain); ?></th>
 							<td class="data">
-								<input type="text" class="uiText" name="<?php echo $this->plugin_option_pref; ?>like_button_exclude_terms_slug" value="<?php echo $this->plugin_option['like_button_exclude_terms_slug']; ?>" size="30" />
+								<input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>like_button_exclude_terms_slug" value="<?php echo $this->plugin_option['like_button_exclude_terms_slug']; ?>" size="30" />
 							</td>
 						</tr>	
 						<tr class="dataRow">
 							<th class="label"><?php _e('Exclude Posts or Pages ID (example: 12,46,234)',$this->plugin_text_domain); ?></th>
 							<td class="data">
-								<input type="text" class="uiText" name="<?php echo $this->plugin_option_pref; ?>like_button_exclude_post_id" value="<?php echo $this->plugin_option['like_button_exclude_post_id']; ?>" size="30" />
+								<input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>like_button_exclude_post_id" value="<?php echo $this->plugin_option['like_button_exclude_post_id']; ?>" size="30" />
 							</td>
 						</tr>
 						<tr class="dataRow">
@@ -244,7 +244,7 @@
                         </tr>
                         <tr class="dataRow">
                             <th class="label"><?php _e('Url of the page',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_url'); ?></th>
-						    <td class="data"><input type="text" class="uiText" name="<?php echo $this->plugin_option_pref; ?>like_box_url" value="<?php echo $this->plugin_option['like_box_url']; ?>" size="30"/></td>
+						    <td class="data"><input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>like_box_url" value="<?php echo $this->plugin_option['like_box_url']; ?>" size="30"/></td>
 					    </tr>
 					    <tr class="dataRow">
                             <th class="label"><?php _e('Colorscheme of box',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_colorscheme'); ?></th>
@@ -256,13 +256,13 @@
 					    <tr class="dataRow">
                             <th class="label"><?php _e('Width of box',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_width'); ?></th>
 						    <td class="data">
-                                <input type="text" class="uiText" name="<?php echo $this->plugin_option_pref; ?>like_box_width" value="<?php echo $this->plugin_option['like_box_width']; ?>" size="6" />
+                                <input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>like_box_width" value="<?php echo $this->plugin_option['like_box_width']; ?>" size="6" />
 						    </td>
 					    </tr>
 					    <tr class="dataRow">
                             <th class="label"><?php _e('Height of box (only for iframe)',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_height'); ?></th>
 						    <td class="data">
-						        <input type="text" class="uiText" name="<?php echo $this->plugin_option_pref; ?>like_box_height" <?php if($this->plugin_option['like_box_xfbml'] == 1){ echo 'disabled="disabled"'; } ?> value="<?php echo $this->plugin_option['like_box_height']; ?>" size="6" />
+						        <input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>like_box_height" <?php if($this->plugin_option['like_box_xfbml'] == 1){ echo 'disabled="disabled"'; } ?> value="<?php echo $this->plugin_option['like_box_height']; ?>" size="6" />
 						    </td>
 					    </tr>
 					    
@@ -333,19 +333,19 @@
                         <tr class="dataRow">
                             <th class="label"><?php _e('Domain',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('activity_domain'); ?></th>
                             <td class="data">
-						        <input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>activity_domain" name="<?php echo $this->plugin_option_pref; ?>activity_domain" value="<?php echo $this->plugin_option['activity_domain']; ?>" size="30"/>
+						        <input type="text" class="uiTextbox" id="<?php echo $this->plugin_option_pref; ?>activity_domain" name="<?php echo $this->plugin_option_pref; ?>activity_domain" value="<?php echo $this->plugin_option['activity_domain']; ?>" size="30"/>
                             </td>
                         </tr>
                         <tr class="dataRow">
                             <th class="label"><?php _e('Width of box',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_width'); ?></th>
                             <td class="data">
-						        <input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>activity_width" name="<?php echo $this->plugin_option_pref; ?>activity_width" value="<?php echo $this->plugin_option['activity_width']; ?>" size="6" />
+						        <input type="text" class="uiTextbox" id="<?php echo $this->plugin_option_pref; ?>activity_width" name="<?php echo $this->plugin_option_pref; ?>activity_width" value="<?php echo $this->plugin_option['activity_width']; ?>" size="6" />
                             </td>
                         </tr>
                         <tr class="dataRow">
                             <th class="label"><?php _e('Height of box',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_height'); ?></th>
                             <td class="data">
-						        <input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>activity_height" name="<?php echo $this->plugin_option_pref; ?>activity_height" value="<?php echo $this->plugin_option['activity_height']; ?>" size="6" />
+						        <input type="text" class="uiTextbox" id="<?php echo $this->plugin_option_pref; ?>activity_height" name="<?php echo $this->plugin_option_pref; ?>activity_height" value="<?php echo $this->plugin_option['activity_height']; ?>" size="6" />
                             </td>
                         </tr>
                         <tr class="dataRow">
@@ -378,7 +378,7 @@
                         <tr class="dataRow">
                             <th class="label"><?php _e('Border color',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('activity_border'); ?></th>
                             <td class="data">
-						        <input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>activity_border_color" name="<?php echo $this->plugin_option_pref; ?>activity_border_color" value="<?php echo $this->plugin_option['activity_border_color']; ?>" size="10" />
+						        <input type="text" class="uiTextbox" id="<?php echo $this->plugin_option_pref; ?>activity_border_color" name="<?php echo $this->plugin_option_pref; ?>activity_border_color" value="<?php echo $this->plugin_option['activity_border_color']; ?>" size="10" />
                             </td>
                         </tr>
                         <tr class="dataRow">
@@ -451,7 +451,7 @@
 							<tr class="dataRow">
 								<th class="label"><?php _e('Width of button',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_width'); ?></th>
 								<td class="data">
-									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_width" name="<?php echo $this->plugin_option_pref; ?>login_button_width" value="<?php echo $this->plugin_option['login_button_width']; ?>" size="6" />
+									<input type="text" class="uiTextbox" id="<?php echo $this->plugin_option_pref; ?>login_button_width" name="<?php echo $this->plugin_option_pref; ?>login_button_width" value="<?php echo $this->plugin_option['login_button_width']; ?>" size="6" />
 								</td>
 							</tr>
 							<tr class="dataRow">
@@ -464,31 +464,31 @@
 							<tr class="dataRow">
 								<th class="label"><?php _e('Max Rows (only if show faces = Yes)',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_maxrow'); ?></th>
 								<td class="data">
-									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_maxrow" name="<?php echo $this->plugin_option_pref; ?>login_button_maxrow" value="<?php echo $this->plugin_option['login_button_maxrow']; ?>" <?php if($this->plugin_option['parse_xfbml'] == 0){ echo 'disabled="disabled"';} ?> size="6" />
+									<input type="text" class="uiTextbox" id="<?php echo $this->plugin_option_pref; ?>login_button_maxrow" name="<?php echo $this->plugin_option_pref; ?>login_button_maxrow" value="<?php echo $this->plugin_option['login_button_maxrow']; ?>" <?php if($this->plugin_option['parse_xfbml'] == 0){ echo 'disabled="disabled"';} ?> size="6" />
 								</td>
 							</tr>
 							<tr class="dataRow">
 								<th class="label"><?php _e('Logout Phrase',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('login_button_logout'); ?></th>
 								<td class="data">
-									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_logout_value" name="<?php echo $this->plugin_option_pref; ?>login_button_logout_value" value="<?php echo $this->plugin_option['login_button_logout_value']; ?>" size="30" />
+									<input type="text" class="uiTextbox" id="<?php echo $this->plugin_option_pref; ?>login_button_logout_value" name="<?php echo $this->plugin_option_pref; ?>login_button_logout_value" value="<?php echo $this->plugin_option['login_button_logout_value']; ?>" size="30" />
 								</td>
 							</tr>
 							<tr class="dataRow">
 								<th class="label"><?php _e('Redirect url after login',$this->plugin_text_domain); ?>. <?php _e('You can use pattern %BLOG_URL%. Default: current url',$this->plugin_text_domain); ?></th>
 								<td class="data">
-									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_login_url" name="<?php echo $this->plugin_option_pref; ?>login_button_login_url" value="<?php echo $this->plugin_option['login_button_login_url']; ?>" size="30" />
+									<input type="text" class="uiTextbox" id="<?php echo $this->plugin_option_pref; ?>login_button_login_url" name="<?php echo $this->plugin_option_pref; ?>login_button_login_url" value="<?php echo $this->plugin_option['login_button_login_url']; ?>" size="30" />
 								</td>
 							</tr>
 							<tr class="dataRow">
 								<th class="label"><?php _e('Redirect url after logout',$this->plugin_text_domain); ?>. <?php _e('You can use pattern %BLOG_URL%. Default: current url',$this->plugin_text_domain); ?></th>
 								<td class="data">
-									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_logout_url" name="<?php echo $this->plugin_option_pref; ?>login_button_logout_url" value="<?php echo $this->plugin_option['login_button_logout_url']; ?>" size="30" />
+									<input type="text" class="uiTextbox" id="<?php echo $this->plugin_option_pref; ?>login_button_logout_url" name="<?php echo $this->plugin_option_pref; ?>login_button_logout_url" value="<?php echo $this->plugin_option['login_button_logout_url']; ?>" size="30" />
 								</td>
 							</tr>
 							<tr class="dataRow">
 								<th class="label"><?php _e('Button Image',$this->plugin_text_domain); ?></th>
 								<td class="data">
-									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>login_button_image" name="<?php echo $this->plugin_option_pref; ?>login_button_image" value="<?php echo $this->plugin_option['login_button_image']; ?>" size="30" /><img id="<?php echo $this->plugin_option_pref; ?>login_button_upload_image" src="<?php echo $this->plugin_url_images; ?>upload_image.png" alt="<?php _e('Upload',$this->plugin_text_domain); ?>" class="AWD_button_media"/>
+									<input type="text" class="uiTextbox" id="<?php echo $this->plugin_option_pref; ?>login_button_image" name="<?php echo $this->plugin_option_pref; ?>login_button_image" value="<?php echo $this->plugin_option['login_button_image']; ?>" size="30" /><img id="<?php echo $this->plugin_option_pref; ?>login_button_upload_image" src="<?php echo $this->plugin_url_images; ?>upload_image.png" alt="<?php _e('Upload',$this->plugin_text_domain); ?>" class="AWD_button_media"/>
 								</td>
 							</tr>
 							<tr class="dataRow">
@@ -554,13 +554,13 @@
 							<tr class="dataRow">
 								<th class="label"><?php _e('URL to comment on',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('comments_url'); ?></th>
 								<td class="data">
-									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>comments_url" name="<?php echo $this->plugin_option_pref; ?>comments_url" value="<?php echo $this->plugin_option['comments_url']; ?>" size="30" />
+									<input type="text" class="uiTextbox" id="<?php echo $this->plugin_option_pref; ?>comments_url" name="<?php echo $this->plugin_option_pref; ?>comments_url" value="<?php echo $this->plugin_option['comments_url']; ?>" size="30" />
 								</td>
 							</tr>
 							<tr class="dataRow">
 								<th class="label"><?php _e('Number of posts',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('comments_nb'); ?></th>
 								<td class="data">
-									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>comments_nb" name="<?php echo $this->plugin_option_pref; ?>comments_nb" value="<?php echo $this->plugin_option['comments_nb']; ?>" size="6" />
+									<input type="text" class="uiTextbox" id="<?php echo $this->plugin_option_pref; ?>comments_nb" name="<?php echo $this->plugin_option_pref; ?>comments_nb" value="<?php echo $this->plugin_option['comments_nb']; ?>" size="6" />
 								</td>
 							</tr>
 							<tr class="dataRow">
@@ -587,13 +587,13 @@
 							<tr class="dataRow">
 								<th class="label"><?php _e('Exclude Posts or Pages ID (example: 12,46,234)',$this->plugin_text_domain); ?></th>
 								<td class="data">
-									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>comments_exclude_post_id" name="<?php echo $this->plugin_option_pref; ?>comments_exclude_post_id" value="<?php echo $this->plugin_option['comments_exclude_post_id']; ?>" size="30" />
+									<input type="text" class="uiTextbox" id="<?php echo $this->plugin_option_pref; ?>comments_exclude_post_id" name="<?php echo $this->plugin_option_pref; ?>comments_exclude_post_id" value="<?php echo $this->plugin_option['comments_exclude_post_id']; ?>" size="30" />
 								</td>
 							</tr>
 							<tr class="dataRow">
 								<th class="label"><?php _e('Width of box',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_width'); ?></th>
 								<td class="data">
-									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>comments_width" name="<?php echo $this->plugin_option_pref; ?>comments_width" value="<?php echo $this->plugin_option['comments_width']; ?>" size="6" />
+									<input type="text" class="uiTextbox" id="<?php echo $this->plugin_option_pref; ?>comments_width" name="<?php echo $this->plugin_option_pref; ?>comments_width" value="<?php echo $this->plugin_option['comments_width']; ?>" size="6" />
 								</td>
 							</tr>
 							<tr class="dataRow">
@@ -606,7 +606,7 @@
 							<tr class="dataRow">
 								<th class="label"><?php _e('User ID to send a notification to upon someone posting a comment. (Only one facebook uid allowed).',$this->plugin_text_domain); ?></th>
 								<td class="data">
-									<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>comments_send_notification_uid" name="<?php echo $this->plugin_option_pref; ?>comments_send_notification_uid" value="<?php echo $this->plugin_option['comments_send_notification_uid']; ?>" size="30" />
+									<input type="text" class="uiTextbox" id="<?php echo $this->plugin_option_pref; ?>comments_send_notification_uid" name="<?php echo $this->plugin_option_pref; ?>comments_send_notification_uid" value="<?php echo $this->plugin_option['comments_send_notification_uid']; ?>" size="30" />
 								</td>
 							</tr>
 							<tr class="dataRow">
