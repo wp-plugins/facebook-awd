@@ -57,7 +57,7 @@ This plugin is compatible with Wordpress multisite.
 
 == Installation ==
 Extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
-[For IE fix, follow this link]("http://trac.ahwebdev.fr/projects/facebook-awd/wiki/Add_cutom_header_html_for_IE")
+[For IE fix, follow this link](http://trac.ahwebdev.fr/projects/facebook-awd/wiki/Add_cutom_header_html_for_IE "")
 Need PHP 5.*
 
 == Frequently Asked Questions ==
