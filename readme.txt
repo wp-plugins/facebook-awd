@@ -26,7 +26,7 @@ Use both SDK's PHP v.3.1.1 AND JS v3
 *   [Activity Box](http://trac.ahwebdev.fr/projects/facebook-awd/wiki/How_to_use_Activity_Box "")
 *   [Login Button](http://trac.ahwebdev.fr/projects/facebook-awd/wiki/How_to_use_Facebook_Connect "")
 *   [Comments](http://trac.ahwebdev.fr/projects/facebook-awd/wiki/How_to_use_Comments_Box "")
-*   [Facebook Actions with OpenGraph](http://trac.ahwebdev.fr/projects/facebook-awd/wiki/How_to_use_Custom_OpenGraph_Objects_and_OpenGraph_Objects_Actions "")
+*   [Facebook Actions with new OpenGraph](http://trac.ahwebdev.fr/projects/facebook-awd/wiki/How_to_use_Custom_OpenGraph_Objects_and_OpenGraph_Objects_Actions "")
 
 = Langs: =
 
