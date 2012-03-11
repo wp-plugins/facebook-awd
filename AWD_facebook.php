@@ -3,7 +3,7 @@
 Plugin Name: Facebook AWD All in One
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph, Plugins from facebook, and FB connect, with SDK JS AND SDK PHP Facebook
-Version: 0.9.9
+Version: 0.9.9.1
 Author: AHWEBDEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AHWEBDEV
@@ -99,6 +99,10 @@ Class AWD_facebook
      */
     public $options = array();
     
+    /**
+    * global message admin
+    */
+    public $message;
     
 	//****************************************************************************************
 	//	GLOBALS FUNCTIONS
@@ -748,7 +752,7 @@ Class AWD_facebook
 			$tab_error[] = __('Email can not be empty',$this->plugin_text_domain);
 		if(empty($_POST['AWD_ads_contact']))
 			$tab_error[] = __('Message Can not be empty',$this->plugin_text_domain);
-		if($_POST['AWD_ads_contact']){
+		if(isset($_POST['AWD_ads_contact'])){
 			if (!wp_verify_nonce($this->plugin_slug.'_AWD_ads_contact',$this->plugin_option_pref.'_nonce_AWD_ads_contact_field') && count($tab_error) == 0 ){
 				wp_mail('contact@ahwebdev.fr', 'Un nouveau Contact Freelance (AWD)', $_POST['AWD_ads_contact']."\nFrom email:".$_POST['AWD_ads_contact_mail'], $headers, $attachments );
 				$message .= '<div class="ui-state-highlight fadeOnload"><p>'.__('Message sent',$this->plugin_text_domain).'</p></div>';
@@ -897,11 +901,12 @@ Class AWD_facebook
 		$exclude_terms_slug = explode(",",$this->options['like_button_exclude_terms_slug']);
 		
 		//get the all terms for the post
+		$args = array();
 		$taxonomies=get_taxonomies($args,'objects'); 
 		$terms = array();
 		if($taxonomies){
 			foreach ($taxonomies  as $taxonomy) {
-				$temp_terms = get_the_terms($post->id, $taxonomy->name);
+				$temp_terms = get_the_terms($post->ID, $taxonomy->name);
 				if($temp_terms)
 				foreach ($temp_terms  as $temp_term)
 					if($temp_term){
@@ -1176,8 +1181,10 @@ Class AWD_facebook
 	 * @return void
 	 */
 	public function hook_post_from_plugin_options()
-	{		
-		if(wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_options_update_field'],$this->plugin_slug.'_update_options')){
+	{
+		if(isset($_POST[$this->plugin_option_pref.'_nonce_options_update_field']) && wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_options_update_field'],$this->plugin_slug.'_update_options')){
+			
+			$this->get_facebook_user_data();
 			//do custom action for sub plugins or other exec.
 			do_action('AWD_facebook_save_custom_settings');
 			//Unset The fetched status, to force update infos form api.
@@ -1191,7 +1198,7 @@ Class AWD_facebook
 			else
 				$this->message = '<div class="ui-state-error"><p>'.__('Options not updated there is an error...',$this->plugin_text_domain).'</p></div>';
 		
-		}else if(wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_reset_options'],$this->plugin_slug.'_reset_options')){
+		}else if(isset($_POST[$this->plugin_option_pref.'_nonce_reset_options']) && wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_reset_options'],$this->plugin_slug.'_reset_options')){
 			$this->optionsManager->reset();
 			$this->message = '<div id="message" class="ui-state-highlight fadeOnload"><p>'.__('Options were reseted',$this->plugin_text_domain).'</p></div>';
 		}
@@ -1365,37 +1372,41 @@ Class AWD_facebook
 	 */
 	public function get_facebook_user_data()
 	{
-        //Try batch request on user
-    	$fb_queries = array(array('method' => 'GET', 'relative_url' => '/me'));
-    	$fb_queries[] = array('method' => 'GET', 'relative_url' => '/me/permissions');
-    	$fb_queries[] = array('method' => 'GET', 'relative_url' => '/me/accounts');
-    	$batchResponse = $this->fcbk->api('?batch='.urlencode(json_encode($fb_queries)),'POST');
-    	$me = json_decode($batchResponse[0]['body'], true);
-    	//Try to find if the batch return error. IF yes, the user acces token is no more good.
-    	if(empty($me['error'])){
-    	   
-    	    $this->me = $me;
-    	    // Proceed knowing you have a logged in user who's authenticated.
-    	    $this->me['AWD_acces_token'] = $this->fcbk->getAccessToken();
-    		//queries are only exec on admin side for perf...
-    		if(is_admin){
-    			$fb_perms = json_decode($batchResponse[1]['body'], true);
-    			$this->me['permissions'] = $fb_perms['data'][0];
-    			$fb_pages = json_decode($batchResponse[2]['body'], true);
-    			if($fb_pages['data']){
-    				foreach($fb_pages['data'] as $fb_page){
-    					$this->me['pages'][$fb_page['id']] = $fb_page;
-    				}
-    			}
-    		}
-    		update_user_meta($this->current_user->ID,'fb_user_infos',$this->me);
-    	}else{
-    	   	$result = array();
-    	   	$result['error_description'] = $me['error']['message'];
-    	   	$result['error_code'] = $me['error']['code'];
-    	    //manually trow error, since errors are not catched in batch request.
-    	    throw new FacebookApiException($result);
-    	}
+		if($this->is_user_logged_in_facebook()){
+			//Try batch request on user
+			$fb_queries = array(array('method' => 'GET', 'relative_url' => '/me'));
+			$fb_queries[] = array('method' => 'GET', 'relative_url' => '/me/permissions');
+			$fb_queries[] = array('method' => 'GET', 'relative_url' => '/me/accounts');
+			$me = array();
+			$batchResponse = $this->fcbk->api('?batch='.urlencode(json_encode($fb_queries)),'POST');
+			$me = json_decode($batchResponse[0]['body'], true);
+		
+			//Try to find if the batch return error. IF yes, the user acces token is no more good.
+			if(empty($me['error'])){
+			   
+				$this->me = $me;
+				// Proceed knowing you have a logged in user who's authenticated.
+				$this->me['AWD_acces_token'] = $this->fcbk->getAccessToken();
+				//queries are only exec on admin side for perf...
+				if(is_admin){
+					$fb_perms = json_decode($batchResponse[1]['body'], true);
+					$this->me['permissions'] = $fb_perms['data'][0];
+					$fb_pages = json_decode($batchResponse[2]['body'], true);
+					if($fb_pages['data']){
+						foreach($fb_pages['data'] as $fb_page){
+							$this->me['pages'][$fb_page['id']] = $fb_page;
+						}
+					}
+				}
+				update_user_meta($this->current_user->ID,'fb_user_infos',$this->me);
+			}else{
+				$result = array();
+				$result['error_description'] = $me['error']['message'];
+				$result['error_code'] = $me['error']['code'];
+				//manually trow error, since errors are not catched in batch request.
+				throw new FacebookApiException($result);
+			}
+		}
 	}
 	
 	/**
@@ -1448,7 +1459,7 @@ Class AWD_facebook
 		$this->logout_listener();
 		
 		//verify the content of the application ID submited by user, store infos if ok
-		if($_POST[$this->plugin_option_pref.'app_id']){
+		if(isset($_POST[$this->plugin_option_pref.'app_id']) && $_POST[$this->plugin_option_pref.'app_id']){
 			$this->get_app_info();
 		}
 		
@@ -1533,7 +1544,7 @@ Class AWD_facebook
 	*/
 	public function logout_listener()
 	{
-		if($_GET['action'] == 'fb_logout'){
+		if(isset($_GET['action']) && $_GET['action'] == 'fb_logout'){
 		    $this->destroy_session();
 			wp_logout();
 			if($_GET['redirect_to'] != '')
@@ -1644,6 +1655,7 @@ Class AWD_facebook
 	{
 		if(!empty($options)){
 			foreach($options as $tag=>$tag_value){
+				$html = '';
 				//custom for video TYPE
 				$tag = str_replace(array(":mp4","_mp4",":html","_html",'_custom'),array(""),$tag);
 				$html .= '<meta property="'.$tag.'" content="'.stripcslashes($tag_value).'"/>'."\n";
@@ -1664,6 +1676,7 @@ Class AWD_facebook
 	 */
 	public function construct_open_graph_tags($prefix_option,$array_pattern,$array_replace,$custom_post=array())
 	{
+		$options = array();
 		$og_tags = $this->og_tags;
 		//define all tags we need to display
 		foreach($this->og_attachement_field as $type=>$tag_fields){
@@ -1677,14 +1690,14 @@ Class AWD_facebook
 		foreach($og_tags_final as $tag=>$tag_name){
 			$option_value = '';
 			//if tags are empty because not set in plugin for retro actif on post and page
-			if($custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == '')
+			if(isset($custom_post[$this->plugin_option_pref.'ogtags_disable'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == '')
 				$custom_post[$this->plugin_option_pref.'ogtags_disable'][0] = 0;
  			//if tags are enable from editor
- 			if($custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == 0){
+			if(!isset($custom_post[$this->plugin_option_pref.'ogtags_disable'][0]) OR $custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == 0){
 				//if general settings of this type is enable
-				if($this->options[$prefix_option.'disable'] == 0 && $this->options[$prefix_option.'disable'] != ''){
+				if(!isset($this->options[$prefix_option.'disable']) OR ($this->options[$prefix_option.'disable'] == 0 && $this->options[$prefix_option.'disable'] != '')){
 					//if choose to redefine from post
-					if($custom_post[$this->plugin_option_pref.'ogtags_redefine'][0] == 1){
+					if(isset($custom_post[$this->plugin_option_pref.'ogtags_redefine'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_redefine'][0] == 1){
 						$option_value = $custom_post[$this->plugin_option_pref.'ogtags_'.$tag][0];
 						$audio = $custom_post[$this->plugin_option_pref.'ogtags_audio'][0];
 						$video = $custom_post[$this->plugin_option_pref.'ogtags_video'][0];
@@ -1694,13 +1707,13 @@ Class AWD_facebook
 						$custom_type = $custom_post[$this->plugin_option_pref.'ogtags_type_custom'][0];
 					//else use general settings
 					}else{
-						$option_value = $this->options[$prefix_option.$tag];
-						$custom_type = $this->options[$prefix_option.'type_custom'];
-						$audio = $this->options[$prefix_option.'audio'];
-						$video = $this->options[$prefix_option.'video'];
-						$video_mp4 = $this->options[$prefix_option.'video:mp4'];
-						$video_html = $this->options[$prefix_option.'video:html'];
-						$image = $this->options[$prefix_option.'image'];
+						$option_value = isset($this->options[$prefix_option.$tag]) ? $this->options[$prefix_option.$tag] : '';
+						$custom_type = isset($this->options[$prefix_option.'type_custom']) ? $this->options[$prefix_option.'type_custom'] : '';
+						$audio =  isset($this->options[$prefix_option.'audio'] ) ? $this->options[$prefix_option.'audio'] : '';
+						$video =  isset($this->options[$prefix_option.'video']) ? $this->options[$prefix_option.'video'] : '';
+						$video_mp4 = isset($this->options[$prefix_option.'video:mp4']) ? $this->options[$prefix_option.'video:mp4'] : '';
+						$video_html = isset($this->options[$prefix_option.'video:html']) ? $this->options[$prefix_option.'video:html'] : '';
+						$image = isset($this->options[$prefix_option.'image']) ?  $this->options[$prefix_option.'image'] : '';
 					}
 					
 					//set url with a pattern

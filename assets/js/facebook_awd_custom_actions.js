@@ -10,7 +10,7 @@ jQuery(document).ready(function($){
 		var $this = $(this);
 		var data = $this.data();
 		//create eventlistener on the element
-		$this.live(data.typeEvent,function(e){
+		$this.bind(data.typeEvent,function(e){
 			e.preventDefault();
 			$.post(awd_fcbk_custom_action.ajaxurl,
 			{
