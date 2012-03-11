@@ -1682,7 +1682,7 @@ Class AWD_facebook
  			//if tags are enable from editor
  			if($custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == 0){
 				//if general settings of this type is enable
-				if($this->options[$prefix_option.'disable'] == 0 && $this->options[$prefix_option.'disable'] != ''){
+				if(isset($this->options[$prefix_option.'disable']) && $this->options[$prefix_option.'disable'] == 0 && $this->options[$prefix_option.'disable'] != ''){
 					//if choose to redefine from post
 					if(isset($custom_post[$this->plugin_option_pref.'ogtags_redefine'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_redefine'][0] == 1){
 						$option_value = $custom_post[$this->plugin_option_pref.'ogtags_'.$tag][0];
@@ -1694,13 +1694,13 @@ Class AWD_facebook
 						$custom_type = $custom_post[$this->plugin_option_pref.'ogtags_type_custom'][0];
 					//else use general settings
 					}else{
-						$option_value = $this->options[$prefix_option.$tag];
-						$custom_type = $this->options[$prefix_option.'type_custom'];
-						$audio = $this->options[$prefix_option.'audio'];
-						$video = $this->options[$prefix_option.'video'];
-						$video_mp4 = $this->options[$prefix_option.'video:mp4'];
-						$video_html = $this->options[$prefix_option.'video:html'];
-						$image = $this->options[$prefix_option.'image'];
+						$option_value = isset($this->options[$prefix_option.$tag]) ? $this->options[$prefix_option.$tag] : null;
+						$custom_type = isset($this->options[$prefix_option.'type_custom']) ? $this->options[$prefix_option.'type_custom'] : null;
+						$audio =  isset($this->options[$prefix_option.'audio'] ) ? $this->options[$prefix_option.'audio'] : null;
+						$video =  isset($this->options[$prefix_option.'video']) ? $this->options[$prefix_option.'video'] : null;
+						$video_mp4 = isset($this->options[$prefix_option.'video:mp4']) ? $this->options[$prefix_option.'video:mp4'] : null;
+						$video_html = isset($this->options[$prefix_option.'video:html']) ? $this->options[$prefix_option.'video:html'] : null;
+						$image = isset($this->options[$prefix_option.'image']) ?  $this->options[$prefix_option.'image'] : null;
 					}
 					
 					//set url with a pattern
