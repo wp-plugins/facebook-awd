@@ -1677,14 +1677,14 @@ Class AWD_facebook
 		foreach($og_tags_final as $tag=>$tag_name){
 			$option_value = '';
 			//if tags are empty because not set in plugin for retro actif on post and page
-			if($custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == '')
+			if(isset($custom_post[$this->plugin_option_pref.'ogtags_disable'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == '')
 				$custom_post[$this->plugin_option_pref.'ogtags_disable'][0] = 0;
  			//if tags are enable from editor
  			if($custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == 0){
 				//if general settings of this type is enable
 				if($this->options[$prefix_option.'disable'] == 0 && $this->options[$prefix_option.'disable'] != ''){
 					//if choose to redefine from post
-					if($custom_post[$this->plugin_option_pref.'ogtags_redefine'][0] == 1){
+					if(isset($custom_post[$this->plugin_option_pref.'ogtags_redefine'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_redefine'][0] == 1){
 						$option_value = $custom_post[$this->plugin_option_pref.'ogtags_'.$tag][0];
 						$audio = $custom_post[$this->plugin_option_pref.'ogtags_audio'][0];
 						$video = $custom_post[$this->plugin_option_pref.'ogtags_video'][0];
