@@ -3,7 +3,11 @@
 Plugin Name: Facebook AWD All in One
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph, Plugins from facebook, and FB connect, with SDK JS AND SDK PHP Facebook
+<<<<<<< HEAD
 Version: 0.9.9
+=======
+Version: 0.9.9.1
+>>>>>>> 0.9.9.1
 Author: AHWEBDEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AHWEBDEV
@@ -1181,8 +1185,16 @@ Class AWD_facebook
 	 * @return void
 	 */
 	public function hook_post_from_plugin_options()
+<<<<<<< HEAD
 	{		
 		if(isset($_POST[$this->plugin_option_pref.'_nonce_options_update_field']) && wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_options_update_field'],$this->plugin_slug.'_update_options')){
+=======
+	{				
+		if(isset($_POST[$this->plugin_option_pref.'_nonce_options_update_field']) && wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_options_update_field'],$this->plugin_slug.'_update_options')){
+			
+			$this->get_facebook_user_data();
+
+>>>>>>> 0.9.9.1
 			//do custom action for sub plugins or other exec.
 			do_action('AWD_facebook_save_custom_settings');
 			//Unset The fetched status, to force update infos form api.
@@ -1370,6 +1382,7 @@ Class AWD_facebook
 	 */
 	public function get_facebook_user_data()
 	{
+<<<<<<< HEAD
         //Try batch request on user
     	$fb_queries = array(array('method' => 'GET', 'relative_url' => '/me'));
     	$fb_queries[] = array('method' => 'GET', 'relative_url' => '/me/permissions');
@@ -1401,6 +1414,43 @@ Class AWD_facebook
     	    //manually trow error, since errors are not catched in batch request.
     	    throw new FacebookApiException($result);
     	}
+=======
+		if($this->is_user_logged_in_facebook()){
+			//Try batch request on user
+			$fb_queries = array(array('method' => 'GET', 'relative_url' => '/me'));
+			$fb_queries[] = array('method' => 'GET', 'relative_url' => '/me/permissions');
+			$fb_queries[] = array('method' => 'GET', 'relative_url' => '/me/accounts');
+			$me = array();
+			$batchResponse = $this->fcbk->api('?batch='.urlencode(json_encode($fb_queries)),'POST');
+			$me = json_decode($batchResponse[0]['body'], true);
+		
+			//Try to find if the batch return error. IF yes, the user acces token is no more good.
+			if(empty($me['error'])){
+			   
+				$this->me = $me;
+				// Proceed knowing you have a logged in user who's authenticated.
+				$this->me['AWD_acces_token'] = $this->fcbk->getAccessToken();
+				//queries are only exec on admin side for perf...
+				if(is_admin){
+					$fb_perms = json_decode($batchResponse[1]['body'], true);
+					$this->me['permissions'] = $fb_perms['data'][0];
+					$fb_pages = json_decode($batchResponse[2]['body'], true);
+					if($fb_pages['data']){
+						foreach($fb_pages['data'] as $fb_page){
+							$this->me['pages'][$fb_page['id']] = $fb_page;
+						}
+					}
+				}
+				update_user_meta($this->current_user->ID,'fb_user_infos',$this->me);
+			}else{
+				$result = array();
+				$result['error_description'] = $me['error']['message'];
+				$result['error_code'] = $me['error']['code'];
+				//manually trow error, since errors are not catched in batch request.
+				throw new FacebookApiException($result);
+			}
+		}
+>>>>>>> 0.9.9.1
 	}
 	
 	/**
@@ -1687,9 +1737,15 @@ Class AWD_facebook
 			if(isset($custom_post[$this->plugin_option_pref.'ogtags_disable'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == '')
 				$custom_post[$this->plugin_option_pref.'ogtags_disable'][0] = 0;
  			//if tags are enable from editor
+<<<<<<< HEAD
  			if(isset($custom_post[$this->plugin_option_pref.'ogtags_disable'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == 0){
 				//if general settings of this type is enable
 				if(isset($this->options[$prefix_option.'disable']) && $this->options[$prefix_option.'disable'] == 0 && $this->options[$prefix_option.'disable'] != ''){
+=======
+ 			if(!isset($custom_post[$this->plugin_option_pref.'ogtags_disable'][0]) OR $custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == 0){
+				//if general settings of this type is enable
+				if(!isset($this->options[$prefix_option.'disable']) OR ($this->options[$prefix_option.'disable'] == 0 && $this->options[$prefix_option.'disable'] != '')){
+>>>>>>> 0.9.9.1
 					//if choose to redefine from post
 					if(isset($custom_post[$this->plugin_option_pref.'ogtags_redefine'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_redefine'][0] == 1){
 						$option_value = $custom_post[$this->plugin_option_pref.'ogtags_'.$tag][0];
@@ -1701,6 +1757,7 @@ Class AWD_facebook
 						$custom_type = $custom_post[$this->plugin_option_pref.'ogtags_type_custom'][0];
 					//else use general settings
 					}else{
+<<<<<<< HEAD
 						$option_value = isset($this->options[$prefix_option.$tag]) ? $this->options[$prefix_option.$tag] : null;
 						$custom_type = isset($this->options[$prefix_option.'type_custom']) ? $this->options[$prefix_option.'type_custom'] : null;
 						$audio =  isset($this->options[$prefix_option.'audio'] ) ? $this->options[$prefix_option.'audio'] : null;
@@ -1708,6 +1765,15 @@ Class AWD_facebook
 						$video_mp4 = isset($this->options[$prefix_option.'video:mp4']) ? $this->options[$prefix_option.'video:mp4'] : null;
 						$video_html = isset($this->options[$prefix_option.'video:html']) ? $this->options[$prefix_option.'video:html'] : null;
 						$image = isset($this->options[$prefix_option.'image']) ?  $this->options[$prefix_option.'image'] : null;
+=======
+						$option_value = isset($this->options[$prefix_option.$tag]) ? $this->options[$prefix_option.$tag] : '';
+						$custom_type = isset($this->options[$prefix_option.'type_custom']) ? $this->options[$prefix_option.'type_custom'] : '';
+						$audio =  isset($this->options[$prefix_option.'audio'] ) ? $this->options[$prefix_option.'audio'] : '';
+						$video =  isset($this->options[$prefix_option.'video']) ? $this->options[$prefix_option.'video'] : '';
+						$video_mp4 = isset($this->options[$prefix_option.'video:mp4']) ? $this->options[$prefix_option.'video:mp4'] : '';
+						$video_html = isset($this->options[$prefix_option.'video:html']) ? $this->options[$prefix_option.'video:html'] : '';
+						$image = isset($this->options[$prefix_option.'image']) ?  $this->options[$prefix_option.'image'] : '';
+>>>>>>> 0.9.9.1
 					}
 					
 					//set url with a pattern
