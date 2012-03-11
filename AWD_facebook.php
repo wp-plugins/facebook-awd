@@ -748,7 +748,7 @@ Class AWD_facebook
 			$tab_error[] = __('Email can not be empty',$this->plugin_text_domain);
 		if(empty($_POST['AWD_ads_contact']))
 			$tab_error[] = __('Message Can not be empty',$this->plugin_text_domain);
-		if($_POST['AWD_ads_contact']){
+		if(isset($_POST['AWD_ads_contact'])){
 			if (!wp_verify_nonce($this->plugin_slug.'_AWD_ads_contact',$this->plugin_option_pref.'_nonce_AWD_ads_contact_field') && count($tab_error) == 0 ){
 				wp_mail('contact@ahwebdev.fr', 'Un nouveau Contact Freelance (AWD)', $_POST['AWD_ads_contact']."\nFrom email:".$_POST['AWD_ads_contact_mail'], $headers, $attachments );
 				$message .= '<div class="ui-state-highlight fadeOnload"><p>'.__('Message sent',$this->plugin_text_domain).'</p></div>';
