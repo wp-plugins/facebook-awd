@@ -1191,7 +1191,7 @@ Class AWD_facebook
 			else
 				$this->message = '<div class="ui-state-error"><p>'.__('Options not updated there is an error...',$this->plugin_text_domain).'</p></div>';
 		
-		}else if(wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_reset_options'],$this->plugin_slug.'_reset_options')){
+		}else if(isset($_POST[$this->plugin_option_pref.'_nonce_reset_options']) && wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_reset_options'],$this->plugin_slug.'_reset_options')){
 			$this->optionsManager->reset();
 			$this->message = '<div id="message" class="ui-state-highlight fadeOnload"><p>'.__('Options were reseted',$this->plugin_text_domain).'</p></div>';
 		}
@@ -1644,6 +1644,7 @@ Class AWD_facebook
 	{
 		if(!empty($options)){
 			foreach($options as $tag=>$tag_value){
+				$html = '';
 				//custom for video TYPE
 				$tag = str_replace(array(":mp4","_mp4",":html","_html",'_custom'),array(""),$tag);
 				$html .= '<meta property="'.$tag.'" content="'.stripcslashes($tag_value).'"/>'."\n";
@@ -1680,7 +1681,7 @@ Class AWD_facebook
 			if(isset($custom_post[$this->plugin_option_pref.'ogtags_disable'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == '')
 				$custom_post[$this->plugin_option_pref.'ogtags_disable'][0] = 0;
  			//if tags are enable from editor
- 			if($custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == 0){
+ 			if(isset($custom_post[$this->plugin_option_pref.'ogtags_disable'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == 0){
 				//if general settings of this type is enable
 				if(isset($this->options[$prefix_option.'disable']) && $this->options[$prefix_option.'disable'] == 0 && $this->options[$prefix_option.'disable'] != ''){
 					//if choose to redefine from post
