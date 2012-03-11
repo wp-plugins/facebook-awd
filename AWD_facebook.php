@@ -1181,6 +1181,7 @@ Class AWD_facebook
 	 * @return void
 	 */
 	public function hook_post_from_plugin_options()
+	{
 		if(isset($_POST[$this->plugin_option_pref.'_nonce_options_update_field']) && wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_options_update_field'],$this->plugin_slug.'_update_options')){
 			
 			$this->get_facebook_user_data();
