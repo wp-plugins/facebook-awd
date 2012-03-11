@@ -1177,7 +1177,7 @@ Class AWD_facebook
 	 */
 	public function hook_post_from_plugin_options()
 	{		
-		if(wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_options_update_field'],$this->plugin_slug.'_update_options')){
+		if(isset($_POST[$this->plugin_option_pref.'_nonce_options_update_field']) && wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_options_update_field'],$this->plugin_slug.'_update_options')){
 			//do custom action for sub plugins or other exec.
 			do_action('AWD_facebook_save_custom_settings');
 			//Unset The fetched status, to force update infos form api.
