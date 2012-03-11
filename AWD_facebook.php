@@ -906,7 +906,7 @@ Class AWD_facebook
 		$terms = array();
 		if($taxonomies){
 			foreach ($taxonomies  as $taxonomy) {
-				$temp_terms = get_the_terms($post->id, $taxonomy->name);
+				$temp_terms = get_the_terms($post->ID, $taxonomy->name);
 				if($temp_terms)
 				foreach ($temp_terms  as $temp_term)
 					if($temp_term){
