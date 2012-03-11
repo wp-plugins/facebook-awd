@@ -99,6 +99,10 @@ Class AWD_facebook
      */
     public $options = array();
     
+    /**
+    * global message admin
+    */
+    public $message;
     
 	//****************************************************************************************
 	//	GLOBALS FUNCTIONS
@@ -897,6 +901,7 @@ Class AWD_facebook
 		$exclude_terms_slug = explode(",",$this->options['like_button_exclude_terms_slug']);
 		
 		//get the all terms for the post
+		$args = array();
 		$taxonomies=get_taxonomies($args,'objects'); 
 		$terms = array();
 		if($taxonomies){
