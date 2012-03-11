@@ -1448,7 +1448,7 @@ Class AWD_facebook
 		$this->logout_listener();
 		
 		//verify the content of the application ID submited by user, store infos if ok
-		if($_POST[$this->plugin_option_pref.'app_id']){
+		if(isset($_POST[$this->plugin_option_pref.'app_id']) && $_POST[$this->plugin_option_pref.'app_id']){
 			$this->get_app_info();
 		}
 		
@@ -1533,7 +1533,7 @@ Class AWD_facebook
 	*/
 	public function logout_listener()
 	{
-		if($_GET['action'] == 'fb_logout'){
+		if(isset($_GET['action']) && $_GET['action'] == 'fb_logout'){
 		    $this->destroy_session();
 			wp_logout();
 			if($_GET['redirect_to'] != '')
@@ -1665,6 +1665,7 @@ Class AWD_facebook
 	 */
 	public function construct_open_graph_tags($prefix_option,$array_pattern,$array_replace,$custom_post=array())
 	{
+		$options = array();
 		$og_tags = $this->og_tags;
 		//define all tags we need to display
 		foreach($this->og_attachement_field as $type=>$tag_fields){
