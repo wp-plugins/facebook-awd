@@ -10,11 +10,7 @@ jQuery(document).ready(function($){
 		var $this = $(this);
 		var data = $this.data();
 		//create eventlistener on the element
-<<<<<<< HEAD
-		$this.live(data.typeEvent,function(e){
-=======
 		$this.bind(data['type-event'],function(e){
->>>>>>> 0.9.9.1
 			e.preventDefault();
 			$.post(awd_fcbk_custom_action.ajaxurl,
 			{
@@ -30,21 +26,13 @@ jQuery(document).ready(function($){
 					var AWD_action_callback = window[ajax_data.callbackJs];
 					AWD_action_callback(this,ajax_data);
 				}else if(ajax_data.success){
-<<<<<<< HEAD
-					if(data.typeEvent != 'AWD_facebook_tracker'){
-=======
 					if(data['type-event'] != 'AWD_facebook_tracker'){
->>>>>>> 0.9.9.1
 						$this.removeClass('.AWD_error_highlight').addClass('.AWD_success');
 					if(ajax_data.htmlResponse)
 						$this.html(ajax_data.htmlResponse);
 					}
 				}else{
-<<<<<<< HEAD
-					if(data.typeEvent != 'AWD_facebook_tracker'){
-=======
 					if(data['type-event'] != 'AWD_facebook_tracker'){
->>>>>>> 0.9.9.1
 						$this.removeClass('.AWD_success').addClass('.AWD_error_highlight');
 						if(ajax_data.htmlResponse)
 							$this.append(ajax_data.message);
@@ -53,11 +41,7 @@ jQuery(document).ready(function($){
 			},"json");
 		});
 		//launch by tracker if needed.
-<<<<<<< HEAD
-		if(data.typeEvent == 'AWD_facebook_tracker')
-=======
 		if(data['type-event'] == 'AWD_facebook_tracker')
->>>>>>> 0.9.9.1
 			$this.trigger('AWD_facebook_tracker');
 	});
 });
