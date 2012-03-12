@@ -287,7 +287,7 @@ Class AWD_facebook
 		if($this->options['app_id'] =='' OR $this->options['app_secret_key'] =='' OR $this->options['admins'] ==''){
 			?>
 			<div class="ui-state-error">
-				<p><?php printf( __('Facebook AWD is almost ready... Go to settings and set a FB app Id (Notification from Facebook AWD)', $this->plugin_text_domain), admin_url( 'admin.php?page='.$this->plugin_slug)); ?></p>
+				<p><?php printf( __('Facebook AWD is almost ready... Go to settings and set your FB app Id and your FB secret key (Notification from Facebook AWD)', $this->plugin_text_domain), admin_url( 'admin.php?page='.$this->plugin_slug)); ?></p>
 			</div> 
 			<?php	
 		}
@@ -615,6 +615,7 @@ Class AWD_facebook
 	{
 	    ?>
 	    <div style="text-align:center;">
+	    	<img src="<?php echo $this->plugin_url_images; ?>banner-256.png" />
 			<div class="header_AWD_facebook_wrap">
 				<h2 style="color:#627AAD;margin:0px;">
 					<img style="vertical-align:middle;" src="<?php echo $this->plugin_url_images; ?>facebook.png" alt="facebook logo" class="AWD_button_media" width="35" height="35"/>Facebook AWD
@@ -626,8 +627,20 @@ Class AWD_facebook
 			<a href="http://trac.ahwebdev.fr/projects/facebook-awd" target="_blank" class="uiButton uiButtonNormal">Support</a><br /><br />
 			<?php echo do_shortcode('[AWD_likebutton url="http://www.ahwebdev.fr/plugins/facebook-awd.html" layout="standart" width="258" height="30" faces="0" xfbml="0"]'); ?><br />
 			<?php echo do_shortcode('[AWD_likebox url="http://www.ahwebdev.fr" colorscheme="light" stream="0" xfbml="0" header="0" width="257" height="180" faces="1"]'); ?>
+	   	    <h2><a href="#tab-link-AWD_facebook_contact_support" onclick="jQuery('#contextual-help-link').trigger('click');"><?php _e('WIKI',$this->plugin_text_domain); ?></a></h2>
+	    	
+	    	<script type="text/javascript"><!--
+				google_ad_client = "ca-pub-6010532200715039";
+				/* Facebook AWD */
+				google_ad_slot = "7936445592";
+				google_ad_width = 250;
+				google_ad_height = 250;
+				//-->
+				</script>
+				<script type="text/javascript"
+				src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+			</script>	
 	    </div>
-	    <p><?php printf(__('Please if you find Bug, report it to help us. You can report bug %shere%s',$this->plugin_text_domain),'<a href="http://trac.ahwebdev.fr/projects/facebook-awd">','</a>'); ?></p>
 	    <?php
 	}
 	
@@ -2458,7 +2471,7 @@ Class AWD_facebook
 				$AWD_facebook_likebutton = new AWD_facebook_likebutton($href,$send,$layout,$show_faces,$width,$height,$action,$font,$colorscheme,$ref,$template);
 				return '<div class="AWD_facebook_likebutton '.$options['like_button_css_classes'].'">'.$AWD_facebook_likebutton->get().'</div>';
 			} catch (Exception $e){
-				return '<div class="AWD_facebook_likebutton '.$options['like_button_css_classes'].'" style="color:red;">'.__("There is an error, please verify the settings for the like button url",$this->plugin_text_domain).'</div>';
+				return '<div class="ui-state-highlight">'.__("There is an error, please verify the settings for the like button url",$this->plugin_text_domain).'</div>';
 			}
 		}
 	}
@@ -2602,7 +2615,7 @@ Class AWD_facebook
 		$mobile = (($options['comments_mobile'] == '' ? $this->options['comments_mobile'] : $options['comments_mobile']) == 1 ? 'true' : 'false');
 
 		if($this->options['comments_content'] !='')
-			return '<div class="AWD_comments '.$options['comments_css_classes'].'">'.$this->options['comments_content'].'</div>';
+			return '<div class="ui-state-highlight">'.$this->options['comments_content'].'</div>';
 		if($href!=''){
 			try {
 				$AWD_facebook_comments = new AWD_facebook_comments($href,$width,$colorscheme,$nb,$mobile,$template);
@@ -2611,7 +2624,7 @@ Class AWD_facebook
 				return '<div class="AWD_comments '.$options['comments_css_classes'].'" style="color:red;">'.__("There is an error, please verify the settings for the Comments box url",$this->plugin_text_domain).'</div>';
 			}
 		}else if($href==''){
-			return '<div class="AWD_comments '.$options['comments_css_classes'].'" style="color:red;">'.__("There is an error, please verify the settings for the Comments box url",$this->plugin_text_domain).'</div>';
+			return '<div class="ui-state-highlight">'.__("There is an error, please verify the settings for the Comments box url",$this->plugin_text_domain).'</div>';
 		}
 	}
 	
@@ -2683,13 +2696,13 @@ Class AWD_facebook
 		}
 		
 		if($this->options['like_box_url'] == '' && $href == '')
-			return '<div class="AWD_like_box '.$options['like_box_css_classes'].'" style="color:red;">'.__("There is an error, please verify the settings for the Like Box URL",$this->plugin_text_domain).'</div>';
+			return '<div class="ui-state-highlight">'.__("There is an error, please verify the settings for the Like Box URL",$this->plugin_text_domain).'</div>';
 		else{
 			try {
 				$AWD_facebook_likebox = new AWD_facebook_likebox($href,$width,$height,$colorscheme,$show_faces,$stream,$header,$border_color,$force_wall,$template);
 				return '<div class="AWD_like_box '.$options['like_box_css_classes'].'">'.$AWD_facebook_likebox->get().'</div>';
 			} catch (Exception $e){
-				return '<div class="AWD_like_box '.$options['like_box_css_classes'].'" style="color:red;">'.__("There is an error, please verify the settings for the Like Box URL",$this->plugin_text_domain).'</div>';
+				return '<div class="ui-state-highlight">'.__("There is an error, please verify the settings for the Like Box URL",$this->plugin_text_domain).'</div>';
 			}
 		}
 	}
@@ -2737,13 +2750,13 @@ Class AWD_facebook
 		$ref = ($options['activity_ref'] == '' ? $this->options['activity_ref'] : $options['activity_ref']);
 
 		if($this->options['activity_domain'] == '' && $site == '')
-			return '<div style="color:red;" class="AWD_activity '.$options['activity_css_classes'].'">'.__("There is an error, please verify the settings for the Acivity Box DOMAIN",$this->plugin_text_domain).'</div>';
+			return '<div class="ui-state-highlight">'.__("There is an error, please verify the settings for the Acivity Box DOMAIN",$this->plugin_text_domain).'</div>';
 		else{
 			try {
 				$AWD_facebook_activity = new AWD_facebook_activity($site,$width,$height,$header,$colorscheme,$font,$border_color,$recommendations,$filter,$linktarget,$ref,$max_age,$template);
 				return '<div class="AWD_facebook_activity '.$options['activity_css_classes'].'">'.$AWD_facebook_activity->get().'</div>';
 			} catch (Exception $e){
-				return '<div style="color:red;" class="AWD_activity '.$options['activity_css_classes'].'">'.__("There is an error, please verify the settings for the Acivity Box DOMAIN",$this->plugin_text_domain).'</div>';
+				return '<div class="ui-state-highlight">'.__("There is an error, please verify the settings for the Acivity Box DOMAIN",$this->plugin_text_domain).'</div>';
 			}
 		}
 	}
