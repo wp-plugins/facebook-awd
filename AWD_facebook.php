@@ -1475,6 +1475,12 @@ Class AWD_facebook
 			//IF user is connected to facebook try to log in.
 			try{
     			if($this->is_user_logged_in_facebook()) {
+    			    
+    			    //if some post form admin refetch user data
+					if(isset($_POST[$this->plugin_option_pref.'app_id']) && $_POST[$this->plugin_option_pref.'app_id']){
+    			    	$this->get_facebook_user_data();
+    			    }
+    			    
     			    //perform login process
     			    $this->login_user();
     			    $this->logout_url = $this->fcbk->getLogoutUrl();
