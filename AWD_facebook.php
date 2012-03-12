@@ -1654,8 +1654,8 @@ Class AWD_facebook
 	public function get_the_open_graph_tags($options=array())
 	{
 		if(!empty($options)){
+			$html = '';
 			foreach($options as $tag=>$tag_value){
-				$html = '';
 				//custom for video TYPE
 				$tag = str_replace(array(":mp4","_mp4",":html","_html",'_custom'),array(""),$tag);
 				$html .= '<meta property="'.$tag.'" content="'.stripcslashes($tag_value).'"/>'."\n";
