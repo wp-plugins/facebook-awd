@@ -628,18 +628,6 @@ Class AWD_facebook
 			<?php echo do_shortcode('[AWD_likebutton url="http://www.ahwebdev.fr/plugins/facebook-awd.html" layout="standart" width="258" height="30" faces="0" xfbml="0"]'); ?><br />
 			<?php echo do_shortcode('[AWD_likebox url="http://www.ahwebdev.fr" colorscheme="light" stream="0" xfbml="0" header="0" width="257" height="180" faces="1"]'); ?>
 	   	    <h2><a href="#tab-link-AWD_facebook_contact_support" onclick="jQuery('#contextual-help-link').trigger('click');"><?php _e('WIKI',$this->plugin_text_domain); ?></a></h2>
-	    	
-	    	<script type="text/javascript"><!--
-				google_ad_client = "ca-pub-6010532200715039";
-				/* Facebook AWD */
-				google_ad_slot = "7936445592";
-				google_ad_width = 250;
-				google_ad_height = 250;
-				//-->
-				</script>
-				<script type="text/javascript"
-				src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-			</script>	
 	    </div>
 	    <?php
 	}
