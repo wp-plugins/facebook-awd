@@ -695,7 +695,6 @@
 		</div>
 	</form>
 </div>
-<?php echo do_shortcode('[AWD_custom_action class="AWD_test" action="test" object="plugin" event="click" url="http://www.skateboardmaps.com" response_text="testoun"]Here the text to use[/AWD_custom_action]'); ?>
 <?php
 /**
 * Javascript for admin
