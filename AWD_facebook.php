@@ -284,22 +284,13 @@ Class AWD_facebook
 	public function missing_config()
 	{
 		//error for connect
-		if($this->options['connect_enable'] == 1 && ($this->options['app_id'] =='' OR $this->options['app_secret_key'] =='')){
-			?>
-			<div class="ui-state-error">
-				<p><?php printf( __( 'Facebook Connect plugin is almost ready. To start using Facebook <strong>you need to set your Facebook Application API ID and Faceook Application secret key</strong>. You can do that in <a href="%1s">Facebook Connect settings page</a>. (Notification from Facebook AWD)', $this->plugin_text_domain), admin_url( 'admin.php?page='.$this->plugin_slug)); ?></p>
-			</div> 
-			<?php	
-		}
-		//error from open Graph ID application
-		if($this->options['app_id'] == '' && $this->options['admins'] ==''){
+		if($this->options['app_id'] =='' OR $this->options['app_secret_key'] =='' OR $this->options['admins'] ==''){
 			?>
 			<div class="ui-state-error">
 				<p><?php printf( __('Facebook AWD is almost ready... Go to settings and set a FB app Id (Notification from Facebook AWD)', $this->plugin_text_domain), admin_url( 'admin.php?page='.$this->plugin_slug)); ?></p>
 			</div> 
 			<?php	
 		}
-
 	}
 	
 	/**
