@@ -24,6 +24,10 @@
 					<td class="data"><input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>app_id" value="<?php echo $this->options['app_id']; ?>" size="30"/></td>
 				</tr>
 				<tr class="dataRow">
+					<th class="label"><?php _e('App SECRET KEY',$this->plugin_text_domain); ?></th>
+					<td class="data"><input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>app_secret_key" value="<?php echo $this->options['app_secret_key']; ?>" size="30" /></td>
+				</tr>
+				<tr class="dataRow">
 					<th class="label"><?php _e('Admins IDs (facebook)',$this->plugin_text_domain); ?></th>
 					<td class="data"><input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>admins" value="<?php echo $this->options['admins']; ?>" size="30" /></td>
 				</tr>
@@ -55,11 +59,6 @@
 					<th class="label"><?php _e('Timeout Facebook connect API',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('timeout'); ?></th>
 					<td class="data"><input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>timeout" value="<?php echo $this->options['timeout']; ?>" size="4" /></td>
 				</tr>
-				<tr class="dataRow hidden connect_options">
-					<th class="label"><?php _e('App SECRET KEY',$this->plugin_text_domain); ?></th>
-					<td class="data"><input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>app_secret_key" value="<?php echo $this->options['app_secret_key']; ?>" size="30" /></td>
-				</tr>
-				
 				<tr class="dataRow hidden connect_options">
 					<th class="label"><?php _e('Add FB avatar choice in Wordpress discussion settings ?',$this->plugin_text_domain); ?></th>
 					<td class="data">
