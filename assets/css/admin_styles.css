@@ -6,6 +6,7 @@
 /* Forms */
 #AWD_adform{margin:0px;} 
 #AWD_adform label{display:block;}
+#AWD_facebook_wrap input:focus,#AWD_facebook_wrap textarea:focus { -webkit-box-shadow: 0px 0px 5px #4362A3 !important;  -moz-box-shadow: 0px 0px 5px #4362A3 !important; box-shadow: 0px 0px 5px #4362A3 !important; }  
 #awd_fcbk_meta .inside img, .awd_app_logo{-moz-box-shadow: 0 1px 3px #999;-webkit-box-shadow: 0 1px 3px #999;box-shadow: 0 1px 3px #999;} 
 #awd_app table td{vertical-align: middle;}
 #awd_app table, #AWD_adform table, #AWD_ads_contact_mail, #AWD_ads_contact{width: 100%;} 
