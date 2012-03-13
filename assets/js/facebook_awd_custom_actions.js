@@ -40,6 +40,7 @@ jQuery(document).ready(function($){
 			},"json");
 		});
 		if(data.typeEvent == 'AWD_facebook_tracker')
+			//launch by tracker if needed.
 			$this.trigger('AWD_facebook_tracker');
 	});
 });
