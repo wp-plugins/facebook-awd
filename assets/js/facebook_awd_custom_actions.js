@@ -31,6 +31,7 @@ jQuery(document).ready(function($){
 					if(ajax_data.htmlResponse)
 						$this.html(ajax_data.htmlResponse);
 					}
+
 					if(data.typeEvent != 'AWD_facebook_tracker'){
 						$this.removeClass('.AWD_success').addClass('.AWD_error_highlight');
 						if(ajax_data.htmlResponse)
@@ -39,6 +40,7 @@ jQuery(document).ready(function($){
 				}
 			},"json");
 		});
+
 		if(data.typeEvent == 'AWD_facebook_tracker')
 			//launch by tracker if needed.
 			$this.trigger('AWD_facebook_tracker');

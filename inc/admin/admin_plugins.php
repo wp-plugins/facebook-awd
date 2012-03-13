@@ -53,7 +53,7 @@
 										</td>
 										<td>
 											<?php _e('Action',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('like_button_action'); ?><br />
-											<select id="<?php echo $this->plugin_option_pref; ?>like_button_action" name="<?php echo $this->plugin_option_pref; ?>like_button_action"  onchange="onchange_uiSelect(this.id);">
+											<select id="<?php echo $this->plugin_option_pref; ?>like_button_action" name="<?php echo $this->plugin_option_pref; ?>like_button_action">
 												<option value="like" <?php if($this->options['like_button_action'] == "like") echo 'selected="selected"'; ?> ><?php echo __("Like",$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?></option>
 												<option value="recommend" <?php if($this->options['like_button_action'] == "recommend") echo 'selected="selected"'; ?> ><?php echo __("Recommend",$this->plugin_text_domain); ?></option>
 											</select>
@@ -81,7 +81,7 @@
 						<tr class="dataRow">
 							<th class="label"><?php printf(__('Enable "Send" button ? %s(xfbml or html5 only)%s',$this->plugin_text_domain),'<i>','</i>'); ?> <?php echo $this->get_the_help('like_button_send'); ?></th>
 							<td class="data">
-								<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>like_button_send_on" name="<?php echo $this->plugin_option_pref; ?>like_button_send" value="1" <?php if($this->options['like_button_xfbml'] == 0){ echo 'disabled="disabled"';}elseif($this->options['like_button_send'] == '1') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>like_button_send_on"><?php _e('Yes',$this->plugin_text_domain); ?></label><br /> 
+								<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>like_button_send_on" name="<?php echo $this->plugin_option_pref; ?>like_button_send" value="1" <?php if($this->options['like_button_send'] == '1') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>like_button_send_on"><?php _e('Yes',$this->plugin_text_domain); ?></label><br /> 
 								<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>like_button_send_off" name="<?php echo $this->plugin_option_pref; ?>like_button_send" value="0" <?php if($this->options['like_button_send'] == '0') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>like_button_send_off"><?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?></label>
 							</td>
 						</tr>

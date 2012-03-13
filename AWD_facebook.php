@@ -625,8 +625,7 @@ Class AWD_facebook
 			<a href="http://wordpress.org/extend/plugins/facebook-awd/" target="_blank" class="uiButton uiButtonNormal"><?php _e('Rate this plugin',$this->plugin_text_domain); ?></a>
 			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZQ2VL33YXHJLC" target="_blank" class="uiButton uiButtonNormal"><?php _e('Donate',$this->plugin_text_domain); ?></a>
 			<a href="http://trac.ahwebdev.fr/projects/facebook-awd" target="_blank" class="uiButton uiButtonNormal">Support</a><br /><br />
-			<?php echo do_shortcode('[AWD_likebutton url="http://www.ahwebdev.fr/plugins/facebook-awd.html" layout="standart" width="258" height="30" faces="0" xfbml="0"]'); ?><br />
-			<?php echo do_shortcode('[AWD_likebox url="http://www.ahwebdev.fr" colorscheme="light" stream="0" xfbml="0" header="0" width="257" height="180" faces="1"]'); ?>
+			<?php echo do_shortcode('[AWD_likebox url="https://www.facebook.com/pages/AHWEBDEV/207050892672485" colorscheme="light" stream="0" xfbml="0" header="0" width="257" height="333" faces="1"]'); ?>
 	   	    <h2><a href="#tab-link-AWD_facebook_contact_support" onclick="jQuery('#contextual-help-link').trigger('click');"><?php _e('WIKI',$this->plugin_text_domain); ?></a></h2>
 	    </div>
 	    <?php
@@ -837,7 +836,7 @@ Class AWD_facebook
 	public function activity_content()
 	{
 		$url = parse_url(home_url());
-		echo do_shortcode('[AWD_activitybox domain='.$url['host'].'" width="258" height="200" header="false" font="lucida grande" border_color="#F9F9F9" recommendations="1"]');
+		echo do_shortcode('[AWD_activitybox domain='.$url['host'].'" width="258" height="200" header="false" font="lucida grande" border_color="#F9F9F9" recommendations="1" ref="Facebook AWD Plugin"]');
 	}
 	
 	/**
@@ -931,7 +930,7 @@ Class AWD_facebook
 			}else{
 				return $content;
 			}
-		}elseif(!in_array($post->post_type,$exclude_post_type) && !in_array($post->ID,$exclude_post_page_id) && !$is_term_to_exclude && $custom[$this->plugin_option_pref.'like_button_enabled'][0]){
+		}elseif(!in_array($post->post_type,$exclude_post_type) && !in_array($post->ID,$exclude_post_page_id) && !$is_term_to_exclude && $custom[$this->plugin_option_pref.'like_button_enabled'][0] == 1 OR $custom[$this->plugin_option_pref.'like_button_enabled'][0] == ''){
 			$like_button = $this->get_the_like_button($post);
 			if($post->post_type == 'page' && $this->options['like_button_on_pages']){
 				if($this->options['like_button_place_on_pages'] == 'bottom')

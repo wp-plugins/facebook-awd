@@ -46,7 +46,7 @@ class AWD_facebook_likebutton
 	 * action 
 	 * the width of the plugin in pixels. Default width: 300px
 	 */
-	protected $action;
+	protected $action = 'like';
 	/**
 	 * font 
 	 * the font to display in the button. Options: 'arial', 'lucida grande', 'segoe ui', 'tahoma', 'trebuchet ms', 'verdana'
@@ -82,7 +82,7 @@ class AWD_facebook_likebutton
 		$this->setShowFaces($show_faces);
 		$this->setWidth($width);
 		$this->setHeight($height);
-		$this->setAction(action);
+		$this->setAction($action);
 		$this->setFont($font);
 		$this->setColorscheme($colorscheme);
 		$this->setRef($ref);

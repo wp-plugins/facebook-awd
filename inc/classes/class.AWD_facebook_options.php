@@ -68,6 +68,8 @@ class AWD_facebook_options
     {
 		global $AWD_facebook;
 		
+		$this->setDefaultValue('timeout', 10);
+		
 		//langs
 		if($this->options['locale']==''){
 		    if(defined('WPLANG')){
@@ -94,11 +96,12 @@ class AWD_facebook_options
 		$this->setDefaultValue('like_button_colorscheme', 'light');
 		$this->setDefaultValue('like_button_send', 0);
 		$this->setDefaultValue('like_button_height', 35);
-		$this->setDefaultValue('like_button_faces', 35);
+		$this->setDefaultValue('like_button_width', 300);
+		$this->setDefaultValue('like_button_faces', 0);
 		$this->setDefaultValue('like_button_type', 'iframe');
 		$this->setDefaultValue('like_button_action', 'like');
 		$this->setDefaultValue('like_button_layout', 'standard');
-		$this->setDefaultValue('like_button_url', home_url('url'));
+		$this->setDefaultValue('like_button_url', home_url());
 		
 		//like box
 		$this->setDefaultValue('like_box_colorscheme', 'light');
@@ -108,8 +111,12 @@ class AWD_facebook_options
 		$this->setDefaultValue('like_box_stream', 1);
 		$this->setDefaultValue('like_box_header', 1);
 		$this->setDefaultValue('like_box_type', 'iframe');	
+		$this->setDefaultValue('like_box_force_wall', 0);	
 
 		//activity box
+		$url = parse_url(home_url());
+		$this->setDefaultValue('activity_domain', $url['host']);
+		$this->setDefaultValue('activity_linktarget', '_blank');
 		$this->setDefaultValue('activity_colorscheme', 'light');
 		$this->setDefaultValue('activity_width', 292);
 		$this->setDefaultValue('activity_height', 427);
@@ -131,44 +138,55 @@ class AWD_facebook_options
 		$this->setDefaultValue('comments_colorscheme', 'light');
 		$this->setDefaultValue('comments_width', 500);
 		$this->setDefaultValue('comments_nb', 10);
-		$this->setDefaultValue('comments_type', 'iframe');
-		
+		$this->setDefaultValue('comments_type', 'html5');
+		$this->setDefaultValue('comments_mobile', 0);
+		$this->setDefaultValue('comments_on_pages', 0);
+		$this->setDefaultValue('comments_on_posts', 0);
+		$this->setDefaultValue('comments_on_custom_post_types', 0);
+
+
 		//OpenGraph
-		$this->setDefaultValue('ogtags_frontpage_title', '%BLOG_TITLE%');
-		$this->setDefaultValue('ogtags_frontpage_site_name', '%BLOG_TITLE%');
-		$this->setDefaultValue('ogtags_categories_site_name', '%BLOG_TITLE%');
-		$this->setDefaultValue('ogtags_archives_site_name', '%BLOG_TITLE%');
-		$this->setDefaultValue('ogtags_page_site_name', '%BLOG_TITLE%');
-		$this->setDefaultValue('ogtags_post_site_name', '%BLOG_TITLE%');
-		$this->setDefaultValue('ogtags_page_disable', 1);
-		$this->setDefaultValue('ogtags_post_disable', 1);
-		$this->setDefaultValue('ogtags_archives_disable', 1);
 		$this->setDefaultValue('ogtags_frontpage_disable', 1);
-		$this->setDefaultValue('ogtags_taxonomies_category_disable', 1);
 		$this->setDefaultValue('ogtags_frontpage_type', 'website');
-		$this->setDefaultValue('ogtags_categories_type', 'blog');
-		$this->setDefaultValue('ogtags_archive_type', 'blog');
+		$this->setDefaultValue('ogtags_frontpage_site_name', '%BLOG_TITLE%');
+		$this->setDefaultValue('ogtags_frontpage_title', '%BLOG_TITLE%');
+		$this->setDefaultValue('ogtags_frontpage_description', '%BLOG_DESCRIPTION%');
+		$this->setDefaultValue('ogtags_frontpage_locale', $this->options['locale']);
+
+		$this->setDefaultValue('ogtags_page_disable', 1);
 		$this->setDefaultValue('ogtags_page_type', 'blog');
-		$this->setDefaultValue('ogtags_author_type', 'blog');
+		$this->setDefaultValue('ogtags_page_site_name', '%BLOG_TITLE%');
+		$this->setDefaultValue('ogtags_page_title', '%POST_TITLE%');
+		$this->setDefaultValue('ogtags_page_description', '%POST_EXCERPT%');
+		$this->setDefaultValue('ogtags_page_locale', $this->options['locale']);
+	
+		$this->setDefaultValue('ogtags_post_disable', 1);
 		$this->setDefaultValue('ogtags_post_type', 'article');
+		$this->setDefaultValue('ogtags_post_site_name', '%BLOG_TITLE%');
+		$this->setDefaultValue('ogtags_post_title', '%POST_TITLE%');
+		$this->setDefaultValue('ogtags_post_description', '%POST_EXCERPT%');
+		$this->setDefaultValue('ogtags_post_locale', $this->options['locale']);
+
+		$this->setDefaultValue('ogtags_archive_disable', 1);
+		$this->setDefaultValue('ogtags_archive_type', 'blog');
+		$this->setDefaultValue('ogtags_archive_site_name', '%BLOG_TITLE%');
+		$this->setDefaultValue('ogtags_archive_title', '%ARCHIVE_TITLE%');
+		$this->setDefaultValue('ogtags_archive_locale', $this->options['locale']);
+		
+		$this->setDefaultValue('ogtags_taxonomies_category_disable', 1);
+		$this->setDefaultValue('ogtags_taxonomies_category_type', 'blog');
+		$this->setDefaultValue('ogtags_taxonomies_category_site_name', '%BLOG_TITLE%');
 		$this->setDefaultValue('ogtags_taxonomies_category_title', '%TERM_TITLE%');
 		$this->setDefaultValue('ogtags_taxonomies_category_description', '%TERM_DESCRIPTION%');
-		$this->setDefaultValue('ogtags_post_title', '%POST_TITLE%');
-		$this->setDefaultValue('ogtags_post_type', '%POST_TITLE%');
-		$this->setDefaultValue('ogtags_archive_title', '%ARCHIVE_TITLE%');
+		$this->setDefaultValue('ogtags_taxonomies_category_locale', $this->options['locale']);
+
+		$this->setDefaultValue('ogtags_author_disable', 1);
+		$this->setDefaultValue('ogtags_author_type', 'blog');
+		$this->setDefaultValue('ogtags_author_site_name', '%BLOG_TITLE%');
 		$this->setDefaultValue('ogtags_author_title', '%POST_TITLE%');
 		$this->setDefaultValue('ogtags_author_image', '%AUTHOR_IMAGE%');
 		$this->setDefaultValue('ogtags_author_description', '%AUTHOR_DESCRIPTION%');
-		$this->setDefaultValue('ogtags_frontpage_description', '%BLOG_DESCRIPTION%');
-		$this->setDefaultValue('ogtags_archive_description', '%BLOG_DESCRIPTION%');
-		$this->setDefaultValue('ogtags_post_description', '%POST_EXCERPT%');
-		$this->setDefaultValue('ogtags_page_description', '%POST_EXCERPT%');
-		$this->setDefaultValue('ogtags_frontpage_locale', $this->options['locale']);
-		$this->setDefaultValue('ogtags_categories_locale', $this->options['locale']);
-		$this->setDefaultValue('ogtags_archives_locale', $this->options['locale']);
-		$this->setDefaultValue('ogtags_page_locale', $this->options['locale']);
-		$this->setDefaultValue('ogtags_post_locale', $this->options['locale']);
-		$this->setDefaultValue('timeout', 10);
+		$this->setDefaultValue('ogtags_author_locale', $this->options['locale']);
 
 		//Define the perms with always email
 		$array_perms = explode(",",$this->options['perms']);
