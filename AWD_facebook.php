@@ -323,13 +323,57 @@ Class AWD_facebook
 	//****************************************************************************************
 	//	ADMIN
 	//****************************************************************************************
+	
 	/**
-
+	 * Checks if we should add links to the bar.
+	 * @return void
+	 */
+	public function admin_bar_init()
+	{
+		// Is the user sufficiently leveled, or has the bar been disabled?
+		if (!is_super_admin() || !is_admin_bar_showing() )
+			return;
+	 
+		// Good to go, lets do this!
+		add_action('admin_bar_menu', array(&$this,'admin_bar_links'),500);
+	}
+	
+	/**
+	 * Add links to the Admin bar.
+	 * @return void
+	 */
+	public function admin_bar_links()
+	{
+		global $wp_admin_bar;
+		// Links to add, in the form: 'Label' => 'URL'
+		$links = array(
+			__('Test on the Facebook Debugger',$this->plugin_text_domain) => 'https://developers.facebook.com/tools/debug/og/object?q='.urlencode($this->get_current_url()),
+			__('WIKI',$this->plugin_text_domain) => 'http://trac.ahwebdev.fr/projects/facebook-awd/Wiki',
+			__('Support',$this->plugin_text_domain) => 'http://trac.ahwebdev.fr/projects/facebook-awd'
+		);
+	
+		// Add the Parent link.
+		$wp_admin_bar->add_menu( array(
+			'title' => '<img style="vertical-align:middle;" src="'.$this->plugin_url_images.'facebook-mini.png" alt="facebook logo"/> '.$this->plugin_name,
+			'href' => false,
+			'id' => $this->plugin_slug,
+			'href' => false
+		));
+ 
+		foreach ($links as $label => $url) {
+			$wp_admin_bar->add_menu( array(
+				'title' => $label,
+				'href' => $url,
+				'parent' => $this->plugin_slug,
+				'meta' => array('target' => '_blank')
+			));
+		}
+	}
+	
+	/**
 	 * Save customs fields during post edition
-
 	 * @param int $post_id
 	 * @return void
-
 	 */
 	public function save_options_post_editor($post_id)
 	{

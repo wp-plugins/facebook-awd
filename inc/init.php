@@ -42,6 +42,9 @@ add_action('show_user_profile', array(&$this,'user_profile_edit'));
 add_action( 'personal_options_update', array(&$this,'user_profile_save'));
 add_action( 'edit_user_profile_update', array(&$this,'user_profile_save'));
 
+//Add usefull links to admin bar
+add_action('admin_bar_init', array(&$this,'admin_bar_init'));
+
 add_action('wp_ajax_is_connect', array(&$this,'is_user_logged_in'));
 add_action('wp_ajax_call_action_open_graph', array(&$this,'ajax_call_action_open_graph'));
 add_action('wp_ajax_get_app_infos_content', array(&$this,'get_app_infos_content'));
