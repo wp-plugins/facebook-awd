@@ -1731,12 +1731,12 @@ Class AWD_facebook
 		foreach($og_tags_final as $tag=>$tag_name){
 			$option_value = '';
 			//if tags are empty because not set in plugin for retro actif on post and page
-			if(isset($custom_post[$this->plugin_option_pref.'ogtags_disable'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == '')
+			if(empty($custom_post[$this->plugin_option_pref.'ogtags_disable'][0]))
 				$custom_post[$this->plugin_option_pref.'ogtags_disable'][0] = 0;
  			//if tags are enable from editor
-			if(!isset($custom_post[$this->plugin_option_pref.'ogtags_disable'][0]) OR $custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == 0){
+			if($custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == 0){
 				//if general settings of this type is enable
-				if(!isset($this->options[$prefix_option.'disable']) OR ($this->options[$prefix_option.'disable'] == 0 && $this->options[$prefix_option.'disable'] != '')){
+				if($this->options[$prefix_option.'disable'] == 0 OR $this->options[$prefix_option.'disable'] != ''){
 					//if choose to redefine from post
 					if(isset($custom_post[$this->plugin_option_pref.'ogtags_redefine'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_redefine'][0] == 1){
 						$option_value = $custom_post[$this->plugin_option_pref.'ogtags_'.$tag][0];
