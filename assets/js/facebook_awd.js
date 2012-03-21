@@ -27,7 +27,6 @@ jQuery(document).ready( function($){
 		icons:icons,
 		collapsible: true,
 		active: false
-		//TODOnavigation: true
 	});
 	
 	//create the tabs in options pages admin

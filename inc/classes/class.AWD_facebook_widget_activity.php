@@ -50,7 +50,7 @@ class AWD_facebook_widget_activity extends WP_Widget {
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('activity_title').'">'._e('Title',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('activity_title').'">'.__('Title',$this->AWD_facebook->plugin_text_domain).' 
 				<input class="widefat" id="'.$this->get_field_id('activity_title').'" name="'.$this->get_field_name('activity_title').'" type="text" value="'.$title.'" />
 			</label>
 		</p>';
@@ -68,35 +68,35 @@ class AWD_facebook_widget_activity extends WP_Widget {
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('activity_domain').'">'._e('Domain (ex: mysite.com)',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('activity_domain').'">'.__('Domain (ex: mysite.com)',$this->AWD_facebook->plugin_text_domain).' 
 				<input class="widefat" id="'.$this->get_field_id('activity_domain').'" name="'.$this->get_field_name('activity_domain').'" type="text" value="'.$activity['activity_domain'].'" />
 			</label>
 		</p>';
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('activity_ref').'">'._e('Ref',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('activity_ref').'">'.__('Ref',$this->AWD_facebook->plugin_text_domain).' 
 				<input class="widefat" id="'.$this->get_field_id('activity_ref').'" name="'.$this->get_field_name('activity_ref').'" type="text" value="'.$activity['activity_ref'].'" />
 			</label>
 		</p>';
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('activity_max_age').'">'._e('Max Age',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('activity_max_age').'">'.__('Max Age',$this->AWD_facebook->plugin_text_domain).' 
 				<input class="widefat" id="'.$this->get_field_id('activity_max_age').'" name="'.$this->get_field_name('activity_max_age').'" type="text" value="'.$activity['activity_max_age'].'" />
 			</label>
 		</p>';
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('activity_filter').'">'._e('Filter',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('activity_filter').'">'.__('Filter',$this->AWD_facebook->plugin_text_domain).' 
 				<input class="widefat" id="'.$this->get_field_id('activity_filter').'" name="'.$this->get_field_name('activity_filter').'" type="text" value="'.$activity['activity_filter'].'" />
 			</label>
 		</p>';
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('activity_linktarget').'">'._e('Link target',$this->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('activity_linktarget').'">'.__('Link target',$this->plugin_text_domain).' 
 				<select class="widefat" id="'.$this->get_field_id('activity_linktarget').'" name="'.$this->get_field_name('activity_linktarget').'">
 					<option value="light" '.($activity['activity_linktarget'] == '_blank' ? 'selected="selected"':'').'>'.__('Blank',$this->AWD_facebook->plugin_text_domain).'</option>
 					<option value="dark" '.($activity['activity_linktarget'] == '_top' ? 'selected="selected"':'').'>'.__('Top',$this->AWD_facebook->plugin_text_domain).'</option>
@@ -107,7 +107,7 @@ class AWD_facebook_widget_activity extends WP_Widget {
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('activity_colorscheme').'">'._e('Colorscheme of box',$this->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('activity_colorscheme').'">'.__('Colorscheme of box',$this->plugin_text_domain).' 
 				<select class="widefat" id="'.$this->get_field_id('activity_colorscheme').'" name="'.$this->get_field_name('activity_colorscheme').'">
 					<option value="light" '.($activity['activity_colorscheme'] == 'light' ? 'selected="selected"':'').'>'.__('Light',$this->AWD_facebook->plugin_text_domain).'</option>
 					<option value="dark" '.($activity['activity_colorscheme'] == 'dark' ? 'selected="selected"':'').'>'.__('Dark',$this->AWD_facebook->plugin_text_domain).'</option>
@@ -117,21 +117,21 @@ class AWD_facebook_widget_activity extends WP_Widget {
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('activity_width').'">'._e('Width of box',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('activity_width').'">'.__('Width of box',$this->AWD_facebook->plugin_text_domain).' 
 				<input id="'.$this->get_field_id('activity_width').'" name="'.$this->get_field_name('activity_width').'" type="text" value="'.$activity['activity_width'].'" size="6" />
 			</label>
 		</p>';
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('activity_height').'">'._e('Height of box',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('activity_height').'">'.__('Height of box',$this->AWD_facebook->plugin_text_domain).' 
 				<input id="'.$this->get_field_id('activity_height').'" name="'.$this->get_field_name('activity_height').'"  type="text" value="'.$activity['activity_height'].'" size="6" />
 			</label>
 		</p>';
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('activity_font').'">'._e('Font',$this->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('activity_font').'">'.__('Font',$this->plugin_text_domain).' 
 				<select class="widefat" id="'.$this->get_field_id('activity_font').'" name="'.$this->get_field_name('activity_font').'">
 					<option value="arial" '.($activity['activity_font'] == "arial" ? 'selected="selected"' :'').' >Arial</option>
 					<option value="lucida grande" '.($activity['activity_font'] == "lucida grande" ? 'selected="selected"' :'').' >Lucida grande</option>
@@ -145,14 +145,14 @@ class AWD_facebook_widget_activity extends WP_Widget {
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('activity_border_color').'">'._e('Border color',$this->plugin_text_domain).'  (ex: #BB0000)
+			<label for="'.$this->get_field_id('activity_border_color').'">'.__('Border color',$this->plugin_text_domain).'  (ex: #BB0000)
 				<input size="10" id="'.$this->get_field_id('activity_border_color').'" name="'.$this->get_field_name('activity_border_color').'" type="text" value="'.$activity['activity_border_color'].'" />
 			</label>
 		</p>';
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('activity_header').'">'._e('Show Header ?',$this->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('activity_header').'">'.__('Show Header ?',$this->plugin_text_domain).' 
 				<select class="widefat" id="'.$this->get_field_id('faces').'" name="'.$this->get_field_name('activity_header').'">
 					<option value="1" '.($activity['activity_header'] == '1' ? 'selected="selected"':'').'>'.__('Yes',$this->AWD_facebook->plugin_text_domain).'</option>
 					<option value="0" '.($activity['activity_header'] == '0' ? 'selected="selected"':'').'>'.__('No',$this->AWD_facebook->plugin_text_domain).'</option>

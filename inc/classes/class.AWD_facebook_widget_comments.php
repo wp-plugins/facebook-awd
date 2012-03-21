@@ -40,7 +40,7 @@ class AWD_facebook_widget_comments extends WP_Widget {
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('comments_title').'">'._e('Title',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('comments_title').'">'.__('Title',$this->AWD_facebook->plugin_text_domain).' 
 				<input class="widefat" id="'.$this->get_field_id('comments_title').'" name="'.$this->get_field_name('comments_title').'" type="text" value="'.$title.'" />
 			</label>
 		</p>';
@@ -57,28 +57,28 @@ class AWD_facebook_widget_comments extends WP_Widget {
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('comments_url').'">'._e('URL to comment on',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('comments_url').'">'.__('URL to comment on',$this->AWD_facebook->plugin_text_domain).' 
 				<input class="widefat" id="'.$this->get_field_id('comments_url').'" name="'.$this->get_field_name('comments_url').'" type="text" value="'.$comments['comments_url'].'" />
 			</label>
 		</p>';
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('comments_nb').'">'._e('Number of posts',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('comments_nb').'">'.__('Number of posts',$this->AWD_facebook->plugin_text_domain).' 
 				<input class="widefat" id="'.$this->get_field_id('comments_nb').'" name="'.$this->get_field_name('comments_nb').'" type="text" value="'.$comments['comments_nb'].'" />
 			</label>
 		</p>';
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('comments_mobile').'">'._e('Mobile version ?',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('comments_mobile').'">'.__('Mobile version ?',$this->AWD_facebook->plugin_text_domain).' 
 				<input class="widefat" id="'.$this->get_field_id('comments_mobile').'" name="'.$this->get_field_name('comments_mobile').'" type="text" value="'.$comments['comments_mobile'].'" />
 			</label>
 		</p>';
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('comments_colorscheme').'">'._e('Colorscheme of box',$this->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('comments_colorscheme').'">'.__('Colorscheme of box',$this->plugin_text_domain).' 
 				<select class="widefat" id="'.$this->get_field_id('comments_colorscheme').'" name="'.$this->get_field_name('comments_colorscheme').'">
 					<option value="light" '.($comments['comments_colorscheme'] == 'light' ? 'selected="selected"':'').'>'.__('Light',$this->AWD_facebook->plugin_text_domain).'</option>
 					<option value="dark" '.($comments['comments_colorscheme'] == 'dark' ? 'selected="selected"':'').'>'.__('Dark',$this->AWD_facebook->plugin_text_domain).'</option>
@@ -88,7 +88,7 @@ class AWD_facebook_widget_comments extends WP_Widget {
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('comments_width').'">'._e('Width of box',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('comments_width').'">'.__('Width of box',$this->AWD_facebook->plugin_text_domain).' 
 				<input id="'.$this->get_field_id('comments_width').'" name="'.$this->get_field_name('comments_width').'" type="text" value="'.$comments['comments_width'].'" size="6" />
 			</label>
 		</p>';

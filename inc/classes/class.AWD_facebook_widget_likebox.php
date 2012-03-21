@@ -48,7 +48,7 @@ class AWD_facebook_widget_likebox extends WP_Widget {
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('like_box_title').'">'._e('Title',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('like_box_title').'">'.__('Title',$this->AWD_facebook->plugin_text_domain).' 
 				<input class="widefat" id="'.$this->get_field_id('like_box_title').'" name="'.$this->get_field_name('like_box_title').'" type="text" value="'.$title.'" />
 			</label>
 		</p>';
@@ -66,7 +66,7 @@ class AWD_facebook_widget_likebox extends WP_Widget {
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('like_box_force_wall').'"> '._e('Force Wall',$this->AWD_facebook->plugin_text_domain).'
+			<label for="'.$this->get_field_id('like_box_force_wall').'"> '.__('Force Wall',$this->AWD_facebook->plugin_text_domain).'
 				<select class="widefat" id="'.$this->get_field_id('like_box_force_wall').'" name="'.$this->get_field_name('like_box_force_wall').'">
 					<option value="1" '.($like_box['like_box_force_wall'] == '1' ? 'selected="selected"':'').'>'.__('YES',$this->AWD_facebook->plugin_text_domain).'</option>
 					<option value="0" '.($like_box['like_box_force_wall'] == '0' ? 'selected="selected"':'').'>'.__('No',$this->AWD_facebook->plugin_text_domain).'</option>
@@ -76,14 +76,14 @@ class AWD_facebook_widget_likebox extends WP_Widget {
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('like_box_url').'">'._e('Url of the page',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('like_box_url').'">'.__('Url of the page',$this->AWD_facebook->plugin_text_domain).' 
 				<input class="widefat" id="'.$this->get_field_id('like_box_url').'" name="'.$this->get_field_name('like_box_url').'" type="text" value="'.$like_box['like_box_url'].'" />
 			</label>
 		</p>';
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('like_box_colorscheme').'">'._e('Colorscheme of box',$this->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('like_box_colorscheme').'">'.__('Colorscheme of box',$this->plugin_text_domain).' 
 				<select class="widefat" id="'.$this->get_field_id('like_box_colorscheme').'" name="'.$this->get_field_name('like_box_colorscheme').'">
 					<option value="light" '.($like_box['like_box_colorscheme'] == 'light' ? 'selected="selected"':'').'>'.__('Light',$this->AWD_facebook->plugin_text_domain).'</option>
 					<option value="dark" '.($like_box['like_box_colorscheme'] == 'dark' ? 'selected="selected"':'').'>'.__('Dark',$this->AWD_facebook->plugin_text_domain).'</option>
@@ -93,28 +93,28 @@ class AWD_facebook_widget_likebox extends WP_Widget {
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('like_box_border_color').'">'._e('Border color',$this->AWD_facebook->plugin_text_domain).' (ex: #BB0000) 
+			<label for="'.$this->get_field_id('like_box_border_color').'">'.__('Border color',$this->AWD_facebook->plugin_text_domain).' (ex: #BB0000) 
 				<input class="widefat" id="'.$this->get_field_id('like_box_border_color').'" name="'.$this->get_field_name('like_box_border_color').'" type="text" value="'.$like_box['like_box_border_color'].'" />
 			</label>
 		</p>';
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('like_box_width').'">'._e('Width of box',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('like_box_width').'">'.__('Width of box',$this->AWD_facebook->plugin_text_domain).' 
 				<input id="'.$this->get_field_id('like_box_width').'" name="'.$this->get_field_name('like_box_width').'" type="text" value="'.$like_box['like_box_width'].'" size="6" />
 			</label>
 		</p>';
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('like_box_height').'">'._e('Height of box (only for iframe)',$this->AWD_facebook->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('like_box_height').'">'.__('Height of box (only for iframe)',$this->AWD_facebook->plugin_text_domain).' 
 				<input id="'.$this->get_field_id('like_box_height').'" name="'.$this->get_field_name('like_box_height').'"  '.($this->options['like_button_xfbml'] == 1 ? 'disabled="disabled"' : '').' type="text" value="'.$like_box['like_box_height'].'" size="6" />
 			</label>
 		</p>';
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('like_box_faces').'">'._e('Show Faces ?',$this->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('like_box_faces').'">'.__('Show Faces ?',$this->plugin_text_domain).' 
 				<select class="widefat" id="'.$this->get_field_id('like_box_faces').'" name="'.$this->get_field_name('like_box_faces').'">
 					<option value="1" '.($like_box['like_box_faces'] == '1' ? 'selected="selected"':'').'>'.__('Yes',$this->AWD_facebook->plugin_text_domain).'</option>
 					<option value="0" '.($like_box['like_box_faces'] == '0' ? 'selected="selected"':'').'>'.__('No',$this->AWD_facebook->plugin_text_domain).'</option>
@@ -124,7 +124,7 @@ class AWD_facebook_widget_likebox extends WP_Widget {
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('like_box_stream').'">'._e('Show Stream ?',$this->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('like_box_stream').'">'.__('Show Stream ?',$this->plugin_text_domain).' 
 				<select class="widefat" id="'.$this->get_field_id('like_box_stream').'" name="'.$this->get_field_name('like_box_stream').'">
 					<option value="1" '.($like_box['like_box_stream'] == '1' ? 'selected="selected"':'').'>'.__('Yes',$this->AWD_facebook->plugin_text_domain).'</option>
 					<option value="0" '.($like_box['like_box_stream'] == '0' ? 'selected="selected"':'').'>'.__('No',$this->AWD_facebook->plugin_text_domain).'</option>
@@ -134,7 +134,7 @@ class AWD_facebook_widget_likebox extends WP_Widget {
 		
 		echo '
 		<p>
-			<label for="'.$this->get_field_id('like_box_header').'">'._e('Show Header ?',$this->plugin_text_domain).' 
+			<label for="'.$this->get_field_id('like_box_header').'">'.__('Show Header ?',$this->plugin_text_domain).' 
 				<select class="widefat" id="'.$this->get_field_id('faces').'" name="'.$this->get_field_name('like_box_header').'">
 					<option value="1" '.($like_box['like_box_header'] == '1' ? 'selected="selected"':'').'>'.__('Yes',$this->AWD_facebook->plugin_text_domain).'</option>
 					<option value="0" '.($like_box['like_box_header'] == '0' ? 'selected="selected"':'').'>'.__('No',$this->AWD_facebook->plugin_text_domain).'</option>

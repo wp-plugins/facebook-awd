@@ -203,7 +203,7 @@
 								<?php echo $this->get_the_like_button(); ?>	
 								<br />
 								<div class="awd_pre" style="text-align:left;">
-									<strong>Shorcode: [AWD_likebutton]</strong> <a href="#" style="float:right;" onclick="jQuery('#egoptions_likebutton').toggle(300); return false;"><?php _e('-show options-',$this->plugin_text_domain); ?></a>
+									<strong>Shortcode: [AWD_likebutton]</strong> <a href="#" style="float:right;" onclick="jQuery('#egoptions_likebutton').toggle(300); return false;"><?php _e('-show options-',$this->plugin_text_domain); ?></a>
 									<br />
 									<div id="egoptions_likebutton"  class="hidden">
                                         Options:<br />
@@ -310,7 +310,7 @@
 						        <?php echo $this->get_the_like_box(); ?>
 								<br />
 								<div class="awd_pre" style="text-align:left;">
-									<strong>Shorcode: [AWD_likebox]</strong> <a href="#" style="float:right;" onclick="jQuery('#egoptions_likebox').toggle(300); return false;"><?php _e('-show options-',$this->plugin_text_domain); ?></a>
+									<strong>Shortcode: [AWD_likebox]</strong> <a href="#" style="float:right;" onclick="jQuery('#egoptions_likebox').toggle(300); return false;"><?php _e('-show options-',$this->plugin_text_domain); ?></a>
 									<br />
 									<div id="egoptions_likebox"  class="hidden">
                                         Options:<br />
@@ -438,7 +438,7 @@
 						        <?php echo $this->get_the_activity_box(); ?>
 								<br />
 								<div class="awd_pre" style="text-align:left;">
-									<strong>Shorcode: [AWD_activitybox]</strong> <a href="#" style="float:right;" onclick="jQuery('#egoptions_activity').toggle(300); return false;"><?php _e('-show options-',$this->plugin_text_domain); ?></a>
+									<strong>Shortcode: [AWD_activitybox]</strong> <a href="#" style="float:right;" onclick="jQuery('#egoptions_activity').toggle(300); return false;"><?php _e('-show options-',$this->plugin_text_domain); ?></a>
 									<br />
 									<div id="egoptions_activity"  class="hidden">
                                         Options:<br />
@@ -553,7 +553,7 @@
 									?>										
 									<br />
 									<div class="awd_pre" style="text-align:left;">
-										<strong>Shorcode: [AWD_loginbutton]</strong> <a href="#" style="float:right;" onclick="jQuery('#egoptions_loginbutton').toggle(300); return false;"><?php _e('-show options-',$this->plugin_text_domain); ?></a>
+										<strong>Shortcode: [AWD_loginbutton]</strong> <a href="#" style="float:right;" onclick="jQuery('#egoptions_loginbutton').toggle(300); return false;"><?php _e('-show options-',$this->plugin_text_domain); ?></a>
 										<br />
 										<div id="egoptions_loginbutton"  class="hidden">
 											Options:<br />
@@ -667,7 +667,7 @@
 									?>										
 									<br />
 									<div class="awd_pre" style="text-align:left;">
-										<strong>Shorcode: [AWD_comments]</strong> <a href="#" style="float:right;" onclick="jQuery('#egoptions_comments').toggle(300); return false;"><?php _e('-show options-',$this->plugin_text_domain); ?></a>
+										<strong>Shortcode: [AWD_comments]</strong> <a href="#" style="float:right;" onclick="jQuery('#egoptions_comments').toggle(300); return false;"><?php _e('-show options-',$this->plugin_text_domain); ?></a>
 										<br />
 										<div id="egoptions_comments"  class="hidden">
 											Options:<br />
@@ -675,7 +675,7 @@
  											* nb (number)<br />
 											* width (number)<br />
 											* colorscheme (light or dark)<br />
-											* mobile (light or dark)<br />
+											* mobile (true or false)<br />
 											* type (xfbml or html5)<br />
 										</div>
 									</div>

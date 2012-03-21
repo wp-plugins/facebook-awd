@@ -12,7 +12,7 @@ jQuery(document).ready(function($){
 		//create eventlistener on the element
 		$this.bind(data.typeEvent,function(e){
 			e.preventDefault();
-			$.post(awd_fcbk_custom_action.ajaxurl,
+			$.post(awd_fcbk.ajaxurl,
 			{
 				action				: 'call_action_open_graph',
 				awd_action			: data.action,
@@ -46,3 +46,58 @@ jQuery(document).ready(function($){
 			$this.trigger('AWD_facebook_tracker');
 	});
 });
+
+
+var AWD_facebook = {
+
+	FBEventHandler : function ()
+	{
+		if(awd_fcbk.FBEventHandler.callbacks){
+			jQuery.each(awd_fcbk.FBEventHandler.callbacks,function(){
+				var AWD_actions_callback = window[this];
+				if(jQuery.isFunction(AWD_actions_callback))
+					AWD_actions_callback(this);
+			});
+		}
+	},
+	
+	callbackLogin : function(response,redirect_url)
+	{
+		
+		var redirect = '';
+		if(response.authResponse){
+			if(!redirect_url){
+				window.location.href = awd_fcbk.loginUrl;
+			}else{
+				redirect = "?redirect_to="+redirect_url;
+				window.location.href = awd_fcbk.loginUrl+redirect;
+			}
+		}
+	},
+	
+	connect :function(redirect_url)
+	{
+		FB.login(
+			function(response){
+				AWD_facebook.callbackLogin(response,redirect_url);
+			},
+			{ 
+				scope: awd_fcbk.scope
+			}
+		);
+		return false;
+	},
+	
+	logout : function(){
+		window.location.href = awd_fcbk.logoutUrl;
+	},
+	
+	isFbConnected : function(){
+		FB.getLoginStatus(function(response) {
+			if (response.status === 'connected') {
+				return true;
+			}
+			return false;
+		});
+	},
+};

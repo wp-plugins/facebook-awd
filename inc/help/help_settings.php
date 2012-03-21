@@ -15,6 +15,11 @@
 		<div class="header_lightbox_help_text"><img style="vertical-align:middle;" src="<?php echo $this->plugin_url_images; ?>facebook-mini.png" alt="facebook logo"/> <?php _e('Help',$this->plugin_text_domain); ?></div>
 	</div>
 </div>
+<div id="lightbox_help_debug_enable" class="hidden">
+	<p><?php
+	_e("Help you debugging Facebook AWD object",$this->plugin_text_domain); 
+	?></p>
+</div>
 <div id="lightbox_help_app_id" class="hidden">
 	<p>
 	<?php

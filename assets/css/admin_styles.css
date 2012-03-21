@@ -32,7 +32,7 @@ tr.dataRow td,tr.dataRow th{padding:5px;}
 .AWD_button_succes{border: 1px solid;padding:4px;color: #4F8A10;background-color: #DFF2BF;}
 /* Styles */
 .help:hover{cursor:help;}
-.help img{vertical-align: top;width:10px;height:10px;}
+.help img{vertical-align: top;width:15px;height:15px;}
 .awd_pre{line-height: 15px;padding:5px;color:#444;background-color: #EFEFEF;border:1px solid #ccc;}
 .awd_pre b {text-shadow: #fff 0.1em 0.1em 0.1em;color:#627AAD;cursor:pointer;}
 .awd_preview{border:1px solid #ccc;border-left:1px solid #ccc;border-bottom:1px solid #ccc;margin-top:1px;padding:0px 8px 15px 8px;-moz-box-shadow: 0 1px 3px #999;-webkit-box-shadow: 0 1px 3px #999;box-shadow: 0 1px 3px #999;border-radius: 8px;-webkit-border-radius:8px;-moz-border-radius:8px;background-color: #fff;} 

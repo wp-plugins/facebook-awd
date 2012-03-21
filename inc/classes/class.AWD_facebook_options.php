@@ -38,10 +38,6 @@ class AWD_facebook_options
 		$this->prefix = $prefix;
 		//call filter for undefined vars
 		add_filter($this->filterName, array($this,'defaultOptions'), 10, 1);
-		
-		//TODO Must called this only one time on update plugin hook
-		//$this->mergeOld();
-		//$this->load();
 	}
 	
 	
@@ -64,10 +60,10 @@ class AWD_facebook_options
 	 * @param   object   wpdb instance
 	 * @return  void
 	 */
-    public function defaultOptions()
+    public function defaultOptions($options)
     {
 		global $AWD_facebook;
-		
+		$this->options = $options;
 		$this->setDefaultValue('timeout', 10);
 		
 		//langs
@@ -85,6 +81,8 @@ class AWD_facebook_options
 		$this->setDefaultValue('connect_enable', 0);
 		$this->setDefaultValue('open_graph_enable', 1);
 		$this->setDefaultValue('connect_fbavatar', 0);
+		$this->setDefaultValue('debug_enable', 0);
+
 
 		//like button
 		$this->setDefaultValue('like_button_on_pages', 0);
@@ -188,6 +186,8 @@ class AWD_facebook_options
 		$this->setDefaultValue('ogtags_author_description', '%AUTHOR_DESCRIPTION%');
 		$this->setDefaultValue('ogtags_author_locale', $this->options['locale']);
 
+
+
 		//Define the perms with always email
 		$array_perms = explode(",",$this->options['perms']);
 		if(!in_array('email',$array_perms))
@@ -197,6 +197,8 @@ class AWD_facebook_options
 		if(current_user_can('manage_options'))
 			if(!in_array('manage_pages',$array_perms))
 				$this->options['perms_admin'] = str_replace(" ", "",rtrim('manage_pages,'.$this->options['perms'],','));
+
+		
 
         return $this->options;
     }
@@ -229,9 +231,7 @@ class AWD_facebook_options
 	 */
 	public function load()
 	{
-		$this->options = get_option($this->filterName);
-		//set default options
-		$this->defaultOptions();
+		$this->options = apply_filters($this->filterName, get_option($this->filterName));
 	}
 	
 	/**
@@ -244,8 +244,7 @@ class AWD_facebook_options
 		//create new options
 		$this->options = array_merge($old_options, $this->options);
 		//verify default value
-
-		$this->defaultOptions();
+		$this->defaultOptions($this->options);
 		update_option($this->filterName, $this->options);
 	}
 	

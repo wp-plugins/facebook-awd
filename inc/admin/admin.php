@@ -9,9 +9,18 @@ elseif($page == $this->plugin_slug.'_plugins')
 	$page_hook = $this->blog_admin_plugins_hook;
 elseif($page == $this->plugin_slug.'_support')
 	$page_hook = $this->blog_admin_support_hook;
-	
+//Try to find meta box for each plugins
+else{
+	$plugins = $this->plugins;
+	if(is_array($plugins)){
+		foreach($plugins as $plugin){
+			if($page == $plugin->plugin_slug){
+				$page_hook = $plugin->plugin_admin_hook;
+			}
+		}
+	}
+}
 $current_screen = get_current_screen();
-
 
 ?>
 <div class="wrap" id="AWD_facebook_wrap">
@@ -31,7 +40,6 @@ $current_screen = get_current_screen();
 			<div id="post-body-content" class="has-sidebar-content">
 				<?php
 				do_meta_boxes($page_hook,'normal',null);
-				do_action("AWD_facebook_custom_metabox");
 				?>
 		   </div>
 		</div>

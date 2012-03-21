@@ -36,12 +36,19 @@
 					<td class="data"><input type="text" class="uiTextbox" name="<?php echo $this->plugin_option_pref; ?>locale" value="<?php echo $this->options['locale']; ?>" size="6" /></td>
 				</tr>
 				<tr class="dataRow">
+					<th class="label"><?php _e('Activate Mode Debug ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('debug_enable'); ?></th>
+					<td class="data">
+						<input type="radio" class="uiRadio" name="<?php echo $this->plugin_option_pref; ?>debug_enable" id="<?php echo $this->plugin_option_pref; ?>debug_enable_on" value="1" <?php if($this->options['debug_enable'] == '1') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>debug_enable_on"><?php echo __('Yes',$this->plugin_text_domain); ?></label><br />
+						<input type="radio" class="uiRadio" name="<?php echo $this->plugin_option_pref; ?>debug_enable" id="<?php echo $this->plugin_option_pref; ?>debug_enable_off" value="0" <?php if($this->options['debug_enable'] == '0') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>debug_enable_off"><?php _e('No',$this->plugin_text_domain); ?></label>
+					</td>
+				</tr>
+				<tr class="dataRow">
 					<th class="label" colspan="2"><h3 class="center"><?php _e('Open Graph',$this->plugin_text_domain);?></h3></th>
 				</tr>
 				<tr class="dataRow">
 					<th class="label"><?php _e('Activate Open Graph ?',$this->plugin_text_domain); ?> <?php echo $this->get_the_help('open_graph'); ?></th>
 					<td class="data">
-						<input type="radio" class="uiRadio" name="<?php echo $this->plugin_option_pref; ?>open_graph_enable" id="<?php echo $this->plugin_option_pref; ?>open_graph_enable_on" value="1" <?php if($this->options['open_graph_enable'] == '1') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>open_graph_enable_on"><?php echo __('Yes',$this->plugin_text_domain).' '.__('(recommended)',$this->plugin_text_domain);; ?></label><br />
+						<input type="radio" class="uiRadio" name="<?php echo $this->plugin_option_pref; ?>open_graph_enable" id="<?php echo $this->plugin_option_pref; ?>open_graph_enable_on" value="1" <?php if($this->options['open_graph_enable'] == '1') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>open_graph_enable_on"><?php echo __('Yes',$this->plugin_text_domain).' '.__('(recommended)',$this->plugin_text_domain); ?></label><br />
 						<input type="radio" class="uiRadio" name="<?php echo $this->plugin_option_pref; ?>open_graph_enable" id="<?php echo $this->plugin_option_pref; ?>open_graph_enable_off" value="0" <?php if($this->options['open_graph_enable'] == '0') echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>open_graph_enable_off"><?php _e('No',$this->plugin_text_domain); ?></label>
 					</td>
 				</tr>
@@ -76,7 +83,7 @@
 				</tr>
 				<tr class="dataRow hidden connect_options">
 					<td class="data" colspan="2">
-						<?php if($this->me['permissions']['publish_stream'] == 1){ ?>
+						<?php if($this->is_user_logged_in_facebook() && $this->me['permissions']['publish_stream'] == 1){ ?>
 							<p class="AWD_button_succes"><?php _e('Publish Stream is enabled',$this->plugin_text_domain); ?></p>
 						<?php }else{ ?>
 							<a href="#" data-scope="email,publish_stream" class="get_permissions floatright uiButton uiButtonNormal"><?php _e('Authorize App to publish on your pages',$this->plugin_text_domain); ?></a>
@@ -85,14 +92,14 @@
 				</tr>
 				<tr class="dataRow hidden connect_options">
 					<td class="data" colspan="2">
-						<?php if($this->me['permissions']['manage_pages'] == 1){ ?>
+						<?php if($this->is_user_logged_in_facebook() && $this->me['permissions']['manage_pages'] == 1){ ?>
 							<span class="AWD_button_succes"><?php _e('Pages can be managed by this plugin.',$this->plugin_text_domain); ?></span> <a href="#" id="toogle_list_pages" class="floatright uiButton uiButtonNormal"><?php _e('Select pages to link with Wordpress',$this->plugin_text_domain); ?></a>
 						<?php }else{ ?>
 							<a href="#" data-scope="email,manage_pages" class="get_permissions floatright uiButton uiButtonNormal"><?php _e('Authorize App to access your pages',$this->plugin_text_domain); ?></a>
 						<?php } ?>
 					</td>
 				</tr>
-				<?php if($this->me['permissions']['manage_pages'] == 1){ ?>
+				<?php if($this->is_user_logged_in_facebook() && $this->me['permissions']['manage_pages'] == 1){ ?>
 					<tr class="dataRow hidden connect_options">
 						<td class="data" colspan="2">
 							<div class="toogle_fb_pages hidden">
@@ -118,7 +125,7 @@
 				</tr>
 				<tr class="dataRow hidden connect_options">
 					<td class="data" colspan="2">
-						<?php if($this->me['permissions']['publish_actions'] == 1){ ?>
+						<?php if($this->is_user_logged_in_facebook() && $this->me['permissions']['publish_actions'] == 1){ ?>
 							<p class="AWD_button_succes"><?php _e('Actions can be posted on your timeline wall',$this->plugin_text_domain); ?></p>
 						<?php }else{ ?>
 							<!--<a href="#" id="get_permissions" data-scope="publish_actions" class="get_permissions floatright uiButton uiButtonNormal"><?php _e('Authorize App to publish actions on your timeline',$this->plugin_text_domain); ?></a>-->
