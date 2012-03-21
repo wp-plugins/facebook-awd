@@ -704,7 +704,7 @@ Class AWD_facebook
 	{
 	    ?>
 	    <div style="text-align:center;">
-	    	<img src="<?php echo $this->plugin_url_images; ?>banner-256.png" />
+	    	<img src="<?php echo $this->plugin_url_images; ?>banner-278.jpg" />
 			<div class="header_AWD_facebook_wrap">
 				<h2 style="color:#627AAD;margin:0px;">
 					<img style="vertical-align:middle;" src="<?php echo $this->plugin_url_images; ?>facebook.png" alt="facebook logo" class="AWD_button_media" width="35" height="35"/>Facebook AWD
