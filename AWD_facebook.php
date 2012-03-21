@@ -1469,9 +1469,11 @@ Class AWD_facebook
 	public function get_facebook_page_url()
 	{			
 		$facebook_page_url = null;
-		$signedrequest = $this->fcbk->getSignedRequest();
-		if( is_array($signedrequest) && array_key_exists("page", $signedrequest) ){
-			$facebook_page_url = json_decode(file_get_contents("https://graph.facebook.com/" . $signedrequest['page']['id']))->{"link"} . "?sk=app_" . $this->fcbk->getAppId();
+		if(is_object($this->fcbk)){
+			$signedrequest = $this->fcbk->getSignedRequest();
+			if( is_array($signedrequest) && array_key_exists("page", $signedrequest) ){
+				$facebook_page_url = json_decode(file_get_contents("https://graph.facebook.com/" . $signedrequest['page']['id']))->{"link"} . "?sk=app_" . $this->fcbk->getAppId();
+			}
 		}
 		return $facebook_page_url; 
 	}
