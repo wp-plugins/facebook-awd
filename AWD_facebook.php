@@ -3,7 +3,7 @@
 Plugin Name: Facebook AWD All in One
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph, Plugins from facebook, and FB connect, with SDK JS AND SDK PHP Facebook
-Version: 1.0
+Version: 1.1
 Author: AHWEBDEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AHWEBDEV
@@ -407,19 +407,21 @@ Class AWD_facebook
 					update_post_meta($post_id, $__post, $val);
 				}				
 			}
-			//Publish to Graph api
-			$message = $_POST[$this->plugin_option_pref.'publish_to_pages_message'];
-			$read_more_text = $_POST[$this->plugin_option_pref.'publish_to_pages_read_more_text'];
-			//Check if we want to publish on facebook pages and profile
-			if($_POST[$this->plugin_option_pref.'publish_to_pages'] == 1){
-				$fb_publish_to_pages = $this->get_pages_to_publish();
-				$this->publish_post_to_facebook($message,$read_more_text,$fb_publish_to_pages,$post_id);
-			}
-			//Check if we want to publish on facebook pages and profile
-			if($_POST[$this->plugin_option_pref.'publish_to_profile'] == 1){
-				$fb_publish_to_user = $this->uid;
-				$this->publish_post_to_facebook($message,$read_more_text,$fb_publish_to_user,$post_id);
-			}			
+			//check if facebook user before to try to publish
+			if($this->is_user_logged_in_facebook()){
+				//Publish to Graph api
+				$message = $_POST[$this->plugin_option_pref.'publish_message_text'];
+				$read_more_text = $_POST[$this->plugin_option_pref.'publish_read_more_text'];
+				//Check if we want to publish on facebook pages and profile
+				if($_POST[$this->plugin_option_pref.'publish_to_pages'] == 1 && $this->current_user_can('stream_publish') && $this->current_user_can('manage_pages')){
+					$fb_publish_to_pages = $this->get_pages_to_publish();
+					$this->publish_post_to_facebook($message,$read_more_text,$fb_publish_to_pages,$post_id);
+				}
+				//Check if we want to publish on facebook pages and profile
+				if($_POST[$this->plugin_option_pref.'publish_to_profile'] == 1 && $this->current_user_can('stream_publish')){
+					$this->publish_post_to_facebook($message,$read_more_text, $this->uid ,$post_id);
+				}
+			}		
 		}
 	}
 	
@@ -542,7 +544,7 @@ Class AWD_facebook
 				add_meta_box($this->plugin_slug."_open_graph_post_metas_form", __('Open Graph Metas',$this->plugin_text_domain).' <img src="'.$this->plugin_url_images.'ogp-logo.png" />', array(&$this,'open_graph_post_metas_form'),  $type , 'normal', 'core',array("prefix"=>$this->plugin_option_pref.'ogtags_'));
 			}
 			//Like button manager on post page type
-			add_meta_box($this->plugin_slug."_awd_mini_form_metabox", __('Facebook AWD Manager',$this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->plugin_url_images.'facebook-mini.png" alt="facebook logo"/>', array(&$this,'like_button_mini_form'),  $type , 'side', 'core');
+			add_meta_box($this->plugin_slug."_awd_mini_form_metabox", __('Facebook AWD Manager',$this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->plugin_url_images.'facebook-mini.png" alt="facebook logo"/>', array(&$this,'post_manager_content'),  $type , 'side', 'core');
 		}
 		if($this->options['open_graph_enable'] == 1){			
 			add_meta_box($this->plugin_slug."_meta_metabox",  __('My Facebook',$this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->plugin_url_images.'facebook-mini.png" alt="facebook logo"/>', array(&$this,'fcbk_content'),  $this->blog_admin_opengraph_hook , 'side', 'core');
@@ -1313,6 +1315,20 @@ Class AWD_facebook
 	}
 	
 	
+	/**
+	 * Return true if the user has this perm.
+	 */
+	public function current_facebook_user_can($perm)
+	{
+		if($this->is_user_logged_in_facebook()){
+			if(isset($this->me['permissions']) && is_array($this->me['permissions'])){
+				if(isset($this->me['permissions'][$perm]) && $this->me['permissions'][$perm] == 1)
+					return true;
+			}
+		}
+		
+		return false;
+	}
 	
 	/**
 	 * Get all facebook Data only when. Then store them.
@@ -2547,7 +2563,7 @@ Class AWD_facebook
 	 * @param WP_Post object $post
 	 * @return void
 	 */
-	 public function like_button_mini_form($post){
+	 public function post_manager_content($post){
 	 	$custom = get_post_custom($post->ID);
 	 	//disabled  redefine by default like button
 	 	if($custom[$this->plugin_option_pref.'like_button_redefine'][0] == '')
@@ -2589,21 +2605,21 @@ Class AWD_facebook
 			</div>
 				<br />
 				<h3 class="center"><?php _e('Publish',$this->plugin_text_domain); ?><?php echo $this->get_the_help('awd_publish_pages','help'); ?></h3>
-				<?php if($this->me['permissions']['publish_stream'] == 1): ?>
-					<?php if($this->me['permissions']['manage_pages'] == 1): ?>
+				<?php if($this->current_facebook_user_can('publish_stream')): ?>
+					<?php if($this->current_facebook_user_can('manage_pages')): ?>
 						<div class="AWD_button_succes help_awd_publish_pages hidden">
 						<?php echo __('You can publish this post to facebook when you save it, It is recommended to use OpenGraph. You can set the linked FB pages in settings. If you selected a lot of pages, the loading may be long.',$this->plugin_text_domain); ?>
 						</div>
 						<br />
-						<input type="checkbox" class="uiCheckbox" id="<?php echo $this->plugin_option_pref; ?>publish_to_pages" name="<?php echo $this->plugin_option_pref; ?>publish_to_pages" value="1" <?php if($custom[$this->plugin_option_pref.'publish_to_pages'][0] == 1) echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>publish_to_pages"><?php echo __('Publish to Facebook pages ?',$this->plugin_text_domain); ?></label>
+						<input type="checkbox" class="uiCheckbox" id="<?php echo $this->plugin_option_pref; ?>publish_to_pages" name="<?php echo $this->plugin_option_pref; ?>publish_to_pages" value="1" <?php if($this->options['publish_to_pages'] == 1) echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>publish_to_pages"><?php echo __('Publish to Facebook pages ?',$this->plugin_text_domain); ?></label>
 						<br />
-						<input type="checkbox" class="uiCheckbox" id="<?php echo $this->plugin_option_pref; ?>publish_to_profile" name="<?php echo $this->plugin_option_pref; ?>publish_to_profile" value="1" <?php if($custom[$this->plugin_option_pref.'publish_to_profile'][0] == 1) echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>publish_to_profile"><?php echo __('Publish to your Facebook profile ?',$this->plugin_text_domain); ?></label>
+						<input type="checkbox" class="uiCheckbox" id="<?php echo $this->plugin_option_pref; ?>publish_to_profile" name="<?php echo $this->plugin_option_pref; ?>publish_to_profile" value="1" <?php if($this->options['publish_to_profile'] == 1) echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>publish_to_profile"><?php echo __('Publish to your Facebook profile ?',$this->plugin_text_domain); ?></label>
 						<br />
-						<label for="<?php echo $this->plugin_option_pref; ?>publish_to_pages_messages"><?php echo __('Add a message to the post ?',$this->plugin_text_domain); ?></label><br />
-						<textarea class="uiTextarea" id="<?php echo $this->plugin_option_pref; ?>publish_to_pages_message" name="<?php echo $this->plugin_option_pref; ?>publish_to_pages_message"></textarea> 
+						<label for="<?php echo $this->plugin_option_pref; ?>publish_message_text"><?php echo __('Add a message to the post ?',$this->plugin_text_domain); ?></label><br />
+						<textarea class="uiTextarea" id="<?php echo $this->plugin_option_pref; ?>publish_message_text" name="<?php echo $this->plugin_option_pref; ?>publish_message_text"></textarea> 
 						<br />
-						<label for="<?php echo $this->plugin_option_pref; ?>publish_to_pages_read_more_text"><?php echo __('Custom Action Label',$this->plugin_text_domain); ?></label><br />
-						<input type="text" class="uiTextarea" value="<?php echo $read_more_text ? $read_more_text : __('Read More',$this->plugin_text_domain); ?>" id="<?php echo $this->plugin_option_pref; ?>publish_to_pages_read_more_text" name="<?php echo $this->plugin_option_pref; ?>publish_to_pages_read_more_text" maxlengh="25"/>
+						<label for="<?php echo $this->plugin_option_pref; ?>publish_read_more_text"><?php echo __('Custom Action Label',$this->plugin_text_domain); ?></label><br />
+						<input type="text" class="uiTextarea" value="<?php echo $this->options['publish_read_more_text']; ?>" id="<?php echo $this->plugin_option_pref; ?>publish_read_more_text" name="<?php echo $this->plugin_option_pref; ?>publish_read_more_text" maxlengh="25"/>
 					<?php 
 					else:
 						echo $this->return_error(__('You must authorize manage_pages permission in the settings of the plugin', $this->plugin_text_domain));

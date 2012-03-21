@@ -142,7 +142,6 @@ class AWD_facebook_options
 		$this->setDefaultValue('comments_on_posts', 0);
 		$this->setDefaultValue('comments_on_custom_post_types', 0);
 
-
 		//OpenGraph
 		$this->setDefaultValue('ogtags_frontpage_disable', 1);
 		$this->setDefaultValue('ogtags_frontpage_type', 'website');
@@ -186,8 +185,12 @@ class AWD_facebook_options
 		$this->setDefaultValue('ogtags_author_description', '%AUTHOR_DESCRIPTION%');
 		$this->setDefaultValue('ogtags_author_locale', $this->options['locale']);
 
-
-
+		//publish
+		$this->setDefaultValue('publish_to_profile', 0);
+		$this->setDefaultValue('publish_to_pages', 0);
+		$this->setDefaultValue('publish_message_text', '');
+		$this->setDefaultValue('publish_read_more_text', __('Read More',$AWD_facebook->plugin_text_domain));
+		
 		//Define the perms with always email
 		$array_perms = explode(",",$this->options['perms']);
 		if(!in_array('email',$array_perms))
@@ -197,9 +200,6 @@ class AWD_facebook_options
 		if(current_user_can('manage_options'))
 			if(!in_array('manage_pages',$array_perms))
 				$this->options['perms_admin'] = str_replace(" ", "",rtrim('manage_pages,'.$this->options['perms'],','));
-
-		
-
         return $this->options;
     }
 	

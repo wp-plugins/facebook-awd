@@ -4,7 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: facebook, facebook tab, like button, open graph, comments, fbconnect, likebox, activity box, all in one, fb connect, fb comments, facebook comments, register
 Requires at least: 3.3
 Tested up to: 3.3.1
-Stable tag: 1.0
+Stable tag: 1.1
+
 Facebook AWD is an all in one Facebook capabilities for wordpress.
 Add like button, like box, activity box, FB Comments, Open Graph and FB connect
 
@@ -38,6 +39,7 @@ You can find sub plugins here:
 *   EN (en_US)
 *   FR (fr_FR)
 *   RO (ro_RO by Alexander Ovsov)
+*   TR (tr_TR Turkish by Tolga Kaprol)
 
 = OpenGraph protocol: =
 Customise Open Graph Tags for each type of posts (custom post support), archives, categories and taxonomies, attachements  

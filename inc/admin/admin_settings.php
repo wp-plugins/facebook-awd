@@ -83,23 +83,26 @@
 				</tr>
 				<tr class="dataRow hidden connect_options">
 					<td class="data" colspan="2">
-						<?php if($this->is_user_logged_in_facebook() && $this->me['permissions']['publish_stream'] == 1){ ?>
+						<?php if($this->current_facebook_user_can('publish_stream')){ ?>
 							<p class="AWD_button_succes"><?php _e('Publish Stream is enabled',$this->plugin_text_domain); ?></p>
 						<?php }else{ ?>
 							<a href="#" data-scope="email,publish_stream" class="get_permissions floatright uiButton uiButtonNormal"><?php _e('Authorize App to publish on your pages',$this->plugin_text_domain); ?></a>
 						<?php } ?>
 					</td>
 				</tr>
+				
+				
 				<tr class="dataRow hidden connect_options">
 					<td class="data" colspan="2">
-						<?php if($this->is_user_logged_in_facebook() && $this->me['permissions']['manage_pages'] == 1){ ?>
+						<?php if($this->current_facebook_user_can('manage_pages')){ ?>
 							<span class="AWD_button_succes"><?php _e('Pages can be managed by this plugin.',$this->plugin_text_domain); ?></span> <a href="#" id="toogle_list_pages" class="floatright uiButton uiButtonNormal"><?php _e('Select pages to link with Wordpress',$this->plugin_text_domain); ?></a>
 						<?php }else{ ?>
 							<a href="#" data-scope="email,manage_pages" class="get_permissions floatright uiButton uiButtonNormal"><?php _e('Authorize App to access your pages',$this->plugin_text_domain); ?></a>
 						<?php } ?>
 					</td>
 				</tr>
-				<?php if($this->is_user_logged_in_facebook() && $this->me['permissions']['manage_pages'] == 1){ ?>
+
+				<?php if($this->current_facebook_user_can('manage_pages')){ ?>
 					<tr class="dataRow hidden connect_options">
 						<td class="data" colspan="2">
 							<div class="toogle_fb_pages hidden">
@@ -119,13 +122,43 @@
 							</div>
 						</td>
 					</tr>
+					
+					
+					<?php if($this->current_facebook_user_can('publish_stream')){ ?>
+						<?php if($this->current_facebook_user_can('manage_pages')){ ?>
+							<tr class="dataRow hidden connect_options">
+								<th class="label"><?php _e('Auto publish post on Facebook pages ?',$this->plugin_text_domain); ?></th>
+								<td class="data">
+									<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>publish_to_pages_on" name="<?php echo $this->plugin_option_pref; ?>publish_to_pages" value="1" <?php if($this->options['publish_to_pages'] == '1') echo 'checked="checked"'; ?> /> <label for="<?php echo $this->plugin_option_pref; ?>publish_to_pages_on"><?php _e('Yes',$this->plugin_text_domain); ?></label><br /> 
+									<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>publish_to_pages_off" name="<?php echo $this->plugin_option_pref; ?>publish_to_pages" value="0" <?php if($this->options['publish_to_pages'] == '0') echo 'checked="checked"'; ?> /> <label for="<?php echo $this->plugin_option_pref; ?>publish_to_pages_off"><?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?></label>
+								</td>
+							</tr>
+						<?php } ?>
+						<tr class="dataRow">
+							<th class="label"><?php _e('Auto publish post on Facebook profile ?',$this->plugin_text_domain); ?></th>
+							<td class="data">
+								<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>publish_to_profile_on" name="<?php echo $this->plugin_option_pref; ?>publish_to_profile" value="1" <?php if($this->options['publish_to_profile'] == '1') echo 'checked="checked"'; ?> /> <label for="<?php echo $this->plugin_option_pref; ?>publish_to_profile_on"><?php _e('Yes',$this->plugin_text_domain); ?></label><br /> 
+								<input type="radio" class="uiRadio" id="<?php echo $this->plugin_option_pref; ?>publish_to_profile_off" name="<?php echo $this->plugin_option_pref; ?>publish_to_profile" value="0" <?php if($this->options['publish_to_profile'] == '0') echo 'checked="checked"'; ?> /> <label for="<?php echo $this->plugin_option_pref; ?>publish_to_profile_off"><?php echo __('No',$this->plugin_text_domain).' '.__('(default)',$this->plugin_text_domain); ?></label>
+							</td>
+						</tr>
+						<tr class="dataRow">
+							<th class="label"><?php _e('Default link action Text',$this->plugin_text_domain); ?></th>
+							<td class="data">
+								<input type="text" class="uiText" id="<?php echo $this->plugin_option_pref; ?>publish_read_more_text" name="<?php echo $this->plugin_option_pref; ?>publish_read_more_text" value="<?php echo $this->options['publish_read_more_text']; ?>" maxlengh="25" />
+							</td>
+						</tr>
+					<?php } ?>
+					
+					
 				<?php } ?>
+				
+				
 				<tr class="dataRow connect_options">
 					<th class="label" colspan="2"><h3 class="center"><?php _e('Advanced Actions (BETA)',$this->plugin_text_domain);?> <?php echo $this->get_the_help('custom_actions'); ?></h3></th>
 				</tr>
 				<tr class="dataRow hidden connect_options">
 					<td class="data" colspan="2">
-						<?php if($this->is_user_logged_in_facebook() && $this->me['permissions']['publish_actions'] == 1){ ?>
+						<?php if($this->current_facebook_user_can('publish_actions')){ ?>
 							<p class="AWD_button_succes"><?php _e('Actions can be posted on your timeline wall',$this->plugin_text_domain); ?></p>
 						<?php }else{ ?>
 							<!--<a href="#" id="get_permissions" data-scope="publish_actions" class="get_permissions floatright uiButton uiButtonNormal"><?php _e('Authorize App to publish actions on your timeline',$this->plugin_text_domain); ?></a>-->
