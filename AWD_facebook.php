@@ -438,10 +438,6 @@ Class AWD_facebook
 	    return $footer_text."  ".__('| With:',$this->plugin_text_domain)." <a href='http://www.ahwebdev.fr/plugins/facebook-awd.html'>".$this->plugin_name." v".$this->get_version()."</a>";
 	}
 	
-	public function register_global_js(){
-		
-	}
-	
 	/**
 	 * Admin plugin init menu
 	 * call form init.php
