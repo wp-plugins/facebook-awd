@@ -1353,8 +1353,13 @@ Class AWD_facebook
 			$fb_queries[] = array('method' => 'GET', 'relative_url' => '/me/permissions');
 			$fb_queries[] = array('method' => 'GET', 'relative_url' => '/me/accounts');
 			$me = array();
-			$batchResponse = $this->fcbk->api('?batch='.urlencode(json_encode($fb_queries)),'POST');
-			$me = json_decode($batchResponse[0]['body'], true);
+			//Catch error for new batch request error.
+			try{
+				$batchResponse = $this->fcbk->api('?batch='.urlencode(json_encode($fb_queries)),'POST');
+				$me = json_decode($batchResponse[0]['body'], true);
+			}catch(FacebookApiException $e){
+				$me['error'] = $e->getMessage();
+			}
 			//Try to find if the batch return error. IF yes, the user acces token is no more good.
 			if(!isset($me['error'])){
 				// Proceed knowing you have a logged in user who's authenticated.
