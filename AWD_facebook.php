@@ -438,6 +438,10 @@ Class AWD_facebook
 	    return $footer_text."  ".__('| With:',$this->plugin_text_domain)." <a href='http://www.ahwebdev.fr/plugins/facebook-awd.html'>".$this->plugin_name." v".$this->get_version()."</a>";
 	}
 	
+	public function register_global_js(){
+		
+	}
+	
 	/**
 	 * Admin plugin init menu
 	 * call form init.php
@@ -475,9 +479,7 @@ Class AWD_facebook
 		add_action( 'admin_print_scripts-post-new.php', array(&$this,'admin_enqueue_js'));
 		add_action( 'admin_print_scripts-post.php', array(&$this,'admin_enqueue_js'));
 		
-		
 		//enqueue here the library facebook connect
-		wp_enqueue_script($this->plugin_slug.'-js');
 		$this->add_js_options();
 		
 		//Add meta box
@@ -602,6 +604,7 @@ Class AWD_facebook
 	
 	public function add_js_options()
 	{
+		wp_enqueue_script($this->plugin_slug.'-js');
 		// declare the URL to the file that handles the AJAX request (wp-admin/admin-ajax.php)
 		$AWD_facebook_vars = array(
 			'ajaxurl' 	=> admin_url('admin-ajax.php'),
@@ -1033,7 +1036,6 @@ Class AWD_facebook
 	public function front_enqueue_js()
 	{
 		wp_register_script($this->plugin_slug.'-js', $this->plugin_url.'/assets/js/facebook_awd_custom_actions.js',array('jquery'));
-		wp_enqueue_script($this->plugin_slug.'-js');
 		$this->add_js_options();
 	}
 	
@@ -2506,7 +2508,6 @@ Class AWD_facebook
 		</div>
 		<br />
 		<?php
-		wp_enqueue_script($this->plugin_slug.'-js');
 		$this->add_js_options();
 		$this->load_sdj_js();
 		$this->js_sdk_init();

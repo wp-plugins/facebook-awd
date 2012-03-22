@@ -24,6 +24,8 @@ add_action('admin_init', array(&$this,'admin_initialisation'));
 add_action('admin_bar_init', array(&$this,'admin_bar_init'));
 add_action('admin_notices',array(&$this,'missing_config'));
 add_action('admin_menu', array(&$this,'admin_menu'));
+add_action('add_js_options', array(&$this,'register_global_js'));
+
 add_filter("admin_footer_text", array($this,'admin_footer_text'),10,1);
 add_action('edit_user_profile', array(&$this,'user_profile_edit'));
 add_action('show_user_profile', array(&$this,'user_profile_edit'));
