@@ -10,23 +10,20 @@ Facebook AWD is an all in one Facebook capabilities for wordpress.
 Add like button, like box, activity box, FB Comments, Open Graph and FB connect
 
 == Description ==
-Facebook AWD is an all in one Facebook capabilities for wordpress.
-Add Socials plugins, OpenGraph, Comments, FB connect and Publish Actions
-Publish your content to all your FB pages and on your personal wall on Facebook
+Facebook AWD is an all in one Facebook capabilities for wordpress.  
+Add Socials plugins, OpenGraph, Comments and FB connect. 
+Publish your content to all your FB pages and on your personnal wall on Facebook
 Easy to install and setup. Use Iframe or Xfbml or HTML5
 Add Like button and comments to pages, posts and custom posts types, at top, bottom or both.
 Widgets and Shortcodes available for each Facebook socials plugins.
 Use post thumbnail for openGraph, Fix like button with url linter, use pattern to defined custom openGraph meta, etc...
 Works in Facebook Tabs and Facebook Canvas!
 Use both SDK's PHP v.3.1.1 AND JS v3
-
-[PROJECT PAGE](http://trac.ahwebdev.fr/projects/facebook-awd/wiki "")
-
+ 
 = Sub Plugins =
-You can find sub plugins here:
-*   [FACEBOOK AWD SEO Comments](http://wordpress.org/extend/plugins/facebook-awd-seo-comments/ "")
-
+*   [Facebook AWD SEO Comments](http://wordpress.org/extend/plugins/facebook-awd-seo-comments/ "")
 = Socials plugins Iframe or Xfbml or Html5: =
+
 *   [Like Button](http://trac.ahwebdev.fr/projects/facebook-awd/wiki/How_to_use_Like_Button "")
 *   [Like Box](http://trac.ahwebdev.fr/projects/facebook-awd/wiki/How_to_use_Like_Box "")
 *   [Activity Box](http://trac.ahwebdev.fr/projects/facebook-awd/wiki/How_to_use_Activity_Box "")
@@ -44,7 +41,6 @@ You can find sub plugins here:
 = OpenGraph protocol: =
 Customise Open Graph Tags for each type of posts (custom post support), archives, categories and taxonomies, attachements  
 You can redefine global settings for all posts or pages or custom post type
-Define your custom type object to work with actions.
 
 = FB connect: =
 if FB connect enable, you can ask special permissions, and link Facebook user with your site. Use avatars from Facebook instead defaults.
@@ -59,7 +55,7 @@ You can use widgets and shotcodes to display Facebook socials plugins
 * Activity Box [AWD_activitybox]
 * Login Button [AWD_loginbutton]
 * Comments Box [AWD_comments]
-* OpenGraph custom Actions [AWD_custom_action]
+* OpenGraph custom Actions Box [AWD_custom_action]
 
 
 = Multisite compatible: =
