@@ -3,7 +3,7 @@
 Plugin Name: Facebook AWD All in One
 Plugin URI: http://www.ahwebdev.fr
 Description: This plugin integrates Facebook open graph, Plugins from facebook, and FB connect, with SDK JS AND SDK PHP Facebook
-Version: 1.1
+Version: 1.2
 Author: AHWEBDEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AHWEBDEV
@@ -413,12 +413,12 @@ Class AWD_facebook
 				$message = $_POST[$this->plugin_option_pref.'publish_message_text'];
 				$read_more_text = $_POST[$this->plugin_option_pref.'publish_read_more_text'];
 				//Check if we want to publish on facebook pages and profile
-				if($_POST[$this->plugin_option_pref.'publish_to_pages'] == 1 && $this->current_user_can('stream_publish') && $this->current_user_can('manage_pages')){
+				if($_POST[$this->plugin_option_pref.'publish_to_pages'] == 1 && $this->current_facebook_user_can('stream_publish') && $this->current_facebook_user_can('manage_pages')){
 					$fb_publish_to_pages = $this->get_pages_to_publish();
 					$this->publish_post_to_facebook($message,$read_more_text,$fb_publish_to_pages,$post_id);
 				}
 				//Check if we want to publish on facebook pages and profile
-				if($_POST[$this->plugin_option_pref.'publish_to_profile'] == 1 && $this->current_user_can('stream_publish')){
+				if($_POST[$this->plugin_option_pref.'publish_to_profile'] == 1 && $this->current_facebook_user_can('stream_publish')){
 					$this->publish_post_to_facebook($message,$read_more_text, $this->uid ,$post_id);
 				}
 			}		
@@ -451,11 +451,11 @@ Class AWD_facebook
 		$this->blog_admin_page_hook = add_menu_page($this->plugin_page_admin_name, __($this->plugin_name,$this->plugin_text_domain), 'administrator', $this->plugin_slug, array($this,'admin_content'), $this->plugin_url_images.'facebook-mini.png',$this->blog_admin_hook_position);
 		$this->blog_admin_settings_hook = add_submenu_page($this->plugin_slug, __('Settings',$this->plugin_text_domain), '<img src="'.$this->plugin_url_images.'settings.png" /> '.__('Settings',$this->plugin_text_domain), 'administrator', $this->plugin_slug);
 		$this->blog_admin_plugins_hook = add_submenu_page($this->plugin_slug, __('Plugins',$this->plugin_text_domain), '<img src="'.$this->plugin_url_images.'plugins.png" /> '.__('Plugins',$this->plugin_text_domain), 'administrator', $this->plugin_slug.'_plugins', array($this,'admin_content'));
-	    $this->blog_admin_support_hook = add_submenu_page($this->plugin_slug, __('Support',$this->plugin_text_domain), '<img src="'.$this->plugin_url_images.'info.png" /> '.__('Support',$this->plugin_text_domain), 'administrator', $this->plugin_slug.'_support', array($this,'admin_content'));
 		if($this->options['open_graph_enable'] == 1){
 			$this->blog_admin_opengraph_hook = add_submenu_page($this->plugin_slug, __('Open Graph',$this->plugin_text_domain), '<img src="'.$this->plugin_url_images.'ogp-logo.png" /> '.__('Open Graph',$this->plugin_text_domain), 'administrator', $this->plugin_slug.'_open_graph', array($this,'admin_content'));
 		}
-		
+		$this->blog_admin_support_hook = add_submenu_page($this->plugin_slug, __('Support',$this->plugin_text_domain), '<img src="'.$this->plugin_url_images.'info.png" /> '.__('Support',$this->plugin_text_domain), 'administrator', $this->plugin_slug.'_support', array($this,'admin_content'));
+
 		add_action( "load-".$this->blog_admin_page_hook, array(&$this,'admin_initialisation'));
 		add_action( "load-".$this->blog_admin_support_hook, array(&$this,'admin_initialisation'));
 		add_action( "load-".$this->blog_admin_plugins_hook, array(&$this,'admin_initialisation'));
@@ -528,14 +528,7 @@ Class AWD_facebook
 		add_meta_box($this->plugin_slug."_activity_metabox",  __('Activity on your site',$this->plugin_text_domain), array(&$this,'activity_content'),  $this->blog_admin_plugins_hook , 'side', 'core');
 		add_meta_box($this->plugin_slug."_discover_metabox",  __('Discover',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->blog_admin_plugins_hook , 'normal', 'core');
 		
-		//Support page
-		add_meta_box($this->plugin_slug."_support_metabox",  __('Support',$this->plugin_text_domain).' <img src="'.$this->plugin_url_images.'info.png" />', array(&$this,'support_content'),  $this->blog_admin_support_hook, 'normal', 'core');
-		add_meta_box($this->plugin_slug."_meta_metabox",  __('My Facebook',$this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->plugin_url_images.'facebook-mini.png" alt="facebook logo"/>', array(&$this,'fcbk_content'),  $this->blog_admin_support_hook , 'side', 'core');
-		add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->options['app_infos']['icon_url'].'" alt=""/>', array(&$this,'app_infos_content'),  $this->blog_admin_support_hook , 'side', 'core');
-		add_meta_box($this->plugin_slug."_info_metabox",  __('Informations',$this->plugin_text_domain), array(&$this,'general_content'),  $this->blog_admin_support_hook , 'side', 'core');
-		add_meta_box($this->plugin_slug."_activity_metabox",  __('Activity on your site',$this->plugin_text_domain), array(&$this,'activity_content'),  $this->blog_admin_support_hook , 'side', 'core');
-		add_meta_box($this->plugin_slug."_discover_metabox",  __('Discover',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->blog_admin_support_hook , 'normal', 'core');
-
+		
 		//OpenGraph And post edito pages
 		add_meta_box($this->plugin_slug."_open_graph_metabox", __('Open Graph',$this->plugin_text_domain).' <img src="'.$this->plugin_url_images.'ogp-logo.png" />', array(&$this,'open_graph_content'),  $this->blog_admin_opengraph_hook, 'normal', 'core');
 		$post_types = get_post_types();
@@ -568,6 +561,15 @@ Class AWD_facebook
 				add_meta_box($this->plugin_slug."_discover_metabox",  __('Discover',$this->plugin_text_domain), array(&$this,'discover_content'),  $page_hook , 'normal', 'core');
 			}
 		}
+		
+		//Support page
+		add_meta_box($this->plugin_slug."_support_metabox",  __('Support',$this->plugin_text_domain).' <img src="'.$this->plugin_url_images.'info.png" />', array(&$this,'support_content'),  $this->blog_admin_support_hook, 'normal', 'core');
+		add_meta_box($this->plugin_slug."_meta_metabox",  __('My Facebook',$this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->plugin_url_images.'facebook-mini.png" alt="facebook logo"/>', array(&$this,'fcbk_content'),  $this->blog_admin_support_hook , 'side', 'core');
+		add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->options['app_infos']['icon_url'].'" alt=""/>', array(&$this,'app_infos_content'),  $this->blog_admin_support_hook , 'side', 'core');
+		add_meta_box($this->plugin_slug."_info_metabox",  __('Informations',$this->plugin_text_domain), array(&$this,'general_content'),  $this->blog_admin_support_hook , 'side', 'core');
+		add_meta_box($this->plugin_slug."_activity_metabox",  __('Activity on your site',$this->plugin_text_domain), array(&$this,'activity_content'),  $this->blog_admin_support_hook , 'side', 'core');
+		add_meta_box($this->plugin_slug."_discover_metabox",  __('Discover',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->blog_admin_support_hook , 'normal', 'core');
+
 	}
 	
 	/**
@@ -711,10 +713,6 @@ Class AWD_facebook
 					<sup style="color:#627AAD;font-size:0.6em;">v<?php echo $this->get_version(); ?></sup>
 				</h2>
 			</div>
-			<a href="http://wordpress.org/extend/plugins/facebook-awd/" target="_blank" class="uiButton uiButtonNormal"><?php _e('Rate this plugin',$this->plugin_text_domain); ?></a>
-			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZQ2VL33YXHJLC" target="_blank" class="uiButton uiButtonNormal"><?php _e('Donate',$this->plugin_text_domain); ?></a>
-			<a href="http://trac.ahwebdev.fr/projects/facebook-awd" target="_blank" class="uiButton uiButtonNormal">Support</a><br /><br />
-			
 			<?php
 			//List plugins
 			echo '<h3 style="color:#627AAD;margin:0px;font-size:13px;text-align:left;">'.__('Plugins installed',$this->plugin_text_domain).'</h3>';
@@ -731,7 +729,19 @@ Class AWD_facebook
 					</p>';
 			}
 			?>
-			<h3 style="color:#627AAD;margin:0px;font-size:13px;text-align:left;">Follow Me</h3>
+			<h3 style="color:#627AAD;margin:5px 0px;font-size:13px;text-align:left;"><?php _e('Help Me',$this->plugin_text_domain); ?></h3>
+			<a name='b_54c8ac3055ea012fbb7e000d60d4c902'></a><object type='application/x-shockwave-flash' data='https://giving.paypallabs.com/flash/badge.swf' width='205' height='350' id='badge54c8ac3055ea012fbb7e000d60d4c902' align='middle'>
+			<param name='allowScriptAccess' value='always' />
+			<param name='allowNetworking' value='all' />
+			<param name='movie' value='https://giving.paypallabs.com/flash/badge.swf' />
+			<param name='quality' value='high' />
+			<param name='bgcolor' value='#FFFFFF' />
+			<param name='wmode' value='transparent' />
+			<param name='FlashVars' value='Id=54c8ac3055ea012fbb7e000d60d4c902'/>
+			<embed src='https://giving.paypallabs.com/flash/badge.swf' FlashVars='Id=54c8ac3055ea012fbb7e000d60d4c902' quality='high' bgcolor='#FFFFFF' wmode='transparent' width='205' height='350' Id='badge54c8ac3055ea012fbb7e000d60d4c902' align='middle' allowScriptAccess='always' allowNetworking='all' type='application/x-shockwave-flash' pluginspage='http://www.macromedia.com/go/getflashplayer'></embed>
+			</object>
+			
+			<h3 style="color:#627AAD;margin:0px;font-size:13px;text-align:left;"><?php _e('Follow Me',$this->plugin_text_domain); ?></h3>
 			<?php echo do_shortcode('[AWD_likebox url="https://www.facebook.com/pages/AHWEBDEV/207050892672485" colorscheme="light" stream="0" xfbml="0" header="0" width="257" height="333" faces="1"]'); ?>
 	   	    <h2><a href="#tab-link-AWD_facebook_contact_support" onclick="jQuery('#contextual-help-link').trigger('click');"><?php _e('WIKI',$this->plugin_text_domain); ?></a></h2>
 	    </div>
@@ -1715,7 +1725,7 @@ Class AWD_facebook
 	public function call_action_open_graph($namespace,$action,$object,$url)
 	{
 	 	$response = array();
-		if(is_user_logged_in_facebook()){
+		if($this->is_user_logged_in_facebook()){
 			try{
 				$response['id'] = $this->fcbk->api('/me/'.$namespace.':'.$action.'?'.$object.'='.$url,'post');
 				$response['success'] = true;
