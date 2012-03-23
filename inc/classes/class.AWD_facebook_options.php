@@ -194,12 +194,20 @@ class AWD_facebook_options
 		//Define the perms with always email
 		$array_perms = explode(",",$this->options['perms']);
 		if(!in_array('email',$array_perms))
-			$this->options['perms'] = str_replace(" ", "", rtrim('email,'.$this->options['perms'],','));  
+			$this->options['perms'] = 'email,'.$this->options['perms'];  
 			
 		//Define default options for admin users.
 		if(current_user_can('manage_options'))
 			if(!in_array('manage_pages',$array_perms))
-				$this->options['perms_admin'] = str_replace(" ", "",rtrim('manage_pages,'.$this->options['perms'],','));
+				$this->options['perms_admin'] = 'manage_pages,';
+		if(current_user_can('publish_stream'))
+        	if(!in_array('publish_stream',$array_perms))
+				$this->options['perms_admin'] .= 'publish_stream,';
+
+		$this->options['perms'] = str_replace(' ','',rtrim($this->options['perms'],','));
+		$this->options['perms_admin'] = str_replace(' ','',rtrim($this->options['perms_admin'],','));
+		$this->options['perms_admin'] = $this->options['perms'].','.$this->options['perms_admin'];
+
         return $this->options;
     }
 	
