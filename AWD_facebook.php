@@ -1362,15 +1362,12 @@ Class AWD_facebook
 			if(!isset($me['error'])){
 				// Proceed knowing you have a logged in user who's authenticated.
 				$me['AWD_acces_token'] = $this->fcbk->getAccessToken();
-				//queries are only exec on admin side for perf...
-				if(is_admin()){
-					$fb_perms = json_decode($batchResponse[1]['body'], true);
-					$me['permissions'] = $fb_perms['data'][0];
-					$fb_pages = json_decode($batchResponse[2]['body'], true);
-					if($fb_pages['data']){
-						foreach($fb_pages['data'] as $fb_page){
-							$me['pages'][$fb_page['id']] = $fb_page;
-						}
+				$fb_perms = json_decode($batchResponse[1]['body'], true);
+				$me['permissions'] = $fb_perms['data'][0];
+				$fb_pages = json_decode($batchResponse[2]['body'], true);
+				if(isset($fb_pages['data'])){
+					foreach($fb_pages['data'] as $fb_page){
+						$me['pages'][$fb_page['id']] = $fb_page;
 					}
 				}
 				$this->me = $me;
@@ -2486,7 +2483,7 @@ Class AWD_facebook
 		
 			case 'message_connect_disabled':
 				if(is_admin())
-				return '<div class="ui-state-highlight">'.sprintf(__('You should enable FB connect in %sApp settings%s to use Login buttons',$this->plugin_text_domain),'<a href="admin.php?page='.$this->plugin_slug.'">','</a>').'</div>';
+				return '<div class="ui-state-highlight">'.sprintf(__('You should enable FB connect in %sApp settings%s',$this->plugin_text_domain),'<a href="admin.php?page='.$this->plugin_slug.'">','</a>').'</div>';
 			break;
 		}
 	}
@@ -2617,28 +2614,33 @@ Class AWD_facebook
 			</div>
 				<br />
 				<h3 class="center"><?php _e('Publish',$this->plugin_text_domain); ?><?php echo $this->get_the_help('awd_publish_pages','help'); ?></h3>
-				<?php if($this->current_facebook_user_can('publish_stream')): ?>
-					<?php if($this->current_facebook_user_can('manage_pages')): ?>
-						<div class="AWD_button_succes help_awd_publish_pages hidden">
-						<?php echo __('You can publish this post to facebook when you save it, It is recommended to use OpenGraph. You can set the linked FB pages in settings. If you selected a lot of pages, the loading may be long.',$this->plugin_text_domain); ?>
-						</div>
-						<br />
-						<input type="checkbox" class="uiCheckbox" id="<?php echo $this->plugin_option_pref; ?>publish_to_pages" name="<?php echo $this->plugin_option_pref; ?>publish_to_pages" value="1" <?php if($this->options['publish_to_pages'] == 1) echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>publish_to_pages"><?php echo __('Publish to Facebook pages ?',$this->plugin_text_domain); ?></label>
-						<br />
-						<input type="checkbox" class="uiCheckbox" id="<?php echo $this->plugin_option_pref; ?>publish_to_profile" name="<?php echo $this->plugin_option_pref; ?>publish_to_profile" value="1" <?php if($this->options['publish_to_profile'] == 1) echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>publish_to_profile"><?php echo __('Publish to your Facebook profile ?',$this->plugin_text_domain); ?></label>
-						<br />
-						<label for="<?php echo $this->plugin_option_pref; ?>publish_message_text"><?php echo __('Add a message to the post ?',$this->plugin_text_domain); ?></label><br />
-						<textarea class="uiTextarea" id="<?php echo $this->plugin_option_pref; ?>publish_message_text" name="<?php echo $this->plugin_option_pref; ?>publish_message_text"></textarea> 
-						<br />
-						<label for="<?php echo $this->plugin_option_pref; ?>publish_read_more_text"><?php echo __('Custom Action Label',$this->plugin_text_domain); ?></label><br />
-						<input type="text" class="uiTextarea" value="<?php echo $this->options['publish_read_more_text']; ?>" id="<?php echo $this->plugin_option_pref; ?>publish_read_more_text" name="<?php echo $this->plugin_option_pref; ?>publish_read_more_text" maxlengh="25"/>
-					<?php 
-					else:
-						echo $this->return_error(__('You must authorize manage_pages permission in the settings of the plugin', $this->plugin_text_domain));
+				<?php if($this->is_user_logged_in_facebook()): ?>
+					<?php if($this->current_facebook_user_can('publish_stream')): ?>
+						<?php if($this->current_facebook_user_can('manage_pages')): ?>
+							<div class="AWD_button_succes help_awd_publish_pages hidden">
+							<?php echo __('You can publish this post to facebook when you save it, It is recommended to use OpenGraph. You can set the linked FB pages in settings. If you selected a lot of pages, the loading may be long.',$this->plugin_text_domain); ?>
+							</div>
+							<br />
+							<input type="checkbox" class="uiCheckbox" id="<?php echo $this->plugin_option_pref; ?>publish_to_pages" name="<?php echo $this->plugin_option_pref; ?>publish_to_pages" value="1" <?php if($this->options['publish_to_pages'] == 1) echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>publish_to_pages"><?php echo __('Publish to Facebook pages ?',$this->plugin_text_domain); ?></label>
+							<br />
+							<input type="checkbox" class="uiCheckbox" id="<?php echo $this->plugin_option_pref; ?>publish_to_profile" name="<?php echo $this->plugin_option_pref; ?>publish_to_profile" value="1" <?php if($this->options['publish_to_profile'] == 1) echo 'checked="checked"'; ?>  /> <label for="<?php echo $this->plugin_option_pref; ?>publish_to_profile"><?php echo __('Publish to your Facebook profile ?',$this->plugin_text_domain); ?></label>
+							<br />
+							<label for="<?php echo $this->plugin_option_pref; ?>publish_message_text"><?php echo __('Add a message to the post ?',$this->plugin_text_domain); ?></label><br />
+							<textarea class="uiTextarea" id="<?php echo $this->plugin_option_pref; ?>publish_message_text" name="<?php echo $this->plugin_option_pref; ?>publish_message_text"></textarea> 
+							<br />
+							<label for="<?php echo $this->plugin_option_pref; ?>publish_read_more_text"><?php echo __('Custom Action Label',$this->plugin_text_domain); ?></label><br />
+							<input type="text" class="uiTextarea" value="<?php echo $this->options['publish_read_more_text']; ?>" id="<?php echo $this->plugin_option_pref; ?>publish_read_more_text" name="<?php echo $this->plugin_option_pref; ?>publish_read_more_text" maxlengh="25"/>
+						<?php 
+						else:
+							echo $this->return_error(__('You must authorize manage_pages permission in the settings of the plugin', $this->plugin_text_domain));
+						endif;
+					else: 
+						echo $this->return_error(__('You must authorize publish_stream permission in the settings of the plugin', $this->plugin_text_domain));
 					endif;
-				else: 
-					echo $this->return_error(__('You must authorize publish_stream permission in the settings of the plugin', $this->plugin_text_domain));
-			endif; ?>
+				else:
+					echo '<p>'.do_shortcode('[AWD_loginbutton]').'</p>';
+				endif;
+		 	?>
 		</div>
 		<script type="text/javascript">
 			jQuery(document).ready(function($){
