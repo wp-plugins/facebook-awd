@@ -8,7 +8,7 @@ Author: AHWEBDEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AHWEBDEV
 Text Domain: AWD_facebook
-Last modification: 14/01/2012
+Last modification: 24/03/2012
 */
 
 
