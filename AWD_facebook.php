@@ -413,12 +413,14 @@ Class AWD_facebook
 				$message = $_POST[$this->plugin_option_pref.'publish_message_text'];
 				$read_more_text = $_POST[$this->plugin_option_pref.'publish_read_more_text'];
 				//Check if we want to publish on facebook pages and profile
-				if($_POST[$this->plugin_option_pref.'publish_to_pages'] == 1 && $this->current_facebook_user_can('stream_publish') && $this->current_facebook_user_can('manage_pages')){
+				if($_POST[$this->plugin_option_pref.'publish_to_pages'] == 1 && $this->current_facebook_user_can('publish_stream') && $this->current_facebook_user_can('manage_pages')){
 					$fb_publish_to_pages = $this->get_pages_to_publish();
-					$this->publish_post_to_facebook($message,$read_more_text,$fb_publish_to_pages,$post_id);
+					if(count($fb_publish_to_pages)>0){
+						$this->publish_post_to_facebook($message,$read_more_text,$fb_publish_to_pages,$post_id);
+					}
 				}
 				//Check if we want to publish on facebook pages and profile
-				if($_POST[$this->plugin_option_pref.'publish_to_profile'] == 1 && $this->current_facebook_user_can('stream_publish')){
+				if($_POST[$this->plugin_option_pref.'publish_to_profile'] == 1 && $this->current_facebook_user_can('publish_stream')){
 					$this->publish_post_to_facebook($message,$read_more_text, $this->uid ,$post_id);
 				}
 			}		
@@ -1070,7 +1072,7 @@ Class AWD_facebook
 	{	
 		$fb_queries = array();
 		$permalink = get_permalink($post_id);
-		if(is_array($to_pages) && count($to_pages)){
+		if(is_array($to_pages) && count($to_pages) > 0){
 			foreach($to_pages as $fbpage){				
 				$feed_dir = '/'.$fbpage['id'].'/feed/';
 				$params = array(
