@@ -22,6 +22,8 @@ Use both SDK's PHP v.3.1.1 AND JS v3
  
 = Sub Plugins =
 *   [Facebook AWD SEO Comments](http://wordpress.org/extend/plugins/facebook-awd-seo-comments/ "")
+*   [Facebook AWD APP Requests](http://wordpress.org/extend/plugins/facebook-awd-app-requests/ "")
+
 = Socials plugins Iframe or Xfbml or Html5: =
 
 *   [Like Button](http://trac.ahwebdev.fr/projects/facebook-awd/wiki/How_to_use_Like_Button "")
