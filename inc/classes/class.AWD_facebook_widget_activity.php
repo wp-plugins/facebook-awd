@@ -45,7 +45,7 @@ class AWD_facebook_widget_activity extends WP_Widget {
 
 	
 	
-	    echo '<h2 style="text-align:center;color:#627AAD;border:1px solid #ccc; padding:5px;"><img style="vertical-align:middle;" src="'.$this->AWD_facebook->plugin_url_images.'facebook-mini.png" alt="facebook logo"/> '.__('Facebook Activity Box',$this->AWD_facebook->plugin_text_domain).'</h2><br />';
+	    echo '<h2 style="text-align:center;color:#04ADD1;border:1px solid #ccc; padding:5px;"><img style="vertical-align:middle;" src="'.$this->AWD_facebook->plugin_url_images.'facebook-mini.png" alt="facebook logo"/> '.__('Facebook Activity Box',$this->AWD_facebook->plugin_text_domain).'</h2><br />';
 
 		
 		echo '

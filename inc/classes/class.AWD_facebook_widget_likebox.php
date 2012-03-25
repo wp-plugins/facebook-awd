@@ -42,7 +42,7 @@ class AWD_facebook_widget_likebox extends WP_Widget {
 		$like_box['like_box_use_content'] = (esc_attr($instance['like_box_use_content']) == '' ? 0 : $instance['like_box_use_content']);
 	
 	
-	    echo '<h2 style="text-align:center;color:#627AAD;border:1px solid #ccc; padding:5px;"><img style="vertical-align:middle;" src="'.$this->AWD_facebook->plugin_url_images.'facebook-mini.png" alt="facebook logo"/> '.__('Facebook Like Box',$this->AWD_facebook->plugin_text_domain).'</h2><br />';
+	    echo '<h2 style="text-align:center;color:#04ADD1;border:1px solid #ccc; padding:5px;"><img style="vertical-align:middle;" src="'.$this->AWD_facebook->plugin_url_images.'facebook-mini.png" alt="facebook logo"/> '.__('Facebook Like Box',$this->AWD_facebook->plugin_text_domain).'</h2><br />';
 
 		$label = __('Iframe Or xfbml:',$this->AWD_facebook->plugin_text_domain);
 		

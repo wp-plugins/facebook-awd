@@ -34,7 +34,7 @@ class AWD_facebook_widget_loginbutton extends WP_Widget {
 		$login_button['login_button_logout_url'] = (esc_attr($instance['login_button_logout_url']) == '' ? $this->AWD_facebook->options['login_button_logout_url'] : $instance['login_button_logout_url']);
 		$login_button['login_button_login_url'] = (esc_attr($instance['login_button_login_url']) == '' ? $this->AWD_facebook->options['login_button_login_url'] : $instance['login_button_login_url']);
 
-	    echo '<h2 style="text-align:center;color:#627AAD;border:1px solid #ccc; padding:5px;"><img style="vertical-align:middle;" src="'.$this->AWD_facebook->plugin_url_images.'facebook-mini.png" alt="facebook logo"/> '.__('Facebook Login Button',$this->AWD_facebook->plugin_text_domain).'</h2><br />';
+	    echo '<h2 style="text-align:center;color:#04ADD1;border:1px solid #ccc; padding:5px;"><img style="vertical-align:middle;" src="'.$this->AWD_facebook->plugin_url_images.'facebook-mini.png" alt="facebook logo"/> '.__('Facebook Login Button',$this->AWD_facebook->plugin_text_domain).'</h2><br />';
 	
 		if($this->AWD_facebook->options['connect_enable'] == 1){
 			echo '

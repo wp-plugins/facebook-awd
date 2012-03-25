@@ -71,4 +71,11 @@ jQuery(document).ready( function($){
 				jQuery('#awd_fcbk_app_infos_metabox.postbox .inside').html(data);
 		});
 	});
+	
+	//effect on promo
+	$('.AWD_facebook_promo_plugin img').hover(function(){
+		$(this).animate({opacity: 0.8}, 200);
+	},function(){
+		$(this).animate({opacity: 1}, 200);
+	});
 });

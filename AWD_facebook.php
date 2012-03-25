@@ -518,7 +518,7 @@ Class AWD_facebook
 		add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->options['app_infos']['icon_url'].'" alt=""/>', array(&$this,'app_infos_content'),  $this->blog_admin_page_hook, 'side', 'core');
 		add_meta_box($this->plugin_slug."_info_metabox",  __('Informations',$this->plugin_text_domain), array(&$this,'general_content'),  $this->blog_admin_page_hook, 'side', 'core');
 		add_meta_box($this->plugin_slug."_activity_metabox",  __('Activity on your site',$this->plugin_text_domain), array(&$this,'activity_content'),  $this->blog_admin_page_hook , 'side', 'core');
-		add_meta_box($this->plugin_slug."_discover_metabox",  __('Discover',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->blog_admin_page_hook , 'normal', 'core');
+		add_meta_box($this->plugin_slug."_discover_metabox",  __('Facebook AWD Plugins',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->blog_admin_page_hook , 'normal', 'core');
 
 		//Plugins page
 		add_meta_box($this->plugin_slug."_plugins_metabox", __('Plugins Settings',$this->plugin_text_domain).' <img src="'.$this->plugin_url_images.'plugins.png" />', array(&$this,'plugins_content'),  $this->blog_admin_plugins_hook , 'normal', 'core');
@@ -526,7 +526,7 @@ Class AWD_facebook
 		add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->options['app_infos']['icon_url'].'" alt=""/>', array(&$this,'app_infos_content'),  $this->blog_admin_plugins_hook , 'side', 'core');
 		add_meta_box($this->plugin_slug."_info_metabox",  __('Informations',$this->plugin_text_domain), array(&$this,'general_content'),  $this->blog_admin_plugins_hook , 'side', 'core');
 		add_meta_box($this->plugin_slug."_activity_metabox",  __('Activity on your site',$this->plugin_text_domain), array(&$this,'activity_content'),  $this->blog_admin_plugins_hook , 'side', 'core');
-		add_meta_box($this->plugin_slug."_discover_metabox",  __('Discover',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->blog_admin_plugins_hook , 'normal', 'core');
+		add_meta_box($this->plugin_slug."_discover_metabox",  __('Facebook AWD Plugins',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->blog_admin_plugins_hook , 'normal', 'core');
 		
 		
 		//OpenGraph And post edito pages
@@ -544,7 +544,7 @@ Class AWD_facebook
 			add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->options['app_infos']['icon_url'].'" alt=""/>', array(&$this,'app_infos_content'),  $this->blog_admin_opengraph_hook , 'side', 'core');
 			add_meta_box($this->plugin_slug."_info_metabox",  __('Informations',$this->plugin_text_domain), array(&$this,'general_content'),  $this->blog_admin_opengraph_hook , 'side', 'core');
 			add_meta_box($this->plugin_slug."_activity_metabox",  __('Activity on your site',$this->plugin_text_domain), array(&$this,'activity_content'),  $this->blog_admin_opengraph_hook , 'side', 'core');
-			add_meta_box($this->plugin_slug."_discover_metabox",  __('Discover',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->blog_admin_opengraph_hook , 'normal', 'core');
+			add_meta_box($this->plugin_slug."_discover_metabox",  __('Facebook AWD Plugins',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->blog_admin_opengraph_hook , 'normal', 'core');
 		}
 		
 		//Call the menu init to get page hook for each menu
@@ -558,7 +558,7 @@ Class AWD_facebook
 				add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->options['app_infos']['icon_url'].'" alt=""/>', array(&$this,'app_infos_content'),  $page_hook , 'side', 'core');
 				add_meta_box($this->plugin_slug."_info_metabox",  __('Informations',$this->plugin_text_domain), array(&$this,'general_content'),  $page_hook , 'side', 'core');
 				add_meta_box($this->plugin_slug."_activity_metabox",  __('Activity on your site',$this->plugin_text_domain), array(&$this,'activity_content'),  $page_hook , 'side', 'core');
-				add_meta_box($this->plugin_slug."_discover_metabox",  __('Discover',$this->plugin_text_domain), array(&$this,'discover_content'),  $page_hook , 'normal', 'core');
+				add_meta_box($this->plugin_slug."_discover_metabox",  __('Facebook AWD Plugins',$this->plugin_text_domain), array(&$this,'discover_content'),  $page_hook , 'normal', 'core');
 			}
 		}
 		
@@ -568,7 +568,7 @@ Class AWD_facebook
 		add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->options['app_infos']['icon_url'].'" alt=""/>', array(&$this,'app_infos_content'),  $this->blog_admin_support_hook , 'side', 'core');
 		add_meta_box($this->plugin_slug."_info_metabox",  __('Informations',$this->plugin_text_domain), array(&$this,'general_content'),  $this->blog_admin_support_hook , 'side', 'core');
 		add_meta_box($this->plugin_slug."_activity_metabox",  __('Activity on your site',$this->plugin_text_domain), array(&$this,'activity_content'),  $this->blog_admin_support_hook , 'side', 'core');
-		add_meta_box($this->plugin_slug."_discover_metabox",  __('Discover',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->blog_admin_support_hook , 'normal', 'core');
+		add_meta_box($this->plugin_slug."_discover_metabox",  __('Facebook AWD Plugins',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->blog_admin_support_hook , 'normal', 'core');
 
 	}
 	
@@ -707,30 +707,29 @@ Class AWD_facebook
 	{
 	    ?>
 	    <div style="text-align:center;">
-	    	<img src="<?php echo $this->plugin_url_images; ?>banner-278.jpg" />
 			<div class="header_AWD_facebook_wrap">
-				<h2 style="color:#627AAD;margin:0px;">
-					<img style="vertical-align:middle;" src="<?php echo $this->plugin_url_images; ?>facebook.png" alt="facebook logo" class="AWD_button_media" width="35" height="35"/>Facebook AWD
-					<sup style="color:#627AAD;font-size:0.6em;">v<?php echo $this->get_version(); ?></sup>
+				<h2 style="color:#04ADD1;margin:0px;">
+					<img style="vertical-align:middle;" src="<?php echo $this->plugin_url_images; ?>facebook-mini.png" alt="facebook logo" style="vertical-align:middle;"/> Facebook AWD
+					<sup style="color:#04ADD1;font-size:0.6em;">v<?php echo $this->get_version(); ?></sup>
 				</h2>
 			</div>
 			<?php
 			//List plugins
-			echo '<h3 style="color:#627AAD;margin:0px;font-size:13px;text-align:left;">'.__('Plugins installed',$this->plugin_text_domain).'</h3>';
+			echo '<h3 style="margin:0px;font-size:13px;text-align:left;">'.__('Plugins installed',$this->plugin_text_domain).'</h3>';
 			if(is_array($this->plugins)){
 				foreach($this->plugins as $plugin){
-					echo'<p style="color:#627AAD;margin:0px;font-size:12px; text-align:left;">
+					echo'<p style="color:#04ADD1;margin:0px;font-size:12px; text-align:left;">
 					- '.$plugin->plugin_name.'
-					<sup style="color:#627AAD;font-size:0.6em;">v'.$plugin->get_version().'</sup>
+					<sup style="color:#04ADD1;font-size:0.6em;">v'.$plugin->get_version().'</sup>
 					</p>';
 				}
 			}else{
-				echo'<p style="color:#627AAD;margin:0px;font-size:12px; text-align:left;">
+				echo'<p style="color:#04ADD1;margin:0px;font-size:12px; text-align:left;">
 					'.__('- None',$this->plugin_text_domain).'
 					</p>';
 			}
 			?>
-			<h3 style="color:#627AAD;margin:5px 0px;font-size:13px;text-align:left;"><?php _e('Help Me',$this->plugin_text_domain); ?></h3>
+			<h3 style="margin:5px 0px;font-size:13px;text-align:left;"><?php _e('Help Me',$this->plugin_text_domain); ?></h3>
 			<a name='b_54c8ac3055ea012fbb7e000d60d4c902'></a><object type='application/x-shockwave-flash' data='https://giving.paypallabs.com/flash/badge.swf' width='205' height='350' id='badge54c8ac3055ea012fbb7e000d60d4c902' align='middle'>
 			<param name='allowScriptAccess' value='always' />
 			<param name='allowNetworking' value='all' />
@@ -742,7 +741,7 @@ Class AWD_facebook
 			<embed src='https://giving.paypallabs.com/flash/badge.swf' FlashVars='Id=54c8ac3055ea012fbb7e000d60d4c902' quality='high' bgcolor='#FFFFFF' wmode='transparent' width='205' height='350' Id='badge54c8ac3055ea012fbb7e000d60d4c902' align='middle' allowScriptAccess='always' allowNetworking='all' type='application/x-shockwave-flash' pluginspage='http://www.macromedia.com/go/getflashplayer'></embed>
 			</object>
 			
-			<h3 style="color:#627AAD;margin:0px;font-size:13px;text-align:left;"><?php _e('Follow Me',$this->plugin_text_domain); ?></h3>
+			<h3 style="margin:0px;font-size:13px;text-align:left;"><?php _e('Follow Me',$this->plugin_text_domain); ?></h3>
 			<?php echo do_shortcode('[AWD_likebox url="https://www.facebook.com/pages/AHWEBDEV/207050892672485" colorscheme="light" stream="0" xfbml="0" header="0" width="257" height="333" faces="1"]'); ?>
 	   	    <h2><a href="#tab-link-AWD_facebook_contact_support" onclick="jQuery('#contextual-help-link').trigger('click');"><?php _e('WIKI',$this->plugin_text_domain); ?></a></h2>
 	    </div>
@@ -800,35 +799,35 @@ Class AWD_facebook
 			<div id="awd_app">
 				<table>
 					<tr>
-						<td><?php _e('Name' ,$this->plugin_text_domain); ?>:</td>
+						<th><?php _e('Name' ,$this->plugin_text_domain); ?>:</th>
 						<td><?php echo $infos['name']; ?></td>
 					</tr>
 					<tr>
-						<td>ID:</td>
+						<th>ID:</th>
 						<td><?php echo $infos['id']; ?></td>
 					</tr>
 					<tr>
-						<td><?php _e('Link' ,$this->plugin_text_domain); ?>:</td>
+						<th><?php _e('Link' ,$this->plugin_text_domain); ?>:</th>
 						<td><a href="<?php echo $infos['link']; ?>" target="_blank">View App</a></td>
 					</tr>
 					<tr>
-						<td><?php _e('Namespace' ,$this->plugin_text_domain); ?>:</td>
+						<th><?php _e('Namespace' ,$this->plugin_text_domain); ?>:</th>
 						<td><?php echo $infos['namespace']; ?></td>
 					</tr>
 					<tr>
-						<td><?php _e('Daily active users' ,$this->plugin_text_domain); ?>:</td>
+						<th><?php _e('Daily active users' ,$this->plugin_text_domain); ?>:</th>
 						<td class="app_active_users"><?php echo $infos['daily_active_users']; ?></td>
 					</tr>
 					<tr>
-						<td><?php _e('Weekly active users' ,$this->plugin_text_domain); ?>:</td>
+						<th><?php _e('Weekly active users' ,$this->plugin_text_domain); ?>:</th>
 						<td class="app_active_users"><?php echo $infos['weekly_active_users']; ?></td>
 					</tr>
 					<tr>
-						<td><?php _e('Monthly active users' ,$this->plugin_text_domain); ?>:</td>
+						<th><?php _e('Monthly active users' ,$this->plugin_text_domain); ?>:</th>
 						<td class="app_active_users"><?php echo $infos['monthly_active_users']; ?></td>
 					</tr>
 					<tr>
-						<td><img src="<?php echo $infos['logo_url']; ?>" class="awd_app_logo"/></td>
+						<th><img src="<?php echo $infos['logo_url']; ?>" class="awd_app_logo"/></th>
 						<td><a href="#" id="reload_app_infos" class="uiButton uiButtonNormal"><?php _e('Test Settings',$this->plugin_text_domain); ?></a></td>
 	
 					</tr>
@@ -854,7 +853,11 @@ Class AWD_facebook
 	 */
 	public function discover()
 	{
-		$html = '<a href="http://wordpress.org/extend/plugins/facebook-awd-seo-comments/" target="_blank"><img src="'.$this->plugin_url_images.'facebook-awd-seo-comments-promo.jpg" alt="SEO comments" border="0" /></a>';
+		$html = '
+		<div class="AWD_facebook_promo_plugin">
+			<a href="http://wordpress.org/extend/plugins/facebook-awd-seo-comments/" target="_blank"><img src="'.$this->plugin_url_images.'facebook-awd-seo-comments-promo.jpg" alt="SEO Comments" border="0" /></a>
+			<a href="http://wordpress.org/extend/plugins/facebook-awd-app-requests/" target="_blank"><img src="'.$this->plugin_url_images.'facebook-awd-app-request-promo.jpg" alt="APP Requests" border="0" /></a>
+		</div>';
 		return $html;
 	}
 	

@@ -35,7 +35,7 @@ class AWD_facebook_widget_comments extends WP_Widget {
 		$comments['comments_nb'] = (esc_attr($instance['comments_nb']) == '' ? $this->AWD_facebook->options['comments_nb'] : $instance['comments_nb']);
 		$comments['comments_mobile'] = (esc_attr($instance['comments_mobile']) == '' ? $this->AWD_facebook->options['comments_mobile'] : $instance['comments_mobile']);
 		
-	    echo '<h2 style="text-align:center;color:#627AAD;border:1px solid #ccc; padding:5px;"><img style="vertical-align:middle;" src="'.$this->AWD_facebook->plugin_url_images.'facebook-mini.png" alt="facebook logo"/> '.__('Facebook Comments Box',$this->AWD_facebook->plugin_text_domain).'</h2><br />';
+	    echo '<h2 style="text-align:center;color:#04ADD1;border:1px solid #ccc; padding:5px;"><img style="vertical-align:middle;" src="'.$this->AWD_facebook->plugin_url_images.'facebook-mini.png" alt="facebook logo"/> '.__('Facebook Comments Box',$this->AWD_facebook->plugin_text_domain).'</h2><br />';
 
 		
 		echo '

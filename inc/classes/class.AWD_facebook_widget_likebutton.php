@@ -42,7 +42,7 @@ class AWD_facebook_widget_likebutton extends WP_Widget {
 		$like_button['like_button_use_content'] = (esc_attr($instance['like_button_use_content']) == '' ? 0 : $instance['like_button_use_content']);
 		$like_button['like_button_layout'] = (esc_attr($instance['like_button_layout']) == '' ? 0 : $instance['like_button_layout']);
 	
-	    echo '<h2 style="text-align:center;color:#627AAD;border:1px solid #ccc; padding:5px;"><img style="vertical-align:middle;" src="'.$this->AWD_facebook->plugin_url_images.'facebook-mini.png" alt="facebook logo"/> '.__('Facebook Like Button',$this->AWD_facebook->plugin_text_domain).'</h2><br />
+	    echo '<h2 style="text-align:center;color:#04ADD1;border:1px solid #ccc; padding:5px;"><img style="vertical-align:middle;" src="'.$this->AWD_facebook->plugin_url_images.'facebook-mini.png" alt="facebook logo"/> '.__('Facebook Like Button',$this->AWD_facebook->plugin_text_domain).'</h2><br />
 		<p>
 			<label for="'.$this->get_field_id('like_button_title').'">'.__('Title',$this->AWD_facebook->plugin_text_domain).' 
 				<input class="widefat" id="'.$this->get_field_id('like_button_title').'" name="'.$this->get_field_name('like_button_title').'" type="text" value="'.$title.'" />
