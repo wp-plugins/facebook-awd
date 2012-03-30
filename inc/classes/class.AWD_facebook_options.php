@@ -10,7 +10,7 @@ class AWD_facebook_options
 	/**
 	 * Protected Option var
 	 */
-	protected $options;
+	protected $options = array();
 	
 	/**
 	 * Protected Wpdb instance WP database
@@ -250,7 +250,8 @@ class AWD_facebook_options
 	{
 		$old_options = get_option($this->filterName);
 		//create new options
-		$this->options = array_merge($old_options, $this->options);
+		$this->options = is_array($old_options) ? array_merge($old_options, $this->options) : $this->options;
+		
 		//verify default value
 		$this->defaultOptions($this->options);
 		update_option($this->filterName, $this->options);
