@@ -241,7 +241,6 @@ Class AWD_facebook
 		wp_register_script($this->plugin_slug.'-admin-js',$this->plugin_url.'/assets/js/facebook_awd.js',array('jquery'));
 		wp_register_script($this->plugin_slug.'-js',$this->plugin_url.'/assets/js/facebook_awd_custom_actions.js',array('jquery'));
 		wp_register_script($this->plugin_slug.'-ui-toolkit',$this->plugin_url.'/assets/js/ui-toolkit.js',array('jquery'));
-		
 		wp_register_style($this->plugin_slug.'-admin', $this->plugin_url.'/assets/css/admin_styles.css',array($this->plugin_slug.'-jquery-ui'));
 		wp_register_style($this->plugin_slug.'-jquery-ui', $this->plugin_url.'/assets/css/jquery-ui-1.8.14.custom.css');
 		wp_register_style($this->plugin_slug.'-ui-toolkit', $this->plugin_url.'/assets/css/ui-toolkit.css');
@@ -280,7 +279,7 @@ Class AWD_facebook
 		//add fetured image menu to get FB image in open Graph set image 50x50
 		if (function_exists('add_theme_support')) {
 			add_theme_support('post-thumbnails');
-			add_image_size('AWD_facebook_ogimage', 100, 100, true);
+			add_image_size('AWD_facebook_ogimage', 200, 200, true);
 		}
 	}
 	
