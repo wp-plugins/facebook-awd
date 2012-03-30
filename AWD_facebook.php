@@ -2446,7 +2446,7 @@ Class AWD_facebook
 		
 		//if some options defined
 		if(empty($options['case'])){
-			if($this->is_user_logged_in_facebook() && $this->options['connect_enable'] == 1)
+			if($this->is_user_logged_in_facebook() && $this->options['connect_enable'] == 1 && is_user_logged_in())
 				$case = 'profile';
 			else if($this->options['connect_enable'] == 1)
 				$case = 'login';
