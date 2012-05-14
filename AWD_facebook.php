@@ -1377,7 +1377,11 @@ Class AWD_facebook
 			//Try to find if the batch return error. IF yes, the user acces token is no more good.
 			if(!isset($me['error'])){
 				// Proceed knowing you have a logged in user who's authenticated.
+<<<<<<< HEAD
 				$me['AWD_access_token'] = $this->fcbk->getAccessToken();
+=======
+				$me['AWD_acces_token'] = $this->fcbk->getAccessToken();
+>>>>>>> Fix global query to be executed in login
 				$fb_perms = json_decode($batchResponse[1]['body'], true);
 				$me['permissions'] = $fb_perms['data'][0];
 				$fb_pages = json_decode($batchResponse[2]['body'], true);

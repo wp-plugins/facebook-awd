@@ -200,10 +200,10 @@ class AWD_facebook_options
 			$this->options['perms'] = 'email,'.$this->options['perms'];  
 			
 		//Define default options for admin users.
-		if(current_facebook_user_can('manage_options'))
+		if(current_user_can('manage_options'))
 			if(!in_array('manage_pages',$array_perms))
 				$this->options['perms_admin'] = 'manage_pages,';
-		if($this->AWD_facebook->current_facebook_user_can('publish_stream'))
+		if($AWD_facebook->current_facebook_user_can('publish_stream'))
         	if(!in_array('publish_stream',$array_perms))
 				$this->options['perms_admin'] .= 'publish_stream,';
 		
