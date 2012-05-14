@@ -153,4 +153,3 @@ abstract class AWD_facebook_plugin_abstract implements AWD_facebook_plugin_inter
 	}
 	
 }
-?>
