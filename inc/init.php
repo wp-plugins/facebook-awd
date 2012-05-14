@@ -60,13 +60,11 @@ add_shortcode('AWD_activitybox', array(&$this,'shortcode_activity_box'));
 add_shortcode('AWD_loginbutton', array(&$this,'shortcode_login_button'));
 add_shortcode('AWD_comments', array(&$this,'shortcode_comments_box'));
 
-
 //OPTIONS
+include_once(dirname(dirname(__FILE__)).'/inc/opengraph_objects.php');
 $this->optionsManager = new AWD_facebook_options($this->plugin_option_pref,$this->wpdb);
 $this->optionsManager->load();
 $this->options = $this->optionsManager->getOptions();
-
-
 
 
 //Init the SDK PHP

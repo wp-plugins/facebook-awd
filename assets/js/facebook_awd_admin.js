@@ -5,15 +5,6 @@
 * Hermann.alexandre@ahwebdev.fr
 *
 */
-
-//Hide or show state
-function hide_state(elem,elem_to_hide){
-	if(jQuery(elem).attr('checked') != "checked"){
-		jQuery(elem_to_hide).fadeOut();
-	}else{
-		jQuery(elem_to_hide).show();
-	}
-}
 //Jquery Init
 jQuery(document).ready( function($){
 	//accordion brefore tabs
@@ -78,4 +69,57 @@ jQuery(document).ready( function($){
 	},function(){
 		$(this).animate({opacity: 1}, 200);
 	});
+	
+	
+	//button upload
+	$(".AWD_button_media").click(function(){
+		var $button = $(this);
+		var $data = $(this).data();
+		var $field = $('#'+$data.field);
+		var formfieldName =  $field.attr('name');
+		tb_show($data.title, 'media-upload.php?type='+$data.type+'&amp;TB_iframe=true');
+		
+		window.send_to_editor = function(html) {
+			var imgurl = jQuery('img',html).attr('src');
+			$field.val(imgurl);
+			tb_remove();
+		}
+		return false;
+	});
+	
+	$(".ui_ogtags_form").accordion({
+		header: "h4",
+		autoHeight: false,
+		icons:{
+			header: "ui-icon-circle-arrow-e",
+			headerSelected: "ui-icon-circle-arrow-s"
+		},
+		collapsible: true,
+		active: false
+	});
+	jQuery('.facebook_AWD_select_ogtype').each(function(){
+		update_custom_type($(this));
+		$(this).change(function(){
+			update_custom_type($(this));
+		});
+	});
 });
+//Hide or show state
+function hide_state(elem,elem_to_hide){
+	if(jQuery(elem).attr('checked') != "checked"){
+		jQuery(elem_to_hide).fadeOut();
+	}else{
+		jQuery(elem_to_hide).show();
+	}
+}
+function update_custom_type($element){
+	if($element.val() == 'custom'){
+		jQuery("#"+$element.attr('id')+"_custom").slideDown();
+		jQuery("#"+$element.attr('id')+"_custom").attr('disabled',false);
+	}else{
+		jQuery("#"+$element.attr('id')+"_custom").slideUp();
+		jQuery("#"+$element.attr('id')+"_custom").attr('disabled',true);
+	}
+}
+	
+	

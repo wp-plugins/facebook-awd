@@ -216,8 +216,6 @@ Class AWD_facebook
 		if(!class_exists('Facebook'))
 			require_once(dirname(__FILE__).'/inc/classes/facebook/facebook.php');
 		
-		//load the objects for open graph
-		include_once(dirname(__FILE__).'/inc/opengraph_objects.php');
 		//init the plugin and action
 		add_action('plugins_loaded',array(&$this,'initial'));
 		//like box widget register
@@ -403,33 +401,37 @@ Class AWD_facebook
 	{
 		$fb_publish_to_pages = false;
 		$fb_publish_to_user = false;
-		if(!wp_is_post_revision( $post_id )){
+		$post = get_post($post_id);
+		if(!wp_is_post_revision($post->ID)){
 			foreach($_POST as $__post=>$val){
 				//should have ogtags in prefix present to be saved
 				if(preg_match('@ogtags_@',$__post)){
-					update_post_meta($post_id, $__post, $val);
+					update_post_meta($post->ID, $__post, $val);
 				}
 				if(preg_match('@'.$this->plugin_option_pref.'like_button@',$__post)){
-					update_post_meta($post_id, $__post, $val);
+					update_post_meta($post->ID, $__post, $val);
 				}				
 			}
-			//check if facebook user before to try to publish
-			if($this->is_user_logged_in_facebook()){
-				//Publish to Graph api
-				$message = $_POST[$this->plugin_option_pref.'publish_message_text'];
-				$read_more_text = $_POST[$this->plugin_option_pref.'publish_read_more_text'];
-				//Check if we want to publish on facebook pages and profile
-				if($_POST[$this->plugin_option_pref.'publish_to_pages'] == 1 && $this->current_facebook_user_can('publish_stream') && $this->current_facebook_user_can('manage_pages')){
-					$fb_publish_to_pages = $this->get_pages_to_publish();
-					if(count($fb_publish_to_pages)>0){
-						$this->publish_post_to_facebook($message,$read_more_text,$fb_publish_to_pages,$post_id);
+			//check if the post is published
+			if($post->post_status == 'publish'){
+				//check if facebook user before to try to publish
+				if($this->is_user_logged_in_facebook()){
+					//Publish to Graph api
+					$message = $_POST[$this->plugin_option_pref.'publish_message_text'];
+					$read_more_text = $_POST[$this->plugin_option_pref.'publish_read_more_text'];
+					//Check if we want to publish on facebook pages and profile
+					if($_POST[$this->plugin_option_pref.'publish_to_pages'] == 1 && $this->current_facebook_user_can('publish_stream') && $this->current_facebook_user_can('manage_pages')){
+						$fb_publish_to_pages = $this->get_pages_to_publish();
+						if(count($fb_publish_to_pages)>0){
+							$this->publish_post_to_facebook($message,$read_more_text,$fb_publish_to_pages,$post->ID);
+						}
+					}
+					//Check if we want to publish on facebook pages and profile
+					if($_POST[$this->plugin_option_pref.'publish_to_profile'] == 1 && $this->current_facebook_user_can('publish_stream')){
+						$this->publish_post_to_facebook($message,$read_more_text, $this->uid ,$post->ID);
 					}
 				}
-				//Check if we want to publish on facebook pages and profile
-				if($_POST[$this->plugin_option_pref.'publish_to_profile'] == 1 && $this->current_facebook_user_can('publish_stream')){
-					$this->publish_post_to_facebook($message,$read_more_text, $this->uid ,$post_id);
-				}
-			}		
+			}
 		}
 	}
 	
@@ -1025,7 +1027,7 @@ Class AWD_facebook
 					return $like_button.$content.$like_button;
 				elseif($this->options['like_button_place_on_posts'] == 'top')
 				    return $like_button.$content;
-			}elseif($post->post_type != '' && $this->options['like_button_on_custom_post_types']){
+			}elseif(in_array($post->post_type,get_post_types(array('public'=> true,'_builtin' => false))) && $this->options['like_button_on_custom_post_types']){     
 				//for other custom post type
 				if($this->options['like_button_place_on_custom_post_types'] == 'bottom')
 					return $content.$like_button;
@@ -1134,7 +1136,7 @@ Class AWD_facebook
 	 * @return boolean
 	 */
 	public function update_options_from_post()
-	{
+	{	
 	    if($_POST){
             foreach($_POST as $option=>$value){
             	$option_name = str_ireplace($this->plugin_option_pref,"",$option);
@@ -1173,7 +1175,7 @@ Class AWD_facebook
 		
 		}else if(isset($_POST[$this->plugin_option_pref.'_nonce_reset_options']) && wp_verify_nonce($_POST[$this->plugin_option_pref.'_nonce_reset_options'],$this->plugin_slug.'_reset_options')){
 			$this->optionsManager->reset();
-			$this->message = '<div id="message" class="ui-state-highlight fadeOnload"><p>'.__('Options were reseted',$this->plugin_text_domain).'</p></div>';
+			$this->message = '<div class="ui-state-highlight fadeOnload"><p>'.__('Options were reseted',$this->plugin_text_domain).'</p></div>';
 		}
 	}
 	
@@ -1389,8 +1391,9 @@ Class AWD_facebook
 				$result = array();
 				$result['error_description'] = $me['error']['message'];
 				$result['error_code'] = $me['error']['code'];
+				return new WP_Error($me['error']['code'], $result['error_description']);
 				//manually trow error, since errors are not catched in batch request.
-				wp_die(new FacebookApiException($result));
+				//wp_die(new FacebookApiException($result));
 			}
 		}
 	}
@@ -1739,8 +1742,11 @@ Class AWD_facebook
 	public function construct_open_graph_tags($prefix_option,$array_pattern,$array_replace,$custom_post=array())
 	{
 		$options = array();
-		$og_tags = $this->og_tags;
+		$og_tags =  array();
+		$og_tags = apply_filters('AWD_facebook_og_tags', $this->og_tags);
 		//define all tags we need to display
+		$tag_attachment_fields = array();
+		$this->og_attachement_field = apply_filters('AWD_facebook_og_attachement_fields', $this->og_attachement_field);
 		foreach($this->og_attachement_field as $type=>$tag_fields){
 			foreach($tag_fields as $tag=>$tag_name){
 				$tag_attachment_fields[$tag] = $tag_name;
@@ -1748,6 +1754,19 @@ Class AWD_facebook
 		}
 		//add attachment fields to global fields for display
 		$og_tags_final = array_merge($og_tags,$tag_attachment_fields);
+		
+		//add new custom fields to array
+		$this->og_custom_fields = apply_filters('AWD_facebook_og_custom_fields', $this->og_custom_fields);
+		$tag_custom_fields = array();
+		foreach($this->og_custom_fields as $type=>$tag_fields){
+			if(is_array($tag_fields)){
+				foreach($tag_fields as $tag=>$tag_infos){
+					$tag_infos['custom'] = 1;
+					$tag_custom_fields[$tag] = $tag_infos;
+				}
+			}
+		}
+		$og_tags_final = array_merge($og_tags_final,$tag_custom_fields);
 		//if tags are empty because not set in plugin for retro actif on post and page
 		if(empty($custom_post[$this->plugin_option_pref.'ogtags_disable'][0]))
 			$custom_post[$this->plugin_option_pref.'ogtags_disable'][0] = 0;
@@ -1758,7 +1777,7 @@ Class AWD_facebook
 		
 		if(!$disabled_general AND !$disabled_from_post){
 			//foreach tags, set value
-			foreach($og_tags_final as $tag=>$tag_name){
+			foreach($og_tags_final as $tag=>$tag_infos){
 				$option_value = '';
 				//if choose to redefine from post
 				if(isset($custom_post[$this->plugin_option_pref.'ogtags_redefine'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_redefine'][0] == 1){
@@ -1800,9 +1819,7 @@ Class AWD_facebook
 				$option_value = str_replace("\n"," ",$option_value);
 				$option_value = str_replace("\r","",$option_value);
 				$option_value = str_replace("\t","",$option_value);
-				
-				
-				
+
 				//if image still empty, and if we get one for app infos... push it inside open Graph as default
 				if(($tag == 'image' && $option_value == '%POST_IMAGE%') OR ($tag == 'image' && $option_value == '' && !empty($this->options['app_infos'])) ){
 					$image = $option_value = $this->options['app_infos']['logo_url'];
@@ -1823,6 +1840,8 @@ Class AWD_facebook
 					continue;
 				elseif(($tag == 'app_id' || $tag == 'admins' || $tag == 'page_id') && $option_value!='')
 					$options['fb:'.$tag] = $option_value;
+				elseif($tag_infos['custom'] == 1)
+					$options[$this->options['app_infos']['namespace'].':'.$tag] = $option_value;
 				elseif($option_value !='')
 					$options['og:'.$tag] = $option_value;
 			}
@@ -1972,6 +1991,37 @@ Class AWD_facebook
 		}
 	}
 	
+	
+	public function get_input_html_from_type($type='string', $tag, $custom='', $prefix=''){
+		$prefixtag = $prefix.$tag;
+		$value = stripslashes($custom[$prefixtag][0]);
+		$default_html_input_input_types = apply_filters('AWD_facebook_input_types', array(
+			'string' => '<input id="%ID%" name="%ID%" type="text" value="%VALUE%" />',
+			'textarea' => '<textarea class="widefat" id="%ID%" name="%ID%">%VALUE%</textarea>',
+			'audio' => '<input class="ogwidefat" id="%ID%" name="%ID%" type="text" value="%VALUE%" /><img id="%PREFIX%upload_%ID%" src="'.$this->plugin_url_images.'upload_image.png" alt="'.__('Upload',$this->plugin_text_domain).'" class="AWD_button_media" data-title="Media '.$this->plugin_name.'" data-field="%ID%" data-type="audio"/>',
+			'video' => '<input class="ogwidefat" id="%ID%" name="%ID%" type="text" value="%VALUE%" /><img id="%PREFIX%upload_%ID%" src="'.$this->plugin_url_images.'upload_image.png" alt="'.__('Upload',$this->plugin_text_domain).'" class="AWD_button_media" data-title="Media '.$this->plugin_name.'" data-field="%ID%" data-type="video"/>',
+			'image' => '<input class="ogwidefat" id="%ID%" name="%ID%" type="text" value="%VALUE%" /><img id="%PREFIX%upload_%ID%" src="'.$this->plugin_url_images.'upload_image.png" alt="'.__('Upload',$this->plugin_text_domain).'" class="AWD_button_media" data-title="Media '.$this->plugin_name.'" data-field="%ID%" data-type="image"/>'
+		));
+		if($tag == 'type'){
+			$select_ogtypes ='';
+			//get special input tags
+			$this->og_types = apply_filters('AWD_facebook_og_types', $this->og_types);
+			foreach($this->og_types as $globaltype=>$types){
+				$select_ogtypes .='<optgroup label="'.strtoupper($globaltype).'">';
+				foreach($types as $type=>$type_name)
+					$select_ogtypes .='<option '.($value == $type ? 'selected="selected"':'').' value="'.$type.'">'.$type_name.'</option>';
+				$select_ogtypes .='</optgroup>';
+			}
+			$input = '<select name="'.$prefixtag.'" id="'.$prefixtag.'" class="facebook_AWD_select_ogtype">'.$select_ogtypes.'</select>';
+			$input .= '<input class="hidden" disabled="disabled" id="'.$prefixtag.'_custom" name="'.$prefixtag.'_custom" type="text" value="'.($custom[$prefixtag.'_custom'][0] != '' ? $custom[$prefixtag.'_custom'][0] : 'Custom value').'" />';
+			return $input;
+		}
+		$array_pattern = array('%ID%','%NAME%','%VALUE%','%PREFIX%');
+		$array_replace = array($prefixtag, $prefixtag, $value, $prefix);
+		$default_html_input_types[$type] = str_ireplace($array_pattern,$array_replace,$default_html_input_input_types[$type]);
+		return $default_html_input_types[$type];
+	}
+	
 	/**
 	 * Open Graph meta form in post and custom post type
 	 * used both in open graph settings
@@ -1981,394 +2031,8 @@ Class AWD_facebook
 	 */
 	public function open_graph_post_metas_form($post=null,$metabox=array())
 	{
-		//prefix defined from args,
-		//custom take value from custom args if set...
-		$prefix = $this->plugin_option_pref.'ogtags_';
-		if(is_array($metabox)){
-			if(is_array($metabox['args'])){
-				$prefix = $metabox['args']['prefix'];
-				//custom is the name of the array of option
-				$customTemp = $metabox['args']['custom'];
-				$custom = $this->options[$customTemp];
-				//reconstruct the arry to be compatible with this function and args metabox
-				if($customTemp){
-					foreach($this->options as $option=>$value)
-						if(preg_match('@'.$customTemp.'@',$option))
-							$custom[str_ireplace($customTemp.'_',"",$prefix).$option][0] = $value;
-				}
-				//use h4 or other
-				$custom_header = $metabox['args']['header'];
-				$custom_help = $metabox['args']['help'];
-			}
-		}
-		
-		if($custom_header =='')
-			$custom_header ='h4';
-		//if post get custom from post
-		//else get custom from $vars
-		if(is_object($post))
-			$custom = get_post_custom($post->ID);
-		elseif(!$custom)
-			$custom = array();
-		?>
-		<script type="text/javascript">
-			jQuery(document).ready(function(){
-				var icons = {
-					header: "ui-icon-circle-arrow-e",
-					headerSelected: "ui-icon-circle-arrow-s"
-				};
-				jQuery(".ui_ogtags_form").accordion({
-					header: "h4",
-					autoHeight: false,
-					icons:icons,
-					collapsible: true,
-					active: false
-				});
-			
-				jQuery("#<?php echo $prefix.'upload_image'; ?>").click(function() {
-					var formfield = jQuery("#<?php echo $prefix.'image'; ?>").attr('name');
-					tb_show("<?php echo __('Image',$this->plugin_text_domain).' '.$this->plugin_name; ?>", 'media-upload.php?type=image&amp;TB_iframe=true');
-					
-					window.send_to_editor = function(html) {
-						var imgurl = jQuery('img',html).attr('src');
-						jQuery("#<?php echo $prefix.'image'; ?>").val(imgurl);
-						tb_remove();
-					}
-					return false;
-				});
-				
-				//audio  
-				jQuery("#<?php echo $prefix.'upload_mp3';?>").click(function() {
-					var formfield = jQuery("#<?php echo $prefix.'audio'; ?>").attr('name');
-					tb_show("<?php echo __('Mp3 song',$this->plugin_text_domain).' '.$this->plugin_name; ?>", 'media-upload.php?type=audio&amp;TB_iframe=true');
-					
-					window.send_to_editor = function(html) {
-						var src = jQuery(html).attr('href');
-						var title = jQuery(html).html();
-						jQuery("#<?php echo $prefix.'audio'; ?>").val(src);
-						jQuery("#<?php echo $prefix.'audio_title'; ?>").val(title);
-						tb_remove();
-					}
-					return false;
-				});
-				
-				//onload verify state of message video if empty image
-				<?php echo str_replace("-","_",$prefix); ?>set_the_message_video();
-				//display error to say that we nedd image if image field is empty
-				//on click every where in body
-				jQuery('body').click(function(){
-					<?php echo str_replace("-","_",$prefix); ?>set_the_message_video();
-				});
-				//video swf  
-				jQuery("#<?php echo $prefix.'upload_video';?>").click(function() {
-					var formfield = jQuery("#<?php echo $prefix.'video'; ?>").attr('name');
-					tb_show("<?php echo __('Video',$this->plugin_text_domain).' '.$this->plugin_name; ?>", 'media-upload.php?post_id=<?php echo $post->ID; ?>&amp;type=video&amp;TB_iframe=true');
-					
-					window.send_to_editor = function(html) {
-						var src = jQuery(html).attr('href');
-						jQuery("#<?php echo $prefix.'video'; ?>").val(src);
-						tb_remove();
-					}
-					return false;
-				});
-				//active default open graph checkbox status
-				<?php echo str_replace("-","_",$prefix); ?>update_custom_type();
-  				jQuery("#<?php echo $prefix.'type';?>").change(function(){
-  					<?php echo str_replace("-","_",$prefix); ?>update_custom_type();
-  				});
-				//active default open graph checkbox status
-  				jQuery("#<?php echo $prefix.'disable_off';?>").click(function(){
-  					jQuery(".ui_ogtags_allform<?php echo $customTemp;?>").slideDown();
-  				});
-  				jQuery("#<?php echo $prefix.'disable_on';?>").click(function(){
-  					jQuery(".ui_ogtags_allform<?php echo $customTemp;?>").slideUp();
-  				});
-  				jQuery("#<?php echo $prefix.'redefine_on';?>").click(function(){
-  					jQuery(".ui_ogtags_form<?php echo $customTemp;?>").slideDown();
-  				});
-  				jQuery("#<?php echo $prefix.'redefine_off';?>").click(function(){
-  					jQuery(".ui_ogtags_form<?php echo $customTemp;?>").slideUp();
-  				});
-			});
-			function <?php echo str_replace("-","_",$prefix); ?>set_the_message_video(){
-				if(jQuery("#<?php echo $prefix.'image';?>").val() ==''){
-					<?php 
-					//display message only if no app image as default
-					if(empty($this->options['app_infos']['logo_url'])): ?>
-					jQuery("#<?php echo $prefix.'message_video';?>").show();
-					<?php endif; ?>
-				}else{
-					jQuery("#<?php echo $prefix.'message_video';?>").slideUp();
-				}
-			
-			}
-			function <?php echo str_replace("-","_",$prefix); ?>update_custom_type(){
-				if(jQuery("#<?php echo $prefix.'type';?>").val() == 'custom'){
-  					jQuery("#<?php echo $prefix.'type_custom';?>").slideDown();
-					jQuery("#<?php echo $prefix.'type_custom';?>").attr('disabled',false);
-				}else{
-					jQuery("#<?php echo $prefix.'type_custom';?>").slideUp();
-					jQuery("#<?php echo $prefix.'type_custom';?>").attr('disabled',true);
-				}
-			}
-		</script>
-		<p>
-		    <?php 
-		    //if post or global form
-		    if(is_object($post)){ ?>
-			    <label class="up_label"><?php _e('Disable Tags for this page ?',$this->plugin_text_domain); ?></label>
-				<?php 
-			}else{
-				?>
-			    <label class="up_label"><?php _e('Disable Tags for this type ? ',$this->plugin_text_domain); ?> <i><?php _e('You can override settings on each page individually',$this->plugin_text_domain); ?></i></label>
-				<?php
-			}
-			?>
-			<input type="radio" name="<?php echo $prefix.'disable';?>" <?php if($custom[$prefix.'disable'][0] == 1 OR ($custom[$prefix.'disable'][0] == '' && !is_object($post))){echo 'checked="checked"';} ?> id="<?php echo $prefix.'disable_on';?>" value="1"/> <?php _e('Yes',$this->plugin_text_domain); ?>
-			<input type="radio" name="<?php echo $prefix.'disable';?>" <?php if($custom[$prefix.'disable'][0] == "0" OR (is_object($post) && $custom[$prefix.'disable'][0]=='')){echo 'checked="checked"';} ?> id="<?php echo $prefix.'disable_off';?>" value="0"/> <?php _e('No',$this->plugin_text_domain); ?>
-		</p>
-		<div class="ui_ogtags_allform<?php echo $customTemp; ?> <?php if($custom[$prefix.'disable'][0] == 1 OR ($custom[$prefix.'disable'][0] == '' && !is_object($post))){echo 'hidden';} ?>">
-		<?php 
-	    //if post or global form
-        if(is_object($post)){ ?>	
-		<p>
-			<label class="up_label"><?php _e('Redefine Tags for this page ?',$this->plugin_text_domain); ?></label>
-			<input type="radio" name="<?php echo $prefix.'redefine';?>" <?php if($custom[$prefix.'redefine'][0] == 1){echo 'checked="checked"';} ?> id="<?php echo $prefix.'redefine_on';?>" value="1"/> <?php _e('Yes',$this->plugin_text_domain); ?>
-			<input type="radio" name="<?php echo $prefix.'redefine';?>" <?php if($custom[$prefix.'redefine'][0] == 0){echo 'checked="checked"';} ?> id="<?php echo $prefix.'redefine_off';?>" value="0"/> <?php _e('No',$this->plugin_text_domain); ?>
-		</p>
-		<?php }	?>
-		<div class="ui_ogtags_form ui_ogtags_form<?php echo $customTemp; ?> <?php if($custom[$prefix.'redefine'][0]!= 1 && is_object($post)){echo 'hidden';} ?>">
-			<?php echo $this->get_the_help_box($custom_help); ?>
-			<<?php echo $custom_header; ?>><a href="#"><?php _e('Tags',$this->plugin_text_domain); ?></a></<?php echo $custom_header; ?>>
-			<div>
-			<div class="uiForm">
-				<table class="AWD_form_table">
-				<?php
-				foreach($this->og_tags as $tag=>$tag_name){
-					$prefixtag = $prefix.$tag;
-					$custom_value = stripslashes($custom[$prefixtag][0]);
-					switch($tag){
-						case 'url':
-							$input ='';
-							$tag_name = '';//'<br /><input class="widefat" id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : get_permalink($post->ID)).'" />';
-						break;
-						case 'title':
-							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : $post->post_title).'" />';
-						break;
-						case 'site_name':
-							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : get_bloginfo('name')).'" />';
-						break;
-						case 'type':
-							$input ='<select name="'.$prefixtag.'" id="'.$prefixtag.'">';
-							foreach($this->og_types as $globaltype=>$types){
-								$input .='<optgroup label="'.strtoupper($globaltype).'">';
-								foreach($types as $type=>$type_name)
-									$input .='<option '.($custom_value == $type ? 'selected="selected"':'').' value="'.$type.'">'.$type_name.'</option>';
-								$input .='</optgroup>';
-							}
-							$input .= '</select>';
-							$input .= '<input class="hidden" disabled="disabled" id="'.$prefixtag.'_custom" name="'.$prefixtag.'_custom" type="text" value="'.($custom[$prefixtag.'_custom'][0] != '' ? $custom[$prefixtag.'_custom'][0] : 'Custom value').'" />';
-						break;
-						case 'description':
-							$input = '<textarea class="widefat" id="'.$prefixtag.'" name="'.$prefixtag.'">'.($custom_value != '' ? $custom_value : $post->excerpt).'</textarea>';
-						break;
-						case 'app_id':
-							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : $this->options['app_id']).'" />';
-						break;
-						case 'admins':
-							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : $this->options['admins']).'" />';
-						break;
-						case 'locale':
-							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : $this->options['locale']).'" />';
-						break;
-						case 'page_id':
-							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : $this->options['admins_page_id']).'" />';
-						break;
-						case 'image':
-							$input = '<input class="ogwidefat" id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" /><img id="'.$prefix.'upload_image" src="'.$this->plugin_url_images.'upload_image.png" alt="'.__('Upload',$this->plugin_text_domain).'" class="AWD_button_media"/>';
-						break;
-						default:
-							$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.$custom_value.'" />';
-					}
-					if($tag_name){
-						?>
-						<tr class="dataRow">
-							<th class="label"><?php echo $tag_name; ?></th>
-							<td class="data">
-								<?php echo $input; ?>
-							</td>
-						</tr>
-						<?php
-					}
-				}
-				?>
-				</table>
-			</div>
-			</div>
-			<?php
-			foreach($this->og_attachement_field as $type=>$tag_fields){
-				switch($type){
-					//video form
-					case 'video':
-						echo '<'.$custom_header.'><a href="#">'.__('Video Attachement',$this->plugin_text_domain).'</a></'.$custom_header.'>';
-						echo '
-						<div>
-						<i>'.__('Facebook supports embedding video in SWF format only. File ith extension ".swf"',$this->plugin_text_domain).'</i>
-						<div class="uiForm">
-							<div id="'.$prefix.'message_video" class="ui-state-highlight hidden">'.__('You must include a valid Image for your video in Tags section to be displayed in the news feed.',$this->plugin_text_domain).'</div>
-							<table class="AWD_form_table">';
-							foreach($tag_fields as $tag=>$tag_name){
-								$prefixtag = $prefix.$tag;
-								$custom_value = $custom[$prefixtag][0];
-								switch($tag){
-									case 'video':
-										$input = '<input class="ogwidefat" id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" /><img id="'.$prefix.'upload_'.$tag.'" src="'.$this->plugin_url_images.'upload_image.png" alt="'.__('Upload',$this->plugin_text_domain).'" class="AWD_button_media"/>';
-									break;
-									case 'video:type':
-										$input = '';//<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" readonly="readonly" value="'.($custom_value != '' ? $custom_value : 'application/x-shockwave-flash').'" />';
-									break;
-									case 'video:type_mp4':
-										$input = '';//<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" readonly="readonly" value="'.($custom_value != '' ? $custom_value : 'video/mp4').'" />';
-									break;
-									case 'video:type_html':
-										$input = '';//<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" readonly="readonly" value="'.($custom_value != '' ? $custom_value : 'text/html').'" />';
-									break;
-									default:
-										$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" />';
-								}
-								if($tag != 'video:type' && $tag != 'video:type_html' && $tag != 'video:type_mp4'):
-								?>
-								<tr class="dataRow">
-									<th class="label"><?php echo $tag_name; ?></th>
-									<td class="data">
-										<?php echo $input; ?>
-									</td>
-								</tr>
-								<?php
-								endif;
-							}
-						echo '</table>
-						</div>
-						</div>';//fin toogle
-					break;
-					//audio form
-					case 'audio':
-						echo '<'.$custom_header.'><a href="#">'.__('Audio Attachement',$this->plugin_text_domain).'</a></'.$custom_header.'>';
-						echo '
-						<div>
-							<i>'.__('In a similar fashion to Video you can add an audio file to your markup',$this->plugin_text_domain).'</i>
-							<div class="uiForm">
-								<table class="AWD_form_table">';
-								foreach($tag_fields as $tag=>$tag_name){
-									$prefixtag = $prefix.$tag;
-									$custom_value = $custom[$prefixtag][0];
-									switch($tag){
-										case 'audio':
-											$input = '<input class="ogwidefat" id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" /><img id="'.$prefix.'upload_mp3" src="'.$this->plugin_url_images.'upload_image.png" alt="'.__('Upload',$this->plugin_text_domain).'" class="AWD_button_media"/>';
-										break;
-										case 'audio:type':
-											$input = '';//<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" readonly="readonly" value="'.($custom_value != '' ? $custom_value : 'application/mp3').'" />';
-										break;
-										default:
-											$input = '<input  id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" />';
-									}
-									if($tag != 'audio:type'):
-									?>
-									<tr class="dataRow">
-										<th class="label"><?php echo $tag_name; ?></th>
-										<td class="data">
-											<?php echo $input; ?>
-										</td>
-									</tr>
-									<?php
-									endif;
-								}
-						echo '</table>
-						</div>
-						</div>';//fin toogle
-					break;
-					//isbn and upc code
-					case 'isbn':
-					case 'upc':
-						foreach($tag_fields as $tag=>$tag_name){
-							$prefixtag = $prefix.$tag;
-							$custom_value = $custom[$prefixtag][0];
-							echo '<'.$custom_header.'><a href="#">'.strtoupper($type).' '.__('code',$this->plugin_text_domain).'</a></'.$custom_header.'>';
-							echo '
-							<div>
-							<div class="uiForm">
-								<table class="AWD_form_table">
-									<tr class="dataRow">
-										<th class="label">'.__('For products which have a UPC code or ISBN number',$this->plugin_text_domain).'</th>
-										<td class="data"><input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" /></td>
-									</tr>
-								</table>
-							</div>
-							</div>';
-						}
-					break;
-					//contact form
-					case 'contact':
-						echo '<'.$custom_header.'><a href="#">'.__('Contact infos',$this->plugin_text_domain).'</a></'.$custom_header.'>';
-						echo '<div>';
-							echo '<i>'.__('Consider including contact information if your page is about an entity that can be contacted.',$this->plugin_text_domain).'</i>
-							<div class="uiForm">
-								<table class="AWD_form_table">';
-								foreach($tag_fields as $tag=>$tag_name){
-									$prefixtag = $prefix.$tag;
-									$custom_value = $custom[$prefixtag][0];
-									switch($tag){
-										default:
-											$input = '<input id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" />';
-									}
-									?>
-									<tr class="dataRow">
-										<th class="label"><?php echo $tag_name; ?></th>
-										<td class="data">
-											<?php echo $input; ?>
-										</td>
-									</tr>
-									<?php
-								}
-						echo '</table>
-						</div>
-						</div>';//fin toogle
-					break;
-					//location form
-					case 'location':
-						echo '<'.$custom_header.'><a href="#">'.__('Location infos',$this->plugin_text_domain).'</a></'.$custom_header.'>';
-						echo '<div>';
-							echo '<i>'.__('This is useful if your pages is a business profile or about anything else with a real-world location. You can specify location via latitude and longitude, a full address, or both.',$this->plugin_text_domain).'</i>
-							<div class="uiForm">
-								<table class="AWD_form_table">';
-								foreach($tag_fields as $tag=>$tag_name){
-									$prefixtag = $prefix.$tag;
-									$custom_value = $custom[$prefixtag][0];
-									switch($tag){
-										default:
-											$input = '<input size="25" id="'.$prefixtag.'" name="'.$prefixtag.'" type="text" value="'.($custom_value != '' ? $custom_value : '').'" />';
-									}
-									?>
-									<tr class="dataRow">
-										<th class="label"><?php echo $tag_name; ?></th>
-										<td class="data">
-											<?php echo $input; ?>
-										</td>
-									</tr>
-									<?php
-								}
-						echo '</table>
-						</div>
-						</div>';//fin toogle
-					break;
-				}
-			}
-			?>
-			</div>
-		</div>
-		<?php //fin start fucntion div
+		include(dirname(__FILE__).'/inc/admin/admin_open_graph_form.php');
 	}
-	
 	
 	//****************************************************************************************
 	//	LOGIN BUTTON

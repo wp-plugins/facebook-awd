@@ -3,15 +3,15 @@
 //  Objects lib
 //****************************************************************************************
 $this->og_tags = array(
-	'url'=> __('Url',$this->plugin_text_domain),
-	'title'=> __('Title',$this->plugin_text_domain),
-	'type'=> __('Type',$this->plugin_text_domain),
-	'description'=> __('Description',$this->plugin_text_domain),
-	'image'=> __('Image url (50x50 is better)',$this->plugin_text_domain),
-	'admins' => __('Admin ids',$this->plugin_text_domain),
-	'app_id' => __('App IDs',$this->plugin_text_domain),
-	'site_name'=> __('Site Name',$this->plugin_text_domain),
-	'locale'=> __('Locale',$this->plugin_text_domain)
+	'url'=> array('type'=> 'string'),
+	'title'=> array('name'=>__('Title',$this->plugin_text_domain), 'type'=> 'string'),
+	'type'=> array('name'=>__('Type',$this->plugin_text_domain), 'type'=> 'string'),
+	'description'=> array('name'=>__('Description',$this->plugin_text_domain), 'type'=> 'string'),
+	'image'=> array('name'=>__('Image url (50x50 is better)',$this->plugin_text_domain), 'type'=> 'image'),
+	'admins' => array('name'=>__('Admin ids',$this->plugin_text_domain), 'type'=> 'string'),
+	'app_id' => array('name'=>__('App IDs',$this->plugin_text_domain), 'type'=> 'string'),
+	'site_name'=> array('name'=>__('Site Name',$this->plugin_text_domain), 'type'=> 'string'),
+	'locale'=> array('name'=>__('Locale',$this->plugin_text_domain), 'type'=> 'string')
 );
 $this->og_tags = apply_filters('AWD_facebook_og_tags', $this->og_tags);
 
@@ -78,44 +78,49 @@ $this->og_types = apply_filters('AWD_facebook_og_types', $this->og_types);
 //attachement
 $this->og_attachement_field = array(
 	'video' => array(
-		'video'=>__('Video src (swf only, for Facebook site)',$this->plugin_text_domain),
-		'video:height'=>__('Height (max: 460px)',$this->plugin_text_domain),
-		'video:width'=>__('Width (max: 398px)',$this->plugin_text_domain),
-		'video:type'=>__('Type swf',$this->plugin_text_domain),
-		'video:secure_url'=>__('Video src HTTPS (swf only, for Facebook site)',$this->plugin_text_domain),
-		'video:mp4'=>__('Video src (mp4 only, for Iphone/Ipad/Safari) ',$this->plugin_text_domain),
-		'video:type_mp4'=>__('Type mp4',$this->plugin_text_domain),
-		'video:html'=>__('Video src (page html only)',$this->plugin_text_domain),
-		'video:type_html'=>__('Type html',$this->plugin_text_domain),
+		'video'=> array('name'=> __('Video src (swf only, for Facebook site)',$this->plugin_text_domain), 'type'=> 'video'),
+		'video:height'=> array('name'=>__('Height (max: 460px)',$this->plugin_text_domain), 'type'=> 'string'),
+		'video:width'=> array('name'=>__('Width (max: 398px)',$this->plugin_text_domain), 'type'=> 'string'),
+		'video:type'=> array('name'=>__('Type swf',$this->plugin_text_domain), 'type'=> 'string'),
+		'video:secure_url'=> array('name'=>__('Video src HTTPS (swf only, for Facebook site)',$this->plugin_text_domain), 'type'=> 'string'),
+		'video:mp4'=> array('name'=>__('Video src (mp4 only, for Iphone/Ipad/Safari) ',$this->plugin_text_domain), 'type'=> 'video'),
+		'video:type_mp4'=> array('name'=>__('Type mp4',$this->plugin_text_domain), 'type'=> 'string'),
+		'video:html'=> array('name'=>__('Video src (page html only)',$this->plugin_text_domain), 'type'=> 'string'),
+		'video:type_html'=> array('name'=>__('Type html',$this->plugin_text_domain), 'type'=> 'string'),
 	),
 	'audio' => array(
-		'audio'=>__('Audio src (mp3 only)',$this->plugin_text_domain),
-		'audio:title'=>__('Title',$this->plugin_text_domain),
-		'audio:artist'=>__('Artist',$this->plugin_text_domain),
-		'audio:album'=>__('Album',$this->plugin_text_domain),
-		'audio:type'=>__('Type',$this->plugin_text_domain)
+		'audio'=> array('name'=>__('Audio src (mp3 only)',$this->plugin_text_domain), 'type'=> 'audio'),
+		'audio:title'=> array('name'=>__('Title',$this->plugin_text_domain), 'type'=> 'string'),
+		'audio:artist'=> array('name'=>__('Artist',$this->plugin_text_domain), 'type'=> 'string'),
+		'audio:album'=> array('name'=>__('Album',$this->plugin_text_domain), 'type'=> 'string'),
+		'audio:type'=> array('name'=>__('Type',$this->plugin_text_domain), 'type'=> 'string')
 	),
 	'contact' => array(
-		'contact_email'=>__('Email',$this->plugin_text_domain),
-		'contact_phone_number'=>__('Phone number',$this->plugin_text_domain),
-		'contact_fax_number'=>__('Fax number',$this->plugin_text_domain),
+		'contact_email'=> array('name'=>__('Email',$this->plugin_text_domain), 'type'=> 'string'),
+		'contact_phone_number'=> array('name'=>__('Phone number',$this->plugin_text_domain), 'type'=> 'string'),
+		'contact_fax_number'=> array('name'=>__('Fax number',$this->plugin_text_domain), 'type'=> 'string'),
 	)
 	,
 	'location' => array(
-		'location_latitude'=>__('Latitude',$this->plugin_text_domain),
-		'location_longitude'=>__('Longitude',$this->plugin_text_domain),
-		'location_street-address'=>__('Street address',$this->plugin_text_domain),
-		'location_locality'=>__('Locality',$this->plugin_text_domain),
-		'location_region'=>__('Region',$this->plugin_text_domain),
-		'location_postal-code'=>__('Postal code',$this->plugin_text_domain),
-		'location_country-name'=>__('Country name',$this->plugin_text_domain),
+		'location_latitude'=> array('name'=>__('Latitude',$this->plugin_text_domain), 'type'=> 'string'),
+		'location_longitude'=> array('name'=>__('Longitude',$this->plugin_text_domain), 'type'=> 'string'),
+		'location_street-address'=> array('name'=>__('Street address',$this->plugin_text_domain), 'type'=> 'string'),
+		'location_locality'=> array('name'=>__('Locality',$this->plugin_text_domain), 'type'=> 'string'),
+		'location_region'=> array('name'=>__('Region',$this->plugin_text_domain), 'type'=> 'string'),
+		'location_postal-code'=> array('name'=>__('Postal code',$this->plugin_text_domain), 'type'=> 'string'),
+		'location_country-name'=> array('name'=>__('Country name',$this->plugin_text_domain), 'type'=> 'string'),
 	),
 	'isbn' => array(
-		'isbn'=>__('Isbn',$this->plugin_text_domain)
+		'isbn'=> array('name'=>__('Isbn',$this->plugin_text_domain), 'type'=> 'string')
 	),
 	'upc' => array(
-		'upc'=>__('Upc',$this->plugin_text_domain)
-	)
+		'upc'=> array('name'=>__('Upc',$this->plugin_text_domain), 'type'=> 'string')
+	),
+	
 );
 $this->og_attachement_field = apply_filters('AWD_facebook_og_attachement_fields', $this->og_attachement_field);
+
+$this->og_custom_fields = array();
+$this->og_custom_fields = apply_filters('AWD_facebook_og_custom_fields', $this->og_custom_fields);
+
 ?>
