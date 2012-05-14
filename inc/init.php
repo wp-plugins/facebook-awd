@@ -35,7 +35,7 @@ add_action("AWD_facebook_save_settings",array(&$this,'hook_post_from_plugin_opti
 add_action('admin_footer',array(&$this,'debug_content'));
 
 //DISPLAY FRONT
-add_action('after_setup_theme',array(&$this,'add_thumbnail_support'));
+add_action('after_setup_theme',array(&$this,'add_theme_support'));
 add_action('wp_head',array(&$this,'define_open_graph_tags_header'));
 add_action('wp_footer',array(&$this,'load_sdj_js'));
 add_action('admin_print_footer_scripts',array(&$this,'load_sdj_js'));

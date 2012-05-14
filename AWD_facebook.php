@@ -224,7 +224,7 @@ Class AWD_facebook
 		add_action('widgets_init',  array(&$this,'register_AWD_facebook_widgets'));
 		
 		$this->_login_url = get_option('permalink_structure') != '' ? home_url('facebook-awd/login') : home_url('?facebook_awd[action]=login');
-		$this->_logout_url = get_option('permalink_structure') != '' ? home_url('facebook-awd/logout') : home_url('?facebook_awd[action]=login');
+		$this->_logout_url = get_option('permalink_structure') != '' ? home_url('facebook-awd/logout') : home_url('?facebook_awd[action]=logout');
 		$this->_unsync_url = get_option('permalink_structure') != '' ? home_url('facebook-awd/unsync') : home_url('?facebook_awd[action]=unsync');
 
 	}
@@ -274,12 +274,19 @@ Class AWD_facebook
 	 * add support for ogimage opengraph
 	 * @return void
 	 */
-	public function add_thumbnail_support()
+	public function add_theme_support()
 	{
 		//add fetured image menu to get FB image in open Graph set image 50x50
 		if (function_exists('add_theme_support')) {
 			add_theme_support('post-thumbnails');
 			add_image_size('AWD_facebook_ogimage', 200, 200, true);
+		}
+		//add featured image + post excerpt in post type too.
+		if(function_exists('add_post_type_support')) {
+			$post_types = get_post_types();
+			foreach($post_types as $type){
+				add_post_type_support($type,array('thumbnails','excerpt'));
+			}
 		}
 	}
 	
@@ -510,11 +517,14 @@ Class AWD_facebook
 	 * @return void
 	 */
 	public function add_meta_boxes(){
+		
+		$icon = isset($icon) ? $icon : '';
+	
 		//sidebar boxes
 		//Settings page
 		add_meta_box($this->plugin_slug."_settings_metabox", __('Settings',$this->plugin_text_domain).' <img src="'.$this->plugin_url_images.'settings.png" />', array(&$this,'settings_content'), $this->blog_admin_page_hook , 'normal', 'core');
 		add_meta_box($this->plugin_slug."_meta_metabox",  __('My Facebook',$this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->plugin_url_images.'facebook-mini.png" alt="facebook logo"/>', array(&$this,'fcbk_content'),  $this->blog_admin_page_hook, 'side', 'core');
-		add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->options['app_infos']['icon_url'].'" alt=""/>', array(&$this,'app_infos_content'),  $this->blog_admin_page_hook, 'side', 'core');
+		add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$icon.'" alt=""/>', array(&$this,'app_infos_content'),  $this->blog_admin_page_hook, 'side', 'core');
 		add_meta_box($this->plugin_slug."_info_metabox",  __('Informations',$this->plugin_text_domain), array(&$this,'general_content'),  $this->blog_admin_page_hook, 'side', 'core');
 		add_meta_box($this->plugin_slug."_activity_metabox",  __('Activity on your site',$this->plugin_text_domain), array(&$this,'activity_content'),  $this->blog_admin_page_hook , 'side', 'core');
 		add_meta_box($this->plugin_slug."_discover_metabox",  __('Facebook AWD Plugins',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->blog_admin_page_hook , 'normal', 'core');
@@ -522,7 +532,7 @@ Class AWD_facebook
 		//Plugins page
 		add_meta_box($this->plugin_slug."_plugins_metabox", __('Plugins Settings',$this->plugin_text_domain).' <img src="'.$this->plugin_url_images.'plugins.png" />', array(&$this,'plugins_content'),  $this->blog_admin_plugins_hook , 'normal', 'core');
 		add_meta_box($this->plugin_slug."_meta_metabox",  __('My Facebook',$this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->plugin_url_images.'facebook-mini.png" alt="facebook logo"/>', array(&$this,'fcbk_content'),  $this->blog_admin_plugins_hook , 'side', 'core');
-		add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->options['app_infos']['icon_url'].'" alt=""/>', array(&$this,'app_infos_content'),  $this->blog_admin_plugins_hook , 'side', 'core');
+		add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$icon.'" alt=""/>', array(&$this,'app_infos_content'),  $this->blog_admin_plugins_hook , 'side', 'core');
 		add_meta_box($this->plugin_slug."_info_metabox",  __('Informations',$this->plugin_text_domain), array(&$this,'general_content'),  $this->blog_admin_plugins_hook , 'side', 'core');
 		add_meta_box($this->plugin_slug."_activity_metabox",  __('Activity on your site',$this->plugin_text_domain), array(&$this,'activity_content'),  $this->blog_admin_plugins_hook , 'side', 'core');
 		add_meta_box($this->plugin_slug."_discover_metabox",  __('Facebook AWD Plugins',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->blog_admin_plugins_hook , 'normal', 'core');
@@ -540,7 +550,7 @@ Class AWD_facebook
 		}
 		if($this->options['open_graph_enable'] == 1){			
 			add_meta_box($this->plugin_slug."_meta_metabox",  __('My Facebook',$this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->plugin_url_images.'facebook-mini.png" alt="facebook logo"/>', array(&$this,'fcbk_content'),  $this->blog_admin_opengraph_hook , 'side', 'core');
-			add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->options['app_infos']['icon_url'].'" alt=""/>', array(&$this,'app_infos_content'),  $this->blog_admin_opengraph_hook , 'side', 'core');
+			add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$icon.'" alt=""/>', array(&$this,'app_infos_content'),  $this->blog_admin_opengraph_hook , 'side', 'core');
 			add_meta_box($this->plugin_slug."_info_metabox",  __('Informations',$this->plugin_text_domain), array(&$this,'general_content'),  $this->blog_admin_opengraph_hook , 'side', 'core');
 			add_meta_box($this->plugin_slug."_activity_metabox",  __('Activity on your site',$this->plugin_text_domain), array(&$this,'activity_content'),  $this->blog_admin_opengraph_hook , 'side', 'core');
 			add_meta_box($this->plugin_slug."_discover_metabox",  __('Facebook AWD Plugins',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->blog_admin_opengraph_hook , 'normal', 'core');
@@ -554,7 +564,7 @@ Class AWD_facebook
 			foreach($plugins as $plugin){
 				$page_hook = $plugin->plugin_admin_hook;
 				add_meta_box($this->plugin_slug."_meta_metabox",  __('My Facebook',$this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->plugin_url_images.'facebook-mini.png" alt="facebook logo"/>', array(&$this,'fcbk_content'),  $page_hook , 'side', 'core');
-				add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->options['app_infos']['icon_url'].'" alt=""/>', array(&$this,'app_infos_content'),  $page_hook , 'side', 'core');
+				add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$icon.'" alt=""/>', array(&$this,'app_infos_content'),  $page_hook , 'side', 'core');
 				add_meta_box($this->plugin_slug."_info_metabox",  __('Informations',$this->plugin_text_domain), array(&$this,'general_content'),  $page_hook , 'side', 'core');
 				add_meta_box($this->plugin_slug."_activity_metabox",  __('Activity on your site',$this->plugin_text_domain), array(&$this,'activity_content'),  $page_hook , 'side', 'core');
 				add_meta_box($this->plugin_slug."_discover_metabox",  __('Facebook AWD Plugins',$this->plugin_text_domain), array(&$this,'discover_content'),  $page_hook , 'normal', 'core');
@@ -564,7 +574,7 @@ Class AWD_facebook
 		//Support page
 		add_meta_box($this->plugin_slug."_support_metabox",  __('Support',$this->plugin_text_domain).' <img src="'.$this->plugin_url_images.'info.png" />', array(&$this,'support_content'),  $this->blog_admin_support_hook, 'normal', 'core');
 		add_meta_box($this->plugin_slug."_meta_metabox",  __('My Facebook',$this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->plugin_url_images.'facebook-mini.png" alt="facebook logo"/>', array(&$this,'fcbk_content'),  $this->blog_admin_support_hook , 'side', 'core');
-		add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$this->options['app_infos']['icon_url'].'" alt=""/>', array(&$this,'app_infos_content'),  $this->blog_admin_support_hook , 'side', 'core');
+		add_meta_box($this->plugin_slug."_app_infos_metabox",  __('Application Infos', $this->plugin_text_domain).' <img style="vertical-align:middle;" src="'.$icon.'" alt=""/>', array(&$this,'app_infos_content'),  $this->blog_admin_support_hook , 'side', 'core');
 		add_meta_box($this->plugin_slug."_info_metabox",  __('Informations',$this->plugin_text_domain), array(&$this,'general_content'),  $this->blog_admin_support_hook , 'side', 'core');
 		add_meta_box($this->plugin_slug."_activity_metabox",  __('Activity on your site',$this->plugin_text_domain), array(&$this,'activity_content'),  $this->blog_admin_support_hook , 'side', 'core');
 		add_meta_box($this->plugin_slug."_discover_metabox",  __('Facebook AWD Plugins',$this->plugin_text_domain), array(&$this,'discover_content'),  $this->blog_admin_support_hook , 'normal', 'core');
@@ -1305,11 +1315,11 @@ Class AWD_facebook
 			}elseif(is_numeric($comments_objects)){
 				$fbuid = get_user_meta($comments_objects,'fb_uid', true);
 			}elseif($comments_objects !=''){
-				$user = get_user_by('email', $comments_objects);
-				$fbuid = get_user_meta($user->ID,'fb_uid', true);
-				
+				if($default == 'awd_fcbk'){
+					$user = get_user_by('email', $comments_objects);
+					$fbuid = get_user_meta($user->ID,'fb_uid', true);
+				}
 			}
-			
 			if($fbuid !=''){
                 if( $size <= 64 ){
 			        $type = 'square';
@@ -1365,7 +1375,7 @@ Class AWD_facebook
 			//Try to find if the batch return error. IF yes, the user acces token is no more good.
 			if(!isset($me['error'])){
 				// Proceed knowing you have a logged in user who's authenticated.
-				$me['AWD_acces_token'] = $this->fcbk->getAccessToken();
+				$me['AWD_access_token'] = $this->fcbk->getAccessToken();
 				$fb_perms = json_decode($batchResponse[1]['body'], true);
 				$me['permissions'] = $fb_perms['data'][0];
 				$fb_pages = json_decode($batchResponse[2]['body'], true);
@@ -1449,10 +1459,19 @@ Class AWD_facebook
 			'secret' => $this->options['app_secret_key'],
 			'timeOut_AWD' => $this->options['timeout']
 		));
-		$this->uid = $this->fcbk->getUser();
-		//Set the current user data
+		try{
+			$this->uid = $this->fcbk->getUser();
+		}catch(FacebookApiException $e){
+			$this->uid = null;
+		}
+		//Set the current WP user data
 		$this->get_current_user();
 		$this->init_facebook_user_data($this->current_user->ID);
+		$login_options = array(
+			'scope' => current_user_can("manage_options") ? $this->options["perms_admin"] : $this->options["perms"],
+			'redirect_uri' => $this->_login_url.(get_option('permalink_structure') != '' ? '?' : '&').'redirect_to='.$this->get_current_url()
+		);
+		$this->_oauth_url = $this->fcbk->getLoginUrl($login_options);
 	}
 	
 	/**
@@ -1505,7 +1524,7 @@ Class AWD_facebook
 				$facebook_page_url = json_decode(file_get_contents("https://graph.facebook.com/" . $signedrequest['page']['id']))->{"link"} . "?sk=app_" . $this->fcbk->getAppId();
 			}
 		}
-		return $facebook_page_url; 
+		return $facebook_page_url;
 	}
 	
 	public function register_user()
@@ -1543,6 +1562,26 @@ Class AWD_facebook
 		
 		return false;
 	}
+	
+	
+	public function login_required()
+	{
+		if(!$this->is_user_logged_in_facebook() && !is_user_logged_in())
+		{
+			wp_redirect($this->_oauth_url);
+			exit();
+		}
+	}
+	
+	public function login_listener($redirect_url)
+	{
+		if($this->is_user_logged_in_facebook() && !is_user_logged_in())
+		{
+			$this->login($redirect_url);
+			exit();
+		}
+	}
+	
 	
 	public function login($redirect_url)
 	{
@@ -1598,10 +1637,11 @@ Class AWD_facebook
 		global $wp_query;
 		$this->facebook_page_url = $this->get_facebook_page_url();
 		$query = get_query_var('facebook_awd');
+		
 		//Parse the query for internal process
 		if(isset($query)){
 			$action = $query['action'];
-			$redirect_url = $_GET['redirect_to'];
+			$redirect_url = $_REQUEST['redirect_to'];
 			switch($action){
 				//LOGIN
 				case 'login':
@@ -1618,16 +1658,18 @@ Class AWD_facebook
 					$this->clear_facebook_user_data($this->current_user->ID);
 					$this->logout($redirect_url);
 				break;
+				
+				//LISTENERS	
+				default:
+					//if we want to force the login for the entire website.
+					if($this->options['login_required_enable'] == 1)
+						$this->login_required($redirect_url);
+					//listen for any session that is create by facebook and redirected here.
+					//exemple for featured dialogs and force login (php redirect)
+					$this->login_listener($redirect_url);
+				break;
 			}
 		}
-		//IF user is logged in facebook and logged in wordpress
-		//if($this->is_user_logged_in_facebook()) {
-			//update user fb infos
-			//$this->get_facebook_user_data();
-			//update_user_meta($existing_user, 'fb_uid', $this->uid );
-			//update_user_meta($existing_user, 'fb_email', $this->me['email']);
-			//update_user_meta($existing_user,'fb_user_infos',$this->me);
-		//}
 	}
 	
 	/**
@@ -1929,8 +1971,16 @@ Class AWD_facebook
                 	is_single() ? $img = $this->options['ogtags_page_image'] : "";
                 	is_page() ? $img = $this->options['ogtags_post_image'] : "";
                 }
+                
+                //try to create a nice description
+                if(!empty($post->post_excerpt)){
+                	$description = esc_attr(str_replace("\r\n",' ',substr(strip_tags(strip_shortcodes($post->post_excerpt)), 0, 160)));
+                }else{
+					$description = esc_attr(str_replace("\r\n",' ',substr(strip_tags(strip_shortcodes($post->post_content)), 0, 160)));
+                }
+                
 				$array_pattern = array("%BLOG_TITLE%","%BLOG_DESCRIPTION%","%BLOG_URL%","%POST_TITLE%","%POST_EXCERPT%","%POST_IMAGE%","%CURRENT_URL%");
-				$array_replace = array($blog_name,$blog_description,$home_url,$post->post_title,$post->post_excerpt,$img,get_permalink($post->ID));
+				$array_replace = array($blog_name,$blog_description,$home_url,$post->post_title,$description,$img,get_permalink($post->ID));
 				$options = $this->construct_open_graph_tags($prefix_option,$array_pattern,$array_replace,$custom_post);
 			break;
 			//for tag archives
@@ -2718,9 +2768,9 @@ Class AWD_facebook
 		if($href!=''){
 			try {
 				$AWD_facebook_comments = new AWD_facebook_comments($href,$width,$colorscheme,$nb,$mobile,$template);
-				return '<div class="AWD_comments '.$options['comments_css_classes'].'">'.$AWD_facebook_comments->get().'</div>';
+				return '<div class="AWD_facebook_comments '.$options['comments_css_classes'].'">'.$AWD_facebook_comments->get().'</div>';
 			} catch (Exception $e){
-				return '<div class="AWD_comments '.$options['comments_css_classes'].'" style="color:red;">'.__("There is an error, please verify the settings for the Comments box url",$this->plugin_text_domain).'</div>';
+				return '<div class="AWD_facebook_comments '.$options['comments_css_classes'].'" style="color:red;">'.__("There is an error, please verify the settings for the Comments box url",$this->plugin_text_domain).'</div>';
 			}
 		}else if($href==''){
 			return '<div class="ui-state-highlight">'.__("There is an error, please verify the settings for the Comments box url",$this->plugin_text_domain).'</div>';
@@ -2799,7 +2849,7 @@ Class AWD_facebook
 		else{
 			try {
 				$AWD_facebook_likebox = new AWD_facebook_likebox($href,$width,$height,$colorscheme,$show_faces,$stream,$header,$border_color,$force_wall,$template);
-				return '<div class="AWD_like_box '.$options['like_box_css_classes'].'">'.$AWD_facebook_likebox->get().'</div>';
+				return '<div class="AWD_facebook_likebox '.$options['like_box_css_classes'].'">'.$AWD_facebook_likebox->get().'</div>';
 			} catch (Exception $e){
 				return '<div class="ui-state-highlight">'.__("There is an error, please verify the settings for the Like Box URL",$this->plugin_text_domain).'</div>';
 			}
