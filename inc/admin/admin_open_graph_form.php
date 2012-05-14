@@ -214,31 +214,28 @@ if(is_object($post)){ ?>
 		}
 	}
 	$this->og_custom_fields = apply_filters('AWD_facebook_og_custom_fields', $this->og_custom_fields);
-	foreach($this->og_custom_fields as $type=>$tag_fields){
-		echo '<'.$custom_header.'><a href="#">'.__('Customs fields',$this->plugin_text_domain).'</a></'.$custom_header.'>
+	echo '<'.$custom_header.'><a href="#">'.__('Customs fields',$this->plugin_text_domain).'</a></'.$custom_header.'>
 		<div>
-			<div class="uiForm">';
-			if(count($tag_fields)){
-				echo '<table class="AWD_form_table">';
-				foreach($tag_fields as $tag=>$tag_infos){
-					$input = $this->get_input_html_from_type($tag_infos['type'], $tag, $custom, $prefix); 
-					?>
-					<tr class="dataRow">
-						<th class="label"><?php echo $tag_infos['name']; ?></th>
-						<td class="data">
-							<?php echo $input; ?>
-						</td>
-					</tr>
-					<?php
+			<div class="uiForm">
+				<table class="AWD_form_table">';
+				if(count($this->og_custom_fields)){
+					foreach($this->og_custom_fields as $tag=>$tag_infos){
+						$input = $this->get_input_html_from_type($tag_infos['type'], $tag, $custom, $prefix); 
+						?>
+						<tr class="dataRow">
+							<th class="label"><?php echo $tag_infos['name']; ?></th>
+							<td class="data">
+								<?php echo $input; ?>
+							</td>
+						</tr>
+						<?php
+					}
+				}else{
+					echo "<p><i>".__('Learn more how to add custom fields in the openGraph form',$this->plugin_text_domain)."</i></p>";
 				}
-				echo '</table>';
-			}else{
-				echo "<p><i>".__('Learn more how to add custom fields for openGraph',$this->plugin_text_domain)."</i></p>";
-			}
-			echo'
+				?>
+				</table>
 			</div>
-		</div>';
-	}
-	?>
+		</div>
 	</div>
 </div>
