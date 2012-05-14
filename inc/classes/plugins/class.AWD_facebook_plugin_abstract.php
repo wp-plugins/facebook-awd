@@ -62,6 +62,7 @@ abstract class AWD_facebook_plugin_abstract implements AWD_facebook_plugin_inter
 		load_plugin_textdomain($this->plugin_text_domain,false,dirname(plugin_basename($this->file)).'/langs/');
 		add_action('AWD_facebook_admin_menu', array(&$this,'admin_menu'));
 		add_action('wp_enqueue_scripts',array(&$this,'front_enqueue_js'));
+		add_action('wp_enqueue_scripts',array(&$this,'front_enqueue_css'));
 	
 		add_filter('AWD_facebook_options', array($this,'default_options'));
 	}
@@ -122,7 +123,9 @@ abstract class AWD_facebook_plugin_abstract implements AWD_facebook_plugin_inter
 		//Load the js lib AWD
 		add_action('load-'.$this->plugin_admin_hook, array(&$this,'admin_init'));
 		add_action('admin_print_styles-'.$this->plugin_admin_hook, array(&$this->AWD_facebook,'admin_enqueue_css'));
+		add_action('admin_print_styles-'.$this->plugin_admin_hook, array(&$this,'admin_enqueue_css'));
 		add_action('admin_print_scripts-'.$this->plugin_admin_hook, array(&$this->AWD_facebook,'admin_enqueue_js'));
+		add_action('admin_print_scripts-'.$this->plugin_admin_hook, array(&$this,'admin_enqueue_js'));
 		
 		//Add action to create custom menu and custom form in plugin
 		add_action('AWD_facebook_plugins_menu',array(&$this,'plugin_settings_menu'));
@@ -137,13 +140,16 @@ abstract class AWD_facebook_plugin_abstract implements AWD_facebook_plugin_inter
 	{}
 	
 	public function front_enqueue_js()
-	{
-		//no need to call it twice, already call from the main plugin.
-		//$this->AWD_facebook->front_enqueue_js();
+	{	
 	}
 	public function admin_enqueue_js()
 	{
-		$this->AWD_facebook->admin_enqueue_js();
+	}
+	public function front_enqueue_css()
+	{	
+	}
+	public function admin_enqueue_css()
+	{	
 	}
 	
 }

@@ -151,20 +151,6 @@
 					
 					
 				<?php } ?>
-				
-				
-				<tr class="dataRow connect_options">
-					<th class="label" colspan="2"><h3 class="center"><?php _e('Advanced Actions (BETA)',$this->plugin_text_domain);?> <?php echo $this->get_the_help('custom_actions'); ?></h3></th>
-				</tr>
-				<tr class="dataRow hidden connect_options">
-					<td class="data" colspan="2">
-						<?php if($this->current_facebook_user_can('publish_actions')){ ?>
-							<p class="AWD_button_succes"><?php _e('Actions can be posted on your timeline wall',$this->plugin_text_domain); ?></p>
-						<?php }else{ ?>
-							<!--<a href="#" id="get_permissions" data-scope="publish_actions" class="get_permissions floatright uiButton uiButtonNormal"><?php _e('Authorize App to publish actions on your timeline',$this->plugin_text_domain); ?></a>-->
-						<?php } ?>
-					</td>
-				</tr>
 			</table>
 		</div><?php //end settings ?>
 		<?php wp_nonce_field($this->plugin_slug.'_update_options',$this->plugin_option_pref.'_nonce_options_update_field'); ?>
