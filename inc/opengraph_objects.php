@@ -3,15 +3,15 @@
 //  Objects lib
 //****************************************************************************************
 $this->og_tags = array(
-	'url'=> array('type'=> 'string'),
-	'title'=> array('name'=>__('Title',$this->plugin_text_domain), 'type'=> 'string'),
-	'type'=> array('name'=>__('Type',$this->plugin_text_domain), 'type'=> 'string'),
-	'description'=> array('name'=>__('Description',$this->plugin_text_domain), 'type'=> 'string'),
-	'image'=> array('name'=>__('Image url (50x50 is better)',$this->plugin_text_domain), 'type'=> 'image'),
-	'admins' => array('name'=>__('Admin ids',$this->plugin_text_domain), 'type'=> 'string'),
 	'app_id' => array('name'=>__('App IDs',$this->plugin_text_domain), 'type'=> 'string'),
-	'site_name'=> array('name'=>__('Site Name',$this->plugin_text_domain), 'type'=> 'string'),
-	'locale'=> array('name'=>__('Locale',$this->plugin_text_domain), 'type'=> 'string')
+	'admins' => array('name'=>__('Admin ids',$this->plugin_text_domain), 'type'=> 'string'),
+	'url'=> array('type'=> 'string'),
+	'type'=> array('name'=>__('Type',$this->plugin_text_domain), 'type'=> 'string'),
+	'title'=> array('name'=>__('Title',$this->plugin_text_domain), 'type'=> 'string'),
+	'locale'=> array('name'=>__('Locale',$this->plugin_text_domain), 'type'=> 'string'),
+	'image'=> array('name'=>__('Image url (50x50 is better)',$this->plugin_text_domain), 'type'=> 'image'),
+	'description'=> array('name'=>__('Description',$this->plugin_text_domain), 'type'=> 'string'),
+	'site_name'=> array('name'=>__('Site Name',$this->plugin_text_domain), 'type'=> 'string')
 );
 $this->og_tags = apply_filters('AWD_facebook_og_tags', $this->og_tags);
 

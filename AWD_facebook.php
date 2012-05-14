@@ -1322,7 +1322,7 @@ Class AWD_facebook
 					$fbuid = get_user_meta($user->ID,'fb_uid', true);
 				}
 			}
-			if($fbuid !=''){
+			if($fbuid !='' && $fbuid !=0){
                 if( $size <= 64 ){
 			        $type = 'square';
 			    }else if($size > 64){
@@ -1721,9 +1721,11 @@ Class AWD_facebook
 		$html = '';
 		if(!empty($options)){
 			foreach($options as $tag=>$tag_value){
-				//custom for video TYPE
-				$tag = str_replace(array(":mp4","_mp4",":html","_html",'_custom'),array(""),$tag);
-				$html .= '<meta property="'.$tag.'" content="'.stripcslashes($tag_value).'"/>'."\n";
+				if($tag_value != ''){
+					//custom for video TYPE
+					$tag = str_replace(array(":mp4","_mp4",":html","_html",'_custom'),array(""),$tag);
+					$html .= '<meta property="'.$tag.'" content="'.stripcslashes($tag_value).'"/>'."\n";
+				}
 			}
 		}else{
 			$html .= '<!-- '.__('Error No tags...',$this->plugin_text_domain).' -->'."\n";
@@ -1758,13 +1760,9 @@ Class AWD_facebook
 		//add new custom fields to array
 		$this->og_custom_fields = apply_filters('AWD_facebook_og_custom_fields', $this->og_custom_fields);
 		$tag_custom_fields = array();
-		foreach($this->og_custom_fields as $type=>$tag_fields){
-			if(is_array($tag_fields)){
-				foreach($tag_fields as $tag=>$tag_infos){
-					$tag_infos['custom'] = 1;
-					$tag_custom_fields[$tag] = $tag_infos;
-				}
-			}
+		foreach($this->og_custom_fields as $tag=>$tag_infos){
+			$tag_infos['custom'] = 1;
+			$tag_custom_fields[$tag] = $tag_infos;
 		}
 		$og_tags_final = array_merge($og_tags_final,$tag_custom_fields);
 		//if tags are empty because not set in plugin for retro actif on post and page
@@ -1781,6 +1779,7 @@ Class AWD_facebook
 				$option_value = '';
 				//if choose to redefine from post
 				if(isset($custom_post[$this->plugin_option_pref.'ogtags_redefine'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_redefine'][0] == 1){
+					
 					$option_value = $custom_post[$this->plugin_option_pref.'ogtags_'.$tag][0];
 					$audio = $custom_post[$this->plugin_option_pref.'ogtags_audio'][0];
 					$video = $custom_post[$this->plugin_option_pref.'ogtags_video'][0];
@@ -1789,8 +1788,8 @@ Class AWD_facebook
 					$image = $custom_post[$this->plugin_option_pref.'ogtags_image'][0];
 					$custom_type = $custom_post[$this->plugin_option_pref.'ogtags_type_custom'][0];
 				//else use general settings
-				}else{
-					$option_value = isset($this->options[$prefix_option.$tag]) ? $this->options[$prefix_option.$tag] : '';
+				}else{					
+					$option_value = isset($this->options[$prefix_option.$tag][0]) ? $this->options[$prefix_option.$tag] : '';
 					$custom_type = isset($this->options[$prefix_option.'type_custom']) ? $this->options[$prefix_option.'type_custom'] : '';
 					$audio =  isset($this->options[$prefix_option.'audio'] ) ? $this->options[$prefix_option.'audio'] : '';
 					$video =  isset($this->options[$prefix_option.'video']) ? $this->options[$prefix_option.'video'] : '';
@@ -1812,7 +1811,6 @@ Class AWD_facebook
 					$option_value = 'video/mp4';		
 				if($tag == 'video:type_html')
 					$option_value = 'text/html';
-				
 				//proces the patern replace
 				$option_value = str_ireplace($array_pattern,$array_replace,$option_value);
 				//clean the \r\n value and replace by space
