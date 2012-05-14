@@ -238,10 +238,10 @@ Class AWD_facebook
 		//add script and styles in the plugin and editos pages.
 		wp_register_script($this->plugin_slug.'-js-cookie',$this->plugin_url.'/assets/js/jquery.cookie.js',array('jquery'));
 		wp_register_script($this->plugin_slug.'-jquery-ui',$this->plugin_url.'/assets/js/jquery-ui-1.8.14.custom.min.js',array('jquery'));
-		wp_register_script($this->plugin_slug.'-admin-js',$this->plugin_url.'/assets/js/facebook_awd.js',array('jquery'));
-		wp_register_script($this->plugin_slug.'-js',$this->plugin_url.'/assets/js/facebook_awd_custom_actions.js',array('jquery'));
+		wp_register_script($this->plugin_slug.'-admin-js',$this->plugin_url.'/assets/js/facebook_awd_admin.js',array('jquery'));
+		wp_register_script($this->plugin_slug,$this->plugin_url.'/assets/js/facebook_awd.js',array('jquery'));
 		wp_register_script($this->plugin_slug.'-ui-toolkit',$this->plugin_url.'/assets/js/ui-toolkit.js',array('jquery'));
-		wp_register_style($this->plugin_slug.'-admin', $this->plugin_url.'/assets/css/admin_styles.css',array($this->plugin_slug.'-jquery-ui'));
+		wp_register_style($this->plugin_slug.'-admin-css', $this->plugin_url.'/assets/css/facebook_awd_admin.css',array($this->plugin_slug.'-jquery-ui'));
 		wp_register_style($this->plugin_slug.'-jquery-ui', $this->plugin_url.'/assets/css/jquery-ui-1.8.14.custom.css');
 		wp_register_style($this->plugin_slug.'-ui-toolkit', $this->plugin_url.'/assets/css/ui-toolkit.css');
 		
@@ -587,7 +587,7 @@ Class AWD_facebook
 	 */
 	public function admin_enqueue_css()
 	{
-		wp_enqueue_style($this->plugin_slug.'-admin');
+		wp_enqueue_style($this->plugin_slug.'-admin-css');
 		wp_enqueue_style($this->plugin_slug.'-jquery-ui');
 		wp_enqueue_style('thickbox');
 	}
@@ -611,7 +611,7 @@ Class AWD_facebook
 	
 	public function add_js_options()
 	{
-		wp_enqueue_script($this->plugin_slug.'-js');
+		wp_enqueue_script($this->plugin_slug);
 		// declare the URL to the file that handles the AJAX request (wp-admin/admin-ajax.php)
 		$AWD_facebook_vars = array(
 			'ajaxurl' 	=> admin_url('admin-ajax.php'),
@@ -623,7 +623,7 @@ Class AWD_facebook
 			'FBEventHandler' => array('callbacks'=>array())
 		);
 		$AWD_facebook_vars = apply_filters('AWD_facebook_js_vars', $AWD_facebook_vars);
-		wp_localize_script($this->plugin_slug.'-js', $this->plugin_slug, $AWD_facebook_vars);
+		wp_localize_script($this->plugin_slug, $this->plugin_slug, $AWD_facebook_vars);
 	}
 
 	/**
@@ -1045,7 +1045,7 @@ Class AWD_facebook
 	 */
 	public function front_enqueue_js()
 	{
-		wp_register_script($this->plugin_slug.'-js', $this->plugin_url.'/assets/js/facebook_awd_custom_actions.js',array('jquery'));
+		wp_register_script($this->plugin_slug, $this->plugin_url.'/assets/js/facebook_awd.js',array('jquery'));
 		$this->add_js_options();
 	}
 	
@@ -1660,7 +1660,7 @@ Class AWD_facebook
 				break;
 				
 				//LISTENERS	
-				default:
+				default:				
 					//if we want to force the login for the entire website.
 					if($this->options['login_required_enable'] == 1)
 						$this->login_required($redirect_url);
@@ -1704,88 +1704,6 @@ Class AWD_facebook
 		$vars[] = 'facebook_awd';
 		return $vars;
 	}
-	
-	//****************************************************************************************
-	//	ACTIONS OPENGRAPH OBJECT (BETA)
-	//****************************************************************************************
-	/**
-	 * Return the custom button action for OpenGraph
-	 * do_shortcode('[AWD_custom_action html="div" class="AWD_test" action="test" object="plugin" event="click" url="http://test.com" response_text="testoun"]Here the text to use[/AWD_custom_action]');  
-	 * @param array $atts   
-	 * @param string $content
-	 * @param string $code
-	 * @return string
-	 */
-	public function shortcode_custom_action($atts=array(),$content,$code)
-	{
-		$new_atts = array();
-		if(is_array($atts)){
-			extract(shortcode_atts(array("init"=>"init", "html"=>"div"), $atts )); 
-			foreach($atts as $att=>$value){
-				$new_atts[$att] = $value;
-			}
-		}
-		//create the container with data attached to.
-		$html = '<'.$new_atts['html'].' class="'.$new_atts['class'].' AWD_facebook_custom_action" data-type-event="'.$new_atts['event'].'" data-action="'.$new_atts['action'].'" data-object="'.$new_atts['object'].'" data-url="'.$new_atts['url'].'" data-responsetext="'.$new_atts['response_text'].'" data-callbackjs="'.$new_atts['callback_js'].'">';
-		$html .= $content;	
-		$html .= '</'.$new_atts['html'].'>';
-		
-		return $html;
-	}
-	
-	/**
-	 * Alias for call_action_openGraph but for ajax hook
-	 * @return void
-	 */
-	public function ajax_call_action_open_graph()
-	{
-		$request = array(
-			'namespace'=> $this->options['app_infos']['namespace'],
-			'action' => $_POST['awd_action'],
-			'object' => $_POST['awd_object'],
-			'url' => $_POST['awd_url'],
-			'responseText' => $_POST['awd_responsetext'],
-			'callbackJs' => $_POST['awd_callbackjs']
-		);
-		//Call filters to allow the user to parse and mofify the request before to send it.
-		$request = apply_filters('AWD_custom_actions_request',$request);
-		//Call the graph api
-		$response = $this->call_action_open_graph($request['namespace'],$request['action'],$request['object'],$request['url']);
-		$response['htmlResponse'] = $request['responseText'];
-		$response['callbackJs'] = $request['callbackJs'];
-		$response['debug'] = true;
-		//Call filters to allow the user to customize htmlresponse
-		$response = apply_filters('AWD_custom_actions_response', $response);
-		echo json_encode($response);
-		exit();
-	}
-	
-	/**
-	 * Call custom action to openGraph object
-	 * @param string $namespace
-	 * @param string $action
-	 * @param string $object
-	 * @param string $url
-	 * @return array
-	 */
-	public function call_action_open_graph($namespace,$action,$object,$url)
-	{
-	 	$response = array();
-		if($this->is_user_logged_in_facebook()){
-			try{
-				$response['id'] = $this->fcbk->api('/me/'.$namespace.':'.$action.'?'.$object.'='.$url,'post');
-				$response['success'] = true;
-				return $response;
-			}catch(Exception $e){
-				$response['message'] = "Error: ".$e->getMessage();
-			}
-		}else{
-			$response['message'] = "Error: You must be logged in to facebook";
-		}
-		$response['success'] = false;
-		return $response;
-	}
-	
 	
 	//****************************************************************************************
 	//	OPENGRAPH

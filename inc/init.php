@@ -46,7 +46,6 @@ add_action('wp_footer',array(&$this,'debug_content'));
 
 //INTERNAL
 add_action("AWD_facebook_get_admin_fbuid",array(&$this,'get_admin_fbuid'));
-add_action('wp_ajax_call_action_open_graph', array(&$this,'ajax_call_action_open_graph'));
 add_action('wp_ajax_get_app_infos_content', array(&$this,'get_app_infos_content'));
 add_filter('rewrite_rules_array',array(&$this,'insert_rewrite_rules' ));
 add_filter('query_vars',array(&$this,'insert_query_vars' ));
@@ -60,7 +59,6 @@ add_shortcode('AWD_likebox', array(&$this,'shortcode_like_box'));
 add_shortcode('AWD_activitybox', array(&$this,'shortcode_activity_box'));
 add_shortcode('AWD_loginbutton', array(&$this,'shortcode_login_button'));
 add_shortcode('AWD_comments', array(&$this,'shortcode_comments_box'));
-add_shortcode('AWD_custom_action', array(&$this,'shortcode_custom_action'));
 
 
 //OPTIONS
