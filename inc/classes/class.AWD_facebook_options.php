@@ -203,7 +203,7 @@ class AWD_facebook_options
 		if(current_facebook_user_can('manage_options'))
 			if(!in_array('manage_pages',$array_perms))
 				$this->options['perms_admin'] = 'manage_pages,';
-		if($this->current_facebook_user_can('publish_stream'))
+		if($this->AWD_facebook->current_facebook_user_can('publish_stream'))
         	if(!in_array('publish_stream',$array_perms))
 				$this->options['perms_admin'] .= 'publish_stream,';
 		
