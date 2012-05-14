@@ -49,11 +49,11 @@ jQuery(document).ready(function($){
 
 
 var AWD_facebook = {
-
+	
 	FBEventHandler : function ()
 	{
 		if(awd_fcbk.FBEventHandler.callbacks){
-			jQuery.each(awd_fcbk.FBEventHandler.callbacks,function(){
+			jQuery.each(awd_fcbk.FBEventHandler.callbacks,function(index,value){
 				var AWD_actions_callback = window[this];
 				if(jQuery.isFunction(AWD_actions_callback))
 					AWD_actions_callback(this);
