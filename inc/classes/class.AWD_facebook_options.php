@@ -149,6 +149,7 @@ class AWD_facebook_options
 		$this->setDefaultValue('ogtags_frontpage_title', '%BLOG_TITLE%');
 		$this->setDefaultValue('ogtags_frontpage_description', '%BLOG_DESCRIPTION%');
 		$this->setDefaultValue('ogtags_frontpage_locale', $this->options['locale']);
+		$this->setDefaultValue('ogtags_frontpage_image', '%POST_IMAGE%');
 
 		$this->setDefaultValue('ogtags_page_disable', 1);
 		$this->setDefaultValue('ogtags_page_type', 'blog');
@@ -156,6 +157,7 @@ class AWD_facebook_options
 		$this->setDefaultValue('ogtags_page_title', '%POST_TITLE%');
 		$this->setDefaultValue('ogtags_page_description', '%POST_EXCERPT%');
 		$this->setDefaultValue('ogtags_page_locale', $this->options['locale']);
+		$this->setDefaultValue('ogtags_page_image', '%POST_IMAGE%');
 	
 		$this->setDefaultValue('ogtags_post_disable', 1);
 		$this->setDefaultValue('ogtags_post_type', 'article');
@@ -163,13 +165,14 @@ class AWD_facebook_options
 		$this->setDefaultValue('ogtags_post_title', '%POST_TITLE%');
 		$this->setDefaultValue('ogtags_post_description', '%POST_EXCERPT%');
 		$this->setDefaultValue('ogtags_post_locale', $this->options['locale']);
-
+		$this->setDefaultValue('ogtags_post_image', '%POST_IMAGE%');
+		
 		$this->setDefaultValue('ogtags_archive_disable', 1);
 		$this->setDefaultValue('ogtags_archive_type', 'blog');
 		$this->setDefaultValue('ogtags_archive_site_name', '%BLOG_TITLE%');
 		$this->setDefaultValue('ogtags_archive_title', '%ARCHIVE_TITLE%');
 		$this->setDefaultValue('ogtags_archive_locale', $this->options['locale']);
-		
+
 		$this->setDefaultValue('ogtags_taxonomies_category_disable', 1);
 		$this->setDefaultValue('ogtags_taxonomies_category_type', 'blog');
 		$this->setDefaultValue('ogtags_taxonomies_category_site_name', '%BLOG_TITLE%');

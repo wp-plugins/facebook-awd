@@ -10,7 +10,6 @@ $this->og_tags = array(
 	'image'=> __('Image url (50x50 is better)',$this->plugin_text_domain),
 	'admins' => __('Admin ids',$this->plugin_text_domain),
 	'app_id' => __('App IDs',$this->plugin_text_domain),
-	'page_id' => __('Page IDs',$this->plugin_text_domain),
 	'site_name'=> __('Site Name',$this->plugin_text_domain),
 	'locale'=> __('Locale',$this->plugin_text_domain)
 );

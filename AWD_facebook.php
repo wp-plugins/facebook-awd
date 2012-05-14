@@ -656,7 +656,7 @@ Class AWD_facebook
 					$html .= '<p><b>%BLOG_URL%</b> - '.__('Use blog url',$this->plugin_text_domain).'</p>';
 					$html .= '<p><b>%AUTHOR_TITLE%</b> - '.__('Use title of post',$this->plugin_text_domain).'</p>';
 					$html .= '<p><b>%AUTHOR_IMAGE%</b> - '.__('Use excerpt',$this->plugin_text_domain).'</p>';
-					$html .= '<p><b>%AUTHOR_DESCRIPTION%</b> - '.__('Use featured image (if activated)',$this->plugin_text_domain).'</p>';
+					$html .= '<p><b>%AUTHOR_DESCRIPTION%</b></p>';
 				$html .= '</div>';
 			break;
 			case 'custom_post_types':
@@ -1788,85 +1788,84 @@ Class AWD_facebook
 		}
 		//add attachment fields to global fields for display
 		$og_tags_final = array_merge($og_tags,$tag_attachment_fields);
-		//foreach tags, set value
-		foreach($og_tags_final as $tag=>$tag_name){
-			$option_value = '';
-			//if tags are empty because not set in plugin for retro actif on post and page
-			if(empty($custom_post[$this->plugin_option_pref.'ogtags_disable'][0]))
-				$custom_post[$this->plugin_option_pref.'ogtags_disable'][0] = 0;
- 			//if tags are enable from editor
-			if($custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == 0){
-				//if general settings of this type is enable
-				if($this->options[$prefix_option.'disable'] == 0 OR $this->options[$prefix_option.'disable'] != ''){
-					//if choose to redefine from post
-					if(isset($custom_post[$this->plugin_option_pref.'ogtags_redefine'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_redefine'][0] == 1){
-						$option_value = $custom_post[$this->plugin_option_pref.'ogtags_'.$tag][0];
-						$audio = $custom_post[$this->plugin_option_pref.'ogtags_audio'][0];
-						$video = $custom_post[$this->plugin_option_pref.'ogtags_video'][0];
-						$video_mp4 = $custom_post[$this->plugin_option_pref.'ogtags_video:video:mp4'][0];
-						$video_html = $custom_post[$this->plugin_option_pref.'ogtags_video:video:html'][0];
-						$image = $custom_post[$this->plugin_option_pref.'ogtags_image'][0];
-						$custom_type = $custom_post[$this->plugin_option_pref.'ogtags_type_custom'][0];
-					//else use general settings
-					}else{
-						$option_value = isset($this->options[$prefix_option.$tag]) ? $this->options[$prefix_option.$tag] : '';
-						$custom_type = isset($this->options[$prefix_option.'type_custom']) ? $this->options[$prefix_option.'type_custom'] : '';
-						$audio =  isset($this->options[$prefix_option.'audio'] ) ? $this->options[$prefix_option.'audio'] : '';
-						$video =  isset($this->options[$prefix_option.'video']) ? $this->options[$prefix_option.'video'] : '';
-						$video_mp4 = isset($this->options[$prefix_option.'video:mp4']) ? $this->options[$prefix_option.'video:mp4'] : '';
-						$video_html = isset($this->options[$prefix_option.'video:html']) ? $this->options[$prefix_option.'video:html'] : '';
-						$image = isset($this->options[$prefix_option.'image']) ?  $this->options[$prefix_option.'image'] : '';
-					}
-					
-					//set url with a pattern
-					if($tag == 'url')
-						$option_value = '%CURRENT_URL%';
-					if($tag == 'type' && $option_value == 'custom' )
-						$option_value = $custom_type;
-						
-					//add content type for each field video format (static value)
-					if($tag == 'video:type')
-						$option_value = 'application/x-shockwave-flash';		
-					if($tag == 'video:type_mp4')
-						$option_value = 'video/mp4';		
-					if($tag == 'video:type_html')
-						$option_value = 'text/html';
-                    
-					//proces the patern replace
-					$option_value = str_ireplace($array_pattern,$array_replace,$option_value);
-					//clean the \r\n value and replace by space
-					$option_value = str_replace("\n"," ",$option_value);
-					$option_value = str_replace("\r","",$option_value);
-					$option_value = str_replace("\t","",$option_value);
-					
-					
-					
-				    //if image still empty, and if we get one for app infos... push it inside open Graph as default
-					if(($tag == 'image' && $option_value == '%POST_IMAGE%') OR ($tag == 'image' && $option_value == '' && !empty($this->options['app_infos'])) ){
-					    $image = $option_value = $this->options['app_infos']['logo_url'];
-					}
-					
-					//for video	and audio
-					//if video src or audio src is null so don't display tags
-					if(preg_match('@audio@',$tag) && $audio =='')
-						continue;
-					elseif( (preg_match('@video:mp4@',$tag) || preg_match('@type_mp4@',$tag)) && $video_mp4 =='')
-						continue;
-					elseif((preg_match('@video:html@',$tag) || preg_match('@type_html@',$tag)) && $video_html =='')
-						continue;
-					elseif(preg_match('@video@',$tag) && $video =='')
-						continue;
-					//need image for video to work
-					elseif(preg_match('@video@',$tag) && $image =='')
-						continue;
-					elseif(($tag == 'app_id' || $tag == 'admins' || $tag == 'page_id') && $option_value!='')
-						$options['fb:'.$tag] = $option_value;
-					elseif($option_value !='')
-						$options['og:'.$tag] = $option_value;
+		//if tags are empty because not set in plugin for retro actif on post and page
+		if(empty($custom_post[$this->plugin_option_pref.'ogtags_disable'][0]))
+			$custom_post[$this->plugin_option_pref.'ogtags_disable'][0] = 0;
+		
+		//if disabled from post settings, disable all
+		$disabled_general = $this->options[$prefix_option.'disable'] == 1 ? true : false;
+		$disabled_from_post = $custom_post[$this->plugin_option_pref.'ogtags_disable'][0] == 1 ? true : false;
+		
+		if(!$disabled_general AND !$disabled_from_post){
+			//foreach tags, set value
+			foreach($og_tags_final as $tag=>$tag_name){
+				$option_value = '';
+				//if choose to redefine from post
+				if(isset($custom_post[$this->plugin_option_pref.'ogtags_redefine'][0]) && $custom_post[$this->plugin_option_pref.'ogtags_redefine'][0] == 1){
+					$option_value = $custom_post[$this->plugin_option_pref.'ogtags_'.$tag][0];
+					$audio = $custom_post[$this->plugin_option_pref.'ogtags_audio'][0];
+					$video = $custom_post[$this->plugin_option_pref.'ogtags_video'][0];
+					$video_mp4 = $custom_post[$this->plugin_option_pref.'ogtags_video:video:mp4'][0];
+					$video_html = $custom_post[$this->plugin_option_pref.'ogtags_video:video:html'][0];
+					$image = $custom_post[$this->plugin_option_pref.'ogtags_image'][0];
+					$custom_type = $custom_post[$this->plugin_option_pref.'ogtags_type_custom'][0];
+				//else use general settings
+				}else{
+					$option_value = isset($this->options[$prefix_option.$tag]) ? $this->options[$prefix_option.$tag] : '';
+					$custom_type = isset($this->options[$prefix_option.'type_custom']) ? $this->options[$prefix_option.'type_custom'] : '';
+					$audio =  isset($this->options[$prefix_option.'audio'] ) ? $this->options[$prefix_option.'audio'] : '';
+					$video =  isset($this->options[$prefix_option.'video']) ? $this->options[$prefix_option.'video'] : '';
+					$video_mp4 = isset($this->options[$prefix_option.'video:mp4']) ? $this->options[$prefix_option.'video:mp4'] : '';
+					$video_html = isset($this->options[$prefix_option.'video:html']) ? $this->options[$prefix_option.'video:html'] : '';
+					$image = isset($this->options[$prefix_option.'image']) ?  $this->options[$prefix_option.'image'] : '';
 				}
-		
+				
+				//set url with a pattern
+				if($tag == 'url')
+					$option_value = '%CURRENT_URL%';
+				if($tag == 'type' && $option_value == 'custom' )
+					$option_value = $custom_type;
+					
+				//add content type for each field video format (static value)
+				if($tag == 'video:type')
+					$option_value = 'application/x-shockwave-flash';		
+				if($tag == 'video:type_mp4')
+					$option_value = 'video/mp4';		
+				if($tag == 'video:type_html')
+					$option_value = 'text/html';
+				
+				//proces the patern replace
+				$option_value = str_ireplace($array_pattern,$array_replace,$option_value);
+				//clean the \r\n value and replace by space
+				$option_value = str_replace("\n"," ",$option_value);
+				$option_value = str_replace("\r","",$option_value);
+				$option_value = str_replace("\t","",$option_value);
+				
+				
+				
+				//if image still empty, and if we get one for app infos... push it inside open Graph as default
+				if(($tag == 'image' && $option_value == '%POST_IMAGE%') OR ($tag == 'image' && $option_value == '' && !empty($this->options['app_infos'])) ){
+					$image = $option_value = $this->options['app_infos']['logo_url'];
+				}
+				
+				//for video	and audio
+				//if video src or audio src is null so don't display tags
+				if(preg_match('@audio@',$tag) && $audio =='')
+					continue;
+				elseif( (preg_match('@video:mp4@',$tag) || preg_match('@type_mp4@',$tag)) && $video_mp4 =='')
+					continue;
+				elseif((preg_match('@video:html@',$tag) || preg_match('@type_html@',$tag)) && $video_html =='')
+					continue;
+				elseif(preg_match('@video@',$tag) && $video =='')
+					continue;
+				//need image for video to work
+				elseif(preg_match('@video@',$tag) && $image =='')
+					continue;
+				elseif(($tag == 'app_id' || $tag == 'admins' || $tag == 'page_id') && $option_value!='')
+					$options['fb:'.$tag] = $option_value;
+				elseif($option_value !='')
+					$options['og:'.$tag] = $option_value;
 			}
-		
 		}
 		return $options;
 	}
