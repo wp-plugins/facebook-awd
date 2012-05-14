@@ -41,7 +41,6 @@ abstract class AWD_facebook_plugin_abstract implements AWD_facebook_plugin_inter
 		}elseif($this->AWD_facebook->get_version() < $this->version_requiered){
 			add_action('admin_notices',array(&$this,'old_parent'));
 			deactivate_plugins($this->file);
-			echo $this->deps['connect'];
 		}else
 			add_action('AWD_facebook_plugins_init',array(&$this,'initialisation'));
 		
