@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Facebook AWD All in One
-Plugin URI: http://www.ahwebdev.fr
+Plugin URI: http://facebook-awd.ahwebdev.fr
 Description: This plugin integrates Facebook open graph, Plugins from facebook, and FB connect, with SDK JS AND SDK PHP Facebook
 Version: 1.3
 Author: AHWEBDEV
