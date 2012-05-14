@@ -1268,7 +1268,7 @@ Class AWD_facebook
 		<script type="text/javascript">
 		(function() {
                 var e = document.createElement('script');
-                e.src = document.location.protocol + '//connect.facebook.net/<?php echo $this->options["locale"]; ?>/all.js#xfbml=1';
+                e.src = document.location.protocol + '//connect.facebook.net/<?php echo $this->options["locale"]; ?>/all.js';
                 <?php 
                 //Add xfbml support if it was not called in the connect.
                 if($this->options['connect_enable'] != 1): ?>
