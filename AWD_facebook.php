@@ -611,7 +611,7 @@ Class AWD_facebook
 		wp_enqueue_script($this->plugin_slug.'-ui-toolkit');
 	}
 	
-	public function add_js_options()
+	public function add_js_options($manual = 0)
 	{
 		wp_enqueue_script($this->plugin_slug);
 		// declare the URL to the file that handles the AJAX request (wp-admin/admin-ajax.php)
@@ -624,6 +624,14 @@ Class AWD_facebook
 			'app_id'    => $this->options["app_id"],
 			'FBEventHandler' => array('callbacks'=>array())
 		);
+		
+		//fix for wp_localize_script that is not called on wp-login.php page
+		if($manual == 1){
+			$temp = array();
+			$temp = $AWD_facebook_vars;
+			echo '<script>var '.$this->plugin_slug.'='.json_encode($temp).';</script>';
+		}
+		
 		$AWD_facebook_vars = apply_filters('AWD_facebook_js_vars', $AWD_facebook_vars);
 		wp_localize_script($this->plugin_slug, $this->plugin_slug, $AWD_facebook_vars);
 	}
@@ -2134,7 +2142,7 @@ Class AWD_facebook
 		</div>
 		<br />
 		<?php
-		$this->add_js_options();
+		$this->add_js_options(true);//force manual wp_localize
 		$this->load_sdj_js();
 		$this->js_sdk_init();
 	}
