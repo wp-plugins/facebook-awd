@@ -489,8 +489,8 @@ Class AWD_facebook
 			$links[] = array(__('My Profile',$this->plugin_text_domain), $this->me['link']);
 		}
 		$links[] = array(__('Settings',$this->plugin_text_domain),admin_url('admin.php?page='.$this->plugin_slug));
-		$links[] = array(__('Wiki',$this->plugin_text_domain),'http://trac.ahwebdev.fr/projects/facebook-awd/Wiki');
-		$links[] = array(__('Support',$this->plugin_text_domain),'http://trac.ahwebdev.fr/projects/facebook-awd');
+		$links[] = array(__('Docuementation',$this->plugin_text_domain),'http://facebook-awd.ahwebdev.fr/documentation/');
+		$links[] = array(__('Support',$this->plugin_text_domain),'http://facebook-awd.ahwebdev.fr/support/');
 		$links[] = array(__('Debugger',$this->plugin_text_domain),'https://developers.facebook.com/tools/debug/og/object?q='.urlencode($this->get_current_url()));
 
 		if($this->is_user_logged_in_facebook()){
@@ -624,24 +624,14 @@ Class AWD_facebook
 		add_screen_option('layout_columns', array('max' => 2, 'default' => 2));
 		$screen = convert_to_screen(get_current_screen());
 		
-		
-		ob_start();
-		$this->get_documentation_feed();
-		$documentation_content = ob_get_clean();
-		ob_end_flush();
-		
+		$documentation_content = $this->get_documentation_feed(false);
 		$screen->add_help_tab( array(
 			'id'      => 'AWD_facebook_documentation_tab',
 			'title'   => __( 'Documentation', $this->plugin_text_domain ),
 			'content' => $documentation_content
 		));
 		
-		
-		ob_start();
-		$this->get_plugins_feed();
-		$discover_content = ob_get_clean();
-		ob_end_flush();
-		
+		$discover_content = $this->get_plugins_feed(false);
 		$screen->add_help_tab( array(
 			'id'      => 'AWD_facebook_plugins_list_tab',
 			'title'   => __('Facebook AWD plugins', $this->plugin_text_domain ),
@@ -861,7 +851,7 @@ Class AWD_facebook
 		return $html;
 	}
 	
-	public function get_documentation_feed()
+	public function get_documentation_feed($echo=true)
 	{
 		$widget_awd_rss = array(
 			'link' => 'http://facebook-awd.ahwebdev.fr/documentation/',
@@ -872,10 +862,10 @@ Class AWD_facebook
 			'show_author' => 0,
 			'show_date' => 0,
 		);
-		$this->admin_get_feeds($widget_awd_rss);
+		if($echo){ echo $this->admin_get_feeds($widget_awd_rss); }else{ $this->admin_get_feeds($widget_awd_rss); }			
 	}
 	
-	public function get_plugins_feed()
+	public function get_plugins_feed($echo=true)
 	{
 		$widget_awd_rss = array(
 			'link' => 'http://facebook-awd.ahwebdev.fr/plugins/',
@@ -886,7 +876,7 @@ Class AWD_facebook
 			'show_author' => 0,
 			'show_date' => 0,
 		);
-		$this->admin_get_feeds($widget_awd_rss);
+		if($echo){ echo $this->admin_get_feeds($widget_awd_rss); }else{ $this->admin_get_feeds($widget_awd_rss); }			
 	}
 	
 	
@@ -900,22 +890,122 @@ Class AWD_facebook
 		$rss = @fetch_feed( $widget_awd_rss['url'] );
 		if ( is_wp_error($rss) ) {
 			if ( is_admin() || current_user_can('manage_options') ) {
-				echo '<div class="rss-widget"><p>';
+				$html .='<div class="rss-widget"><p>';
 				printf(__('<strong>RSS Error</strong>: %s'), $rss->get_error_message());
-				echo '</p></div>';
+				$html .= '</p></div>';
 			}
 		} elseif ( !$rss->get_item_quantity() ) {
 			$rss->__destruct();
 			unset($rss);
 			return false;
 		} else {
-			echo '<div class="rss-widget">';
-			wp_widget_rss_output( $rss, $widget_awd_rss );
-			echo '</div>';
+			$html .= '<div class="rss-widget">';
+			$html .= $this->wp_widget_rss_output( $rss, $widget_awd_rss );
+			$html .= '</div>';
 			$rss->__destruct();
 			unset($rss);
 		}
-	 }
+	}
+	
+	/**
+	 * Display the RSS entries in a list.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @param string|array|object $rss RSS url.
+	 * @param array $args Widget arguments.
+	 */
+	public function wp_widget_rss_output( $rss, $args = array() ) {
+		$html = '';
+		if ( is_string( $rss ) ) {
+			$rss = fetch_feed($rss);
+		} elseif ( is_array($rss) && isset($rss['url']) ) {
+			$args = $rss;
+			$rss = fetch_feed($rss['url']);
+		} elseif ( !is_object($rss) ) {
+			return;
+		}
+	
+		if ( is_wp_error($rss) ) {
+			if ( is_admin() || current_user_can('manage_options') )
+				echo '<p>' . sprintf( __('<strong>RSS Error</strong>: %s'), $rss->get_error_message() ) . '</p>';
+			return;
+		}
+	
+		$default_args = array( 'show_author' => 0, 'show_date' => 0, 'show_summary' => 0 );
+		$args = wp_parse_args( $args, $default_args );
+		extract( $args, EXTR_SKIP );
+	
+		$items = (int) $items;
+		if ( $items < 1 || 20 < $items )
+			$items = 10;
+		$show_summary  = (int) $show_summary;
+		$show_author   = (int) $show_author;
+		$show_date     = (int) $show_date;
+	
+		if ( !$rss->get_item_quantity() ) {
+			$html .=  '<ul><li>' . __( 'An error has occurred; the feed is probably down. Try again later.' ) . '</li></ul>';
+			$rss->__destruct();
+			unset($rss);
+			return;
+		}
+	
+		$html .= '<ul>';
+		foreach ( $rss->get_items(0, $items) as $item ) {
+			$link = $item->get_link();
+			while ( stristr($link, 'http') != $link )
+				$link = substr($link, 1);
+			$link = esc_url(strip_tags($link));
+			$title = esc_attr(strip_tags($item->get_title()));
+			if ( empty($title) )
+				$title = __('Untitled');
+	
+			$desc = str_replace( array("\n", "\r"), ' ', esc_attr( strip_tags( @html_entity_decode( $item->get_description(), ENT_QUOTES, get_option('blog_charset') ) ) ) );
+			$desc = wp_html_excerpt( $desc, 360 );
+	
+			// Append ellipsis. Change existing [...] to [&hellip;].
+			if ( '[...]' == substr( $desc, -5 ) )
+				$desc = substr( $desc, 0, -5 ) . '[&hellip;]';
+			elseif ( '[&hellip;]' != substr( $desc, -10 ) )
+				$desc .= ' [&hellip;]';
+	
+			$desc = esc_html( $desc );
+	
+			if ( $show_summary ) {
+				$summary = "<div class='rssSummary'>$desc</div>";
+			} else {
+				$summary = '';
+			}
+	
+			$date = '';
+			if ( $show_date ) {
+				$date = $item->get_date( 'U' );
+	
+				if ( $date ) {
+					$date = ' <span class="rss-date">' . date_i18n( get_option( 'date_format' ), $date ) . '</span>';
+				}
+			}
+	
+			$author = '';
+			if ( $show_author ) {
+				$author = $item->get_author();
+				if ( is_object($author) ) {
+					$author = $author->get_name();
+					$author = ' <cite>' . esc_html( strip_tags( $author ) ) . '</cite>';
+				}
+			}
+	
+			if ( $link == '' ) {
+				$html .= "<li>$title{$date}{$summary}{$author}</li>";
+			} else {
+				$html .= "<li><a class='rsswidget' href='$link' title='$desc'>$title</a>{$date}{$summary}{$author}</li>";
+			}
+		}
+		$html .= '</ul>';
+		$rss->__destruct();
+		unset($rss);
+		return $html;
+	}
 	
 	
 	/**
