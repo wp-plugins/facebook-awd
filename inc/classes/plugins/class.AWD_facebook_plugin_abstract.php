@@ -104,17 +104,26 @@ abstract class AWD_facebook_plugin_abstract implements AWD_facebook_plugin_inter
 	{
 		add_screen_option('layout_columns', array('max' => 2, 'default' => 2));
 		$screen = convert_to_screen(get_current_screen());
-		$support = $this->AWD_facebook->support();
+		
+		$documentation_content = $this->AWD_facebook->get_documentation_feed(false);
 		$screen->add_help_tab( array(
-			'id'      => 'AWD_facebook_contact_support',
-			'title'   => __( 'WIKI & SUPPORT', $this->AWD_facebook->plugin_text_domain ),
-			'content' => $support
+			'id'      => 'AWD_facebook_documentation_tab',
+			'title'   => __( 'Documentation', $this->AWD_facebook->plugin_text_domain ),
+			'content' => $documentation_content
 		));
-		$discover_content = $this->AWD_facebook->discover();
+		
+		$discover_content = $this->AWD_facebook->get_plugins_feed(false);
 		$screen->add_help_tab( array(
-			'id'      => 'AWD_facebook_contact_dev',
-			'title'   => __( 'Get Top Freelance Web Developer & Pay Per Hour', $this->AWD_facebook->plugin_text_domain ),
+			'id'      => 'AWD_facebook_plugins_list_tab',
+			'title'   => __('Facebook AWD plugins', $this->AWD_facebook->plugin_text_domain ),
 			'content' => $discover_content
+		));
+		
+		$support_content = $this->AWD_facebook->support();
+		$screen->add_help_tab( array(
+			'id'      => 'AWD_facebook_support_tab',
+			'title'   => __( 'Bug Tracker', $this->AWD_facebook->plugin_text_domain ),
+			'content' => $support_content
 		));
 	}
 	public function admin_menu()
