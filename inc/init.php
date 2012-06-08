@@ -107,4 +107,5 @@ if($this->options['connect_enable'] == 1 && $this->options['app_id'] !='' && $th
 		add_filter('get_avatar', array($this, 'fb_get_avatar'), 100, 5);//modify in last... 
 	}
 }
+$this->AWD_master_verification();
 ?>
