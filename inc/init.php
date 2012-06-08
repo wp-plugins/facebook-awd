@@ -82,7 +82,7 @@ do_action("AWD_facebook_save_settings");
 /****************************************************/
 do_action("AWD_facebook_plugins_init");
 //UPDATES OPTIONS FOR PLUGINS
-do_action("AWD_facebook_save_settings");
+do_action("AWD_facebook_save_settings");  
 /****************************************************/
 
 
