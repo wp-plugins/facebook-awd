@@ -91,7 +91,7 @@ do_action("AWD_facebook_save_settings");
 
 $this->optionsManager->load();
 $this->options = $this->optionsManager->getOptions();
-$this->options->verification();
+$this->optionsManager->verification();
 
 
 //init the FB connect
