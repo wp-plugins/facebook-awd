@@ -86,13 +86,8 @@ do_action("AWD_facebook_save_settings");
 /****************************************************/
 
 
-
-
-
 $this->optionsManager->load();
 $this->options = $this->optionsManager->getOptions();
-$this->optionsManager->verification();
-
 
 //init the FB connect
 if($this->options['connect_enable'] == 1 && $this->options['app_id'] !='' && $this->options['app_secret_key'] !=''){
