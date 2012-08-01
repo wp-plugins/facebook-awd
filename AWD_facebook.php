@@ -886,7 +886,7 @@ Class AWD_facebook
 	 */
 	 public function admin_get_feeds($widget_awd_rss)
 	 {
-	 	
+	 	/*Must be fixed !
 		$rss = @fetch_feed( $widget_awd_rss['url'] );
 		if ( is_wp_error($rss) ) {
 			if ( is_admin() || current_user_can('manage_options') ) {
@@ -904,7 +904,7 @@ Class AWD_facebook
 			$html .= '</div>';
 			$rss->__destruct();
 			unset($rss);
-		}
+		}*/
 	}
 	
 	/**
