@@ -99,15 +99,14 @@ do_action("AWD_facebook_save_settings");
 $this->optionsManager->load();
 $this->options = $this->optionsManager->getOptions();
 
+//load the facebook lib
+//and load the sdk if connect if activated.
+add_action('wp_print_footer_scripts',array(&$this,'js_sdk_init'), 11);
+add_action('admin_print_footer_scripts',array(&$this,'js_sdk_init'));
 
 //init the FB connect
 if($this->options['app_id'] !='' && $this->options['app_secret_key'] !=''){
-	
-	add_action('wp_print_footer_scripts',array(&$this,'js_sdk_init'));
-	add_action('admin_print_footer_scripts',array(&$this,'js_sdk_init'));
-	
 	if($this->options['connect_enable'] == 1){
-		
 		//add action to add the login button on the wp-login.php page...
 		if($this->options['login_button']['display_on_login_page'] == 1)
 			add_action('login_form',array(&$this,'the_login_button_wp_login'));

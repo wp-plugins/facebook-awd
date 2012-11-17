@@ -3,7 +3,7 @@
 Plugin Name: Facebook AWD All in One
 Plugin URI: http://facebook-awd.ahwebdev.fr
 Description: Adds extensions from facebook on wordpress easily. Like button, Like Box, Activity box, Fb comments, OpenGraph and more.
-Version: 1.5.1
+Version: 1.5.2
 Author: AHWEBDEV
 Author URI: http://www.ahwebdev.fr
 License: Copywrite AHWEBDEV
@@ -1953,7 +1953,6 @@ Class AWD_facebook
 			}else{
 				$error = new WP_Error(500, $this->plugin_name ." Api not configured");
 				return $error;
-				throw new Exception("Facebook AWD not set");
 			}
 			$sub = isset($sub['data']) ? $sub['data'] : array();
 			return $sub;
@@ -2085,7 +2084,7 @@ Class AWD_facebook
 		$this->_oauth_url = $this->fcbk->getLoginUrl($login_options);
 		$this->facebook_page_url = $this->get_facebook_page_url();
 	}
-
+	
 	/**
 	 * Add Js init fcbk to footer  ADMIN AND FRONT 
 	 * Print debug if active here
@@ -2093,7 +2092,8 @@ Class AWD_facebook
 	 */
 	public function js_sdk_init()
 	{
-		$html = '
+		$html = "\n".'
+		<!-- '.$this->plugin_name.' Facebook Library Library-->
 		<div id="fb-root"></div>
 		<script type="text/javascript">
 			(function(d){
@@ -2109,8 +2109,7 @@ Class AWD_facebook
 			}(document));';
 
 		if ($this->options['connect_enable'] == 1) {
-			$html .= '
-			//When jquery ready, load JS SDK
+			$html .= '					
 			jQuery(document).ready(function(){
 				window.fbAsyncInit = function(){
 					FB.init({
@@ -2126,8 +2125,7 @@ Class AWD_facebook
 			});
 		';
 		}
-		$html .= '
-		</script>';
+		$html .= '</script>';
 		echo $html;
 	}
 
