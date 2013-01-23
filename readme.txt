@@ -56,6 +56,7 @@ You can use widgets and shotcodes to display Facebook socials plugins
 * Like Button
 * Like Box [AWD_likebox]
 * Activity Box [AWD_activitybox]
+* Shared Activity [AWD_shared_activitybox]
 * Facebook Connect & Login Button [AWD_loginbutton]
 * Comments Box [AWD_comments]
 
